@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/notes"
+        android:icon="@drawable/ic_action_name3"
+        android:title="notes"
+
+        />
+
+    <item
+        android:id="@+id/reminder"
+        android:icon="@drawable/ic_action_name3"
+        android:title="Reminder"
+
+
+      />
+
+    <item
+        android:id="@+id/expense"
+        android:icon="@drawable/ic_action_name3"
+        android:title="expenses"/>
+    <item
+        android:id="@+id/setting"
+        android:icon="@drawable/ic_action_name3"
+        android:title="setting"
+
+        />
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_action_name3"
+        android:title="home"
+        />
+
+
+</menu>
