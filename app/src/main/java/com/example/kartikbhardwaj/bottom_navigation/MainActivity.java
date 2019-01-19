@@ -13,12 +13,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     BottomNavigationView bottomNavigationView;
-
+    CircleImageView imageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +31,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView =(BottomNavigationView)findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
-       loadfragment(new fragment2());
+       loadfragment(new HomeFragment());
+        Toolbar toolbar = (Toolbar)findViewById(R.id.tool_bar);
+       // getSupportActionBar().hide();
+        setSupportActionBar(toolbar);
+        imageButton=findViewById(R.id.user_image);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent profileIntent =new Intent(MainActivity.this,Profile_Activity.class);
+                startActivity(profileIntent);
+            }
+        });
 
 
     }
-    @Override
-     public  boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater =getMenuInflater();
-        inflater.inflate(R.menu.appbar_menu,menu);
-        return true;}
 
         public boolean loadfragment(Fragment fragment) {
 
@@ -74,24 +85,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         Fragment fragment = null;
 
         switch (menuItem.getItemId()) {
+            case R.id.referrals:
+                fragment = new ReferralFragment();
+                break;
+
             case R.id.home:
-                fragment = new Homefragment();
+                fragment = new HomeFragment();
                 break;
 
-            case R.id.reminder:
-                fragment = new fragment2();
+            case R.id.stats:
+                fragment = new StatsFragment();
                 break;
 
-            case R.id.expense:
-                fragment = new fragment3();
-                break;
 
-            case R.id.setting:
-                fragment = new fragment5();
-                break;
-            case R.id.notes:
-                fragment = new fragment4();
-                break;
 
 
         }

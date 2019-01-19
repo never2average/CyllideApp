@@ -4,12 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity"
 
+
     >
 
     <item android:id="@+id/pic"
-        android:icon="@drawable/ic_action_name"
+        android:icon="@drawable/home_icon"
         android:title="name"
         app:showAsAction="always"
+
+
         />
+
+
 
 </menu>
