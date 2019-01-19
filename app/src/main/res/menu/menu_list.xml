@@ -2,34 +2,31 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/notes"
-        android:icon="@drawable/ic_action_name3"
-        android:title="notes"
+        android:id="@+id/home"
+        android:icon="@drawable/home_icon"
+        android:title="Home"
 
         />
 
     <item
-        android:id="@+id/reminder"
-        android:icon="@drawable/ic_action_name3"
-        android:title="Reminder"
+        android:id="@+id/referrals"
+        android:icon="@drawable/referral_icon"
+        android:title="Referrals"
 
 
       />
 
     <item
-        android:id="@+id/expense"
-        android:icon="@drawable/ic_action_name3"
-        android:title="expenses"/>
-    <item
-        android:id="@+id/setting"
-        android:icon="@drawable/ic_action_name3"
-        android:title="setting"
+        android:id="@+id/stats"
+        android:icon="@drawable/stats_icon"
+        android:title="Stats"/>
 
-        />
     <item
-        android:id="@+id/home"
-        android:icon="@drawable/ic_action_name3"
-        android:title="home"
+        android:id="@+id/account_type"
+        android:icon="@drawable/stats_icon"
+        android:title="SILVER"
+
+
         />
 
 
