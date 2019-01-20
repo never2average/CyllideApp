@@ -21,6 +21,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
+    Toolbar toolbar;
     BottomNavigationView bottomNavigationView;
     CircleImageView imageButton;
 
@@ -31,10 +32,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView =(BottomNavigationView)findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
-       loadfragment(new HomeFragment());
-        Toolbar toolbar = (Toolbar)findViewById(R.id.tool_bar);
-       // getSupportActionBar().hide();
+        loadfragment(new HomeFragment());
+
+        toolbar = (Toolbar)findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+
         imageButton=findViewById(R.id.user_image);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,12 +71,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.pic:
                 Intent profileIntent=new Intent(this,Profile_Activity.class);
                 startActivity(profileIntent);
-
-
-
-
-
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -94,12 +90,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.stats:
+                getSupportActionBar().hide();
                 fragment = new StatsFragment();
                 break;
-
-
-
-
         }
 
         return loadfragment(fragment);
