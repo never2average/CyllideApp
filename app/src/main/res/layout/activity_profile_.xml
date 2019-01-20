@@ -47,7 +47,7 @@
                        />
 
                </LinearLayout>
-               <android.support.v7.widget.CardView
+               <com.google.android.material.card.MaterialCardView
                    android:layout_width="match_parent"
                    android:layout_height="0dp"
                    android:layout_centerHorizontal="true"
@@ -82,7 +82,7 @@
                    </LinearLayout>
 
 
-               </android.support.v7.widget.CardView>
+               </com.google.android.material.card.MaterialCardView>
 
            </LinearLayout>
 
@@ -108,7 +108,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
@@ -141,9 +141,9 @@
                             android:src="@drawable/profile_setting_logo" />
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
-                <android.support.v7.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
@@ -176,9 +176,9 @@
                             android:src="@drawable/notification_setting_logo" />
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
-                <android.support.v7.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
@@ -211,9 +211,9 @@
                             android:src="@drawable/profile_setting_logo" />
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
-                <android.support.v7.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
@@ -246,9 +246,9 @@
                             android:src="@drawable/profile_setting_logo" />
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
-                <android.support.v7.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
@@ -281,9 +281,9 @@
                             android:src="@drawable/profile_setting_logo" />
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
-                <android.support.v7.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
@@ -316,9 +316,9 @@
                             android:src="@drawable/profile_setting_logo" />
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
-                <android.support.v7.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
@@ -351,9 +351,9 @@
                             android:src="@drawable/profile_setting_logo" />
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
-                <android.support.v7.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
@@ -386,9 +386,9 @@
                             android:src="@drawable/profile_setting_logo" />
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
-                <android.support.v7.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
@@ -421,9 +421,9 @@
                         <!--/>-->
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
-                <android.support.v7.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
@@ -456,7 +456,7 @@
                         <!--/>-->
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
 
             </LinearLayout>
