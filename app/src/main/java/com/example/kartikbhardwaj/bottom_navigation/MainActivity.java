@@ -1,5 +1,6 @@
 package com.example.kartikbhardwaj.bottom_navigation;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -10,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -37,7 +39,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             public void onClick(View v) {
 
                 Intent profileIntent =new Intent(MainActivity.this,Profile_Activity.class);
-                startActivity(profileIntent);
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,imageButton,ViewCompat.getTransitionName(imageButton));
+                startActivity(profileIntent,options.toBundle());
             }
         });
 

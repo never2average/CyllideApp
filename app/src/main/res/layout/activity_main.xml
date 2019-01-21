@@ -25,43 +25,82 @@
             android:layout_height="match_parent"
             >
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/logo"
-            android:layout_weight="1"
-            android:layout_gravity="left"
-            />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="4"
-            android:layout_gravity="center_vertical"
-            android:layout_height="wrap_content"
-            android:text="TradeRoyale"
-            android:textSize="27sp"
-            android:textColor="#fff"
-            android:textStyle="bold"
-            android:id="@+id/heading"
-            />
-        <ImageView
-            android:layout_gravity="center"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="30dp"
-            android:src="@drawable/notification_icon"/>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo"
+                android:layout_weight="1"
+                android:layout_gravity="left"
+
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:text="TradeRoyale"
+                android:textSize="27sp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:id="@+id/heading"
+                />
+            <RelativeLayout
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <RelativeLayout
+                    android:gravity="center"
+                    android:layout_width="65dip"
+                    android:layout_height="65dip"
+                    android:id="@+id/relative_layout">
+
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/notification_icon"
+
+                        android:background="@drawable/notification_icon"
+                        android:backgroundTint="#ffffff"/>
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/badge_notification_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignRight="@id/relative_layout"
+                    android:background="@drawable/notification_badge"
+                    android:text="27"
+                    android:textColor="#FFF"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
 
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:src="@drawable/profile_pic"
-            android:layout_weight="0.9"
-            android:id="@+id/user_image"
-            android:background="@android:color/transparent"
-            />
+
+
+            </RelativeLayout>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:src="@drawable/profile_pic"
+                android:layout_weight="0.9"
+                android:id="@+id/user_image"
+                android:background="?android:attr/selectableItemBackground"
+                android:transitionName="activity_transition"
+
+
+
+
+                />
+
+
+
         </LinearLayout>
+
     </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
