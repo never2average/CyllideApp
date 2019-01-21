@@ -19,7 +19,11 @@ android {
     buildToolsVersion '28.0.3'
 }
 
+repositories {
+    maven { url 'https://jitpack.io' }
+}
 dependencies {
+    implementation 'com.github.razerdp:AnimatedPieView:1.2.5'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
@@ -31,6 +35,5 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0-alpha02'
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
-    implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
 
 }

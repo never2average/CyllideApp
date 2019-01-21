@@ -6,6 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.razerdp.widget.animatedpieview.AnimatedPieView;
+import com.razerdp.widget.animatedpieview.AnimatedPieViewConfig;
+import com.razerdp.widget.animatedpieview.data.SimplePieInfo;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,6 +18,17 @@ public class StatsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.stats_fragment,null);
+
+        View view= inflater.inflate(R.layout.stats_fragment,null);
+
+        AnimatedPieView mAnimatedPieView = view.findViewById(R.id.win_perc);
+        AnimatedPieViewConfig config =  new  AnimatedPieViewConfig ();
+        config.startAngle(-90).addData(
+                new  SimplePieInfo ( 75.0f , R.color.green,"Win %")).addData (
+                        new SimplePieInfo( 25.0f ,R.color.red, "Loss %" )).duration( 2000 );
+        mAnimatedPieView.applyConfig (config);
+        mAnimatedPieView.start();
+
+        return view;
     }
 }
