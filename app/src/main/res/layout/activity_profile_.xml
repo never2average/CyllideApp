@@ -44,6 +44,9 @@
                        android:layout_width="wrap_content"
                        android:layout_height="0dp"
                        android:src="@drawable/profile_pic"
+                       android:transitionName="activity_transition"
+                       android:id="@+id/profile_pic"
+
                        />
 
                </LinearLayout>
@@ -56,30 +59,41 @@
                    android:layout_marginRight="12dp"
                    android:layout_weight="1"
                    android:layout_marginBottom="10dp"
+
                    >
                    <LinearLayout
                        android:gravity="center"
                        android:orientation="horizontal"
-                       android:layout_width="0dp"
+                       android:layout_width="match_parent"
                        android:layout_weight="0.9"
-                       android:layout_height="match_parent">
+                       android:layout_height="match_parent"
+                       >
                        <TextView
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:text="Followers"
-                           android:textSize="17sp"
-                           />
-                       <TextView
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:text="125"
+                           android:layout_width="0dp"
+                           android:layout_height="match_parent"
+                           android:text="Kartik Bhardwaj"
+                           android:textSize="20sp"
+                           android:layout_weight="5"
+                           android:gravity="center_vertical"
                            android:textStyle="bold"
-                           android:textSize="17sp"
-                           android:paddingTop="10dp"
-                           android:textColor="@color/black"
-                           />
+                           android:paddingLeft="5dp"
+                           android:textColor="#2c2c2c"
+                           android:id="@+id/username"
 
+
+
+
+                           />
+                       <ImageView
+                           android:layout_weight="1"
+                           android:layout_width="0dp"
+                           android:layout_height="match_parent"
+                           android:src="@drawable/edit_icon"
+                           android:clickable="true"
+                           android:onClick="editname"
+                           />
                    </LinearLayout>
+
 
 
                </com.google.android.material.card.MaterialCardView>
@@ -121,14 +135,21 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:weightSum="4">
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/how_this_works"
+                            android:layout_gravity="center"
+                            />
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:gravity="center"
-                            android:text="Profile Setting"
+                            android:text="How This Works"
                             android:textColor="@color/colorPrimary"
                             android:textSize="24sp"
                             android:textStyle="bold" />
@@ -138,7 +159,8 @@
                             android:layout_height="40dp"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:src="@drawable/profile_setting_logo" />
+                            android:src="@drawable/arrow_icon"
+                            android:tint="@color/colorPrimary"/>
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
@@ -156,14 +178,21 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:weightSum="4">
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/top_traders_icon"
+                            android:tint="@color/colorPrimary"
+                            android:layout_gravity="center"/>
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:gravity="center"
-                            android:text="Notifications "
+                            android:text="Top Traders "
                             android:textColor="@color/colorPrimary"
                             android:textSize="24sp"
                             android:textStyle="bold" />
@@ -173,7 +202,8 @@
                             android:layout_height="40dp"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:src="@drawable/notification_setting_logo" />
+                            android:src="@drawable/arrow_icon"
+                            android:tint="@color/colorPrimary"/>
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
@@ -191,14 +221,21 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:weightSum="4">
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/faq_icon"
+                            android:tint="@color/colorPrimary"
+                            android:layout_gravity="center"/>
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:gravity="center"
-                            android:text="Profile Setting"
+                            android:text="FAQs"
                             android:textColor="@color/colorPrimary"
                             android:textSize="24sp"
                             android:textStyle="bold" />
@@ -208,7 +245,8 @@
                             android:layout_height="40dp"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:src="@drawable/profile_setting_logo" />
+                            android:src="@drawable/arrow_icon"
+                            android:tint="@color/colorPrimary"/>
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
@@ -226,14 +264,21 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:weightSum="4">
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:src="@drawable/about_us_icon"
+                            android:tint="@color/colorPrimary"/>
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:gravity="center"
-                            android:text="Profile Setting"
+                            android:text="About Us"
                             android:textColor="@color/colorPrimary"
                             android:textSize="24sp"
                             android:textStyle="bold" />
@@ -243,217 +288,9 @@
                             android:layout_height="40dp"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:src="@drawable/profile_setting_logo" />
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="50dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2"
-                            android:gravity="center"
-                            android:text="Profile Setting"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:src="@drawable/profile_setting_logo" />
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="50dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2"
-                            android:gravity="center"
-                            android:text="Profile Setting"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:src="@drawable/profile_setting_logo" />
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="50dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2"
-                            android:gravity="center"
-                            android:text="Profile Setting"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:src="@drawable/profile_setting_logo" />
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="50dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2"
-                            android:gravity="center"
-                            android:text="Profile Setting"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:src="@drawable/profile_setting_logo" />
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="50dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="Go Gold"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <!--<ImageView-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:layout_width="0dp"-->
-                        <!--android:layout_height="40dp"-->
-                        <!--android:layout_gravity="center"-->
-                        <!--android:src="@drawable/profile_setting_logo"-->
-                        <!--/>-->
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="50dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="Go Platinum"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <!--<ImageView-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:layout_width="0dp"-->
-                        <!--android:layout_height="40dp"-->
-                        <!--android:layout_gravity="center"-->
-                        <!--android:src="@drawable/profile_setting_logo"-->
-                        <!--/>-->
+                            android:src="@drawable/arrow_icon"
+                            android:tint="@color/colorPrimary"
+                            />
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
