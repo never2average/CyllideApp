@@ -28,12 +28,13 @@ public class NewsFragment extends Fragment{
     String newsThumbnailSource[]={"https://www.desktopbackground.org/download/1366x768/2014/08/21/812557_civil-engineering-wallpapers_1600x1200_h.jpg","https://www.desktopbackground.org/download/1366x768/2014/08/21/812557_civil-engineering-wallpapers_1600x1200_h.jpg","https://www.desktopbackground.org/download/1366x768/2014/08/21/812557_civil-engineering-wallpapers_1600x1200_h.jpg"};
     String newsDate[]={"2018-09-15","2018-09-21","2018-12-18"};
     String newsSource[]={"Times","Of","India"};
-    String newsDescription[]={"General Description shown in the other activity","General Description shown in the other activity","General Description shown in the other activity"};
+    String url[]={"www.google.com","www.google.com","www.google.com"};
+    String newsDescription[]={"General Description shown in the other activity which is uselessly long just to show that it is working fine and withourt any problems.","General Description shown in the other activity just to show that it is working fine and withourt any problems.","General Description shown in the other activity just to show that it is working fine and withourt any problems."};
 
     private List<NewsModel> dummyData() {
         List<NewsModel> data = new ArrayList<>(12);
         for (int i = 0; i < 3; i++) {
-            data.add(new NewsModel(newsTitle[i],newsThumbnailSource[i],newsDate[i],newsSource[i],newsDescription[i]));
+            data.add(new NewsModel(newsTitle[i],newsThumbnailSource[i],newsDate[i],newsSource[i],newsDescription[i],url[i]));
         }//data is the list of objects to be set in the list item
         return data;
     }

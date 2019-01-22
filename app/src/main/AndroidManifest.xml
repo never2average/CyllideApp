@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.kartikbhardwaj.bottom_navigation">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,8 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".stories.StoriesActivity"></activity>
-        <activity android:name=".Profile_Activity"></activity>
+        <activity android:name=".stories.StoriesActivity" />
+        <activity android:name=".Profile_Activity" />
+        <activity android:name=".stories.StoryPageActivity" />
+        <activity android:name=".stories.NewsPageActivity"></activity>
     </application>
 
 </manifest>
