@@ -14,7 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.example.kartikbhardwaj.bottom_navigation.Contests.WeeklyActivity;
-import com.example.kartikbhardwaj.bottom_navigation.stories.NewsData;
+//import com.example.kartikbhardwaj.bottom_navigation.stories.NewsData;
 import com.example.kartikbhardwaj.bottom_navigation.stories.StoriesActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -62,14 +62,6 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
                 }
         });
-        quiz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getContext(),NewsData.class);
-                startActivity(intent);
-            }
-        });
-
-    }
+        }
 
 }
