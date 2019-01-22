@@ -13,10 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.example.kartikbhardwaj.bottom_navigation.Contests.WeeklyActivity;
 import com.example.kartikbhardwaj.bottom_navigation.stories.StoriesActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -51,6 +53,13 @@ public class HomeFragment extends Fragment {
                 Intent intent=new Intent(getContext(),StoriesActivity.class);
                 getContext().startActivity(intent);
             }
+        });
+        contest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(),WeeklyActivity.class);
+                startActivity(intent);
+                }
         });
 
     }
