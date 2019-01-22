@@ -20,12 +20,12 @@ public class WeeklyPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         switch (position) {
-            /*case 0:
+            case 0:
                 WeeklyFragment weeklyFragment = new WeeklyFragment();
                 return weeklyFragment;
             case 1:
                 MonthlyFragment monthlyFragment = new MonthlyFragment();
-                return monthlyFragment;*/
+                return monthlyFragment;
             default:
                 return null;
         }

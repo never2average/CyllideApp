@@ -3,7 +3,7 @@ package com.example.kartikbhardwaj.bottom_navigation.Contests;
 public class MonthlyModel {
     private String monthlyName,monthlyDescription,monthlyImageURL,monthlyDate, monthlySource;
 
-    public MonthlyModel(String monthlyName, String monthlyDescription, String monthlyImageURL, String monthlyDate, String monthlySource)
+    public MonthlyModel(String monthlyName, String monthlyImageURL,  String monthlyDate, String monthlySource, String monthlyDescription)
     {
         this.monthlyDescription=monthlyDescription;
         this.monthlyImageURL=monthlyImageURL;

@@ -3,7 +3,7 @@ package com.example.kartikbhardwaj.bottom_navigation.Contests;
 public class WeeklyModel {
     private String weeklyName,weeklyDescription,weeklyImageURL;
 
-    public WeeklyModel(String weeklyName, String weeklyDescription, String weeklyImageURL)
+    public WeeklyModel(String weeklyName, String weeklyImageURL, String weeklyDescription)
     {
         this.weeklyDescription=weeklyDescription;
         this.weeklyImageURL=weeklyImageURL;

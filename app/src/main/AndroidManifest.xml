@@ -19,6 +19,7 @@
         </activity>
         <activity android:name=".stories.StoriesActivity"></activity>
         <activity android:name=".Profile_Activity"></activity>
+        <activity android:name=".Contests.WeeklyActivity"></activity>
     </application>
 
 </manifest>
