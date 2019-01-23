@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:orientation="vertical">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:id="@+id/newsThumbImage"
+        app:placeholderImage="@drawable/red"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="18sp"
+        android:paddingTop="18sp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/newsNameTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10sp"
+            android:textSize="22sp"
+            android:fontFamily="@font/ralewaysemibold"
+            android:textColor="#000000"
+            android:clickable="true"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="6"
+            >
+
+            <TextView
+                android:id="@+id/newsDateTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10sp"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="18sp"
+                android:layout_weight="3"
+                android:clickable="true"/>
+
+            <TextView
+                android:id="@+id/newsSourceTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10sp"
+                android:gravity="right"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="18sp"
+                android:layout_weight="3"
+                android:clickable="true"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#c0c0c0"
+            android:paddingStart="18sp" />
+
+        <TextView
+            android:id="@+id/newsDescTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18sp"
+            android:layout_weight="3"
+            android:clickable="true"/>
+
+    </LinearLayout>
+</LinearLayout>
