@@ -30,11 +30,12 @@ public class NewsFragment extends Fragment{
     String newsSource[]={"Times","Of","India"};
     String url[]={"www.google.com","www.google.com","www.google.com"};
     String newsDescription[]={"General Description shown in the other activity which is uselessly long just to show that it is working fine and withourt any problems.","General Description shown in the other activity just to show that it is working fine and withourt any problems.","General Description shown in the other activity just to show that it is working fine and withourt any problems."};
+    String newsAuthor[]={"Author 1","Author 2","Author 3"};
 
     private List<NewsModel> dummyData() {
         List<NewsModel> data = new ArrayList<>(12);
         for (int i = 0; i < 3; i++) {
-            data.add(new NewsModel(newsTitle[i],newsThumbnailSource[i],newsDate[i],newsSource[i],newsDescription[i],url[i]));
+            data.add(new NewsModel(newsTitle[i],newsThumbnailSource[i],newsDate[i],newsSource[i],newsDescription[i],url[i],newsAuthor[i]));
         }//data is the list of objects to be set in the list item
         return data;
     }

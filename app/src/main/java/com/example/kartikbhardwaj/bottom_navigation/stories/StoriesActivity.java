@@ -3,7 +3,9 @@ package com.example.kartikbhardwaj.bottom_navigation.stories;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
 import com.example.kartikbhardwaj.bottom_navigation.Profile_Activity;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.google.android.material.tabs.TabLayout;
@@ -18,27 +20,16 @@ public class StoriesActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     CircleImageView imageButton;
+    ImageView back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stories);
 
-        toolbar = findViewById(R.id.tool_bar_stories);
-        setSupportActionBar(toolbar);
-
-        imageButton=findViewById(R.id.user_image_stories);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent profileIntent =new Intent(StoriesActivity.this,Profile_Activity.class);
-                startActivity(profileIntent);
-            }
-        });
 
         TabLayout tabLayout =
                 (TabLayout) findViewById(R.id.tab_layout);
-
+        back=findViewById(R.id.newsbackbutton);
         tabLayout.addTab(tabLayout.newTab().setText("News"));
         tabLayout.addTab(tabLayout.newTab().setText("Stories"));
 
@@ -67,6 +58,15 @@ public class StoriesActivity extends AppCompatActivity {
 
            }
 
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(StoriesActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
         });
 
     }

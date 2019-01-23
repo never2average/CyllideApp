@@ -15,7 +15,7 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
     private TextView nameTv,dateTv,sourceTv, descTv;
     private LinearLayout newsLL;
     private SimpleDraweeView image;
-    private String name, description, imageURL, source, date, url;
+    private String name, description, imageURL, source, date, url, author;
     Intent intent= new Intent(itemView.getContext(),NewsPageActivity.class);
 
     public NewsViewHolder(View itemView)
@@ -37,6 +37,7 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         date=news.getNewsDate();
         source=news.getNewsSource();
         url=news.getNewsUrl();
+        author=news.getNewsAuthor();
 
         nameTv.setText(name);
         image.setImageURI(imageURL);
@@ -49,6 +50,7 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         intent.putExtra("newsdate",date);
         intent.putExtra("newssource",source);
         intent.putExtra("newsurl",url);
+        intent.putExtra("newsauthor",author);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

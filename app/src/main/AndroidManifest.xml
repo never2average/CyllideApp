@@ -12,17 +12,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".stories.StoriesActivity" />
-        <activity android:name=".Profile_Activity" />
-        <activity android:name=".stories.StoryPageActivity" />
-        <activity android:name=".stories.NewsPageActivity"></activity>
+        <activity
+            android:name=".stories.StoriesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Profile_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".stories.StoryPageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".stories.NewsPageActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".notification.NotificationActivity"></activity>
     </application>
 
 </manifest>
