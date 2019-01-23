@@ -1,79 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-
     android:orientation="vertical">
 
+
+
+
     <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/newsThumbImage"
         android:layout_width="match_parent"
         android:layout_height="225dp"
-        android:id="@+id/newsThumbImage"
-        app:placeholderImage="@drawable/red"/>
+        android:layout_gravity="center_horizontal"
+        android:cropToPadding="false"
+        android:paddingBottom="12sp"
+        fresco:placeholderImage="@android:drawable/ic_menu_camera"
+        fresco:roundedCornerRadius="8sp"
+        android:clickable="true"/>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="18sp"
-        android:paddingTop="18sp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/newsNameTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10sp"
-            android:textSize="22sp"
-            android:fontFamily="@font/ralewaysemibold"
-            android:textColor="#000000"
-            android:clickable="true"/>
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:paddingHorizontal="8dp"
+        android:paddingBottom="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="6"
-            >
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/newsDateTV"
+                android:id="@+id/newsNameTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10sp"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="18sp"
-                android:layout_weight="3"
-                android:clickable="true"/>
+                android:textSize="22sp"
+                android:fontFamily="@font/ralewaymedium"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/newsAuthorTV"
+                android:textSize="13dp"
+                android:text="alpha"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="6"
+            android:layout_weight="3"
+            android:layout_gravity="center"
+            >
 
             <TextView
                 android:id="@+id/newsSourceTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10sp"
-                android:gravity="right"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="18sp"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="3"
-                android:clickable="true"/>
+                android:clickable="true"
+                android:textAlignment="textEnd"
+                android:fontFamily="@font/ralewayregular"
+                android:gravity="center_vertical"
+                android:textSize="10sp"
+                android:paddingTop="2dp"
+                android:paddingBottom="7dp"/>
+
+            <TextView
+                android:id="@+id/newsDateTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="3"
+                android:text="alpha"
+                android:lineHeight="@dimen/mtrl_emphasis_disabled"
+                android:clickable="true"
+                android:textAlignment="textEnd"
+                android:fontFamily="@font/ralewayregular"
+                android:gravity="center_vertical"
+                android:textSize="10sp" />
+
+
+
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#c0c0c0"
-            android:paddingStart="18sp" />
-
-        <TextView
-            android:id="@+id/newsDescTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10sp"
-            android:paddingBottom="10sp"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="18sp"
-            android:layout_weight="3"
-            android:clickable="true"/>
 
     </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/newsDescTV"
+        android:paddingHorizontal="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10sp"
+        android:textSize="12sp"
+        android:fontFamily="@font/ralewaylight"
+        android:textColor="#232323"
+        android:clickable="true"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#000000" />
 </LinearLayout>
+<ImageView
+    android:layout_width="40dp"
+    android:layout_height="60dp"
+    android:padding="6dp"
+    android:id="@+id/newspagebackbutton"
+    android:src="@drawable/ic_arrow_back_black_24dp"
+    android:tint="#ffffff"
+    android:background="#00000000"/>
+</FrameLayout>

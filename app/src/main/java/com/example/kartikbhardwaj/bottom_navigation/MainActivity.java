@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.example.kartikbhardwaj.bottom_navigation.notification.NotificationActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     Toolbar toolbar;
     BottomNavigationView bottomNavigationView;
     CircleImageView imageButton;
+    ImageView notificationImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-
+        notificationImage=findViewById(R.id.notification);
         imageButton=findViewById(R.id.user_image);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +44,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 Intent profileIntent =new Intent(MainActivity.this,Profile_Activity.class);
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,imageButton,ViewCompat.getTransitionName(imageButton));
                 startActivity(profileIntent,options.toBundle());
+            }
+        });
+        notificationImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent notificationIntent =new Intent(MainActivity.this,NotificationActivity.class);
+                startActivity(notificationIntent);
             }
         });
 
