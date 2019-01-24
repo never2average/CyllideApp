@@ -1,9 +1,9 @@
 package com.example.kartikbhardwaj.bottom_navigation.stories;
 
 public class NewsModel {
-    private String newsName,newsDescription,newsImageURL,newsDate, newsSource, newsUrl;
+    private String newsName,newsDescription,newsImageURL,newsDate, newsSource, newsUrl, newsAuthor;
 
-    public NewsModel(String newsName, String newsImageURL, String newsDate, String newsSource, String newsDescription, String newsUrl)
+    public NewsModel(String newsName, String newsImageURL, String newsDate, String newsSource, String newsDescription, String newsUrl, String newsAuthor)
     {
         this.newsDescription=newsDescription;
         this.newsUrl = newsUrl;
@@ -11,6 +11,7 @@ public class NewsModel {
         this.newsName=newsName;
         this.newsDate=newsDate;
         this.newsSource=newsSource;
+        this.newsAuthor=newsAuthor;
     }
 
     public String getNewsDescription() {
@@ -35,6 +36,10 @@ public class NewsModel {
 
     public String getNewsUrl() {return newsUrl;}
 
+    public String getNewsAuthor() {
+        return newsAuthor;
+    }
+
     public void setNewsDescription(String newsDescription) {
         this.newsDescription = newsDescription;
     }
@@ -57,5 +62,9 @@ public class NewsModel {
 
     public void setNewsUrl(String newsUrl) {
         this.newsUrl = newsUrl;
+    }
+
+    public void setNewsAuthor(String newsAuthor) {
+        this.newsAuthor = newsAuthor;
     }
 }
