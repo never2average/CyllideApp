@@ -13,20 +13,17 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.google.gson.JsonParser;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,26 +46,10 @@ public class NewsFragment extends Fragment{
     ArrayList<String> url=new ArrayList<>();
     ArrayList<String> author=new ArrayList<>();
 
-<<<<<<< HEAD
-    String newsTitle[]={"News1","News2","News3"};
-    String newsThumbnailSource[]={"https://www.desktopbackground.org/download/1366x768/2014/08/21/812557_civil-engineering-wallpapers_1600x1200_h.jpg","https://www.desktopbackground.org/download/1366x768/2014/08/21/812557_civil-engineering-wallpapers_1600x1200_h.jpg","https://www.desktopbackground.org/download/1366x768/2014/08/21/812557_civil-engineering-wallpapers_1600x1200_h.jpg"};
-    String newsDate[]={"2018-09-15","2018-09-21","2018-12-18"};
-    String newsSource[]={"Times","Of","India"};
-    String url[]={"www.google.com","www.google.com","www.google.com"};
-    String newsDescription[]={"General Description shown in the other activity which is uselessly long just to show that it is working fine and withourt any problems.","General Description shown in the other activity just to show that it is working fine and withourt any problems.","General Description shown in the other activity just to show that it is working fine and withourt any problems."};
-    String newsAuthor[]={"Author 1","Author 2","Author 3"};
-
-    private List<NewsModel> dummyData() {
-        List<NewsModel> data = new ArrayList<>(12);
-        for (int i = 0; i < 3; i++) {
-            data.add(new NewsModel(newsTitle[i],newsThumbnailSource[i],newsDate[i],newsSource[i],newsDescription[i],url[i],newsAuthor[i]));
-=======
-
     private List<NewsModel> dummyData() {
         List<NewsModel> data = new ArrayList<>(12);
         for (int i = 0; i < newsTitle.size(); i++) {
-            data.add(new NewsModel(newsTitle.get(i),newsThumbnailSource.get(i),newsDate.get(i),newsSource.get(i),newsDescription.get(i),url.get(i)));
->>>>>>> upstream/master
+            data.add(new NewsModel(newsTitle.get(i),newsThumbnailSource.get(i),newsDate.get(i),newsSource.get(i),newsDescription.get(i),url.get(i),author.get(i)));
         }//data is the list of objects to be set in the list item
         return data;
     }
@@ -97,7 +78,7 @@ public class NewsFragment extends Fragment{
                     newsSource.add(responseArray.getJSONObject(i).getJSONObject("source").getJSONObject("name").toString());
                     newsThumbnailSource.add(responseArray.getJSONObject(i).getJSONObject("urlToImage").toString());
                 }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
