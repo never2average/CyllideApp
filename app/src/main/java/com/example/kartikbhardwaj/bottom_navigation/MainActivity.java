@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -92,5 +93,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
 
         return loadfragment(fragment);
+    }
+
+    public void switchToPortfoloiActivity(View view){
+        Intent portfoloiIntent =new Intent(MainActivity.this,PortfolioActivity.class);
+        startActivity(portfoloiIntent);
+
+
+
     }
 }

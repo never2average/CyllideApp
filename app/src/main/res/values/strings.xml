@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TradeRoyale</string>
+    <string name="hint1">Enter Current Password </string>
 </resources>
