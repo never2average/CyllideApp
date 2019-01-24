@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.activity_main);
         bottomNavigationView =findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigationView.setSelectedItemId(R.id.home);
 
         loadfragment(new HomeFragment());
 
@@ -98,6 +99,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.stats:
                 fragment = new StatsFragment();
+                break;
+
+            case R.id.purchase:
+                fragment=new GoldFragment();
+                break;
+
+            case R.id.howitworks:
+                fragment=new SlideShowFragment();
                 break;
         }
 

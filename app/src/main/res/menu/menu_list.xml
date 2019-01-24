@@ -2,19 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home"
-        android:icon="@drawable/home_icon"
-        android:title="Home"
+        android:id="@+id/howitworks"
+        android:icon="@drawable/about_us_icon"
+        android:title="How it works?"/>
 
-        />
 
     <item
         android:id="@+id/referrals"
         android:icon="@drawable/referral_icon"
-        android:title="Referrals"
+        android:title="Referrals"/>
 
-
-      />
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/home_icon"
+        android:title="Home"/>
 
     <item
         android:id="@+id/stats"
@@ -22,11 +23,9 @@
         android:title="Stats"/>
 
     <item
-        android:id="@+id/account_type"
+        android:id="@+id/purchase"
         android:icon="@drawable/stats_icon"
-        android:title="SILVER"
-
-
+        android:title="Gold"
         />
 
 
