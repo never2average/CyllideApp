@@ -7,11 +7,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-<<<<<<< HEAD
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioActivity;
-=======
 import com.example.kartikbhardwaj.bottom_navigation.notification.NotificationActivity;
->>>>>>> upstream/master
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;

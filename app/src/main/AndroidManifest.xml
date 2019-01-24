@@ -21,29 +21,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity android:name=".stories.StoriesActivity" />
         <activity
             android:name=".Profile_Activity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".faq_view.Faq_Activity" />
-        <activity android:name=".PasswordChangeActivity" />
-        <activity android:name=".Portfolio.PortfolioActivity"></activity>
-=======
-        <activity
-            android:name=".stories.StoriesActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Profile_Activity"
-            android:screenOrientation="portrait" />
+        <activity android:name=".faq_view.Faq_Activity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".PasswordChangeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Portfolio.PortfolioActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".stories.StoryPageActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".stories.NewsPageActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".notification.NotificationActivity"></activity>
->>>>>>> upstream/master
+        <activity android:name=".notification.NotificationActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
