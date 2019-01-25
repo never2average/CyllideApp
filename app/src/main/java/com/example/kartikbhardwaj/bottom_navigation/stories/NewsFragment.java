@@ -13,6 +13,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
@@ -37,6 +38,7 @@ import static android.content.ContentValues.TAG;
 
 public class NewsFragment extends Fragment{
 
+    RequestQueue requestQueue = Volley.newRequestQueue(getContext());
     private RecyclerView newsRV;
     ArrayList<String> newsTitle=new ArrayList<>();
     ArrayList<String> newsThumbnailSource=new ArrayList<>();
@@ -57,46 +59,45 @@ public class NewsFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
-        String newsURL = "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=f6bddf738e64468280f0a7173b265b41";
+        jsonParse();
+        return inflater.inflate(R.layout.fragment_news, container, false);
+    }
 
-        StringRequest request = new StringRequest(newsURL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                JSONObject jsonResponse= null;
-                try {
+    private void jsonParse() {
 
-                    Log.d("abc",response);
-                int arrlen=jsonResponse.getJSONArray("articles").length();
-                JSONArray responseArray=jsonResponse.getJSONArray("articles");
-                for(int i=0;i<arrlen;i++)
-                {
-                    newsTitle.add(responseArray.getJSONObject(i).getJSONObject("title").toString());
-                    newsDescription.add(responseArray.getJSONObject(i).getJSONObject("description").toString());
-                    url.add(responseArray.getJSONObject(i).getJSONObject("url").toString());
-                    author.add(responseArray.getJSONObject(i).getJSONObject("author").toString());
-                    newsDate.add(responseArray.getJSONObject(i).getJSONObject("publishedAt").toString());
-                    newsSource.add(responseArray.getJSONObject(i).getJSONObject("source").getJSONObject("name").toString());
-                    newsThumbnailSource.add(responseArray.getJSONObject(i).getJSONObject("urlToImage").toString());
-                }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        final String newsURL = "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=f6bddf738e64468280f0a7173b265b41";
 
-            }
-        }, new Response.ErrorListener() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, newsURL, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("articles");
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject article = jsonArray.getJSONObject(i);
+
+                                newsTitle.add(article.getString("title"));
+                                newsThumbnailSource.add(article.getString("urlToImage"));
+                                newsSource.add(article.getString("title"));
+                                url.add(article.getString("url"));
+                                author.add(article.getString("author"));
+                                newsTitle.add(article.getString("title"));
+                                newsTitle.add(article.getString("title"));
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(),"Something Went Wrong!",Toast.LENGTH_LONG).show();
+                error.printStackTrace();
             }
         });
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(request);
-
-
-
-
-        return inflater.inflate(R.layout.fragment_news, container, false);
     }
 
     @Override

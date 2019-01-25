@@ -56,12 +56,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 startActivity(notificationIntent);
             }
         });
-
-
     }
 
         public boolean loadfragment(Fragment fragment) {
-
             if (fragment != null) {
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -77,12 +74,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-
             case R.id.pic:
                 Intent profileIntent=new Intent(this,Profile_Activity.class);
                 startActivity(profileIntent);
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -118,8 +113,5 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void switchToPortfoloiActivity(View view){
         Intent portfoloiIntent =new Intent(MainActivity.this,PortfolioActivity.class);
         startActivity(portfoloiIntent);
-
-
-
     }
 }
