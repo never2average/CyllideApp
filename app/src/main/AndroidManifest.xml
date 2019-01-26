@@ -21,12 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-        <activity android:name=".stories.StoriesActivity"></activity>
-        <activity android:name=".Profile_Activity"></activity>
         <activity android:name=".Contests.WeeklyActivity"></activity>
         <activity android:name=".stories.NewsData"></activity>
-=======
         <activity android:name=".stories.StoriesActivity" />
         <activity
             android:name=".Profile_Activity"
@@ -45,7 +41,6 @@
             android:screenOrientation="portrait" />
         <activity android:name=".notification.NotificationActivity"
             android:screenOrientation="portrait"/>
->>>>>>> upstream/master
     </application>
 
 </manifest>

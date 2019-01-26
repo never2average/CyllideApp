@@ -1,13 +1,9 @@
 package com.example.kartikbhardwaj.bottom_navigation;
 
 
-<<<<<<< HEAD
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-=======
-import android.content.Context;
->>>>>>> upstream/master
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
