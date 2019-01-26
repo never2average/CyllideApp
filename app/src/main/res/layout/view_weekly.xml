@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="18sp"
+    android:paddingHorizontal="18sp">
+
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/weekly_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:layout_gravity="center_horizontal"
+        android:cropToPadding="false"
+        android:paddingBottom="12sp"
+        fresco:placeholderImage="@android:drawable/ic_menu_camera"
+        fresco:roundedCornerRadius="8sp"
+        android:clickable="true"/>
+
+    <TextView
+        android:id="@+id/weekly_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10sp"
+        android:textSize="22sp"
+        android:fontFamily="@font/ralewaymedium"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:clickable="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="6"
+        >
+
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#000000" />
+
+
+
+
+</LinearLayout>
