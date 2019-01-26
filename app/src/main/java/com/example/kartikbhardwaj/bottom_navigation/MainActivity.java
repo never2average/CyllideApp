@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioActivity;
+import com.example.kartikbhardwaj.bottom_navigation.notification.NotificationActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -20,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     Toolbar toolbar;
     BottomNavigationView bottomNavigationView;
     CircleImageView imageButton;
+    ImageView notificationImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +32,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.activity_main);
         bottomNavigationView =findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigationView.setSelectedItemId(R.id.home);
 
         loadfragment(new HomeFragment());
 
         toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-
+        notificationImage=findViewById(R.id.notification);
         imageButton=findViewById(R.id.user_image);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,12 +49,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 startActivity(profileIntent,options.toBundle());
             }
         });
-
-
+        notificationImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent notificationIntent =new Intent(MainActivity.this,NotificationActivity.class);
+                startActivity(notificationIntent);
+            }
+        });
     }
 
         public boolean loadfragment(Fragment fragment) {
-
             if (fragment != null) {
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -64,12 +74,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-
             case R.id.pic:
                 Intent profileIntent=new Intent(this,Profile_Activity.class);
                 startActivity(profileIntent);
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -89,8 +97,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.stats:
                 fragment = new StatsFragment();
                 break;
+
+            case R.id.purchase:
+                fragment=new GoldFragment();
+                break;
+
+            case R.id.howitworks:
+                fragment=new SlideShowFragment();
+                break;
         }
 
         return loadfragment(fragment);
+    }
+
+    public void switchToPortfoloiActivity(View view){
+        Intent portfoloiIntent =new Intent(MainActivity.this,PortfolioActivity.class);
+        startActivity(portfoloiIntent);
     }
 }

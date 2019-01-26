@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingTop="18sp"
+    android:id="@+id/storiesll"
     android:paddingHorizontal="18sp">
 
 

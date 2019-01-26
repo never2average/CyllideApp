@@ -3,7 +3,7 @@ package com.example.kartikbhardwaj.bottom_navigation.stories;
 public class StoriesModel {
     private String storyName,storyDescription,storyImageURL;
 
-    public StoriesModel(String storyName, String storyDescription, String storyImageURL)
+    public StoriesModel(String storyName, String storyImageURL, String storyDescription)
     {
         this.storyDescription=storyDescription;
         this.storyImageURL=storyImageURL;
