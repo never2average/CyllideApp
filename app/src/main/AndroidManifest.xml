@@ -20,6 +20,7 @@
         <activity android:name=".stories.StoriesActivity"></activity>
         <activity android:name=".Profile_Activity"></activity>
         <activity android:name=".Contests.WeeklyActivity"></activity>
+        <activity android:name=".stories.NewsData"></activity>
     </application>
 
 </manifest>

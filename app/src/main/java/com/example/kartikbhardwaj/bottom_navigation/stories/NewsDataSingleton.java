@@ -1,4 +1,4 @@
-package com.example.kartikbhardwaj.bottom_navigation.stories;
+/*package com.example.kartikbhardwaj.bottom_navigation.stories;
 
 import android.content.Context;
 
@@ -38,5 +38,5 @@ public class NewsDataSingleton {
         public <T> void addToRequestQueue(Request<T> req) {
             getRequestQueue().add(req);
         }
-    }
+    }*/
 
