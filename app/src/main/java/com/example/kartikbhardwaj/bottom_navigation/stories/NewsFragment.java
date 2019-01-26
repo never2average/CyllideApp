@@ -14,7 +14,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
 import com.example.kartikbhardwaj.bottom_navigation.R;
@@ -38,7 +37,7 @@ import static android.content.ContentValues.TAG;
 
 public class NewsFragment extends Fragment{
 
-    RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+    RequestQueue requestQueue;
     private RecyclerView newsRV;
     ArrayList<String> newsTitle=new ArrayList<>();
     ArrayList<String> newsThumbnailSource=new ArrayList<>();
@@ -49,6 +48,7 @@ public class NewsFragment extends Fragment{
     ArrayList<String> author=new ArrayList<>();
 
     private List<NewsModel> dummyData() {
+        jsonParse();
         List<NewsModel> data = new ArrayList<>(12);
         for (int i = 0; i < newsTitle.size(); i++) {
             data.add(new NewsModel(newsTitle.get(i),newsThumbnailSource.get(i),newsDate.get(i),newsSource.get(i),newsDescription.get(i),url.get(i),author.get(i)));
@@ -59,12 +59,13 @@ public class NewsFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
-        jsonParse();
+        Toast.makeText(getContext(),"ONCREATEVIEWCALLED",Toast.LENGTH_LONG).show();
         return inflater.inflate(R.layout.fragment_news, container, false);
     }
 
-    private void jsonParse() {
 
+    private void jsonParse() {
+        requestQueue= Volley.newRequestQueue(getContext());
         final String newsURL = "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=f6bddf738e64468280f0a7173b265b41";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, newsURL, null,
@@ -79,11 +80,11 @@ public class NewsFragment extends Fragment{
 
                                 newsTitle.add(article.getString("title"));
                                 newsThumbnailSource.add(article.getString("urlToImage"));
-                                newsSource.add(article.getString("title"));
+                                newsSource.add(article.getJSONObject("source").getString("name"));
                                 url.add(article.getString("url"));
                                 author.add(article.getString("author"));
-                                newsTitle.add(article.getString("title"));
-                                newsTitle.add(article.getString("title"));
+                                newsDescription.add(article.getString("description"));
+                                newsDate.add(article.getString("publishedAt"));
 
                             }
                         } catch (JSONException e) {
@@ -96,7 +97,6 @@ public class NewsFragment extends Fragment{
                 error.printStackTrace();
             }
         });
-
         requestQueue.add(request);
     }
 
@@ -111,11 +111,11 @@ public class NewsFragment extends Fragment{
 
     @Override
     public void onStart() {
+        List<NewsModel> news = dummyData();
         super.onStart();
         final Activity activity = getActivity();
         final Context context = getContext();
         Fresco.initialize(context);
-        List<NewsModel> news = dummyData();
         if (activity != null) {
             final NewsAdapter mAdapter = new NewsAdapter(news);
             newsRV.setAdapter(mAdapter);
