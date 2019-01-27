@@ -1,14 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <Button
-
-        android:id="@+id/button"
+    <LinearLayout
+        android:layout_marginBottom="2dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <ImageView
+            android:src="@drawable/gift"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="7"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:text="Gift your friends one quiz entry and get one entry free. 10 friends invited equals lifetime quiz entry"/>
+
+    </LinearLayout>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="30sp"
+            android:text="INVITE NOW"
+            android:id="@+id/invitebutton"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="INVITE"
-        android:textSize="50dp" />
+        android:layout_marginBottom="50dp">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:id="@+id/inv_bottom"/>
+
+
+
+        </LinearLayout>
+
 </LinearLayout>

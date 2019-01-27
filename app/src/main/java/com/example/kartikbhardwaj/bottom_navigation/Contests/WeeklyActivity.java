@@ -36,8 +36,7 @@ public class WeeklyActivity extends AppCompatActivity {
             }
         });
 
-        TabLayout tabLayout =
-                (TabLayout) findViewById(R.id.tab_layout);
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
 
         tabLayout.addTab(tabLayout.newTab().setText("Weekly"));
         tabLayout.addTab(tabLayout.newTab().setText("Monthly"));

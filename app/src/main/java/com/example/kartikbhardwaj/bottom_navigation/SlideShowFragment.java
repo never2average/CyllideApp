@@ -13,6 +13,7 @@ import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 
@@ -20,6 +21,13 @@ import androidx.fragment.app.Fragment;
 public class SlideShowFragment extends Fragment {
     private ViewFlipper viewFlipper;
     private float initialXPoint;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+    }
+
     int image[]={R.drawable.ss_page_1,R.drawable.ss_page_2};
     @Nullable
     @Override

@@ -46,20 +46,29 @@ public class NewsFragment extends Fragment{
     ArrayList<String> url=new ArrayList<>();
     ArrayList<String> author=new ArrayList<>();
 
-    private List<NewsModel> dummyData() {
+    @Override
+    public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.fragment_news, container, false);
+        Toast.makeText(getContext(),"ONCREATEVIEWCALLED",Toast.LENGTH_LONG).show();
+        final Activity activity = getActivity();
+        final Context context = getContext();
+        newsRV = view.findViewById(R.id.fragment_news_rv);
+        newsRV.setHasFixedSize(true);
+        newsRV.setLayoutManager(new LinearLayoutManager(context));
+        Fresco.initialize(context);
         jsonParse();
         List<NewsModel> data = new ArrayList<>(12);
         for (int i = 0; i < newsTitle.size(); i++) {
             data.add(new NewsModel(newsTitle.get(i),newsThumbnailSource.get(i),newsDate.get(i),newsSource.get(i),newsDescription.get(i),url.get(i),author.get(i)));
-        }//data is the list of objects to be set in the list item
-        return data;
-    }
-
-    @Override
-    public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
-                             final Bundle savedInstanceState) {
-        Toast.makeText(getContext(),"ONCREATEVIEWCALLED",Toast.LENGTH_LONG).show();
-        return inflater.inflate(R.layout.fragment_news, container, false);
+        }
+        if (activity != null) {
+            final NewsAdapter mAdapter = new NewsAdapter(data);
+            newsRV.setAdapter(mAdapter);
+        } else {
+            Log.e(TAG, "getActivity() returned null in onStart()");
+        }
+        return view;
     }
 
 
@@ -99,27 +108,4 @@ public class NewsFragment extends Fragment{
         requestQueue.add(request);
     }
 
-    @Override
-    public void onViewCreated(@NonNull final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        newsRV = view.findViewById(R.id.fragment_news_rv);
-        final Context context = getContext();
-        newsRV.setHasFixedSize(true);
-        newsRV.setLayoutManager(new LinearLayoutManager(context));
-    }
-
-    @Override
-    public void onStart() {
-        List<NewsModel> news = dummyData();
-        super.onStart();
-        final Activity activity = getActivity();
-        final Context context = getContext();
-        Fresco.initialize(context);
-        if (activity != null) {
-            final NewsAdapter mAdapter = new NewsAdapter(news);
-            newsRV.setAdapter(mAdapter);
-        } else {
-            Log.e(TAG, "getActivity() returned null in onStart()");
-        }
-    }
 }

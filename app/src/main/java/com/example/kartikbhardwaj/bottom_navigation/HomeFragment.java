@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -27,6 +28,13 @@ import java.util.List;
 import static android.content.ContentValues.TAG;
 
 public class HomeFragment extends Fragment {
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+    }
 
     SimpleDraweeView stories, contest, portfolios, quiz;
     @Nullable
