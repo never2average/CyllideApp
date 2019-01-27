@@ -16,6 +16,7 @@ import android.view.View;
 
 import com.example.kartikbhardwaj.bottom_navigation.Contests.WeeklyActivity;
 //import com.example.kartikbhardwaj.bottom_navigation.stories.NewsData;
+import com.example.kartikbhardwaj.bottom_navigation.quiz.StartingScreenActivity;
 import com.example.kartikbhardwaj.bottom_navigation.stories.NewsData;
 import com.example.kartikbhardwaj.bottom_navigation.stories.StoriesActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -74,7 +75,7 @@ public class HomeFragment extends Fragment {
         quiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),NewsData.class);
+                Intent intent=new Intent(getContext(), StartingScreenActivity.class);
                 getContext().startActivity(intent);
             }
         });
