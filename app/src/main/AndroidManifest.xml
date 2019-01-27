@@ -24,6 +24,8 @@
         <activity android:name=".Contests.WeeklyActivity"></activity>
         <activity android:name=".stories.NewsData"></activity>
         <activity android:name=".stories.StoriesActivity" />
+        <activity android:name=".quiz.QuizActivity"></activity>
+        <activity android:name=".quiz.StartingScreenActivity"></activity>
         <activity
             android:name=".Profile_Activity"
             android:windowSoftInputMode="stateHidden" />
