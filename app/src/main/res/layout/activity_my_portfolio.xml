@@ -7,45 +7,33 @@
     tools:context=".Portfolio.MyPortfolio"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
+    <LinearLayout
+        android:background="@drawable/red"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@drawable/green"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        android:id="@+id/tool_bar1"
-        app:titleTextColor="@android:color/white"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:elevation="10dp">
 
-
-
-        >
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-
-            >
-            <TextView
-                android:layout_gravity="center"
-                android:layout_marginLeft="-6dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text=" My Portfolio's"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:textSize="25sp"
-                android:textColor="@android:color/white"/>
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text=" My Portfolios"
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
+    </LinearLayout>
 
 
 
-        </LinearLayout>
-
-    </androidx.appcompat.widget.Toolbar>
-
-
-
-    <Button
+    <com.google.android.material.button.MaterialButton
+        app:cornerRadius="10dp"
         android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Create New Portfolio"
@@ -56,7 +44,6 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="20dp"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/my_portfolio"
