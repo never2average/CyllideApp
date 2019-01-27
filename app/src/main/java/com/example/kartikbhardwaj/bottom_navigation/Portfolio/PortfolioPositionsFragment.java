@@ -17,5 +17,7 @@ public class PortfolioPositionsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.portfolio_positions_fragment,null);
 
+
+
     }
 }
