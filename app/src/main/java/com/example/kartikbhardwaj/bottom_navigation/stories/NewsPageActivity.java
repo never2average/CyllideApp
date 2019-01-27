@@ -23,10 +23,8 @@ public class NewsPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Fresco.initialize(getApplicationContext());
         setContentView(R.layout.activity_news_page);
-        back=findViewById(R.id.newspagebackbutton);
         nameTv=findViewById(R.id.newsNameTV);
         dateTv=findViewById(R.id.newsDateTV);
-        descTv=findViewById(R.id.newsDescTV);
         sourceTv=findViewById(R.id.newsSourceTV);
         image=findViewById(R.id.newsThumbImage);
         authorTv=findViewById(R.id.newsAuthorTV);
@@ -39,19 +37,14 @@ public class NewsPageActivity extends AppCompatActivity {
         url=getIntent().getStringExtra("newsurl");
         author=getIntent().getStringExtra("newsauthor");
         nameTv.setText(name);
-        descTv.setText(description);
         sourceTv.setText(source);
         dateTv.setText(date);
         image.setImageURI(imageURL);
-        authorTv.setText(author);
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(NewsPageActivity.this,StoriesActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        if(author.equals("null")){
+            authorTv.setText("");
+        }
+        else{
+            authorTv.setText(author);
+        }
     }
 }

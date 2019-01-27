@@ -50,24 +50,13 @@ public class NewsFragment extends Fragment{
     public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_news, container, false);
-        Toast.makeText(getContext(),"ONCREATEVIEWCALLED",Toast.LENGTH_LONG).show();
         final Activity activity = getActivity();
         final Context context = getContext();
         newsRV = view.findViewById(R.id.fragment_news_rv);
         newsRV.setHasFixedSize(true);
         newsRV.setLayoutManager(new LinearLayoutManager(context));
         Fresco.initialize(context);
-        jsonParse();
-        List<NewsModel> data = new ArrayList<>(12);
-        for (int i = 0; i < newsTitle.size(); i++) {
-            data.add(new NewsModel(newsTitle.get(i),newsThumbnailSource.get(i),newsDate.get(i),newsSource.get(i),newsDescription.get(i),url.get(i),author.get(i)));
-        }
-        if (activity != null) {
-            final NewsAdapter mAdapter = new NewsAdapter(data);
-            newsRV.setAdapter(mAdapter);
-        } else {
-            Log.e(TAG, "getActivity() returned null in onStart()");
-        }
+        if (newsDate.size()==0) jsonParse();
         return view;
     }
 
@@ -95,6 +84,18 @@ public class NewsFragment extends Fragment{
                                 newsDate.add(article.getString("publishedAt"));
 
                             }
+                            List<NewsModel> data = new ArrayList<>(12);
+                            for (int i = 0; i < newsTitle.size(); i++) {
+                                data.add(new NewsModel(newsTitle.get(i),newsThumbnailSource.get(i),newsDate.get(i),newsSource.get(i),newsDescription.get(i),url.get(i),author.get(i)));
+                            }
+                            if (getActivity() != null) {
+                                final NewsAdapter mAdapter = new NewsAdapter(data);
+                                newsRV.setAdapter(mAdapter);
+                            } else {
+                                Log.e(TAG, "getActivity() returned null in onStart()");
+                            }
+                            NewsAdapter newsAdapter= new NewsAdapter(data);
+                            newsRV.setAdapter(newsAdapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -106,6 +107,7 @@ public class NewsFragment extends Fragment{
             }
         });
         requestQueue.add(request);
+
     }
 
 }

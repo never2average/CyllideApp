@@ -98,10 +98,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 fragment = new StatsFragment();
                 break;
 
-            case R.id.purchase:
-                fragment=new GoldFragment();
-                break;
-
             case R.id.howitworks:
                 fragment=new SlideShowFragment();
                 break;

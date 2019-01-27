@@ -67,9 +67,5 @@ public class ReferralFragment extends Fragment {
 
             }
         });
-
     }
-
-
-
 }

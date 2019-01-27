@@ -9,7 +9,8 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 public class StoryPageActivity extends AppCompatActivity {
-    private String name,description,imageURL;
+    private String name;
+    private String description;
     private TextView nameTv, descTv;
     private SimpleDraweeView image;
     @Override
@@ -24,7 +25,7 @@ public class StoryPageActivity extends AppCompatActivity {
 
         name= getIntent().getStringExtra("storyname");
         description= getIntent().getStringExtra("storydesc");
-        imageURL= getIntent().getStringExtra("storyurl");
+        String imageURL = getIntent().getStringExtra("storyurl");
 
         nameTv.setText(name);
         descTv.setText(description);
