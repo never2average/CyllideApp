@@ -64,6 +64,7 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:text="LIMIT"
+                    android:paddingLeft="5dp"
                     android:id="@+id/order_type_tv"
                     android:gravity="center_vertical"
                     android:textSize="16dp"/>
@@ -80,6 +81,7 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:text="SHORT"
+                    android:paddingLeft="5dp"
                     android:id="@+id/position_type_tv"
                     android:gravity="center_vertical"
                     android:textSize="16dp"/>
@@ -105,6 +107,7 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:text="300"
+                    android:paddingLeft="5dp"
                     android:id="@+id/quantity_tv"
                     android:gravity="center_vertical"
                     android:textSize="16dp"/>
@@ -122,6 +125,7 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:text="49.35"
+                    android:paddingLeft="5dp"
                     android:id="@+id/exec_price_tv"
                     android:gravity="center_vertical"
                     android:textSize="16dp"/>
