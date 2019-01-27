@@ -3,9 +3,8 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-
+    android:orientation="vertical"
+    >
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/newsThumbImage"
@@ -35,7 +34,8 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <TextView
             android:layout_marginStart="4dp"
@@ -43,7 +43,8 @@
             android:layout_weight="2"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:id="@+id/newsSourceTV"/>
+            android:id="@+id/newsSourceTV"
+            />
 
         <TextView
             android:gravity="right"
@@ -52,24 +53,27 @@
             android:layout_weight="2"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:id="@+id/newsDateTV"/>
-
+            android:id="@+id/newsDateTV"
+            />
 
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/newsAuthorTV"/>
-
+        android:id="@+id/newsAuthorTV"
+        />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="#000000" />
+        android:background="#000000"
+        />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/newsContent"/>
+        android:id="@+id/newsContent"
+        />
+
 </LinearLayout>

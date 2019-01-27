@@ -167,7 +167,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:onClick="switchToPortfoloiActivity">
+                android:onClick="switchToPortfolioActivity">
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:layout_width="160dp"

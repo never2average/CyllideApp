@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.MyPortfolio;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioActivity;
 import com.example.kartikbhardwaj.bottom_navigation.notification.NotificationActivity;
 
@@ -106,8 +107,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         return loadfragment(fragment);
     }
 
-    public void switchToPortfoloiActivity(View view){
-        Intent portfoloiIntent =new Intent(MainActivity.this,PortfolioActivity.class);
-        startActivity(portfoloiIntent);
+    public void switchToPortfolioActivity(View view){
+        Intent portfolioIntent =new Intent(MainActivity.this,MyPortfolio.class);
+        startActivity(portfolioIntent);
     }
 }
