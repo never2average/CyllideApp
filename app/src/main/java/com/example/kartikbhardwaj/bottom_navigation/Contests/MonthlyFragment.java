@@ -24,16 +24,18 @@ import static android.content.ContentValues.TAG;
 public class MonthlyFragment extends Fragment{
     private RecyclerView monthlyRV;
 
-    String monthlyTitle[]={"Monthly1","Monthly2","Monthly3"};
-    String monthlyThumbnailSource[]={"https://www.desktopbackground.org/download/1366x768/2014/08/21/812557_civil-engineering-wallpapers_1600x1200_h.jpg","https://www.desktopbackground.org/download/1366x768/2014/08/21/812557_civil-engineering-wallpapers_1600x1200_h.jpg","https://www.desktopbackground.org/download/1366x768/2014/08/21/812557_civil-engineering-wallpapers_1600x1200_h.jpg"};
-    String monthlyDate[]={"2018-09-15","2018-09-21","2018-12-18"};
-    String monthlySource[]={"Times","Of","India"};
-    String monthlyDescription[]={"General Description shown in the other activity","General Description shown in the other activity","General Description shown in the other activity"};
+    String monthlyName[]={"Monthly1","Monthly2","Monthly3"};
+    String monthlyCapacity[]={"2093","3431", "1234"};
+    String monthlyWinners[]={"10", "20", "30"};
+    String monthlyTimeRemaining[]={"12hrs","10hrs","1hr"};
+    String monthlyProgress[]={"33", "60", "80"};
+    String monthlyParticipants[] = {"375 left out of 500 participants", "375 left out of 500 participants", "375 left out of 500 participants"};
+    Boolean monthlyPremium[] = {true, true, false};
 
     private List<MonthlyModel> dummyData() {
         List<MonthlyModel> data = new ArrayList<>(12);
         for (int i = 0; i < 3; i++) {
-            data.add(new MonthlyModel(monthlyTitle[i],monthlyThumbnailSource[i],monthlyDate[i],monthlySource[i],monthlyDescription[i]));
+            data.add(new MonthlyModel(monthlyName[i], monthlyCapacity[i], monthlyWinners[i], monthlyTimeRemaining[i], monthlyProgress[i], monthlyParticipants[i], monthlyPremium[i]));
         }//data is the list of objects to be set in the list item
         return data;
     }

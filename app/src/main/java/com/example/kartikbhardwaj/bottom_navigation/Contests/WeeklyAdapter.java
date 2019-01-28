@@ -12,11 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class WeeklyAdapter extends RecyclerView.Adapter<WeeklyViewHolder> {
+    List<WeeklyModel> partlist3;
 
-    List<WeeklyModel> partList3;
+    public WeeklyAdapter(List<WeeklyModel> partlist3) {
 
-    public WeeklyAdapter(List<WeeklyModel> partList3) {
-        this.partList3= partList3;
+        this.partlist3 = partlist3;
     }
 
     @NonNull
@@ -31,12 +31,12 @@ public class WeeklyAdapter extends RecyclerView.Adapter<WeeklyViewHolder> {
 
     @Override//means whatever we are extending is changed to put our own stuff
     public void onBindViewHolder(@NonNull WeeklyViewHolder holder, int position) {
-        WeeklyModel parts = partList3.get(position);
+        WeeklyModel parts = partlist3.get(position);
         holder.populate(parts);
     }
 
     @Override
     public int getItemCount() {
-        return partList3.size();
+        return partlist3.size();
     }
 }

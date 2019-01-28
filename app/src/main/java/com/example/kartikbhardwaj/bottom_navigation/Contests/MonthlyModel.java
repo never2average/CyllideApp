@@ -1,54 +1,76 @@
 package com.example.kartikbhardwaj.bottom_navigation.Contests;
 
 public class MonthlyModel {
-    private String monthlyName,monthlyDescription,monthlyImageURL,monthlyDate, monthlySource;
+    private String monthlyName,monthlyCapacity,monthlyWinners,monthlyTimeRemaining, monthlyProgress, monthlyParticipantsRemaining;
+    private Boolean isPremium;
 
-    public MonthlyModel(String monthlyName, String monthlyImageURL,  String monthlyDate, String monthlySource, String monthlyDescription)
+    public MonthlyModel(String monthlyName, String monthlyCapacity, String monthlyWinners, String monthlyTimeRemaining, String monthlyProgress, String monthlyParticipantsRemaining, Boolean isPremium)
     {
-        this.monthlyDescription=monthlyDescription;
-        this.monthlyImageURL=monthlyImageURL;
+        this.monthlyCapacity=monthlyCapacity;
+        this.monthlyWinners=monthlyWinners;
         this.monthlyName=monthlyName;
-        this.monthlyDate=monthlyDate;
-        this.monthlySource=monthlySource;
+        this.monthlyTimeRemaining=monthlyTimeRemaining;
+        this.monthlyProgress=monthlyProgress;
+        this.monthlyParticipantsRemaining=monthlyParticipantsRemaining;
+        this.isPremium = isPremium;
     }
 
-    public String getMonthlyDescription() {
-        return monthlyDescription;
+    public Boolean getPremium() {
+        return isPremium;
+    }
+
+    public void setPremium(Boolean premium) {
+        isPremium = premium;
     }
 
     public String getMonthlyName() {
         return monthlyName;
     }
 
-    public String getMonthlyImageURL() {
-        return monthlyImageURL;
+    public String getMonthlyCapacity() {
+        return monthlyCapacity;
     }
 
-    public String getMonthlyDate() {
-        return monthlyDate;
+    public String getMonthlyWinners() {
+        return monthlyWinners;
     }
 
-    public String getMonthlySource() {
-        return monthlySource;
+    public String getMonthlyTimeRemaining() {
+        return monthlyTimeRemaining;
     }
 
-    public void setMonthlyDescription(String monthlyDescription) {
-        this.monthlyDescription = monthlyDescription;
+    public String getMonthlyProgress() {
+        return monthlyProgress;
     }
 
-    public void setMonthlyImageURL(String monthlyImageURL) {
-        this.monthlyImageURL = monthlyImageURL;
+    public String getMonthlyParticipantsRemaining() {
+        return monthlyParticipantsRemaining;
     }
 
     public void setMonthlyName(String monthlyName) {
         this.monthlyName = monthlyName;
     }
 
-    public void setMonthlyDate(String monthlyDate) {
-        this.monthlyDate = monthlyDate;
+    public void setMonthlyCapacity(String monthlyCapacity) {
+        this.monthlyCapacity = monthlyCapacity;
     }
 
-    public void setMonthlySource(String monthlySource) {
-        this.monthlySource = monthlySource;
+    public void setMonthlyWinners(String monthlyWinners) {
+        this.monthlyWinners = monthlyWinners;
     }
+
+    public void setMonthlyTimeRemaining(String monthlyTimeRemaining) {
+        this.monthlyTimeRemaining = monthlyTimeRemaining;
+    }
+
+    public void setMonthlyProgress(String monthlyProgress) {
+        this.monthlyProgress = monthlyProgress;
+    }
+
+    public void setMonthlyParticipantsRemaining(String monthlyParticipantsRemaining) {
+        this.monthlyParticipantsRemaining = monthlyParticipantsRemaining;
+    }
+
+
 }
+

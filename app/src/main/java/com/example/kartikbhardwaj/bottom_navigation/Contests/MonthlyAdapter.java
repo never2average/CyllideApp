@@ -15,6 +15,7 @@ public class MonthlyAdapter extends RecyclerView.Adapter<MonthlyViewHolder> {
     List<MonthlyModel> partList2;
 
     public MonthlyAdapter(List<MonthlyModel> partList2) {
+
         this.partList2 = partList2;
     }
 
