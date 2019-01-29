@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".Portfolio.PortfolioActivity"
     android:id="@+id/dl"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#fefefe">
 
 
         <androidx.appcompat.widget.Toolbar
@@ -27,7 +28,8 @@
                     android:text="Portfolio"
                     android:layout_weight="3"
                     android:gravity="center"
-                    android:textSize="25sp"/>
+                    android:textSize="25sp"
+                    android:id="@+id/tool_bar_title"/>
 
             </LinearLayout>
 
@@ -35,10 +37,11 @@
 
 
     <FrameLayout
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="0dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/container1"
+        android:background="@android:color/transparent"
         />
 
 
