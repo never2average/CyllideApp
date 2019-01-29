@@ -56,6 +56,7 @@ public class PendingOrdersFragment extends Fragment {
         List<OrdersModel> data1 =dummyData();
         OrdersAdapter ordersAdapter= new OrdersAdapter(data1);
         RV.setAdapter(ordersAdapter);
+
         return rootView;
 
 

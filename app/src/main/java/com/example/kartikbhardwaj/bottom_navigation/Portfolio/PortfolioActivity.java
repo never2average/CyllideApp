@@ -12,15 +12,18 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.kartikbhardwaj.bottom_navigation.HomeFragment;
 import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
+import com.example.kartikbhardwaj.bottom_navigation.PasswordChangeStatus;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.example.kartikbhardwaj.bottom_navigation.StatsFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -28,24 +31,57 @@ import com.google.android.material.navigation.NavigationView;
 
 public class PortfolioActivity extends AppCompatActivity {
 
+    TextView toolBarTitle;
+    String stockName;
+    String newStockName;
+    String  buttonStatus;
+    String rvStatus;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolio);
-
+        toolBarTitle=findViewById(R.id.tool_bar_title);
         androidx.appcompat.widget.Toolbar toolbar =findViewById(R.id.tool_bar1);
+
+        stockName = getIntent().getStringExtra("stock_name");
+        newStockName=getIntent().getStringExtra("newStockName");
+
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
+
+
+
+
+
+
+        if(PasswordChangeStatus.rvCardstatus)
+        {
+            toolBarTitle.setText(stockName);
+
+
+        }
+
+        if(PasswordChangeStatus.buttonstatus)
+        {
+            toolBarTitle.setText(newStockName);
+
+        }
+
 
         AvailableStocksFragment fragment=new AvailableStocksFragment();
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.container1,fragment);
         fragmentTransaction.commit();
-    }
+
+
+
+        }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

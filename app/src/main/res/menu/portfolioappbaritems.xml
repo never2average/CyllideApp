@@ -15,6 +15,7 @@
         android:id="@+id/orderspending"
         android:title="Pending Orders"
         android:icon="@drawable/orders_pending"
+
         />
 
     <item
