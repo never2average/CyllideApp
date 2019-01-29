@@ -6,4 +6,5 @@
     android:layout_height="match_parent"
     android:contextClickable="true"
     tools:context="Contests.MonthlyFragment"
-    tools:ignore="UnusedAttribute" />
+    tools:ignore="UnusedAttribute"
+    android:layout_marginTop="4dp"/>

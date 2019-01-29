@@ -3,7 +3,9 @@ package com.example.kartikbhardwaj.bottom_navigation.Contests;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
 import com.example.kartikbhardwaj.bottom_navigation.Profile_Activity;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.google.android.material.tabs.TabLayout;
@@ -16,33 +18,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class WeeklyActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
-    CircleImageView imageButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weekly);
 
-        toolbar = findViewById(R.id.tool_bar_weekly);
-        setSupportActionBar(toolbar);
-
-        imageButton=findViewById(R.id.user_image_weekly);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent profileIntent =new Intent(WeeklyActivity.this,Profile_Activity.class);
-                startActivity(profileIntent);
-            }
-        });
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
+        ImageView imgView=findViewById(R.id.contestbackbutton);
+
 
         tabLayout.addTab(tabLayout.newTab().setText("Weekly"));
         tabLayout.addTab(tabLayout.newTab().setText("Monthly"));
 
-        final ViewPager viewPager =
-                (ViewPager) findViewById(R.id.view_pager);
+        final ViewPager viewPager = findViewById(R.id.view_pager);
         final PagerAdapter adapter = new WeeklyPagerAdapter
                 (getSupportFragmentManager(),
                         tabLayout.getTabCount());
@@ -66,6 +55,17 @@ public class WeeklyActivity extends AppCompatActivity {
 
            }
 
+
+
+        });
+
+        imgView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(WeeklyActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
         });
 
     }

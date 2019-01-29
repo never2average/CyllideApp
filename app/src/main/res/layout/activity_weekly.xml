@@ -6,77 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".Contests.WeeklyActivity">
 
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:id="@+id/tool_bar_weekly"
-            android:padding="0dp"
-            android:background="@drawable/gold"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            >
-
-                <LinearLayout
-                    android:layout_marginLeft="0dp"
-                    android:paddingLeft="0dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
-
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/logo"
-                            android:layout_weight="1"
-                            android:layout_gravity="left"
-                            />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="4"
-                            android:layout_gravity="center_vertical"
-                            android:layout_height="wrap_content"
-                            android:text="TradeRoyale"
-                            android:textSize="27sp"
-                            android:textColor="#fff"
-                            android:textStyle="bold"
-                            android:id="@+id/heading"
-                            />
-                        <ImageView
-                            android:layout_gravity="center"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="30dp"
-                            android:tint="#ffffff"
-                            android:src="@drawable/notification_icon"/>
-
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_gravity="center"
-                            android:layout_width="0dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/profile_pic"
-                            android:layout_weight="0.9"
-                            android:id="@+id/user_image_weekly"
-                            android:background="@android:color/transparent"
-                            />
-                </LinearLayout>
-        </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             app:tabTextColor="#ffffff"
-            android:layout_marginTop="?attr/actionBarSize"
-            android:layout_height="45dp"
+            android:layout_height="60dp"
             android:layout_gravity="left"
-            android:background="@drawable/gold"
+            android:background="@drawable/orange"
             app:tabGravity="fill"
             app:tabMode="fixed"/>
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="60dp"
+            android:padding="6dp"
+            android:id="@+id/contestbackbutton"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            android:tint="#ffffff"
+            android:background="#00000000"/>
+
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
-            android:layout_marginTop="105dp"
+            android:layout_marginTop="60dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>

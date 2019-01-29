@@ -1,51 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingTop="18sp"
-    android:paddingHorizontal="18sp">
-
-
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/weekly_image_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="225dp"
-        android:layout_gravity="center_horizontal"
-        android:cropToPadding="false"
-        android:paddingBottom="12sp"
-        fresco:placeholderImage="@android:drawable/ic_menu_camera"
-        fresco:roundedCornerRadius="8sp"
-        android:clickable="true"/>
-
-    <TextView
-        android:id="@+id/weekly_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="10sp"
-        android:textSize="22sp"
-        android:fontFamily="@font/ralewaymedium"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:clickable="true"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="6"
+        android:layout_height="150dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:id="@+id/paid_contest_card"
+        app:cardElevation="10dp"
         >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.1"
+                android:id="@+id/weekly_color_strip"
+                android:background="@drawable/gold"
+                android:orientation="horizontal"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/paid_card_contents"
+                android:orientation="vertical"
+                >
+
+
+                <TextView
+                    android:layout_marginLeft="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="12"
+                    android:text="Contest Name"
+                    android:id="@+id/weekly_name"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="14"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="6"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="4"
+                            android:id="@+id/weekly_capacity"
+                            android:gravity="center"
+                            android:text="1232"
+                            android:textSize="22sp"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            android:text="prize pool"
+                            android:gravity="center"
+                            android:textSize="10dp"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="6"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="4"
+                            android:id="@+id/weekly_no_of_winners"
+                            android:gravity="center"
+                            android:text="40"
+                            android:textSize="22sp"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            android:text="num winners"
+                            android:gravity="center"
+                            android:textSize="10sp"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="6"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            >
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="3"
+                                android:src="@drawable/timer_icon"
+                                />
+                            <TextView
+                                android:gravity="center_vertical"
+                                android:layout_width="0dp"
+                                android:textSize="15sp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="9"
+                                android:textColor="#ec2010"
+                                android:text="12h32m22s"
+                                android:id="@+id/weekly_time_remaining"
+                                />
 
 
 
-    </LinearLayout>
+                        </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            android:text="time remaining"
+                            android:gravity="center"
+                            android:textSize="10sp"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="#000000" />
+                    </LinearLayout>
 
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="12"
+                    android:orientation="vertical">
+
+                    <ProgressBar
+                        android:paddingTop="3dp"
+                        android:paddingBottom="3dp"
+                        android:paddingStart="3dp"
+                        android:paddingEnd="5dp"
+                        android:progress="75"
+                        android:id="@+id/weekly_progress_bar"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:rotation="180"
+                        android:progressTint="@color/red"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="4"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="4"
+                        android:text="375 left out of 500 participants"
+                        android:textSize="12sp"
+                        android:id="@+id/weekly_participants_remaining"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginStart="5dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 
 

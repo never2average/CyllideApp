@@ -1,4 +1,5 @@
 <androidx.recyclerview.widget.RecyclerView
+    android:layout_marginTop="4dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_weekly_rv"

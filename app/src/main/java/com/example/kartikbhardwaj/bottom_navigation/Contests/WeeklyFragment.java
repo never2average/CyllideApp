@@ -21,17 +21,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import static android.content.ContentValues.TAG;
 
-
-public class WeeklyFragment extends Fragment {
+public class WeeklyFragment extends Fragment{
     private RecyclerView weeklyRV;
 
-    String weeklyTitle[]={"News1","News2","News3"};
-    String weeklyThumbnailSource[]={"https://www.desktopbackground.org/download/1366x768/2014/08/21/812557_civil-engineering-wallpapers_1600x1200_h.jpg","https://www.desktopbackground.org/download/1366x768/2014/08/21/812557_civil-engineering-wallpapers_1600x1200_h.jpg","https://www.desktopbackground.org/download/1366x768/2014/08/21/812557_civil-engineering-wallpapers_1600x1200_h.jpg"};
-    String weeklyDescription[]={"General Description shown in the other activity","General Description shown in the other activity","General Description shown in the other activity"};
+    String weeklyName[]={"weekly1","weekly2","weekly3"};
+    String weeklyCapacity[]={"2093","3431", "1234"};
+    String weeklyWinners[]={"10", "20", "30"};
+    String weeklyTimeRemaining[]={"12hrs","10hrs","1hr"};
+    String weeklyProgress[]={"33", "60", "80"};
+    Boolean weeklyPremium[] = {true, true, false};
+    String weeklyParticipants[] = {"375 left out of 500 participants", "375 left out of 500 participants", "375 left out of 500 participants"};
+
     private List<WeeklyModel> dummyData() {
         List<WeeklyModel> data = new ArrayList<>(12);
         for (int i = 0; i < 3; i++) {
-            data.add(new WeeklyModel(weeklyTitle[i],weeklyThumbnailSource[i],weeklyDescription[i]));
+            data.add(new WeeklyModel(weeklyName[i], weeklyCapacity[i], weeklyWinners[i], weeklyTimeRemaining[i], weeklyProgress[i], weeklyParticipants[i], weeklyPremium[i]));
         }//data is the list of objects to be set in the list item
         return data;
     }
@@ -55,11 +59,11 @@ public class WeeklyFragment extends Fragment {
     public void onStart() {
         super.onStart();
         final Activity activity = getActivity();
-            final Context context = getContext();
-            Fresco.initialize(context);
-            List<WeeklyModel> WeeklyPart = dummyData();
+        final Context context = getContext();
+        Fresco.initialize(context);
+        List<WeeklyModel> weekly = dummyData();
         if (activity != null) {
-            final WeeklyAdapter mAdapter = new WeeklyAdapter(WeeklyPart);
+            final WeeklyAdapter mAdapter = new WeeklyAdapter(weekly);
             weeklyRV.setAdapter(mAdapter);
         } else {
             Log.e(TAG, "getActivity() returned null in onStart()");

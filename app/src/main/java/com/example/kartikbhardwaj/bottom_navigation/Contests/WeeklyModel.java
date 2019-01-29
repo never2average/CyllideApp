@@ -1,36 +1,75 @@
 package com.example.kartikbhardwaj.bottom_navigation.Contests;
 
 public class WeeklyModel {
-    private String weeklyName,weeklyDescription,weeklyImageURL;
+    private String weeklyName,weeklyCapacity,weeklyWinners,weeklyTimeRemaining, weeklyProgress, weeklyParticipantsRemaining;
+    private Boolean isPremium;
 
-    public WeeklyModel(String weeklyName, String weeklyImageURL, String weeklyDescription)
+    public WeeklyModel(String weeklyName, String weeklyCapacity, String weeklyWinners, String weeklyTimeRemaining, String weeklyProgress, String weeklyParticipantsRemaining, Boolean isPremium)
     {
-        this.weeklyDescription=weeklyDescription;
-        this.weeklyImageURL=weeklyImageURL;
+        this.weeklyCapacity=weeklyCapacity;
+        this.weeklyWinners=weeklyWinners;
         this.weeklyName=weeklyName;
+        this.weeklyTimeRemaining=weeklyTimeRemaining;
+        this.weeklyProgress=weeklyProgress;
+        this.weeklyParticipantsRemaining=weeklyParticipantsRemaining;
+        this.isPremium = isPremium;
     }
 
-    public String getWeeklyDescription() {
-        return weeklyDescription;
+    public Boolean getPremium() {
+        return isPremium;
     }
 
-    public String getWeeklyName() {
+    public void setPremium(Boolean premium) {
+        isPremium = premium;
+    }
+
+    public String getweeklyName() {
         return weeklyName;
     }
 
-    public String getWeeklyImageURL() {
-        return weeklyImageURL;
+    public String getweeklyCapacity() {
+        return weeklyCapacity;
     }
 
-    public void setWeeklyDescription(String weeklyDescription) {
-        this.weeklyDescription = weeklyDescription;
+    public String getweeklyWinners() {
+        return weeklyWinners;
     }
 
-    public void setWeeklyImageURL(String weeklyImageURL) {
-        this.weeklyImageURL = weeklyImageURL;
+    public String getweeklyTimeRemaining() {
+        return weeklyTimeRemaining;
     }
 
-    public void setWeeklyName(String weeklyName) {
+    public String getweeklyProgress() {
+        return weeklyProgress;
+    }
+
+    public String getweeklyParticipantsRemaining() {
+        return weeklyParticipantsRemaining;
+    }
+
+    public void setweeklyName(String weeklyName) {
         this.weeklyName = weeklyName;
     }
+
+    public void setweeklyCapacity(String weeklyCapacity) {
+        this.weeklyCapacity = weeklyCapacity;
+    }
+
+    public void setweeklyWinners(String weeklyWinners) {
+        this.weeklyWinners = weeklyWinners;
+    }
+
+    public void setweeklyTimeRemaining(String weeklyTimeRemaining) {
+        this.weeklyTimeRemaining = weeklyTimeRemaining;
+    }
+
+    public void setweeklyProgress(String weeklyProgress) {
+        this.weeklyProgress = weeklyProgress;
+    }
+
+    public void setweeklyParticipantsRemaining(String weeklyParticipantsRemaining) {
+        this.weeklyParticipantsRemaining = weeklyParticipantsRemaining;
+    }
+
+
 }
