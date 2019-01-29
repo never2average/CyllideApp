@@ -15,6 +15,7 @@
         android:layout_marginBottom="5dp"
         android:clickable="true"
         android:focusable="true"
+        android:id="@+id/card_view"
 
         >
         <LinearLayout

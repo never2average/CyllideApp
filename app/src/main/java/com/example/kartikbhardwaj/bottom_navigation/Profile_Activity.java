@@ -242,6 +242,9 @@ public class Profile_Activity extends AppCompatActivity {
                 username.setText(newName1);
                 username.setText(newName1);
                 newName.setText("");
+
+
+
                 nameEditPopup.dismiss();
 
 
