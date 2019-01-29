@@ -2,24 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
+
     <item
-        android:id="@+id/item1"
-        android:title="item1"
-        android:icon="@drawable/home_icon"
-        app:showAsAction="always"
-        />
-    <item
-        android:id="@+id/item2"
-        android:title="item2"
-        android:icon="@drawable/home_icon"
-        app:showAsAction="always"
-        />
-    <item
-        android:id="@+id/item3"
-        android:title="item3"
-        android:icon="@drawable/home_icon"
+        android:id="@+id/stockanalysis"
+        android:title="Analyze"
+        android:icon="@drawable/stockanalysis"
         app:showAsAction="always"
         />
 
+    <item
+        app:showAsAction="always"
+        android:id="@+id/orderspending"
+        android:title="Pending Orders"
+        android:icon="@drawable/orders_pending"
+        />
+
+    <item
+        app:showAsAction="always"
+        android:id="@+id/portfoliopositions"
+        android:title="Portfolio"
+        android:icon="@drawable/portfoliopositions"
+        />
 
 </menu>
