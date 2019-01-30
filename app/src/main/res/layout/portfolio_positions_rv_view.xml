@@ -12,7 +12,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="18dp"
         android:layout_marginEnd="18dp"
-        app:cardElevation="80dp"
+        app:cardElevation="4dp"
         >
 
         <LinearLayout
@@ -76,7 +76,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="0.5">
                     <TextView
-                        android:gravity="bottom"
+                        android:gravity="center_vertical"
                         android:text="123.45(-1.23%)▼"
                         android:paddingLeft="8dp"
                         android:textSize="14sp"
