@@ -26,8 +26,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 public class ReferralFragment extends Fragment {
 
     Button referralButton;
-    SimpleDraweeView imgBottom;
-    Uri uri=Uri.parse("https://www.altran.com/as-content/uploads/sites/20/2017/05/5-0_finance_1600.jpg");
 
     @Nullable
     @Override
@@ -39,7 +37,6 @@ public class ReferralFragment extends Fragment {
     public void onViewCreated(@NonNull final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         referralButton = view.findViewById(R.id.invitebutton);
-        imgBottom = view.findViewById(R.id.inv_bottom);
         final Context context = getContext();
     }
 
@@ -53,7 +50,6 @@ public class ReferralFragment extends Fragment {
     public void onStart() {
         super.onStart();
         Fresco.initialize(getContext());
-        imgBottom.setImageURI(uri);
         final Activity activity = getActivity();
         referralButton.setOnClickListener(new View.OnClickListener() {
             @Override
