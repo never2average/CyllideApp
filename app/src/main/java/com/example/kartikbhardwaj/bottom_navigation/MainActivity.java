@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.MyPortfolio;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioActivity;
+import com.example.kartikbhardwaj.bottom_navigation.howitworks.HowItWorksFragment;
 import com.example.kartikbhardwaj.bottom_navigation.notification.NotificationActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,7 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     Toolbar toolbar;
-    BottomNavigationView bottomNavigationView;
+    public static BottomNavigationView bottomNavigationView;
     CircleImageView imageButton;
     ImageView notificationImage;
 
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.howitworks:
-                fragment=new SlideShowFragment();
+                fragment=new HowItWorksFragment();
                 break;
         }
 
