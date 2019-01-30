@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".quiz.QuizWaitingActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -21,29 +22,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Contests.WeeklyActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".stories.NewsData"></activity>
+        <activity
+            android:name=".Contests.WeeklyActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".stories.NewsData" />
         <activity android:name=".stories.StoriesActivity" />
-        <activity android:name=".quiz.QuizActivity"></activity>
-        <activity android:name=".quiz.StartingScreenActivity"></activity>
-        <activity android:name=".Portfolio.PortfolioActivity"></activity>
-        <activity android:name=".Portfolio.MyPortfolio"></activity>
+        <activity android:name=".quiz.QuizActivity" />
+        <activity android:name=".quiz.StartingScreenActivity" />
+        <activity android:name=".Portfolio.PortfolioActivity" />
+        <activity android:name=".Portfolio.MyPortfolio" />
         <activity
             android:name=".Profile_Activity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".faq_view.Faq_Activity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".PasswordChangeActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".faq_view.Faq_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PasswordChangeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".stories.StoryPageActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".stories.NewsPageActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".notification.NotificationActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".notification.NotificationActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
