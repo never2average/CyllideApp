@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:freezesText="true"
         android:text="Score: 0"
-        android:textColor="@android:color/black" />
+        android:textColor="@color/colorPrimaryDark" />
 
     <TextView
         android:id="@+id/text_view_question_count"
@@ -43,11 +43,30 @@
         android:text="Difficulty: "
         android:textColor="@android:color/black" />
 
+    <ProgressBar
+        android:id="@+id/progressBarCircle"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_above="@id/text_view_question"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/drawable_circle_dark"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="100"
+        android:progressDrawable="@drawable/drawable_circle_yellow"
+        android:rotation="-90" />
+
+
+
     <TextView
         android:id="@+id/text_view_countdown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
+        android:layout_alignTop="@id/progressBarCircle"
+        android:layout_centerHorizontal="true"
         android:freezesText="true"
         android:text="00:30"
         android:textColor="@android:color/black"
@@ -59,6 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/radio_group"
         android:layout_marginBottom="16dp"
+        android:layout_marginTop="30dp"
         android:freezesText="true"
         android:text="Here will be the question text\nHere will be the question text\nHere will be the question text"
         android:textAlignment="center"
@@ -69,7 +89,8 @@
         android:id="@+id/radio_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
+        android:layout_centerVertical="true"
+        android:layout_marginHorizontal="8dp">
 
         <RadioButton
             android:id="@+id/radio_button1"
@@ -92,15 +113,45 @@
             android:freezesText="true"
             android:text="Option 3" />
 
+        <RadioButton
+            android:id="@+id/radio_button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:freezesText="true"
+            android:text="Option 4" />
+
     </RadioGroup>
 
-    <Button
-        android:id="@+id/button_confirm_next"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/radio_group"
-        android:layout_marginTop="16dp"
-        android:freezesText="true"
-        android:text="Confirm" />
+        android:orientation="horizontal"
+        android:layout_below="@id/radio_group">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_confirm_next"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="16dp"
+            app:cornerRadius="20dp"
+            android:elevation="10dp"
+            android:freezesText="true"
+            android:text="Confirm" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/clear"
+            app:cornerRadius="20dp"
+            android:layout_width="0dp"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:elevation="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="16dp"
+            android:freezesText="true"
+            android:text="Clear" />
+    </LinearLayout>
+
 
 </RelativeLayout>
