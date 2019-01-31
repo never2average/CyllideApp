@@ -51,6 +51,6 @@ public class HowItWorksFragment extends Fragment {
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tab_layout_how);
         tabLayout.setupWithViewPager(viewPager, true);
     }
-    
+
 
 }

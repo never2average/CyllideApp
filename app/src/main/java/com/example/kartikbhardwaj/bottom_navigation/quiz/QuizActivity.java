@@ -2,12 +2,15 @@ package com.example.kartikbhardwaj.bottom_navigation.quiz;
 
 import android.content.Intent;
 import com.example.kartikbhardwaj.bottom_navigation.R;
+import com.google.android.material.button.MaterialButton;
+
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -39,7 +42,8 @@ public class QuizActivity extends AppCompatActivity {
     private RadioButton rb1;
     private RadioButton rb2;
     private RadioButton rb3;
-    private Button buttonConfirmNext;
+    private RadioButton rb4;
+    private MaterialButton buttonConfirmNext, clear;
 
     private ColorStateList textColorDefaultRb;
     private ColorStateList textColorDefaultCd;
@@ -51,6 +55,8 @@ public class QuizActivity extends AppCompatActivity {
     private int questionCounter;
     private int questionCountTotal;
     private Question currentQuestion;
+
+    private ProgressBar progressBarCircle;
 
     private int score;
     private boolean answered;
@@ -72,8 +78,10 @@ public class QuizActivity extends AppCompatActivity {
         rb1 = findViewById(R.id.radio_button1);
         rb2 = findViewById(R.id.radio_button2);
         rb3 = findViewById(R.id.radio_button3);
+        rb4 = findViewById(R.id.radio_button4);
         buttonConfirmNext = findViewById(R.id.button_confirm_next);
-
+        clear = findViewById(R.id.clear);
+        progressBarCircle = (ProgressBar) findViewById(R.id.progressBarCircle);
         textColorDefaultRb = rb1.getTextColors();
         textColorDefaultCd = textViewCountDown.getTextColors();
 
@@ -103,6 +111,7 @@ public class QuizActivity extends AppCompatActivity {
 
             if (!answered) {
                 startCountDown();
+                setProgressBarValues();
             } else {
                 updateCountDownText();
                 showSolution();
@@ -123,12 +132,23 @@ public class QuizActivity extends AppCompatActivity {
                 }
             }
         });
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rb1.setChecked(false);
+                rb2.setChecked(false);
+                rb3.setChecked(false);
+                rb4.setChecked(false);
+            }
+        });
     }
 
     private void showNextQuestion() {
         rb1.setTextColor(textColorDefaultRb);
         rb2.setTextColor(textColorDefaultRb);
         rb3.setTextColor(textColorDefaultRb);
+        rb4.setTextColor(textColorDefaultRb);
         rbGroup.clearCheck();
 
         if (questionCounter < questionCountTotal) {
@@ -146,6 +166,7 @@ public class QuizActivity extends AppCompatActivity {
 
             timeLeftInMillis = COUNTDOWN_IN_MILLIS;
             startCountDown();
+            setProgressBarValues();
         } else {
             finishQuiz();
         }
@@ -171,6 +192,8 @@ public class QuizActivity extends AppCompatActivity {
     private void updateCountDownText() {
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
+
+        progressBarCircle.setProgress((int) (timeLeftInMillis / 1000));
 
         String timeFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
 
@@ -203,6 +226,7 @@ public class QuizActivity extends AppCompatActivity {
         rb1.setTextColor(Color.RED);
         rb2.setTextColor(Color.RED);
         rb3.setTextColor(Color.RED);
+        rb4.setTextColor(Color.RED);
 
         switch (currentQuestion.getAnswerNr()) {
             case 1:
@@ -215,6 +239,10 @@ public class QuizActivity extends AppCompatActivity {
                 break;
             case 3:
                 rb3.setTextColor(Color.GREEN);
+                textViewQuestion.setText("Answer 3 is correct");
+                break;
+            case 4:
+                rb4.setTextColor(Color.GREEN);
                 textViewQuestion.setText("Answer 3 is correct");
                 break;
         }
@@ -260,5 +288,11 @@ public class QuizActivity extends AppCompatActivity {
         outState.putLong(KEY_MILLIS_LEFT, timeLeftInMillis);
         outState.putBoolean(KEY_ANSWERED, answered);
         outState.putParcelableArrayList(KEY_QUESTION_LIST, questionList);
+    }
+
+    private void setProgressBarValues() {
+
+        progressBarCircle.setMax((int) timeLeftInMillis / 1000);
+        progressBarCircle.setProgress((int) timeLeftInMillis / 1000);
     }
 }
