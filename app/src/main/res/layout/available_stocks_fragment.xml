@@ -5,6 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.SearchView
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/searchbarstocks"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/search_background">
+    </androidx.appcompat.widget.SearchView>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/showstocks"
+        />
 
 </LinearLayout>

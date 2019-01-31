@@ -36,8 +36,6 @@ public class PendingOrdersFragment extends Fragment {
             data.add(new OrdersModel(OrderType[i], PositionType[i],Quantity[i],ExecutionPrice[i],StockTicker[i],CurrentStockPrice[i]));
         }//data is the list of objects to be set in the list item
         return data;
-
-
     }
 
     @Override
