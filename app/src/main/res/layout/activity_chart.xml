@@ -1,9 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChartActivity">
+    tools:context=".ChartActivity"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:background="@drawable/gradientbackground"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="40sp"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    android:text="1234.56"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_height="350dp"
+                app:cardElevation="5dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="125dp"
+                android:layout_marginBottom="5dp">
+
+            </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="0.5"
+        android:padding="5dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="1D"
+            android:textSize="14sp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="5D"
+            android:textSize="14sp"
+            android:layout_weight="1"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:text="1M"
+            android:textSize="14sp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="6M"
+            android:textSize="14sp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="1Y"
+            android:textSize="14sp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:text="5Y"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
