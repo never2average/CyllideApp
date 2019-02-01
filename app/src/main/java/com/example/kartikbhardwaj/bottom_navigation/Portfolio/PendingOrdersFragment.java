@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PendingOrdersRV.OrdersAdapter;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PendingOrdersRV.OrdersModel;
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.PendingOrdersInterface;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 
 import java.util.ArrayList;
@@ -22,19 +23,20 @@ import java.util.List;
 public class PendingOrdersFragment extends Fragment {
     RecyclerView RV;
 
-    private   String OrderType[]={"fhgas"};
-    private   String PositionType[]={"akjfgd"};
-    private   String Quantity[]={"ksjgfh"};
-    private   String ExecutionPrice[]={"kejghrw"};
-
-    private String StockTicker[]={"wkgel"};
-    private String CurrentStockPrice[]={"skejgoihtw"};
+//    private   String OrderType[]={"fhgas"};
+//    private   String PositionType[]={"akjfgd"};
+//    private   String Quantity[]={"ksjgfh"};
+//    private   String ExecutionPrice[]={"kejghrw"};
+//
+//    private String StockTicker[]={"wkgel"};
+//    private String CurrentStockPrice[]={"skejgoihtw"};
 
     private List<OrdersModel> dummyData() {
         List<OrdersModel> data = new ArrayList<>(12);
-        for (int i = 0; i < 1; i++) {
-            data.add(new OrdersModel(OrderType[i], PositionType[i],Quantity[i],ExecutionPrice[i],StockTicker[i],CurrentStockPrice[i]));
-        }//data is the list of objects to be set in the list item
+        for (int i = 0; i < PendingOrdersInterface.orderPrice.size(); i++) {
+            data.add(new OrdersModel(PendingOrdersInterface.orderType.get(i), PendingOrdersInterface.positionType.get(i),String.valueOf(PendingOrdersInterface.Quantity.get(i)),String.valueOf(PendingOrdersInterface.executionPrice.get(i)),PendingOrdersInterface.stockTicker.get(i),String.valueOf(PendingOrdersInterface.orderPrice.get(i))));
+
+        }
         return data;
     }
 
@@ -54,7 +56,6 @@ public class PendingOrdersFragment extends Fragment {
         List<OrdersModel> data1 =dummyData();
         OrdersAdapter ordersAdapter= new OrdersAdapter(data1);
         RV.setAdapter(ordersAdapter);
-
         return rootView;
 
 
