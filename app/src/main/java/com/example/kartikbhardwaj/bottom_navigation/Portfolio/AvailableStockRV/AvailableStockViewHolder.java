@@ -111,6 +111,7 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                             PendingOrdersInterface.stockTicker.add(stockName.getText().toString());
                             PendingOrdersInterface.orderPrice.add(priceAtPlace);
                             PendingOrdersInterface.Quantity.add(Integer.valueOf(stockQuantity.getText().toString()));
+                            PendingOrdersInterface.executionPrice.add(10002.89);
 
 
 

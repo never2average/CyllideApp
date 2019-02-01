@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,19 +24,15 @@ import java.util.List;
 public class PendingOrdersFragment extends Fragment {
     RecyclerView RV;
 
-//    private   String OrderType[]={"fhgas"};
-//    private   String PositionType[]={"akjfgd"};
-//    private   String Quantity[]={"ksjgfh"};
-//    private   String ExecutionPrice[]={"kejghrw"};
-//
-//    private String StockTicker[]={"wkgel"};
-//    private String CurrentStockPrice[]={"skejgoihtw"};
-
     private List<OrdersModel> dummyData() {
         List<OrdersModel> data = new ArrayList<>(12);
         for (int i = 0; i < PendingOrdersInterface.orderPrice.size(); i++) {
-            data.add(new OrdersModel(PendingOrdersInterface.orderType.get(i), PendingOrdersInterface.positionType.get(i),String.valueOf(PendingOrdersInterface.Quantity.get(i)),String.valueOf(PendingOrdersInterface.executionPrice.get(i)),PendingOrdersInterface.stockTicker.get(i),String.valueOf(PendingOrdersInterface.orderPrice.get(i))));
-
+            data.add(new OrdersModel(PendingOrdersInterface.orderType.get(i),
+                    PendingOrdersInterface.positionType.get(i),
+                    String.valueOf(PendingOrdersInterface.Quantity.get(i)),
+                    String.valueOf(PendingOrdersInterface.executionPrice.get(i)),
+                    PendingOrdersInterface.stockTicker.get(i),
+                    String.valueOf(PendingOrdersInterface.orderPrice.get(i))));
         }
         return data;
     }
