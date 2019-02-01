@@ -123,34 +123,25 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                     @Override
                     public void onCheckedChanged(SingleSelectToggleGroup group, int checkedId) {
                         switch (checkedId){
+
                             case R.id.Buy:
                                // Toast.makeText(itemView.getContext(),"Buy",Toast.LENGTH_LONG).show();
                                 positiontype ="Buy";
-
-
-
                                 break;
+
                             case R.id.Sell:
                                 //Toast.makeText(itemView.getContext(),"Sell",Toast.LENGTH_LONG).show();
                                 positiontype="Sell";
                                 break;
-
 
                             case R.id.Short:
                                 Toast.makeText(itemView.getContext(),"Short",Toast.LENGTH_LONG).show();
                                 positiontype="Short";
                                 break;
 
-
                             case R.id.Cover:
                                 Toast.makeText(itemView.getContext(),"Cover",Toast.LENGTH_LONG).show();
                                 positiontype="Cover";
-
-
-
-
-
-
                         }
                     }
                 });
