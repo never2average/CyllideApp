@@ -8,11 +8,12 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Bundle;
+import android.os.Debug;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,8 @@ import java.util.Collections;
 import java.util.Locale;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.solver.widgets.WidgetContainer;
 
 public class QuizActivity extends AppCompatActivity {
     public static final String EXTRA_SCORE = "extraScore";
@@ -33,17 +36,21 @@ public class QuizActivity extends AppCompatActivity {
     private static final String KEY_QUESTION_LIST = "keyQuestionList";
 
     private TextView textViewQuestion;
-    private TextView textViewScore;
-    private TextView textViewQuestionCount;
-    private TextView textViewCategory;
-    private TextView textViewDifficulty;
+   // private TextView textViewScore;
+   // private TextView textViewQuestionCount;
+   // private TextView textViewCategory;
+   // private TextView textViewDifficulty;
     private TextView textViewCountDown;
-    private RadioGroup rbGroup;
-    private RadioButton rb1;
-    private RadioButton rb2;
-    private RadioButton rb3;
-    private RadioButton rb4;
-    private MaterialButton buttonConfirmNext, clear;
+   // private RadioGroup rbGroup;
+    private CardView ob1;
+    private CardView ob2;
+    private CardView ob3;
+    private CardView ob4;
+    private TextView ob1t;
+    private TextView ob2t;
+    private TextView ob3t;
+    private TextView ob4t;
+//    private MaterialButton buttonConfirmNext, clear;
 
     private ColorStateList textColorDefaultRb;
     private ColorStateList textColorDefaultCd;
@@ -69,20 +76,25 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
         textViewQuestion = findViewById(R.id.text_view_question);
-        textViewScore = findViewById(R.id.text_view_score);
-        textViewQuestionCount = findViewById(R.id.text_view_question_count);
-        textViewCategory = findViewById(R.id.text_view_category);
-        textViewDifficulty = findViewById(R.id.text_view_difficulty);
+        //textViewScore = findViewById(R.id.text_view_score);
+        //textViewQuestionCount = findViewById(R.id.text_view_question_count);
+        //textViewCategory = findViewById(R.id.text_view_category);
+        //textViewDifficulty = findViewById(R.id.text_view_difficulty);
         textViewCountDown = findViewById(R.id.text_view_countdown);
-        rbGroup = findViewById(R.id.radio_group);
-        rb1 = findViewById(R.id.radio_button1);
-        rb2 = findViewById(R.id.radio_button2);
-        rb3 = findViewById(R.id.radio_button3);
-        rb4 = findViewById(R.id.radio_button4);
-        buttonConfirmNext = findViewById(R.id.button_confirm_next);
-        clear = findViewById(R.id.clear);
+        //rbGroup = findViewById(R.id.radio_group);
+        ob1 = findViewById(R.id.option_1);
+        ob2 = findViewById(R.id.option_2);
+        ob3 = findViewById(R.id.option_3);
+        ob4 = findViewById(R.id.option_4);
+        ob1t=findViewById(R.id.option_1_text);
+        ob2t=findViewById(R.id.option_2_text);
+        ob3t=findViewById(R.id.option_3_text);
+        ob4t=findViewById(R.id.option_4_text);
+
+        //buttonConfirmNext = findViewById(R.id.button_confirm_next);
+        //clear = findViewById(R.id.clear);
         progressBarCircle = (ProgressBar) findViewById(R.id.progressBarCircle);
-        textColorDefaultRb = rb1.getTextColors();
+        textColorDefaultRb = textViewCountDown.getTextColors();
         textColorDefaultCd = textViewCountDown.getTextColors();
 
         Intent intent = getIntent();
@@ -90,8 +102,8 @@ public class QuizActivity extends AppCompatActivity {
         String categoryName = intent.getStringExtra(StartingScreenActivity.EXTRA_CATEGORY_NAME);
         String difficulty = intent.getStringExtra(StartingScreenActivity.EXTRA_DIFFICULTY);
 
-        textViewCategory.setText("Category: " + categoryName);
-        textViewDifficulty.setText("Difficulty: " + difficulty);
+//        textViewCategory.setText("Category: " + categoryName);
+//        textViewDifficulty.setText("Difficulty: " + difficulty);
 
         if (savedInstanceState == null) {
             QuizDbHelper dbHelper = QuizDbHelper.getInstance(this);
@@ -118,11 +130,13 @@ public class QuizActivity extends AppCompatActivity {
             }
         }
 
-        buttonConfirmNext.setOnClickListener(new View.OnClickListener() {
+
+
+      /**  buttonConfirmNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!answered) {
-                    if (rb1.isChecked() || rb2.isChecked() || rb3.isChecked()) {
+                    if (ob1.isChecked() || ob2.isChecked() || ob3.isChecked()) {
                         checkAnswer();
                     } else {
                         Toast.makeText(QuizActivity.this, "Please select an answer", Toast.LENGTH_SHORT).show();
@@ -133,36 +147,40 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
+
+
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rb1.setChecked(false);
-                rb2.setChecked(false);
-                rb3.setChecked(false);
-                rb4.setChecked(false);
+                ob1.setChecked(false);
+                ob2.setChecked(false);
+                ob3.setChecked(false);
+                ob4.setChecked(false);
             }
         });
-    }
+    */}
+
+
 
     private void showNextQuestion() {
-        rb1.setTextColor(textColorDefaultRb);
-        rb2.setTextColor(textColorDefaultRb);
-        rb3.setTextColor(textColorDefaultRb);
-        rb4.setTextColor(textColorDefaultRb);
-        rbGroup.clearCheck();
+        ob1t.setTextColor(textColorDefaultRb);
+        ob2t.setTextColor(textColorDefaultRb);
+        ob3t.setTextColor(textColorDefaultRb);
+        ob4t.setTextColor(textColorDefaultRb);
+        //rbGroup.clearCheck();
 
         if (questionCounter < questionCountTotal) {
             currentQuestion = questionList.get(questionCounter);
 
             textViewQuestion.setText(currentQuestion.getQuestion());
-            rb1.setText(currentQuestion.getOption1());
-            rb2.setText(currentQuestion.getOption2());
-            rb3.setText(currentQuestion.getOption3());
+            ob1t.setText(currentQuestion.getOption1());
+            ob2t.setText(currentQuestion.getOption2());
+            ob3t.setText(currentQuestion.getOption3());
 
             questionCounter++;
-            textViewQuestionCount.setText("Question: " + questionCounter + "/" + questionCountTotal);
+            //textViewQuestionCount.setText("Question: " + questionCounter + "/" + questionCountTotal);
             answered = false;
-            buttonConfirmNext.setText("Confirm");
+            //buttonConfirmNext.setText("Confirm");
 
             timeLeftInMillis = COUNTDOWN_IN_MILLIS;
             startCountDown();
@@ -184,7 +202,7 @@ public class QuizActivity extends AppCompatActivity {
             public void onFinish() {
                 timeLeftInMillis = 0;
                 updateCountDownText();
-                checkAnswer();
+                //checkAnswer();
             }
         }.start();
     }
@@ -206,52 +224,84 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-    private void checkAnswer() {
-        answered = true;
+    public void checkAnswer(View v) {
+        Log.w("Button Clicked","Button Cliked");
+        if(!answered) {
+            countDownTimer.cancel();
 
-        countDownTimer.cancel();
+//        RadioButton rbSelected = findViewById(rbGroup.getCheckedRadioButtonId());
+            int answerNr=0;
+            switch (v.getId()) {
+                case R.id.option_1:
+                    answerNr = 1;
+                    ob1.setCardBackgroundColor(Color.parseColor("#ffc107"));
+                    ob1t.setTextColor(Color.parseColor("#ffffff"));
+                    break;
+                case R.id.option_2:
+                    answerNr = 2;
+                    ob2.setCardBackgroundColor(Color.parseColor("#ffc107"));
+                    ob2t.setTextColor(Color.parseColor("#ffffff"));
+                    break;
+                case R.id.option_3:
+                    ob3.setCardBackgroundColor(Color.parseColor("#ffc107"));
+                    ob3t.setTextColor(Color.parseColor("#ffffff"));
+                    answerNr = 3;
+                    break;
+                case R.id.option_4:
+                    ob4.setCardBackgroundColor(Color.parseColor("#ffc107"));
+                    ob4t.setTextColor(Color.parseColor("#ffffff"));
+                    answerNr = 4;
+            }
 
-        RadioButton rbSelected = findViewById(rbGroup.getCheckedRadioButtonId());
-        int answerNr = rbGroup.indexOfChild(rbSelected) + 1;
+            if (answerNr == currentQuestion.getAnswerNr()) {
+                score++;
+               // textViewScore.setText("Score: " + score);
+            }
 
-        if (answerNr == currentQuestion.getAnswerNr()) {
-            score++;
-            textViewScore.setText("Score: " + score);
+            showSolution();
         }
-
-        showSolution();
+        answered = true;
     }
 
     private void showSolution() {
-        rb1.setTextColor(Color.RED);
-        rb2.setTextColor(Color.RED);
-        rb3.setTextColor(Color.RED);
-        rb4.setTextColor(Color.RED);
+//        ob1t.setTextColor(Color.RED);
+//        ob2t.setTextColor(Color.RED);
+//        ob3t.setTextColor(Color.RED);
+//        ob4t.setTextColor(Color.RED);
+//
+//        switch (currentQuestion.getAnswerNr()) {
+//            case 1:
+//                ob1t.setTextColor(Color.GREEN);
+//                //textViewQuestion.setText("Answer 1 is correct");
+//                break;
+//            case 2:
+//                ob2t.setTextColor(Color.GREEN);
+//                //textViewQuestion.setText("Answer 2 is correct");
+//                break;
+//            case 3:
+//                ob3t.setTextColor(Color.GREEN);
+//                //textViewQuestion.setText("Answer 3 is correct");
+//                break;
+//            case 4:
+//                ob4t.setTextColor(Color.GREEN);
+//                //textViewQuestion.setText("Answer 3 is correct");
+//                break;
+//        }
 
-        switch (currentQuestion.getAnswerNr()) {
-            case 1:
-                rb1.setTextColor(Color.GREEN);
-                textViewQuestion.setText("Answer 1 is correct");
-                break;
-            case 2:
-                rb2.setTextColor(Color.GREEN);
-                textViewQuestion.setText("Answer 2 is correct");
-                break;
-            case 3:
-                rb3.setTextColor(Color.GREEN);
-                textViewQuestion.setText("Answer 3 is correct");
-                break;
-            case 4:
-                rb4.setTextColor(Color.GREEN);
-                textViewQuestion.setText("Answer 3 is correct");
-                break;
-        }
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Do something after 5s = 5000ms
+                showNextQuestion();
+            }
+        }, 3000);
 
-        if (questionCounter < questionCountTotal) {
-            buttonConfirmNext.setText("Next");
-        } else {
-            buttonConfirmNext.setText("Finish");
-        }
+//        if (questionCounter < questionCountTotal) {
+//            buttonConfirmNext.setText("Next");
+//        } else {
+//            buttonConfirmNext.setText("Finish");
+//        }
     }
 
     private void finishQuiz() {
