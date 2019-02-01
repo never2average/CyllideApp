@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static BottomNavigationView bottomNavigationView;
     CircleImageView imageButton;
     ImageView notificationImage;
+    ImageView logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView =findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.home);
+        logo=findViewById(R.id.logo);
 
         loadfragment(new HomeFragment());
 
@@ -42,6 +44,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setSupportActionBar(toolbar);
         notificationImage=findViewById(R.id.notification);
         imageButton=findViewById(R.id.user_image);
+
+
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this,SplashScreen.class);
+                startActivity(intent);
+
+            }
+        });
+
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,4 +126,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         Intent portfolioIntent =new Intent(MainActivity.this,MyPortfolio.class);
         startActivity(portfolioIntent);
     }
+
+//
+//    public void loadertest(View view)
+//    {
+//        Intent intent = new Intent(MainActivity.this,SplashScreen.class);
+//        startActivity(intent);
+//    }
 }

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="350dp"
+    android:layout_height="400dp"
+    >
+
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/addstocks"
+        android:layout_gravity="center_horizontal"
+
+        >
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Reliance"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="#FFA100"
+                android:id="@+id/stock_ticker_selected"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+                <TextView
+                    android:gravity="center"
+                    android:text="Quantity:"
+                    android:textSize="17sp"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="match_parent"/>
+                <EditText
+                    android:id="@+id/stockquantity"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="number"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Position:"
+                    android:layout_width="match_parent"/>
+                <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/Position_choices"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tbgCheckedButton="@+id/Buy"
+                    app:tbgFlow="true"
+                    android:layout_gravity="center_horizontal"
+                    app:tbgChildSpacing="auto">
+
+                    <com.nex3z.togglebuttongroup.button.LabelToggle
+                        android:id="@+id/Buy"
+                        android:layout_width="wrap_content"
+                        android:textSize="17sp"
+                        android:layout_height="wrap_content"
+                        android:text="BUY"/>
+
+                    <com.nex3z.togglebuttongroup.button.LabelToggle
+                        android:id="@+id/Sell"
+                        android:layout_width="wrap_content"
+                        android:textSize="17sp"
+                        android:layout_height="wrap_content"
+                        android:text="SELL"/>
+                    <com.nex3z.togglebuttongroup.button.LabelToggle
+                        android:id="@+id/Short"
+                        android:textSize="17sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SHORT"
+                        />
+
+                    <com.nex3z.togglebuttongroup.button.LabelToggle
+                        android:id="@+id/Cover"
+                        android:textSize="17sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="COVER"/>
+
+                </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Order Type:"
+                    android:layout_width="match_parent"/>
+                <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/Order_type_choices"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tbgFlow="true"
+                    app:tbgChildSpacing="auto">
+
+
+                    <com.nex3z.togglebuttongroup.button.LabelToggle
+                        android:id="@+id/Market"
+                        android:layout_width="wrap_content"
+                        android:textSize="17sp"
+                        android:layout_height="wrap_content"
+                        android:text="MARKET"/>
+
+                    <com.nex3z.togglebuttongroup.button.LabelToggle
+                        android:id="@+id/Limit"
+                        android:layout_width="wrap_content"
+                        android:textSize="17sp"
+                        android:layout_height="wrap_content"
+                        android:text="LIMIT"/>
+                    <com.nex3z.togglebuttongroup.button.LabelToggle
+                        android:id="@+id/Stop_Loss"
+                        android:textSize="17sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="STOPLOSS"/>
+
+                </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.1">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FFA100"
+                    android:text="Place Order"
+                    android:textSize="20sp"
+                    android:textColor="#fff"
+                    android:layout_marginBottom="-2dp"
+                    android:textStyle="bold"
+                    android:id="@+id/place_order"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+</LinearLayout>

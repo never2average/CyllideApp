@@ -51,6 +51,7 @@
             android:screenOrientation="portrait" />
 
         <activity android:name=".ChartActivity"></activity>
+        <activity android:name=".SplashScreen"></activity>
 
     </application>
 

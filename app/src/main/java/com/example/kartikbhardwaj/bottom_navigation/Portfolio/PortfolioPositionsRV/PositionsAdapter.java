@@ -3,6 +3,8 @@ package com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPosition
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsFragment;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 
 import java.util.List;
@@ -10,8 +12,9 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class PositionsAdapter extends RecyclerView.Adapter<PositionsViewHolder> {
+public class PositionsAdapter extends RecyclerView.Adapter<PositionsViewHolder>  {
     List<PositionsModel> positionsModels;
+
     @NonNull
     @Override
     public PositionsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -26,8 +29,21 @@ public class PositionsAdapter extends RecyclerView.Adapter<PositionsViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PositionsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final PositionsViewHolder holder, final int position) {
         PositionsModel positionsModel=positionsModels.get(position);
+        holder.minusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int position = holder.getAdapterPosition();
+                positionsModels.remove(position);
+
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position,positionsModels.size());
+               String balance= holder.positionCurrPriceTV.getText().toString();
+               Float balance1 = Float.valueOf(balance);
+            }
+        });
         holder.populate(positionsModel);
     }
 
