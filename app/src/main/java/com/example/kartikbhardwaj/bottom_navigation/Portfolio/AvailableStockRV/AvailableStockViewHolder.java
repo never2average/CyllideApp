@@ -104,6 +104,17 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                             PortfolioPositionsInterface.orderPrice.add(priceAtPlace);
                             PortfolioPositionsInterface.Quantity.add(Integer.valueOf(stockQuantity.getText().toString()));
 
+                        } else {
+
+                            PendingOrdersInterface.positionType.add(positiontype);
+                            PendingOrdersInterface.orderType.add(orderType);
+                            PendingOrdersInterface.stockTicker.add(stockName.getText().toString());
+                            PendingOrdersInterface.orderPrice.add(priceAtPlace);
+                            PendingOrdersInterface.Quantity.add(Integer.valueOf(stockQuantity.getText().toString()));
+
+
+
+
                         }
                         popup.dismiss();
 
