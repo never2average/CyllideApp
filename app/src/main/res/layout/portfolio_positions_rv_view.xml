@@ -53,16 +53,16 @@
                         android:gravity="bottom"
                         android:text="IBM"
                         android:paddingLeft="8dp"
-                        android:textSize="18sp"
-                        android:layout_width="0dp"
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:id="@+id/tv_pos_ticker"
-                        android:layout_weight="4"/>
+                        android:id="@+id/tv_pos_ticker"/>
                     <TextView
                         android:paddingBottom="5dp"
                         android:text="X1234"
+                        android:paddingStart="8dp"
                         android:gravity="bottom"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:paddingEnd="5dp"
                         android:layout_marginEnd="5dp"
                         android:layout_width="0dp"

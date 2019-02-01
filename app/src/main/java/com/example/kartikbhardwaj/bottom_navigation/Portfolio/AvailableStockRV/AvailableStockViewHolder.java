@@ -52,7 +52,7 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
         analyzeBtn=itemView.findViewById(R.id.analyzebtn);
         stockCard=itemView.findViewById(R.id.stockcard);
         expandableLayout=itemView.findViewById(R.id.expandablepositionoptions);
-        stockQuantity=itemView.findViewById(R.id.stockquantity);
+
 
 
         analyzeBtn.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +83,7 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                 popup=new Dialog(itemView.getContext());
 
                 popup.setContentView(R.layout.add_stock_popup);
+                stockQuantity=popup.findViewById(R.id.stockquantity);
                 stockTickerSelected=popup.findViewById(R.id.stock_ticker_selected);
 
                 stockTickerSelected.setText(stockName.getText().toString());
@@ -103,18 +104,9 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                             PortfolioPositionsInterface.orderPrice.add(priceAtPlace);
                             PortfolioPositionsInterface.Quantity.add(Integer.valueOf(stockQuantity.getText().toString()));
 
-                        } else {
-
-
-
-
-
-
                         }
-
-
-
                         popup.dismiss();
+
 
                     }
                 });
@@ -171,47 +163,33 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                     public void onCheckedChanged(SingleSelectToggleGroup group, int checkedId) {
                       switch (checkedId) {
                           case R.id.Market:
-                              // Toast.makeText(itemView.getContext(), "Market", Toast.LENGTH_LONG).show();
                               orderType = "Market";
                               break;
-
-
                           case R.id.Limit:
                               orderType="Limit";
                               break;
-
-
                           case R.id.Stop_Loss:
                               orderType="StopLoss";
                               break;
-
                       }
-
                     }
                 });
-
-
-
-
-
-
             }
         });
-
     }
 
     public void populate(AvailableStockModel stocksModel){
         stockName.setText(stocksModel.getIndexName());
         if(stocksModel.getIndexChanges()>=0){
-            priceAtPlace= Double.parseDouble(stocksModel.getIndexValue());
+            priceAtPlace= stocksModel.getIndexValue();
             stockValNet.setTextColor(Color.parseColor("#00ff00"));
             stockValNet.setText(stocksModel.getIndexValue()+"(+"+String.valueOf(stocksModel.getIndexChanges())+"%)"+"▲");
         }
         else{
+            priceAtPlace= stocksModel.getIndexValue();
             stockValNet.setTextColor(Color.parseColor("#ff0000"));
             stockValNet.setText(stocksModel.getIndexValue()+"("+String.valueOf(stocksModel.getIndexChanges())+"%)"+"▼");
 
         }
-
     }
 }

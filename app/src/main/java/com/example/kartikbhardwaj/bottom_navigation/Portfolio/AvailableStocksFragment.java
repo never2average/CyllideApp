@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,7 +34,7 @@ public class AvailableStocksFragment extends Fragment {
 
 
     private String stockNames[]={"MRF","RELIANCE","VEDL","HINDALCO","INFY"};
-    private String stockPrices[]={"70000","1020","240","170","1000"};
+    private Double stockPrices[]={70000.0,1020.0,240.0,170.0,1000.0};
     private Double priceChanges[]={-3.1,6.23,-7.29,1.9,2.34};
 
     private List<AvailableStocksModel> dummyData() {

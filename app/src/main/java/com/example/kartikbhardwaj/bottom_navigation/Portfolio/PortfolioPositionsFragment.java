@@ -27,16 +27,10 @@ public class PortfolioPositionsFragment extends Fragment {
 
     public TextView BalanceTXTV;
     private RecyclerView RV;
-//    private String PositionTicker[]={"AAPL","IBM"};
-//    private String PositionQuantity[]={"29","31"};
-//    private String PositionCurrPrice[]={"156(+2.29%)▲","123.45(-1.23%)▼"};
-//    private String PositionType[]={"LONG","SHORT"};
-//    private String PositionValue[]={"$10,000","$20,000"};
-
 
     private List<PositionsModel> dummyData(){
         List<PositionsModel> data= new ArrayList<>();
-        for(int i=0;i<=1;i++){
+        for(int i=0;i<PortfolioPositionsInterface.stockTicker.size();i++){
             data.add(new PositionsModel(PortfolioPositionsInterface.stockTicker.get(i),PortfolioPositionsInterface.Quantity.get(i).toString(),PortfolioPositionsInterface.orderPrice.get(i).toString(),PortfolioPositionsInterface.positionType.get(i),String.valueOf(PortfolioPositionsInterface.Quantity.get(i)*PortfolioPositionsInterface.orderPrice.get(i))));
 
         }
