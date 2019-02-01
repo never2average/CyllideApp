@@ -28,7 +28,7 @@
             <LinearLayout
                 android:background="@drawable/gradientbackground"
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
+                android:layout_height="275dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -44,13 +44,13 @@
                     android:gravity="center"/>
 
             </LinearLayout>
-            <com.google.android.material.card.MaterialCardView
+            yy<com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_marginStart="20dp"
                 android:layout_height="350dp"
-                app:cardElevation="5dp"
+                app:cardElevation="7dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="125dp"
+                android:layout_marginTop="100dp"
                 android:layout_marginBottom="5dp">
 
             </com.google.android.material.card.MaterialCardView>

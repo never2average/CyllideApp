@@ -65,6 +65,8 @@ public class AvailableStocksFragment extends Fragment {
         AvailableStocksAdapter stocksAdapter=new AvailableStocksAdapter(data1);
         RV.setAdapter(stocksAdapter);
         searchView=view.findViewById(R.id.searchbarstocks);
+//        searchView.setIconifiedByDefault(false);
+//        searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
