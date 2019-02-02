@@ -16,4 +16,5 @@
     <color name="transparent">#00000000</color>
     <color name="black_overlay">#66000000</color>
     <color name="contest_grey">#999999</color>
+    <color name="primary_light_max">#fff8e1</color>
 </resources>
