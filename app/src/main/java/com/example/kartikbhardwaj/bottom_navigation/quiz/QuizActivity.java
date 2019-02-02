@@ -1,5 +1,6 @@
 package com.example.kartikbhardwaj.bottom_navigation.quiz;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.google.android.material.button.MaterialButton;
@@ -12,6 +13,7 @@ import android.os.Debug;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -56,6 +58,8 @@ public class QuizActivity extends AppCompatActivity {
     private ColorStateList textColorDefaultCd;
 
     private CountDownTimer countDownTimer;
+
+
     private long timeLeftInMillis;
 
     private ArrayList<Question> questionList;
@@ -158,7 +162,8 @@ public class QuizActivity extends AppCompatActivity {
                 ob4.setChecked(false);
             }
         });
-    */}
+    */
+    }
 
 
 
@@ -190,8 +195,9 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
+
     private void startCountDown() {
-        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
+        countDownTimer = new CountDownTimer(timeLeftInMillis, 60) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeLeftInMillis = millisUntilFinished;
@@ -211,7 +217,7 @@ public class QuizActivity extends AppCompatActivity {
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
 
-        progressBarCircle.setProgress((int) (timeLeftInMillis / 1000));
+        progressBarCircle.setProgress((int)(timeLeftInMillis));
 
         String timeFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
 
@@ -225,6 +231,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     public void checkAnswer(View v) {
+
         Log.w("Button Clicked","Button Cliked");
         if(!answered) {
             countDownTimer.cancel();
@@ -342,7 +349,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private void setProgressBarValues() {
 
-        progressBarCircle.setMax((int) timeLeftInMillis / 1000);
-        progressBarCircle.setProgress((int) timeLeftInMillis / 1000);
+        progressBarCircle.setMax((int) timeLeftInMillis);
+        progressBarCircle.setProgress((int) timeLeftInMillis);
     }
 }

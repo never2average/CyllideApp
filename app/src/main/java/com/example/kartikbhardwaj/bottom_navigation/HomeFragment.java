@@ -16,6 +16,8 @@ import android.view.View;
 
 import com.example.kartikbhardwaj.bottom_navigation.Contests.WeeklyActivity;
 //import com.example.kartikbhardwaj.bottom_navigation.stories.NewsData;
+import com.example.kartikbhardwaj.bottom_navigation.quiz.QuizActivity;
+import com.example.kartikbhardwaj.bottom_navigation.quiz.QuizActivityTest;
 import com.example.kartikbhardwaj.bottom_navigation.quiz.StartingScreenActivity;
 import com.example.kartikbhardwaj.bottom_navigation.stories.NewsData;
 import com.example.kartikbhardwaj.bottom_navigation.stories.StoriesActivity;

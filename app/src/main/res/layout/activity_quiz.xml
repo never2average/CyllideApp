@@ -159,7 +159,7 @@
                 android:id="@+id/card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                card_view:cardCornerRadius="14dp"
+                card_view:cardCornerRadius="30dp"
                 android:layout_margin="10dp">
 
 
@@ -189,6 +189,8 @@
                 app:cardCornerRadius="14dp"
                 android:textColor="@color/black_overlay"
                 app:backgroundTint="@android:color/white">
+
+
                 <LinearLayout
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
