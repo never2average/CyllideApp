@@ -44,10 +44,10 @@ public class QuizActivity extends AppCompatActivity {
    // private TextView textViewDifficulty;
     private TextView textViewCountDown;
    // private RadioGroup rbGroup;
-    private CardView ob1;
-    private CardView ob2;
-    private CardView ob3;
-    private CardView ob4;
+//    private CardView ob1;
+//    private CardView ob2;
+//    private CardView ob3;
+//    private CardView ob4;
     private TextView ob1t;
     private TextView ob2t;
     private TextView ob3t;
@@ -86,10 +86,10 @@ public class QuizActivity extends AppCompatActivity {
         //textViewDifficulty = findViewById(R.id.text_view_difficulty);
         textViewCountDown = findViewById(R.id.text_view_countdown);
         //rbGroup = findViewById(R.id.radio_group);
-        ob1 = findViewById(R.id.option_1);
-        ob2 = findViewById(R.id.option_2);
-        ob3 = findViewById(R.id.option_3);
-        ob4 = findViewById(R.id.option_4);
+//        ob1 = findViewById(R.id.option_1);
+//        ob2 = findViewById(R.id.option_2);
+//        ob3 = findViewById(R.id.option_3);
+//        ob4 = findViewById(R.id.option_4);
         ob1t=findViewById(R.id.option_1_text);
         ob2t=findViewById(R.id.option_2_text);
         ob3t=findViewById(R.id.option_3_text);
@@ -239,23 +239,23 @@ public class QuizActivity extends AppCompatActivity {
 //        RadioButton rbSelected = findViewById(rbGroup.getCheckedRadioButtonId());
             int answerNr=0;
             switch (v.getId()) {
-                case R.id.option_1:
+                case R.id.option_1_text:
                     answerNr = 1;
-                    ob1.setCardBackgroundColor(Color.parseColor("#ffc107"));
+                    ob1t.setBackgroundResource(R.drawable.quiz_option_selected_bg);
                     ob1t.setTextColor(Color.parseColor("#ffffff"));
                     break;
-                case R.id.option_2:
+                case R.id.option_2_text:
                     answerNr = 2;
-                    ob2.setCardBackgroundColor(Color.parseColor("#ffc107"));
+                    ob2t.setBackgroundResource(R.drawable.quiz_option_selected_bg);
                     ob2t.setTextColor(Color.parseColor("#ffffff"));
                     break;
-                case R.id.option_3:
-                    ob3.setCardBackgroundColor(Color.parseColor("#ffc107"));
+                case R.id.option_3_text:
+                    ob3t.setBackgroundResource(R.drawable.quiz_option_selected_bg);
                     ob3t.setTextColor(Color.parseColor("#ffffff"));
                     answerNr = 3;
                     break;
-                case R.id.option_4:
-                    ob4.setCardBackgroundColor(Color.parseColor("#ffc107"));
+                case R.id.option_4_text:
+                    ob4t.setBackgroundResource(R.drawable.quiz_option_selected_bg);
                     ob4t.setTextColor(Color.parseColor("#ffffff"));
                     answerNr = 4;
             }
@@ -265,7 +265,7 @@ public class QuizActivity extends AppCompatActivity {
                // textViewScore.setText("Score: " + score);
             }
 
-            showSolution();
+           // showSolution();
         }
         answered = true;
     }
