@@ -3,18 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_marginTop="6dp"
-    android:layout_marginBottom="6dp"
     android:layout_height="wrap_content">
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:id="@+id/paid_contest_card"
-        app:cardElevation="5dp"
+        app:cardElevation="3dp"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,8 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:id="@+id/monthly_color_strip"
-                android:layout_weight="0.1"
-                android:background="@drawable/gold"
+                android:layout_weight="0.03"
+                android:background="@color/colorPrimaryDark"
                 android:orientation="horizontal"
                 />
 
@@ -119,13 +117,14 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="3"
+                                android:tint="@color/primary_dark_max"
                                 android:src="@drawable/timer_icon"
                                 />
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="9"
-                                android:textColor="#ec2010"
+                                android:textColor="@color/primary_dark_max"
                                 android:text="12h32m22s"
                                 android:gravity="center_vertical"
                                 android:id="@+id/monthly_time_remaining"
@@ -148,9 +147,12 @@
                 </LinearLayout>
 
                 <LinearLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="12"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:orientation="vertical">
 
                     <ProgressBar
@@ -161,8 +163,8 @@
                         android:progress="75"
                         android:id="@+id/monthly_progress_bar"
                         style="@android:style/Widget.ProgressBar.Horizontal"
-                        android:rotation="180"
-                        android:progressTint="@color/red"
+                        android:progressTint="@color/primary_dark_max"
+                        android:progressBackgroundTint="@color/primary_light_max"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="4"
