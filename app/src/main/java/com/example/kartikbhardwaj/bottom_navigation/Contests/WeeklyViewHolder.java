@@ -53,7 +53,7 @@ public class WeeklyViewHolder extends RecyclerView.ViewHolder {
 
         if(isPremium == false){
             weeklyPremium.setBackground(null);
-            weeklyPremium.setBackgroundColor(ResourcesCompat.getColor(view.getResources(), R.color.contest_grey,null));
+            weeklyPremium.setBackgroundColor(ResourcesCompat.getColor(view.getResources(), R.color.primary_light,null));
         }
     }
 }

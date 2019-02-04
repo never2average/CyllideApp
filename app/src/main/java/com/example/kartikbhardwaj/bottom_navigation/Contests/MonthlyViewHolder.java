@@ -54,7 +54,7 @@ public class MonthlyViewHolder extends RecyclerView.ViewHolder {
 
         if(isPremium == false){
             monthlyPremium.setBackground(null);
-            monthlyPremium.setBackgroundColor(ResourcesCompat.getColor(view.getResources(), R.color.contest_grey,null));
+            monthlyPremium.setBackgroundColor(ResourcesCompat.getColor(view.getResources(), R.color.primary_light,null));
         }
     }
 }

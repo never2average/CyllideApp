@@ -2,10 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary_light_max"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:paddingBottom="10dp"
+
     tools:context="com.example.kartikbhardwaj.bottom_navigation.quiz.QuizActivityTest">
 
     <LinearLayout
@@ -47,18 +49,20 @@
         app:cardElevation="6dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingBottom="10dp">
+            android:paddingBottom="5dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp">
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="25dp">
 
 
                 <ProgressBar
@@ -95,6 +99,7 @@
 
 
         <TextView
+            android:id="@+id/text_view_question"
             android:layout_width="match_parent"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
@@ -104,7 +109,7 @@
             android:layout_marginBottom="10dp"
             android:textSize="16sp"
             android:gravity="center"
-            android:text="LKHKUYGIUYGUYFOUKFVFUYFYGIUFVUKYVUYUKYFGUKYFOUTFkLHGUYGUYKGBIUYVIUYFIUVUYTCKUYJVTCKUYRYJCRTJYRKYTJJYVTFIBKUYJGH"/>
+            android:text="GBIUYVIUYFIUVUYTCKUYJVTCKUYRYJCRTJYRKYTJJYVTFIBKUYJGH"/>
 
             <RelativeLayout
                 android:layout_weight="1"
@@ -116,19 +121,23 @@
                 android:layout_marginBottom="6dp"
                 >
                 <ProgressBar
+                    android:id="@+id/option_1_progress_bar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:progressDrawable="@drawable/answer_progress_bar"
-                    android:progress="20"
+                    android:progress="60"
                     android:visibility="invisible"
                     />
 
                 <TextView
+                    android:id="@+id/option_1_text"
+                    android:onClick="checkAnswer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/quiz_answer_bg"
+                    android:background="@drawable/quiz_option_bg"
                     android:paddingLeft="15dp"
+                    android:gravity="center_vertical"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Option 1"
@@ -143,7 +152,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="12dp"
                     android:gravity="center_vertical"
-                    android:text="100%"
+                    android:text="100"
                     android:visibility="invisible"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="20sp" />
@@ -151,62 +160,156 @@
 
             </RelativeLayout>
 
-            <TextView
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="6dp"
                 android:layout_marginStart="18dp"
                 android:layout_marginEnd="18dp"
                 android:layout_marginBottom="6dp"
-                android:textSize="20sp"
-                android:layout_height="0dp"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginRight="8dp"
-                android:text="Option 1"
-                android:paddingLeft="15dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:background="@drawable/quiz_answer_bg"
-                android:textColor="@color/colorPrimaryDark"
-                />
+                >
+                <ProgressBar
+                    android:id="@+id/option_2_progress_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:progressDrawable="@drawable/answer_progress_bar"
+                    android:progress="60"
+                    android:visibility="invisible"
+                    />
 
-            <TextView
-                android:layout_marginStart="18dp"
-                android:layout_marginEnd="18dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="6dp"
-                android:textSize="20sp"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginRight="8dp"
-                android:text="Option 1"
-                android:paddingLeft="15dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:background="@drawable/quiz_answer_bg"
-                android:textColor="@color/colorPrimaryDark"
-                />
+                <TextView
+                    android:id="@+id/option_2_text"
+                    android:onClick="checkAnswer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/quiz_option_bg"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:text="Option 1"
 
-            <TextView
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="12dp"
+                    android:gravity="center_vertical"
+                    android:text="100"
+
+                    android:visibility="invisible"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="6dp"
                 android:layout_marginStart="18dp"
                 android:layout_marginEnd="18dp"
-                android:layout_height="0dp"
                 android:layout_marginBottom="6dp"
-                android:textSize="20sp"
-                android:layout_width="match_parent"
+                >
+                <ProgressBar
+                    android:id="@+id/option_3_progress_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:progressDrawable="@drawable/answer_progress_bar"
+                    android:progress="60"
+
+                    android:visibility="invisible"
+                    />
+
+                <TextView
+                    android:id="@+id/option_3_text"
+                    android:onClick="checkAnswer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/quiz_option_bg"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:text="Option 1"
+
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="12dp"
+                    android:gravity="center_vertical"
+                    android:text="100"
+                    android:visibility="invisible"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_weight="1"
-                android:layout_marginLeft="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_marginTop="6dp"
-                android:layout_marginRight="8dp"
-                android:text="Option 1"
-                android:paddingLeft="15dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:background="@drawable/quiz_answer_bg"
-                android:textColor="@color/colorPrimaryDark"
-                />
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="6dp"
+                >
+                <ProgressBar
+                    android:id="@+id/option_4_progress_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:progressDrawable="@drawable/answer_progress_bar"
+                    android:progress="60"
+                    android:visibility="invisible"
+                    />
+
+                <TextView
+                    android:id="@+id/option_4_text"
+                    android:onClick="checkAnswer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/quiz_option_bg"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:text="Option 1"
+
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="12dp"
+                    android:gravity="center_vertical"
+                    android:text="100"
+                    android:visibility="invisible"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp" />
+
+
+            </RelativeLayout>
+
 
 
 

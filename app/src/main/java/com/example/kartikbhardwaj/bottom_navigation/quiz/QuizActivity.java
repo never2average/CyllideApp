@@ -1,21 +1,16 @@
 package com.example.kartikbhardwaj.bottom_navigation.quiz;
 
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import com.example.kartikbhardwaj.bottom_navigation.R;
-import com.google.android.material.button.MaterialButton;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Bundle;
-import android.os.Debug;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +19,6 @@ import java.util.Collections;
 import java.util.Locale;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.solver.widgets.WidgetContainer;
 
 public class QuizActivity extends AppCompatActivity {
     public static final String EXTRA_SCORE = "extraScore";
@@ -44,10 +37,11 @@ public class QuizActivity extends AppCompatActivity {
    // private TextView textViewDifficulty;
     private TextView textViewCountDown;
    // private RadioGroup rbGroup;
-    private CardView ob1;
-    private CardView ob2;
-    private CardView ob3;
-    private CardView ob4;
+//    private CardView ob1;
+//    private CardView ob2;
+//    private CardView ob3;
+//    private CardView ob4;
+    private int final_answer;
     private TextView ob1t;
     private TextView ob2t;
     private TextView ob3t;
@@ -86,10 +80,10 @@ public class QuizActivity extends AppCompatActivity {
         //textViewDifficulty = findViewById(R.id.text_view_difficulty);
         textViewCountDown = findViewById(R.id.text_view_countdown);
         //rbGroup = findViewById(R.id.radio_group);
-        ob1 = findViewById(R.id.option_1);
-        ob2 = findViewById(R.id.option_2);
-        ob3 = findViewById(R.id.option_3);
-        ob4 = findViewById(R.id.option_4);
+//        ob1 = findViewById(R.id.option_1);
+//        ob2 = findViewById(R.id.option_2);
+//        ob3 = findViewById(R.id.option_3);
+//        ob4 = findViewById(R.id.option_4);
         ob1t=findViewById(R.id.option_1_text);
         ob2t=findViewById(R.id.option_2_text);
         ob3t=findViewById(R.id.option_3_text);
@@ -208,7 +202,7 @@ public class QuizActivity extends AppCompatActivity {
             public void onFinish() {
                 timeLeftInMillis = 0;
                 updateCountDownText();
-                //checkAnswer();
+                showSolution();
             }
         }.start();
     }
@@ -234,28 +228,29 @@ public class QuizActivity extends AppCompatActivity {
 
         Log.w("Button Clicked","Button Cliked");
         if(!answered) {
-            countDownTimer.cancel();
+            //countDownTimer.cancel();
 
 //        RadioButton rbSelected = findViewById(rbGroup.getCheckedRadioButtonId());
             int answerNr=0;
+            final_answer = v.getId();
             switch (v.getId()) {
-                case R.id.option_1:
+                case R.id.option_1_text:
                     answerNr = 1;
-                    ob1.setCardBackgroundColor(Color.parseColor("#ffc107"));
+                    ob1t.setBackgroundResource(R.drawable.quiz_option_selected_bg);
                     ob1t.setTextColor(Color.parseColor("#ffffff"));
                     break;
-                case R.id.option_2:
+                case R.id.option_2_text:
                     answerNr = 2;
-                    ob2.setCardBackgroundColor(Color.parseColor("#ffc107"));
+                    ob2t.setBackgroundResource(R.drawable.quiz_option_selected_bg);
                     ob2t.setTextColor(Color.parseColor("#ffffff"));
                     break;
-                case R.id.option_3:
-                    ob3.setCardBackgroundColor(Color.parseColor("#ffc107"));
+                case R.id.option_3_text:
+                    ob3t.setBackgroundResource(R.drawable.quiz_option_selected_bg);
                     ob3t.setTextColor(Color.parseColor("#ffffff"));
                     answerNr = 3;
                     break;
-                case R.id.option_4:
-                    ob4.setCardBackgroundColor(Color.parseColor("#ffc107"));
+                case R.id.option_4_text:
+                    ob4t.setBackgroundResource(R.drawable.quiz_option_selected_bg);
                     ob4t.setTextColor(Color.parseColor("#ffffff"));
                     answerNr = 4;
             }
@@ -265,35 +260,83 @@ public class QuizActivity extends AppCompatActivity {
                // textViewScore.setText("Score: " + score);
             }
 
-            showSolution();
+           // showSolution();
         }
         answered = true;
     }
 
     private void showSolution() {
-//        ob1t.setTextColor(Color.RED);
-//        ob2t.setTextColor(Color.RED);
-//        ob3t.setTextColor(Color.RED);
-//        ob4t.setTextColor(Color.RED);
-//
-//        switch (currentQuestion.getAnswerNr()) {
-//            case 1:
-//                ob1t.setTextColor(Color.GREEN);
-//                //textViewQuestion.setText("Answer 1 is correct");
-//                break;
-//            case 2:
-//                ob2t.setTextColor(Color.GREEN);
-//                //textViewQuestion.setText("Answer 2 is correct");
-//                break;
-//            case 3:
-//                ob3t.setTextColor(Color.GREEN);
-//                //textViewQuestion.setText("Answer 3 is correct");
-//                break;
-//            case 4:
-//                ob4t.setTextColor(Color.GREEN);
-//                //textViewQuestion.setText("Answer 3 is correct");
-//                break;
-//        }
+//        ob1t.setBackgroundResource(R.drawable.quiz_option_incorrect);
+//        ob2t.setBackgroundResource(R.drawable.quiz_option_incorrect);
+//        ob3t.setBackgroundResource(R.drawable.quiz_option_incorrect);
+//        ob4t.setBackgroundResource(R.drawable.quiz_option_incorrect);
+        ob1t.setVisibility(View.GONE);
+        ob2t.setVisibility(View.GONE);
+        ob3t.setVisibility(View.GONE);
+        ob4t.setVisibility(View.GONE);
+        if(ob1t.getId()==final_answer){
+            ob1t.setVisibility(View.VISIBLE);
+            ob1t.setBackgroundResource(R.drawable.quiz_option_selected_incorrect);
+        }
+        if(ob2t.getId()==final_answer){
+            ob2t.setVisibility(View.VISIBLE);
+            ob2t.setBackgroundResource(R.drawable.quiz_option_selected_incorrect);
+        }
+        if(ob3t.getId()==final_answer){
+            ob3t.setVisibility(View.VISIBLE);
+            ob3t.setBackgroundResource(R.drawable.quiz_option_selected_incorrect);
+        }
+        if(ob4t.getId()==final_answer){
+            ob4t.setVisibility(View.VISIBLE);
+            ob4t.setBackgroundResource(R.drawable.quiz_option_selected_incorrect);
+        }
+
+
+        switch (currentQuestion.getAnswerNr()) {
+            case 1:
+//                if(final_answer == ob1t.getId())
+//                {
+//                    ob1t.setBackgroundResource(R.drawable.quiz_option_selected_correct);
+//                    break;
+//                }
+                ob1t.setVisibility(View.VISIBLE);
+                ob1t.setBackgroundResource(R.drawable.quiz_option_correct);
+                ob1t.setTextColor(Color.parseColor("#ffffff"));
+                break;
+            case 2:
+//                if(final_answer == ob2t.getId())
+//                {
+//                    ob2t.setBackgroundResource(R.drawable.quiz_option_selected_correct);
+//                    break;
+//                }
+                ob2t.setVisibility(View.VISIBLE);
+                ob2t.setBackgroundResource(R.drawable.quiz_option_correct);
+                ob1t.setTextColor(Color.parseColor("#ffffff"));
+                //textViewQuestion.setText("Answer 2 is correct");
+                break;
+            case 3:
+//                if(final_answer == ob3t.getId())
+//                {
+//                    ob3t.setBackgroundResource(R.drawable.quiz_option_selected_correct);
+//                    break;
+//                }
+                ob3t.setVisibility(View.VISIBLE);
+                ob3t.setBackgroundResource(R.drawable.quiz_option_correct);
+                ob1t.setTextColor(Color.parseColor("#ffffff"));
+                //textViewQuestion.setText("Answer 3 is correct");
+                break;
+            case 4:
+//                if(final_answer == ob4t.getId())
+//                {
+//                    ob4t.setBackgroundResource(R.drawable.quiz_option_selected_correct);
+//                    break;
+//                }
+                ob4t.setVisibility(View.VISIBLE);
+                ob4t.setBackgroundResource(R.drawable.quiz_option_correct);
+                ob1t.setTextColor(Color.parseColor("#ffffff"));
+                //textViewQuestion.setText("Answer 3 is correct");
+                break;
+        }
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
