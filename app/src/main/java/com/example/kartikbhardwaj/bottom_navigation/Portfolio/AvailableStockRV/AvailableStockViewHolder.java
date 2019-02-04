@@ -4,6 +4,7 @@ import com.example.kartikbhardwaj.bottom_navigation.ChartActivity;
 import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioActivity;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsFragment;
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.BalanceClass;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.PendingOrdersInterface;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.PortfolioPositionsInterface;
 import com.example.kartikbhardwaj.bottom_navigation.R;
@@ -40,6 +41,16 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
     private String positiontype;
     private String orderType;
     private double priceAtPlace;
+  private int previousQuantity;
+  private   int j;
+  private   double previousPrice;
+  private   int newQuantity;
+  private   double newPrice;
+  private   String previousPositionType;
+  private   String newPositiontype;
+  private double previousBalance;
+  private double newBalance;
+  private int quantity;
 
     Dialog popup;
 
@@ -97,29 +108,139 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                 placeOrder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(orderType.equals("Market")){
+
+
+
+                            newPrice = priceAtPlace;
+
+                            for(int i=0;i<PortfolioPositionsInterface.stockTicker.size();i++) {
+                                if (stockName.getText().toString().equals(PortfolioPositionsInterface.stockTicker.get(i))) {
+                                    j = 1;
+
+                                    previousQuantity = PortfolioPositionsInterface.Quantity.get(i);
+                                    previousPrice = PortfolioPositionsInterface.orderPrice.get(i);
+                                    newQuantity = Integer.valueOf(stockQuantity.getText().toString());
+                                    previousPositionType = PortfolioPositionsInterface.positionType.get(i);
+                                    newPositiontype = positiontype;
+
+
+                                    if (orderType.equals("Market")) {
+
+
+
+
+                                        if (positiontype.equals(PortfolioPositionsInterface.positionType.get(i))) {
+
+                                            PortfolioPositionsInterface.Quantity.set(i, (previousQuantity + newQuantity));
+                                            PortfolioPositionsInterface.orderPrice.set(i, ((((previousQuantity * previousPrice) + (newQuantity * priceAtPlace)) / (previousQuantity + newQuantity))));
+
+
+                                        } else {
+
+
+                                            if (previousQuantity > newQuantity) {
+
+
+                                                PortfolioPositionsInterface.Quantity.set(i, (previousQuantity - newQuantity));
+                                                // PortfolioPositionsInterface.positionType.set(i, previousPositionType);
+
+
+                                            } else {
+
+                                                if (newQuantity > previousQuantity)
+
+                                                {
+
+
+                                                    PortfolioPositionsInterface.Quantity.set(i, (newQuantity - previousQuantity));
+                                                    PortfolioPositionsInterface.positionType.set(i, positiontype);
+
+
+                                                } else if (newQuantity == previousQuantity) {
+
+
+                                                    PortfolioPositionsInterface.positionType.remove(i);
+                                                    PortfolioPositionsInterface.orderType.remove(i);
+                                                    PortfolioPositionsInterface.stockTicker.remove(i);
+                                                    PortfolioPositionsInterface.orderPrice.remove(i);
+                                                    PortfolioPositionsInterface.Quantity.remove(i);
+
+
+                                                }
+
+                                            }
+
+
+                                        }
+
+
+                                    }
+
+
+                                }
+                            }
+                            if(j!=1)
+                            {
+
                             PortfolioPositionsInterface.positionType.add(positiontype);
                             PortfolioPositionsInterface.orderType.add(orderType);
                             PortfolioPositionsInterface.stockTicker.add(stockName.getText().toString());
                             PortfolioPositionsInterface.orderPrice.add(priceAtPlace);
                             PortfolioPositionsInterface.Quantity.add(Integer.valueOf(stockQuantity.getText().toString()));
 
-                        } else {
+
+                            }
+
+
+
+                         else {
 
                             PendingOrdersInterface.positionType.add(positiontype);
                             PendingOrdersInterface.orderType.add(orderType);
                             PendingOrdersInterface.stockTicker.add(stockName.getText().toString());
                             PendingOrdersInterface.orderPrice.add(priceAtPlace);
                             PendingOrdersInterface.Quantity.add(Integer.valueOf(stockQuantity.getText().toString()));
+                            PendingOrdersInterface.executionPrice.add(Double.valueOf(stockQuantity.getText().toString()));
+
+
 
 
 
 
                         }
+
+                        if (positiontype.equals("LONG")) {
+
+                            previousBalance=BalanceClass.balance;
+                            quantity= Integer.valueOf(stockQuantity.getText().toString());
+
+
+                            newBalance=previousBalance-quantity*priceAtPlace;
+                            BalanceClass.balance=newBalance;
+                            Toast.makeText(itemView.getContext(),"inside long "+String.valueOf(previousBalance)+" "+String.valueOf(newBalance),Toast.LENGTH_LONG).show();
+
+
+
+
+                        } else  if (positiontype.equals("SHORT")){
+
+                            previousBalance=BalanceClass.balance;
+                            quantity= Integer.valueOf(stockQuantity.getText().toString());
+                            newBalance=previousBalance+quantity*priceAtPlace;
+                            BalanceClass.balance=newBalance;
+
+
+
+
+                        }
+
                         popup.dismiss();
 
 
                     }
+
+
+
                 });
 
 
@@ -136,26 +257,26 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                         switch (checkedId){
                             case R.id.Buy:
                                // Toast.makeText(itemView.getContext(),"Buy",Toast.LENGTH_LONG).show();
-                                positiontype ="Buy";
+                                positiontype ="LONG";
 
 
 
                                 break;
                             case R.id.Sell:
                                 //Toast.makeText(itemView.getContext(),"Sell",Toast.LENGTH_LONG).show();
-                                positiontype="Sell";
+                                positiontype="SHORT";
                                 break;
 
 
                             case R.id.Short:
-                                Toast.makeText(itemView.getContext(),"Short",Toast.LENGTH_LONG).show();
-                                positiontype="Short";
+                                //Toast.makeText(itemView.getContext(),"Short",Toast.LENGTH_LONG).show();
+                                positiontype="SHORT";
                                 break;
 
 
                             case R.id.Cover:
-                                Toast.makeText(itemView.getContext(),"Cover",Toast.LENGTH_LONG).show();
-                                positiontype="Cover";
+                                //Toast.makeText(itemView.getContext(),"Cover",Toast.LENGTH_LONG).show();
+                                positiontype="LONG";
 
 
 

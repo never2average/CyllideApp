@@ -13,4 +13,5 @@ public interface PortfolioPositionsInterface {
     ArrayList<String>positionType=new ArrayList<>();
 
 
+
 }
