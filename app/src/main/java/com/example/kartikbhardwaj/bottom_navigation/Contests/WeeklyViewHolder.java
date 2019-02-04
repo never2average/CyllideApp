@@ -1,12 +1,14 @@
 package com.example.kartikbhardwaj.bottom_navigation.Contests;
 
+import android.app.Dialog;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kartikbhardwaj.bottom_navigation.R;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.material.card.MaterialCardView;
 
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +21,8 @@ public class WeeklyViewHolder extends RecyclerView.ViewHolder {
     private LinearLayout weeklyPremium;
     private Boolean isPremium;
     View view;
+    Dialog portfolioSelectionPopup;
+    private MaterialCardView cv;
 
     public WeeklyViewHolder(View itemView)
     {
@@ -31,6 +35,9 @@ public class WeeklyViewHolder extends RecyclerView.ViewHolder {
         weeklyParticipantsRemaining = itemView.findViewById(R.id.weekly_participants_remaining);
         weeklyPremium = itemView.findViewById(R.id.weekly_color_strip);
         view = itemView;
+        cv = itemView.findViewById(R.id.contest_card_weekly);
+        portfolioSelectionPopup= new Dialog(itemView.getContext());
+
     }
 
     public void populate(WeeklyModel news)
@@ -55,5 +62,17 @@ public class WeeklyViewHolder extends RecyclerView.ViewHolder {
             weeklyPremium.setBackground(null);
             weeklyPremium.setBackgroundColor(ResourcesCompat.getColor(view.getResources(), R.color.primary_light,null));
         }
+    cv.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(view.getContext(),"Aagaya",Toast.LENGTH_LONG).show();
+            portfolioSelectionPopup.setContentView(R.layout.portfolio_popup);
+            portfolioSelectionPopup.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+            portfolioSelectionPopup.show();
+
+        }
+    });
     }
+
 }
