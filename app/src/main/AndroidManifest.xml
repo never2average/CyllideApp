@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Contests.ContestLeaderboard"></activity>
+        <activity android:name=".Contests.testPortfolioActivity"></activity>
+        <activity android:name=".Contests.ContestLeaderboard" />
         <activity android:name=".quiz.QuizWaitingActivity" />
         <activity
             android:name=".MainActivity"

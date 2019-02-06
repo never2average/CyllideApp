@@ -1,16 +1,26 @@
 package com.example.kartikbhardwaj.bottom_navigation.Contests;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Debug;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kartikbhardwaj.bottom_navigation.Contests.PortfolioRV.PortfolioAdapter;
+import com.example.kartikbhardwaj.bottom_navigation.Contests.PortfolioRV.PortfolioModel;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.core.content.res.ResourcesCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class WeeklyViewHolder extends RecyclerView.ViewHolder {
@@ -21,8 +31,19 @@ public class WeeklyViewHolder extends RecyclerView.ViewHolder {
     private LinearLayout weeklyPremium;
     private Boolean isPremium;
     View view;
+    Context context;
     Dialog portfolioSelectionPopup;
     private MaterialCardView cv;
+    RecyclerView portfolioView;
+
+
+    private List<PortfolioModel> dummyData() {
+        List<PortfolioModel> data = new ArrayList<>(5);
+        for (int i = 0; i < 5; i++) {
+            data.add(new PortfolioModel("TEST_DAAATAAA", 0.0));
+        }//data is the list of objects to be set in the list item
+        return data;
+    }
 
     public WeeklyViewHolder(View itemView)
     {
@@ -35,6 +56,7 @@ public class WeeklyViewHolder extends RecyclerView.ViewHolder {
         weeklyParticipantsRemaining = itemView.findViewById(R.id.weekly_participants_remaining);
         weeklyPremium = itemView.findViewById(R.id.weekly_color_strip);
         view = itemView;
+        context=itemView.getContext();
         cv = itemView.findViewById(R.id.contest_card_weekly);
         portfolioSelectionPopup= new Dialog(itemView.getContext());
 
@@ -65,11 +87,34 @@ public class WeeklyViewHolder extends RecyclerView.ViewHolder {
     cv.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Toast.makeText(view.getContext(),"Aagaya",Toast.LENGTH_LONG).show();
-            portfolioSelectionPopup.setContentView(R.layout.portfolio_popup);
-            portfolioSelectionPopup.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
+            //portfolioSelectionPopup.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//            Intent intent = new Intent(context,testPortfolioActivity.class);
+//            context.startActivity(intent);
+            //super.onCreate(savedInstanceState);
+            portfolioSelectionPopup.setContentView(R.layout.activity_test_portfolio);
+            portfolioView= portfolioSelectionPopup.findViewById(R.id.portfolios);
+            portfolioView.setHasFixedSize(true);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(portfolioSelectionPopup.getContext());
+            List<PortfolioModel> data=dummyData();
+            //data.add(new PortfolioModel("lkl",0.0));
+            PortfolioAdapter portfolioAdapter = new PortfolioAdapter(data);
+            portfolioView.setLayoutManager(layoutManager);
+            portfolioView.setAdapter(portfolioAdapter);
             portfolioSelectionPopup.show();
+
+//            portfolioSelectionPopup.setContentView(R.layout.portfolio_popup);
+//            portfolioView= portfolioSelectionPopup.findViewById(R.id.portfolios);
+//            portfolioView.setHasFixedSize(true);
+//            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(portfolioSelectionPopup.getContext(),RecyclerView.VERTICAL,false);
+//            List<PortfolioModel>data=dummyData();
+//            PortfolioAdapter portfolioAdapter = new PortfolioAdapter(data);
+//            portfolioView.setLayoutManager(layoutManager);
+//            portfolioView.setAdapter(portfolioAdapter);
+//            portfolioSelectionPopup.show();
+//            Log.e("Lame",data.get(0).getPortfolioname());
+
+
+
 
         }
     });

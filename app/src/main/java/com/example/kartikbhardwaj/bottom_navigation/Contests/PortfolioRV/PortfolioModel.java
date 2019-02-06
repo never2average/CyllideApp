@@ -9,12 +9,12 @@ public class PortfolioModel {
         this.returns = returns;
     }
 
-    public String getPortfolioname() {
+    public String getPortfolioName() {
 
         return portfolioname;
     }
 
-    public void setPortfolioname(String portfolioname) {
+    public void setPortfolioName(String portfolioname) {
         this.portfolioname = portfolioname;
     }
 
