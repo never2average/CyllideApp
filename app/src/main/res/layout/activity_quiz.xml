@@ -78,14 +78,13 @@
                     android:progress="100"
                     android:progressDrawable="@drawable/drawable_circle_yellow"
                     android:rotation="-90" />
-
                 <ImageView
                     android:id="@+id/image_view_result"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
-                    android:layout_centerHorizontal="true"
-                    android:scaleType="centerCrop"
+                    android:layout_centerInParent="true"
                     android:visibility="gone"/>
+
 
                 <TextView
                     android:id="@+id/text_view_countdown"

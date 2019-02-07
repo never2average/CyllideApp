@@ -9,8 +9,10 @@ import android.os.CountDownTimer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,7 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class QuizActivity extends AppCompatActivity {
     public static final String EXTRA_SCORE = "extraScore";
-    private static final long COUNTDOWN_IN_MILLIS = 10000;
+    private static final long COUNTDOWN_IN_MILLIS = 2000;//TODO: change this back
 
     private static final String KEY_SCORE = "keyScore";
     private static final String KEY_QUESTION_COUNT = "keyQuestionCount";
@@ -104,6 +106,11 @@ public class QuizActivity extends AppCompatActivity {
         ob2t=findViewById(R.id.option_2_text);
         ob3t=findViewById(R.id.option_3_text);
         ob4t=findViewById(R.id.option_4_text);
+
+        ob1rel = findViewById(R.id.option_1_relative_layout);
+        ob2rel= findViewById(R.id.option_2_relative_layout);
+        ob3rel= findViewById(R.id.option_3_relative_layout);
+        ob4rel= findViewById(R.id.option_4_relative_layout);
 
         //buttonConfirmNext = findViewById(R.id.button_confirm_next);
         //clear = findViewById(R.id.clear);
@@ -289,7 +296,7 @@ public class QuizActivity extends AppCompatActivity {
 //        ob2t.setBackgroundResource(R.drawable.quiz_option_incorrect);
 //        ob3t.setBackgroundResource(R.drawable.quiz_option_incorrect);
 //        ob4t.setBackgroundResource(R.drawable.quiz_option_incorrect);
-        //TODO: Sort this mess
+        //TODO: Sort this mess,
         hideAllOptions();
 //        ob1t.setVisibility(View.GONE);
 //        ob2t.setVisibility(View.GONE);
@@ -397,11 +404,18 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void hideAllOptions() {
+        LinearLayout.LayoutParams layoutParams =
+                new LinearLayout.LayoutParams(((LinearLayout.LayoutParams)(ob1rel.getLayoutParams())));
+        layoutParams.weight = 0;
+        layoutParams.height = ob1rel.getHeight();
+        layoutParams.width = ob1rel.getWidth();
+        layoutParams.gravity = Gravity.CENTER_VERTICAL;
 
-        ob1rel = findViewById(R.id.option_1_relative_layout);
-        ob2rel= findViewById(R.id.option_2_relative_layout);
-        ob3rel= findViewById(R.id.option_3_relative_layout);
-        ob4rel= findViewById(R.id.option_4_relative_layout);
+        ob1rel.setLayoutParams(layoutParams);
+        ob2rel.setLayoutParams(layoutParams);
+        ob3rel.setLayoutParams(layoutParams);
+        ob4rel.setLayoutParams(layoutParams);
+
         ob1rel.setVisibility(View.GONE);
         ob2rel.setVisibility(View.GONE);
         ob3rel.setVisibility(View.GONE);
