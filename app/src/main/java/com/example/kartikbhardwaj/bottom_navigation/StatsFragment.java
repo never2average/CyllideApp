@@ -24,8 +24,8 @@ public class StatsFragment extends Fragment {
         AnimatedPieView mAnimatedPieView = view.findViewById(R.id.win_perc);
         AnimatedPieViewConfig config =  new  AnimatedPieViewConfig ();
         config.startAngle(-90).addData(
-                new  SimplePieInfo ( 75.0f , R.color.green,"Win %")).addData (
-                        new SimplePieInfo( 25.0f ,R.color.red, "Loss %" )).duration( 2000 );
+                new  SimplePieInfo ( 75.0f , R.color.primary_light_max,"Win %")).addData (
+                        new SimplePieInfo( 25.0f ,R.color.primary_dark_max, "Loss %" )).duration( 2000 );
         mAnimatedPieView.applyConfig (config);
         mAnimatedPieView.start();
 

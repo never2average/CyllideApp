@@ -7,11 +7,13 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:focusable="true"
+        android:clickable="true"
         android:layout_marginStart="18dp"
         android:layout_marginEnd="18dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:id="@+id/paid_contest_card"
+        android:id="@+id/contest_card_weekly"
         app:cardElevation="3dp"
         >
         <LinearLayout
