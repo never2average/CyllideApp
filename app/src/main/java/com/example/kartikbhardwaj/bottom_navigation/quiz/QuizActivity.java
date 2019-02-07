@@ -26,7 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class QuizActivity extends AppCompatActivity {
     public static final String EXTRA_SCORE = "extraScore";
-    private static final long COUNTDOWN_IN_MILLIS = 2000;//TODO: change this back
+    private static final long COUNTDOWN_IN_MILLIS = 10000;
 
     private static final String KEY_SCORE = "keyScore";
     private static final String KEY_QUESTION_COUNT = "keyQuestionCount";
@@ -402,7 +402,7 @@ public class QuizActivity extends AppCompatActivity {
 //            buttonConfirmNext.setText("Finish");
 //        }
     }
-
+    //hide all options and disable weights so they don't expand when visible
     private void hideAllOptions() {
         LinearLayout.LayoutParams layoutParams =
                 new LinearLayout.LayoutParams(((LinearLayout.LayoutParams)(ob1rel.getLayoutParams())));
@@ -410,6 +410,14 @@ public class QuizActivity extends AppCompatActivity {
         layoutParams.height = ob1rel.getHeight();
         layoutParams.width = ob1rel.getWidth();
         layoutParams.gravity = Gravity.CENTER_VERTICAL;
+
+        LinearLayout.LayoutParams layoutParamsQuestionTV =
+                new LinearLayout.LayoutParams(((LinearLayout.LayoutParams)(ob1rel.getLayoutParams())));
+        layoutParamsQuestionTV.height = textViewQuestion.getHeight();
+        layoutParamsQuestionTV.width = textViewQuestion.getWidth();
+        layoutParamsQuestionTV.weight=0;
+
+        textViewQuestion.setLayoutParams(layoutParamsQuestionTV);
 
         ob1rel.setLayoutParams(layoutParams);
         ob2rel.setLayoutParams(layoutParams);
