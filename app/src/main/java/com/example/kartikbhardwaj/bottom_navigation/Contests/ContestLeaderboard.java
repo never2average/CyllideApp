@@ -30,7 +30,7 @@ public class ContestLeaderboard extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contest_leaderboard);
+        setContentView(R.layout.activity_contest_leaderboard_free);
         leaderboardView = findViewById(R.id.leaderboard_recycler_view);
         RecyclerView.LayoutManager leaderboardLayoutManager = new LinearLayoutManager(this);
         LeaderboardAdapter leaderboardAdapter = new LeaderboardAdapter(getDummyData());
