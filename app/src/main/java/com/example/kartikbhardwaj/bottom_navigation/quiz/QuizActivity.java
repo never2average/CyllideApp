@@ -9,8 +9,12 @@ import android.os.CountDownTimer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,12 +34,19 @@ public class QuizActivity extends AppCompatActivity {
     private static final String KEY_ANSWERED = "keyAnswered";
     private static final String KEY_QUESTION_LIST = "keyQuestionList";
 
+
+    private boolean mIsCorrect;//boolean is true when the correct answer is selected
+
     private TextView textViewQuestion;
    // private TextView textViewScore;
    // private TextView textViewQuestionCount;
    // private TextView textViewCategory;
    // private TextView textViewDifficulty;
     private TextView textViewCountDown;
+
+    private ImageView imageViewResult;
+
+
    // private RadioGroup rbGroup;
 //    private CardView ob1;
 //    private CardView ob2;
@@ -46,6 +57,12 @@ public class QuizActivity extends AppCompatActivity {
     private TextView ob2t;
     private TextView ob3t;
     private TextView ob4t;
+
+
+    private RelativeLayout ob1rel;
+    private RelativeLayout ob2rel;
+    private RelativeLayout ob3rel;
+    private RelativeLayout ob4rel;
 //    private MaterialButton buttonConfirmNext, clear;
 
     private ColorStateList textColorDefaultRb;
@@ -79,6 +96,7 @@ public class QuizActivity extends AppCompatActivity {
         //textViewCategory = findViewById(R.id.text_view_category);
         //textViewDifficulty = findViewById(R.id.text_view_difficulty);
         textViewCountDown = findViewById(R.id.text_view_countdown);
+        imageViewResult = findViewById(R.id.image_view_result);
         //rbGroup = findViewById(R.id.radio_group);
 //        ob1 = findViewById(R.id.option_1);
 //        ob2 = findViewById(R.id.option_2);
@@ -88,6 +106,11 @@ public class QuizActivity extends AppCompatActivity {
         ob2t=findViewById(R.id.option_2_text);
         ob3t=findViewById(R.id.option_3_text);
         ob4t=findViewById(R.id.option_4_text);
+
+        ob1rel = findViewById(R.id.option_1_relative_layout);
+        ob2rel= findViewById(R.id.option_2_relative_layout);
+        ob3rel= findViewById(R.id.option_3_relative_layout);
+        ob4rel= findViewById(R.id.option_4_relative_layout);
 
         //buttonConfirmNext = findViewById(R.id.button_confirm_next);
         //clear = findViewById(R.id.clear);
@@ -257,7 +280,10 @@ public class QuizActivity extends AppCompatActivity {
 
             if (answerNr == currentQuestion.getAnswerNr()) {
                 score++;
+                mIsCorrect=true;
                // textViewScore.setText("Score: " + score);
+            } else{
+                mIsCorrect =false;
             }
 
            // showSolution();
@@ -270,24 +296,31 @@ public class QuizActivity extends AppCompatActivity {
 //        ob2t.setBackgroundResource(R.drawable.quiz_option_incorrect);
 //        ob3t.setBackgroundResource(R.drawable.quiz_option_incorrect);
 //        ob4t.setBackgroundResource(R.drawable.quiz_option_incorrect);
-        ob1t.setVisibility(View.GONE);
-        ob2t.setVisibility(View.GONE);
-        ob3t.setVisibility(View.GONE);
-        ob4t.setVisibility(View.GONE);
+        //TODO: Sort this mess,
+        hideAllOptions();
+//        ob1t.setVisibility(View.GONE);
+//        ob2t.setVisibility(View.GONE);
+//        ob3t.setVisibility(View.GONE);
+//        ob4t.setVisibility(View.GONE);
+
         if(ob1t.getId()==final_answer){
-            ob1t.setVisibility(View.VISIBLE);
+//            ob1t.setVisibility(View.VISIBLE);
+            ob1rel.setVisibility(View.VISIBLE);
             ob1t.setBackgroundResource(R.drawable.quiz_option_selected_incorrect);
         }
         if(ob2t.getId()==final_answer){
-            ob2t.setVisibility(View.VISIBLE);
+//            ob2t.setVisibility(View.VISIBLE);
+            ob2rel.setVisibility(View.VISIBLE);
             ob2t.setBackgroundResource(R.drawable.quiz_option_selected_incorrect);
         }
         if(ob3t.getId()==final_answer){
-            ob3t.setVisibility(View.VISIBLE);
+//            ob3t.setVisibility(View.VISIBLE);
+            ob3rel.setVisibility(View.VISIBLE);
             ob3t.setBackgroundResource(R.drawable.quiz_option_selected_incorrect);
         }
         if(ob4t.getId()==final_answer){
-            ob4t.setVisibility(View.VISIBLE);
+//            ob4t.setVisibility(View.VISIBLE);
+            ob4rel.setVisibility(View.VISIBLE);
             ob4t.setBackgroundResource(R.drawable.quiz_option_selected_incorrect);
         }
 
@@ -299,7 +332,8 @@ public class QuizActivity extends AppCompatActivity {
 //                    ob1t.setBackgroundResource(R.drawable.quiz_option_selected_correct);
 //                    break;
 //                }
-                ob1t.setVisibility(View.VISIBLE);
+//                ob1t.setVisibility(View.VISIBLE);
+                ob1rel.setVisibility(View.VISIBLE);
                 ob1t.setBackgroundResource(R.drawable.quiz_option_correct);
                 ob1t.setTextColor(Color.parseColor("#ffffff"));
                 break;
@@ -309,9 +343,10 @@ public class QuizActivity extends AppCompatActivity {
 //                    ob2t.setBackgroundResource(R.drawable.quiz_option_selected_correct);
 //                    break;
 //                }
-                ob2t.setVisibility(View.VISIBLE);
+//                ob2t.setVisibility(View.VISIBLE);
+                ob2rel.setVisibility(View.VISIBLE);
                 ob2t.setBackgroundResource(R.drawable.quiz_option_correct);
-                ob1t.setTextColor(Color.parseColor("#ffffff"));
+                ob2t.setTextColor(Color.parseColor("#ffffff"));
                 //textViewQuestion.setText("Answer 2 is correct");
                 break;
             case 3:
@@ -320,9 +355,10 @@ public class QuizActivity extends AppCompatActivity {
 //                    ob3t.setBackgroundResource(R.drawable.quiz_option_selected_correct);
 //                    break;
 //                }
-                ob3t.setVisibility(View.VISIBLE);
+//                ob3t.setVisibility(View.VISIBLE);
+                ob3rel.setVisibility(View.VISIBLE);
                 ob3t.setBackgroundResource(R.drawable.quiz_option_correct);
-                ob1t.setTextColor(Color.parseColor("#ffffff"));
+                ob3t.setTextColor(Color.parseColor("#ffffff"));
                 //textViewQuestion.setText("Answer 3 is correct");
                 break;
             case 4:
@@ -331,11 +367,24 @@ public class QuizActivity extends AppCompatActivity {
 //                    ob4t.setBackgroundResource(R.drawable.quiz_option_selected_correct);
 //                    break;
 //                }
-                ob4t.setVisibility(View.VISIBLE);
+//                ob4t.setVisibility(View.VISIBLE);
+                ob4rel.setVisibility(View.VISIBLE);
                 ob4t.setBackgroundResource(R.drawable.quiz_option_correct);
-                ob1t.setTextColor(Color.parseColor("#ffffff"));
+                ob4t.setTextColor(Color.parseColor("#ffffff"));
                 //textViewQuestion.setText("Answer 3 is correct");
                 break;
+        }
+
+        //Show a drawable in an image view in place of the timer text, displaying a cross or tick for a wrong
+        // and right answer respectively
+        textViewCountDown.setVisibility(View.GONE);
+        imageViewResult.setVisibility(View.VISIBLE);
+        if(mIsCorrect){//correct answer
+            imageViewResult.setImageResource(R.drawable.inset_quiz_answer_correct);
+
+        } else {//wrong answer
+            imageViewResult.setImageResource(R.drawable.inset_quiz_answer_wrong);
+
         }
 
         final Handler handler = new Handler();
@@ -352,6 +401,34 @@ public class QuizActivity extends AppCompatActivity {
 //        } else {
 //            buttonConfirmNext.setText("Finish");
 //        }
+    }
+    //hide all options and disable weights so they don't expand when visible
+    private void hideAllOptions() {
+        LinearLayout.LayoutParams layoutParams =
+                new LinearLayout.LayoutParams(((LinearLayout.LayoutParams)(ob1rel.getLayoutParams())));
+        layoutParams.weight = 0;
+        layoutParams.height = ob1rel.getHeight();
+        layoutParams.width = ob1rel.getWidth();
+        layoutParams.gravity = Gravity.CENTER_VERTICAL;
+
+        LinearLayout.LayoutParams layoutParamsQuestionTV =
+                new LinearLayout.LayoutParams(((LinearLayout.LayoutParams)(ob1rel.getLayoutParams())));
+        layoutParamsQuestionTV.height = textViewQuestion.getHeight();
+        layoutParamsQuestionTV.width = textViewQuestion.getWidth();
+        layoutParamsQuestionTV.weight=0;
+
+        textViewQuestion.setLayoutParams(layoutParamsQuestionTV);
+
+        ob1rel.setLayoutParams(layoutParams);
+        ob2rel.setLayoutParams(layoutParams);
+        ob3rel.setLayoutParams(layoutParams);
+        ob4rel.setLayoutParams(layoutParams);
+
+        ob1rel.setVisibility(View.GONE);
+        ob2rel.setVisibility(View.GONE);
+        ob3rel.setVisibility(View.GONE);
+        ob4rel.setVisibility(View.GONE);
+
     }
 
     private void finishQuiz() {
