@@ -71,6 +71,7 @@
         android:padding="5dp">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/chart_button_one_day"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -80,6 +81,7 @@
             android:layout_marginEnd="1dp"/>
         <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
+            android:id="@+id/chart_button_five_days"
             android:layout_height="match_parent"
             android:text="5D"
             android:textSize="14sp"
@@ -89,6 +91,7 @@
         <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
             android:text="1M"
+            android:id="@+id/chart_button_one_month"
             android:textSize="14sp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -98,6 +101,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:id="@+id/chart_button_six_months"
             android:text="6M"
             android:textSize="14sp"
             android:layout_marginStart="1dp"
@@ -107,6 +111,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="1Y"
+            android:id="@+id/chart_button_one_year"
             android:textSize="14sp"
             android:layout_marginStart="1dp"
             android:layout_marginEnd="1dp"/>
@@ -116,6 +121,7 @@
             android:layout_weight="1"
             android:layout_marginStart="1dp"
             android:layout_marginEnd="1dp"
+            android:id="@+id/chart_button_five_years"
             android:text="5Y"
             android:textSize="14sp"/>
     </LinearLayout>
@@ -123,9 +129,171 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:padding="5dp">
+
+
+                    <TextView
+                        android:layout_marginTop="13dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="6dp"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:text="Summary"
+                        android:textSize="25sp" />
+
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TableRow>
+                        <TextView
+                            android:gravity="end|center_vertical"
+                            android:text="Previous Close: "
+                            android:textStyle="bold"
+                            android:layout_margin="3dp"
+                            android:layout_height="50dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"/>
+                        <TextView
+                            android:layout_margin="3dp"
+                            android:gravity="start|center_vertical"
+                            android:text="1,2345.67"
+                            android:layout_height="50dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"/>
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:gravity="end|center_vertical"
+                            android:text="Open: "
+                            android:textStyle="bold"
+                            android:layout_margin="3dp"
+                            android:layout_height="50dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"/>
+                        <TextView
+                            android:layout_margin="3dp"
+                            android:gravity="start|center_vertical"
+                            android:text="1,2345.67"
+                            android:layout_height="50dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"/>
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:gravity="end|center_vertical"
+                            android:text="Bid: "
+                            android:textStyle="bold"
+                            android:layout_margin="3dp"
+                            android:layout_height="50dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"/>
+                        <TextView
+                            android:layout_margin="3dp"
+                            android:gravity="start|center_vertical"
+                            android:text="1,2345.67"
+                            android:layout_height="50dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"/>
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:gravity="end|center_vertical"
+                            android:text="Ask: "
+                            android:textStyle="bold"
+                            android:layout_margin="3dp"
+                            android:layout_height="50dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"/>
+                        <TextView
+                            android:layout_margin="3dp"
+                            android:gravity="start|center_vertical"
+                            android:text="1,2345.67"
+                            android:layout_height="50dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"/>
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:gravity="end|center_vertical"
+                            android:text="Volume: "
+                            android:textStyle="bold"
+                            android:layout_margin="3dp"
+                            android:layout_height="50dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"/>
+                        <TextView
+                            android:layout_margin="3dp"
+                            android:gravity="start|center_vertical"
+                            android:text="1,2345.67"
+                            android:layout_height="50dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"/>
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:gravity="end|center_vertical"
+                            android:text="Market Cap: "
+                            android:textStyle="bold"
+                            android:layout_margin="3dp"
+                            android:layout_height="50dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"/>
+                        <TextView
+                            android:layout_margin="3dp"
+                            android:gravity="start|center_vertical"
+                            android:text="1,2345.67"
+                            android:layout_height="50dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"/>
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:gravity="end|center_vertical"
+                            android:text="Beta: "
+                            android:textStyle="bold"
+                            android:layout_margin="3dp"
+                            android:layout_height="50dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"/>
+                        <TextView
+                            android:layout_margin="3dp"
+                            android:gravity="start|center_vertical"
+                            android:text="1,2345.67"
+                            android:layout_height="50dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"/>
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:gravity="end|center_vertical"
+                            android:text="Day's Range: "
+                            android:textStyle="bold"
+                            android:layout_margin="3dp"
+                            android:layout_height="50dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"/>
+                        <TextView
+                            android:layout_margin="3dp"
+                            android:gravity="start|center_vertical"
+                            android:text="1,2345.67"
+                            android:layout_height="50dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"/>
+                    </TableRow>
+
+                </TableLayout>
 
 
 
