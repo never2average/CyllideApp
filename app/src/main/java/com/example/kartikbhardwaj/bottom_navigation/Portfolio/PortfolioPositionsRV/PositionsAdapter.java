@@ -23,13 +23,13 @@ public class PositionsAdapter extends RecyclerView.Adapter<PositionsViewHolder> 
     List<PositionsModel> positionsModels;
 
 
-    View mView;
-    String positionType;
-    double previousBalance;
-    double quantity;
-    double newBalance;
-    double orderPrice;
-    TextView tv;
+   private View mView;
+   private String positionType;
+  private   double previousBalance;
+   private double quantity;
+   private double newBalance;
+  private   double orderPrice;
+   private TextView tv;
 
 
     @NonNull

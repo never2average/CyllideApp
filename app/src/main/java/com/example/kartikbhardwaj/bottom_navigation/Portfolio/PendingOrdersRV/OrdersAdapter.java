@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PendingOrdersFragment;
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.PendingOrdersInterface;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.google.android.material.card.MaterialCardView;
 
@@ -24,27 +25,17 @@ import com.google.android.material.card.MaterialCardView;
 public class OrdersAdapter extends RecyclerView.Adapter<OrdersViewHolder> {
    private List<OrdersModel>data;
    private MaterialCardView cardView;
-   private GestureDetector mDetector;
-    private static final int SWIPE_MIN_DISTANCE = 120;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+   private String savedPositionType;
+   private String savedOrderType;
+   private String savedStockTicker;
+   private double savedOrderPrice;
+   private int savedQuantity;
 
 
     @Override
     public void onBindViewHolder(@NonNull OrdersViewHolder holder, int position) {
 
         OrdersModel list = data.get(position);
-        cardView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                mDetector.onTouchEvent(event);
-
-                return true;
-            }
-        });
-
-
-
-
 
         holder.populate(list);
 
@@ -69,7 +60,6 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersViewHolder> {
         OrdersViewHolder holder = new OrdersViewHolder(view);
         cardView=view.findViewById(R.id.card);
 
-        mDetector = new GestureDetector(view.getContext(), new MyListener());
 
 
 
@@ -83,43 +73,41 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersViewHolder> {
 
         return holder;
         //return null;
+        }
+
+
+    public void removeItem(int position) {
+        data.remove(position);
+        // notify the item removed by position
+        // to perform recycler view delete animations
+        // NOTE: don't call notifyDataSetChanged()
+        notifyItemRemoved(position);
+        savedOrderPrice=PendingOrdersInterface.orderPrice.get(position);
+        savedOrderType=PendingOrdersInterface.orderType.get(position);
+        savedPositionType=PendingOrdersInterface.positionType.get(position);
+        savedStockTicker=PendingOrdersInterface.stockTicker.get(position);
+        savedQuantity=PendingOrdersInterface.Quantity.get(position);
+        PendingOrdersInterface.positionType.remove(position);
+        PendingOrdersInterface.orderType.remove(position);
+        PendingOrdersInterface.stockTicker.remove(position);
+        PendingOrdersInterface.orderPrice.remove(position);
+        PendingOrdersInterface.Quantity.remove(position);
+
+
+
+    }
+
+    public void restoreItem(OrdersModel item, int position) {
+        data.add(position, item);
+        PendingOrdersInterface.positionType.add(position,savedPositionType);
+        PendingOrdersInterface.orderType.add(position,savedOrderType);
+        PendingOrdersInterface.stockTicker.add(position,savedStockTicker);
+        PendingOrdersInterface.orderPrice.add(position,savedOrderPrice);
+        PendingOrdersInterface.Quantity.add(position,savedQuantity);
+        // notify item added by position
+        notifyItemInserted(position);
     }
 
 
 
 }
-class MyListener extends GestureDetector.SimpleOnGestureListener {
-    private static final int SWIPE_MIN_DISTANCE = 120;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-
-
-
-    @Override
-    public boolean onDown(MotionEvent e) {
-        return true;
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-       // return super.onFling(e1, e2, velocityX, velocityY);
-        if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-
-
-
-            return true; // Right to left
-        }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-
-            return true; // Left to right
-        }
-
-        if(e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-            return false; // Bottom to top
-        }  else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-            return false; // Top to bottom
-        }
-        return false;
-    }
-
-
-    }
-

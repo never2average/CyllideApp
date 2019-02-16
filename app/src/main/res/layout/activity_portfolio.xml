@@ -5,9 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Portfolio.PortfolioActivity"
-    android:id="@+id/dl"
+    android:id="@+id/portfolio_layout"
     android:orientation="vertical"
-    android:background="#fefefe">
+    android:background="#fefefe"
+    >
 
 
         <androidx.appcompat.widget.Toolbar

@@ -110,10 +110,13 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                     public void onClick(View v) {
 
 
+                        newPrice = priceAtPlace;
 
-                            newPrice = priceAtPlace;
 
-                            for(int i=0;i<PortfolioPositionsInterface.stockTicker.size();i++) {
+                        if (orderType.equals("Market")) {
+
+
+                            for (int i = 0; i < PortfolioPositionsInterface.stockTicker.size(); i++) {
                                 if (stockName.getText().toString().equals(PortfolioPositionsInterface.stockTicker.get(i))) {
                                     j = 1;
 
@@ -124,52 +127,44 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                                     newPositiontype = positiontype;
 
 
-                                    if (orderType.equals("Market")) {
+                                    if (positiontype.equals(PortfolioPositionsInterface.positionType.get(i))) {
+
+                                        PortfolioPositionsInterface.Quantity.set(i, (previousQuantity + newQuantity));
+                                        PortfolioPositionsInterface.orderPrice.set(i, ((((previousQuantity * previousPrice) + (newQuantity * priceAtPlace)) / (previousQuantity + newQuantity))));
 
 
+                                    } else {
 
 
-                                        if (positiontype.equals(PortfolioPositionsInterface.positionType.get(i))) {
+                                        if (previousQuantity > newQuantity) {
 
-                                            PortfolioPositionsInterface.Quantity.set(i, (previousQuantity + newQuantity));
-                                            PortfolioPositionsInterface.orderPrice.set(i, ((((previousQuantity * previousPrice) + (newQuantity * priceAtPlace)) / (previousQuantity + newQuantity))));
+
+                                            PortfolioPositionsInterface.Quantity.set(i, (previousQuantity - newQuantity));
+                                            // PortfolioPositionsInterface.positionType.set(i, previousPositionType);
 
 
                                         } else {
 
+                                            if (newQuantity > previousQuantity)
 
-                                            if (previousQuantity > newQuantity) {
-
-
-                                                PortfolioPositionsInterface.Quantity.set(i, (previousQuantity - newQuantity));
-                                                // PortfolioPositionsInterface.positionType.set(i, previousPositionType);
+                                            {
 
 
-                                            } else {
-
-                                                if (newQuantity > previousQuantity)
-
-                                                {
+                                                PortfolioPositionsInterface.Quantity.set(i, (newQuantity - previousQuantity));
+                                                PortfolioPositionsInterface.positionType.set(i, positiontype);
 
 
-                                                    PortfolioPositionsInterface.Quantity.set(i, (newQuantity - previousQuantity));
-                                                    PortfolioPositionsInterface.positionType.set(i, positiontype);
+                                            } else if (newQuantity == previousQuantity) {
 
 
-                                                } else if (newQuantity == previousQuantity) {
+                                                PortfolioPositionsInterface.positionType.remove(i);
+                                                PortfolioPositionsInterface.orderType.remove(i);
+                                                PortfolioPositionsInterface.stockTicker.remove(i);
+                                                PortfolioPositionsInterface.orderPrice.remove(i);
+                                                PortfolioPositionsInterface.Quantity.remove(i);
 
-
-                                                    PortfolioPositionsInterface.positionType.remove(i);
-                                                    PortfolioPositionsInterface.orderType.remove(i);
-                                                    PortfolioPositionsInterface.stockTicker.remove(i);
-                                                    PortfolioPositionsInterface.orderPrice.remove(i);
-                                                    PortfolioPositionsInterface.Quantity.remove(i);
-
-
-                                                }
 
                                             }
-
 
                                         }
 
@@ -179,8 +174,9 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
 
                                 }
                             }
-                            if(j!=1)
-                            {
+
+
+                        if (j != 1) {
 
                             PortfolioPositionsInterface.positionType.add(positiontype);
                             PortfolioPositionsInterface.orderType.add(orderType);
@@ -189,7 +185,8 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                             PortfolioPositionsInterface.Quantity.add(Integer.valueOf(stockQuantity.getText().toString()));
 
 
-                            }
+                        }
+                    }
 
 
 
