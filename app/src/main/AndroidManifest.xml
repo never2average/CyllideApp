@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".quiz.QuizWaitingActivity"></activity>
+        <activity android:name=".Contests.testPortfolioActivity"></activity>
+        <activity android:name=".Contests.ContestLeaderboard" />
+        <activity android:name=".quiz.QuizWaitingActivity" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -24,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".quiz.QuizActivityTest" />
         <activity
             android:name=".Contests.WeeklyActivity"
             android:screenOrientation="portrait" />
@@ -51,10 +54,8 @@
         <activity
             android:name=".notification.NotificationActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".ChartActivity"></activity>
-        <activity android:name=".SplashScreen"></activity>
-
+        <activity android:name=".ChartActivity" />
+        <activity android:name=".SplashScreen" />
     </application>
 
 </manifest>

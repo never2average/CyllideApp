@@ -197,9 +197,13 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                             PendingOrdersInterface.stockTicker.add(stockName.getText().toString());
                             PendingOrdersInterface.orderPrice.add(priceAtPlace);
                             PendingOrdersInterface.Quantity.add(Integer.valueOf(stockQuantity.getText().toString()));
+<<<<<<< HEAD
                             PendingOrdersInterface.executionPrice.add(Double.valueOf(stockQuantity.getText().toString()));
 
 
+=======
+                            PendingOrdersInterface.executionPrice.add(10002.89);
+>>>>>>> 7fb06ba720ccfe20e17af8123a3f3ca7d136b7e9
 
 
 
@@ -252,26 +256,31 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                     @Override
                     public void onCheckedChanged(SingleSelectToggleGroup group, int checkedId) {
                         switch (checkedId){
+
                             case R.id.Buy:
                                // Toast.makeText(itemView.getContext(),"Buy",Toast.LENGTH_LONG).show();
+<<<<<<< HEAD
                                 positiontype ="LONG";
 
 
 
+=======
+                                positiontype ="Buy";
+>>>>>>> 7fb06ba720ccfe20e17af8123a3f3ca7d136b7e9
                                 break;
+
                             case R.id.Sell:
                                 //Toast.makeText(itemView.getContext(),"Sell",Toast.LENGTH_LONG).show();
                                 positiontype="SHORT";
                                 break;
-
 
                             case R.id.Short:
                                 //Toast.makeText(itemView.getContext(),"Short",Toast.LENGTH_LONG).show();
                                 positiontype="SHORT";
                                 break;
 
-
                             case R.id.Cover:
+<<<<<<< HEAD
                                 //Toast.makeText(itemView.getContext(),"Cover",Toast.LENGTH_LONG).show();
                                 positiontype="LONG";
 
@@ -280,6 +289,10 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
 
 
 
+=======
+                                Toast.makeText(itemView.getContext(),"Cover",Toast.LENGTH_LONG).show();
+                                positiontype="Cover";
+>>>>>>> 7fb06ba720ccfe20e17af8123a3f3ca7d136b7e9
                         }
                     }
                 });

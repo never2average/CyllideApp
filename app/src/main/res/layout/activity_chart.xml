@@ -44,7 +44,7 @@
                     android:gravity="center"/>
 
             </LinearLayout>
-            yy<com.google.android.material.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_marginStart="20dp"
                 android:layout_height="350dp"
@@ -52,6 +52,11 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="100dp"
                 android:layout_marginBottom="5dp">
+
+                <WebView
+                    android:id="@+id/web_view_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></WebView>
 
             </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>

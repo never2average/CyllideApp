@@ -11,7 +11,4 @@ public interface PendingOrdersInterface {
     ArrayList<Double>executionPrice=new ArrayList<>();
     ArrayList<Double>orderPrice=new ArrayList<>();
 
-
-
-
 }
