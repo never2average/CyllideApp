@@ -1,6 +1,7 @@
 package com.example.kartikbhardwaj.bottom_navigation;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,13 +26,23 @@ import com.example.kartikbhardwaj.bottom_navigation.stories.StoriesActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
 public class HomeFragment extends Fragment {
+    Calendar startTime =Calendar.getInstance();
+    Dialog quizPopup;
+    TextView timer;
+
+
+
 
 
     @Override
@@ -48,12 +60,18 @@ public class HomeFragment extends Fragment {
     }
     @Override
     public void onViewCreated(@NonNull final View view, final Bundle savedInstanceState) {
+        startTime.set(Calendar.HOUR_OF_DAY,startTime.get(Calendar.HOUR_OF_DAY)+2);
+
+
+
         super.onViewCreated(view, savedInstanceState);
         stories = view.findViewById(R.id.stories);
         contest = view.findViewById(R.id.contest);
         portfolios = view.findViewById(R.id.portfolios);
         quiz = view.findViewById(R.id.quiz);
         final Context context = getContext();
+        quizPopup=new Dialog(view.getContext());
+
 
     }
     @Override
@@ -77,8 +95,45 @@ public class HomeFragment extends Fragment {
         quiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(), StartingScreenActivity.class);
+
+                if(Calendar.getInstance().getTimeInMillis()<startTime.getTimeInMillis()){
+                    quizPopup.setContentView(R.layout.quiz_notstarted_popupxml);
+                    quizPopup.getWindow();
+                    timer=quizPopup.findViewById(R.id.timer);
+                    new CountDownTimer(startTime.getTimeInMillis()-Calendar.getInstance().getTimeInMillis(),1000){
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            //converting millis to sec,min,hour
+                            String hour=String.valueOf(millisUntilFinished/(1000*3600));
+                            String minute=String.valueOf((millisUntilFinished/(1000*60))%60);
+                            String second=String.valueOf(((millisUntilFinished/1000)%60)%60);
+
+                            // formatted the time to string
+                            SimpleDateFormat df =new SimpleDateFormat("HH:mm:ss");
+                            String time=df.format(millisUntilFinished);
+                            //timer.setText(hour+" :"+minute+" : "+second);
+                            timer.setText(time);
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            Intent intent=new Intent(getContext(), StartingScreenActivity.class);
+                            getContext().startActivity(intent);
+
+
+
+                        }
+                    }.start();
+                    quizPopup.show();
+
+
+
+
+                }
+                else{Intent intent=new Intent(getContext(), StartingScreenActivity.class);
                 getContext().startActivity(intent);
+
+                }
             }
         });
         }
