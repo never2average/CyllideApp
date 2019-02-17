@@ -1,7 +1,10 @@
 package com.example.kartikbhardwaj.bottom_navigation.stories;
 
+
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
 import androidx.fragment.app.FragmentPagerAdapter;
 
 public class StoriesPagerAdapter extends FragmentPagerAdapter {

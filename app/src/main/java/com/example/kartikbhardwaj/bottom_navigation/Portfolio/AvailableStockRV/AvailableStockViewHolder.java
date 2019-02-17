@@ -1,20 +1,14 @@
 package com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableStockRV;
 
-import com.example.kartikbhardwaj.bottom_navigation.ChartActivity;
-import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
-import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioActivity;
-import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsFragment;
+import com.example.kartikbhardwaj.bottom_navigation.Charts.ChartActivity;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.PendingOrdersInterface;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.PortfolioPositionsInterface;
 import com.example.kartikbhardwaj.bottom_navigation.R;
-import com.google.android.material.card.MaterialCardView;
 import com.nex3z.togglebuttongroup.SingleSelectToggleGroup;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
