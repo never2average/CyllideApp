@@ -1,21 +1,15 @@
 package com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableStockRV;
 
-import com.example.kartikbhardwaj.bottom_navigation.ChartActivity;
-import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
-import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioActivity;
-import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsFragment;
+import com.example.kartikbhardwaj.bottom_navigation.Charts.ChartActivity;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.BalanceClass;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.PendingOrdersInterface;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.PortfolioPositionsInterface;
 import com.example.kartikbhardwaj.bottom_navigation.R;
-import com.google.android.material.card.MaterialCardView;
 import com.nex3z.togglebuttongroup.SingleSelectToggleGroup;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -197,13 +191,7 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                             PendingOrdersInterface.stockTicker.add(stockName.getText().toString());
                             PendingOrdersInterface.orderPrice.add(priceAtPlace);
                             PendingOrdersInterface.Quantity.add(Integer.valueOf(stockQuantity.getText().toString()));
-<<<<<<< HEAD
                             PendingOrdersInterface.executionPrice.add(Double.valueOf(stockQuantity.getText().toString()));
-
-
-=======
-                            PendingOrdersInterface.executionPrice.add(10002.89);
->>>>>>> 7fb06ba720ccfe20e17af8123a3f3ca7d136b7e9
 
 
 
@@ -259,14 +247,7 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
 
                             case R.id.Buy:
                                // Toast.makeText(itemView.getContext(),"Buy",Toast.LENGTH_LONG).show();
-<<<<<<< HEAD
                                 positiontype ="LONG";
-
-
-
-=======
-                                positiontype ="Buy";
->>>>>>> 7fb06ba720ccfe20e17af8123a3f3ca7d136b7e9
                                 break;
 
                             case R.id.Sell:
@@ -280,19 +261,8 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                                 break;
 
                             case R.id.Cover:
-<<<<<<< HEAD
-                                //Toast.makeText(itemView.getContext(),"Cover",Toast.LENGTH_LONG).show();
                                 positiontype="LONG";
-
-
-
-
-
-
-=======
-                                Toast.makeText(itemView.getContext(),"Cover",Toast.LENGTH_LONG).show();
-                                positiontype="Cover";
->>>>>>> 7fb06ba720ccfe20e17af8123a3f3ca7d136b7e9
+                                break;
                         }
                     }
                 });

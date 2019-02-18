@@ -54,7 +54,7 @@
         <activity
             android:name=".notification.NotificationActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ChartActivity" />
+        <activity android:name=".Charts.ChartActivity" />
         <activity android:name=".SplashScreen" />
     </application>
 
