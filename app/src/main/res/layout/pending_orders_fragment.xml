@@ -2,12 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
     android:background="@android:color/transparent"
     android:id="@+id/fragment_ID"
-=======
-    android:background="#fff8e1"
->>>>>>> 7fb06ba720ccfe20e17af8123a3f3ca7d136b7e9
     >
 
 
