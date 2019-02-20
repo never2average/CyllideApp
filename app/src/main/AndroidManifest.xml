@@ -18,7 +18,7 @@
         <activity android:name=".Contests.ContestLeaderboard" />
         <activity android:name=".quiz.QuizWaitingActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".PhoneAuthActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".quiz.QuizActivityTest" />
         <activity
             android:name=".Contests.WeeklyActivity"
