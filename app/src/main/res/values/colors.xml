@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFC107</color>
+    <color name="colorPrimary">#482cbf</color>
+    <color name="white">#fff</color>
     <color name="colorPrimaryDark">#FFA000</color>
     <color name="backgroundcolor">#FCFCFC</color>
     <color name="lightgray">#ededed</color>
@@ -19,4 +20,5 @@
     <color name="primary_light_max">#fff8e1</color>
     <color name="primary_dark_max">#ff6f00</color>
     <color name="primary_light">#ffe082</color>
+    <color name="background_color">#e0f7fa</color>
 </resources>

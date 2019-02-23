@@ -95,6 +95,9 @@ public class HomeFragment extends Fragment {
         quiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*Comment later*/
+                Intent intent=new Intent(getContext(), StartingScreenActivity.class);
+                getContext().startActivity(intent);
 
                 if(Calendar.getInstance().getTimeInMillis()<startTime.getTimeInMillis()){
                     quizPopup.setContentView(R.layout.quiz_notstarted_popupxml);
@@ -130,11 +133,8 @@ public class HomeFragment extends Fragment {
 
 
                 }
-                else{Intent intent=new Intent(getContext(), StartingScreenActivity.class);
-                getContext().startActivity(intent);
 
                 }
-            }
         });
         }
 
