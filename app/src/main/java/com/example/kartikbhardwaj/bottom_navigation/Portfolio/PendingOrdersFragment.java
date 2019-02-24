@@ -6,10 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-<<<<<<< HEAD
+
 import android.widget.LinearLayout;
-=======
->>>>>>> 7fb06ba720ccfe20e17af8123a3f3ca7d136b7e9
+
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;

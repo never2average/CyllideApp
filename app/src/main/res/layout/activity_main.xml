@@ -26,78 +26,28 @@
             >
 
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/logo"
-                android:layout_weight="1"
-                android:layout_gravity="left"
-                android:id="@+id/logo"
-
-                />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="4"
                 android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content"
-                android:text="TradeRoyale"
-                android:textSize="27sp"
+                android:text='@string/app_name'
+                android:textSize="21sp"
+                android:gravity="center"
                 android:textColor="#fff"
-                android:textStyle="bold"
+
                 android:id="@+id/heading"
                 />
-            <RelativeLayout
+
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-                <RelativeLayout
-                    android:gravity="center"
-                    android:layout_width="65dip"
-                    android:layout_height="65dip"
-                    android:id="@+id/relative_layout">
-
-                    <ImageView
-                        android:layout_gravity="center_vertical"
-
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:id="@+id/notification"
-                        android:src="@drawable/notification_icon"
-
-                        android:background="@drawable/notification_icon"
-                        android:backgroundTint="#ffffff"/>
-                </RelativeLayout>
-                <TextView
-                    android:id="@+id/badge_notification_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignRight="@id/relative_layout"
-                    android:background="@drawable/notification_badge"
-                    android:text="27"
-                    android:textColor="#FFF"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-
-
-
-
-            </RelativeLayout>
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_gravity="center"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:src="@drawable/profile_pic"
-                android:layout_weight="0.9"
-                android:id="@+id/user_image"
-                android:background="?android:attr/selectableItemBackground"
-                android:transitionName="activity_transition"
-
-
-
-
-                />
+                android:padding="8dp"
+                android:src="@drawable/cyllidelogo" />
 
 
 
@@ -105,18 +55,19 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="#eeeeee"
-        app:itemTextColor="@drawable/color"
-        app:menu="@menu/menu_list"
-        app:itemIconTint="@drawable/color"
-        app:labelVisibilityMode="labeled"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:tint="#fff"
+        android:src="@drawable/bottom"
+        app:backgroundTint="@color/colorPrimary"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp" />
 
-        />
+
 
 
 

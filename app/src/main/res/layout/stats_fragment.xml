@@ -27,7 +27,7 @@
                     android:gravity="center"
                     android:text="PERFORMANCE"
                     android:textStyle="bold"
-                    android:textSize="25sp"/>
+                    android:textSize="21sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -103,7 +103,7 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="0.7"
                                 android:text="400"
-                                android:textSize="28sp"
+                                android:textSize="21sp"
                                 android:textColor="@color/colorPrimary"
                                 android:gravity="center"
                                 />
@@ -130,7 +130,7 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="0.7"
                                 android:text="300"
-                                android:textSize="28sp"
+                                android:textSize="21sp"
                                 android:textColor="@color/colorPrimary"
                                 android:gravity="center"
                                 />
@@ -172,7 +172,7 @@
                         android:layout_weight="0.8"
                         android:layout_width="match_parent"
                         android:text="# 12312"
-                        android:textSize="40sp"/>
+                        android:textSize="21sp"/>
 
                     <TextView
                         android:background="@color/colorPrimaryDark"
@@ -183,7 +183,7 @@
                         android:layout_width="match_parent"
                         android:text="Global Rank"
                         android:textStyle="bold"
-                        android:textSize="20sp"/>
+                        android:textSize="21sp"/>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -212,7 +212,7 @@
                         android:layout_weight="0.8"
                         android:layout_width="match_parent"
                         android:text="# 1231"
-                        android:textSize="40sp"/>
+                        android:textSize="21sp"/>
 
                     <TextView
                         android:textColor="#fff"
@@ -222,7 +222,7 @@
                         android:layout_width="match_parent"
                         android:text="RC Rank"
                         android:textStyle="bold"
-                        android:textSize="20sp"
+                        android:textSize="21sp"
                         android:background="@color/colorPrimaryDark"/>
 
                 </LinearLayout>
@@ -258,7 +258,7 @@
                             android:layout_weight="0.8"
                             android:layout_width="match_parent"
                             android:text="12"
-                            android:textSize="40sp"/>
+                            android:textSize="21sp"/>
 
                         <TextView
                             android:background="@color/colorPrimaryDark"
@@ -269,7 +269,7 @@
                             android:text="Referrals"
                             android:textColor="#fff"
                             android:textStyle="bold"
-                            android:textSize="20sp"/>
+                            android:textSize="21sp"/>
 
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -296,7 +296,7 @@
                             android:layout_weight="0.8"
                             android:layout_width="match_parent"
                             android:text="123"
-                            android:textSize="40sp"/>
+                            android:textSize="21sp"/>
 
                         <TextView
                             android:background="@color/colorPrimaryDark"
@@ -307,7 +307,7 @@
                             android:text="Coins"
                             android:textColor="#fff"
                             android:textStyle="bold"
-                            android:textSize="20sp"/>
+                            android:textSize="21sp"/>
 
                     </LinearLayout>
 
