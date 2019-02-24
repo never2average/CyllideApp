@@ -2,13 +2,13 @@ package com.example.kartikbhardwaj.bottom_navigation;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.MyPortfolio;
-import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioActivity;
 import com.example.kartikbhardwaj.bottom_navigation.howitworks.HowItWorksFragment;
 import com.example.kartikbhardwaj.bottom_navigation.notification.NotificationActivity;
 
@@ -38,6 +38,10 @@ public class MainActivity extends AppCompatActivity{
 //        bottomNavigationView.setOnNavigationItemSelectedListener(this);
       //  bottomNavigationView.setSelectedItemId(R.id.home);
         logo=findViewById(R.id.logo);
+        SharedPreferences.Editor editor = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE).edit();
+        editor.putString("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiQnVyam9zZSIsImV4cCI6MTU4MjU1NzQzNH0.M9K5ZcW515hWwBe3gNHdVB6AhQRpubfuQFn7xvrpLNg");
+        editor.apply();
+//        startService(new Intent(this, QuizID.class));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

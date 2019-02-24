@@ -62,6 +62,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:tint="#fff"
+        android:foregroundTint="@android:color/white"
         android:src="@drawable/bottom"
         app:backgroundTint="@color/colorPrimary"
         app:elevation="6dp"
