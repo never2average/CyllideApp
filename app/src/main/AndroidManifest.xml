@@ -15,18 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <receiver
-            android:name=".background_services.AutoStart"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
 
-        <service
-            android:name=".background_services.QuizID"
-            android:exported="false" />
 
         <activity android:name=".Contests.testPortfolioActivity" />
         <activity android:name=".Contests.ContestLeaderboard" />
