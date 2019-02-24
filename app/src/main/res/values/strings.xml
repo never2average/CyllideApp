@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TradeRoyale</string>
+    <string name="app_name">Cyllide</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Pending_Orders_title">Pending Orders</string>
 </resources>

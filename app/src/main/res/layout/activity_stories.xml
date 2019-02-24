@@ -13,7 +13,7 @@
                     app:tabTextColor="#ffffff"
                     android:layout_height="60dp"
                     android:layout_gravity="left"
-                    android:background="@drawable/red"
+                    android:background="@color/colorPrimary"
                     app:tabGravity="fill"
                     app:tabMode="fixed"/>
     <ImageView

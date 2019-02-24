@@ -48,7 +48,7 @@ public class StoriesFragment extends Fragment {
         storiesRV = view.findViewById(R.id.fragment_stories_rv);
         final Context context = getContext();
         storiesRV.setHasFixedSize(true);
-        storiesRV.setLayoutManager(new LinearLayoutManager(context));
+        storiesRV.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }
 
     @Override
