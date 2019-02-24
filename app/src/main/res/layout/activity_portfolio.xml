@@ -16,6 +16,7 @@
             android:layout_height="56dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             android:id="@+id/tool_bar1"
+            android:background="@color/colorPrimary"
             android:layout_marginLeft="-14dp"
             >
             <LinearLayout
@@ -27,9 +28,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Portfolio"
+                    android:textColor="#fff"
                     android:layout_weight="3"
                     android:gravity="center"
-                    android:textSize="25sp"
+                    android:textSize="21sp"
                     android:id="@+id/tool_bar_title"/>
 
             </LinearLayout>

@@ -22,123 +22,101 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="#fff"
-            android:clickable="true"
-            android:focusable="true"
-            android:elevation="0dp"
-            android:foreground="?android:attr/selectableItemBackground">
+        <androidx.cardview.widget.CardView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp"
+            android:layout_margin="5dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginLeft="32dp"
+            android:id="@+id/storiescard"
+            android:elevation="5dp"
+            android:padding="16dp"
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
+            >
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+
                 <com.facebook.drawee.view.SimpleDraweeView
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
                     android:id="@+id/stories"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center"
-                    app:actualImageResource="@drawable/red"
-                    app:roundAsCircle="true"
+                    android:layout_weight="3"
                     android:elevation="10dp"
-                    />
+                    app:actualImageResource="@drawable/storieslogo"
+                    app:roundAsCircle="true" />
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:background="@color/transparent"
-                    android:elevation="15dp"
-                    android:paddingBottom="20dp"
-                    android:src="@drawable/ic_library_books_black_24dp"
-                    android:tint="#ffffff" />
-
-
-
-            </FrameLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="35dp"
+                    android:layout_weight="1"
+                    android:padding="8dp"
                     android:text="Stories"
-                    android:textSize="19sp"
-                    android:fontFamily="@font/ralewayblack"
-                    android:textColor="#ffffff"
                     android:textAlignment="center"
-                    android:textStyle="bold" />
+                    android:textColor="#000"
+                    android:textSize="16sp" />
             </LinearLayout>
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="#00000000"
-            android:clickable="true"
-            android:elevation="10dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:focusable="true">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="100dp"
+            app:cardCornerRadius="5dp"
+            android:padding="16dp"
+            android:id="@+id/contestcard"
+            android:layout_margin="5dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginLeft="32dp"
+            android:elevation="5dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
                 <com.facebook.drawee.view.SimpleDraweeView
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:id="@+id/contest"
-                    app:actualImageResource="@drawable/orange"
+                    app:actualImageResource="@drawable/contestlogo"
                     app:roundAsCircle="true"
                     android:elevation="10dp"
+                    android:layout_weight="3"
                     />
 
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:background="@color/transparent"
-                    android:elevation="15dp"
-                    android:paddingBottom="20dp"
-                    android:src="@drawable/sword"
-                    android:tint="#ffffff" />
 
 
 
-            </FrameLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
+
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="35dp"
+                    android:layout_weight="1"
                     android:text="Contest"
-                    android:textSize="19sp"
-                    android:fontFamily="@font/ralewayblack"
-                    android:textColor="#ffffff"
-                    android:textAlignment="center"
-                    android:textStyle="bold" />
+                    android:textSize="16sp"
+                    android:padding="8dp"
+                    android:textColor="#000"
+
+                    />
+
+
             </LinearLayout>
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 
@@ -146,133 +124,162 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:baselineAligned="false"
         android:clipToPadding="false"
         android:gravity="center"
         android:orientation="horizontal">
-        
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="#00000000"
-            android:clickable="true"
-            android:orientation="vertical"
-            android:elevation="0dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:focusable="true">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:onClick="switchToPortfolioActivity">
-
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    android:layout_gravity="center"
-                    android:id="@+id/portfolios"
-                    app:actualImageResource="@drawable/green"
-                    app:roundAsCircle="true"
-                    android:elevation="10dp"
-                    />
-
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:background="@color/transparent"
-                    android:elevation="15dp"
-                    android:paddingBottom="20dp"
-                    android:src="@drawable/chart"
-                    android:tint="#ffffff" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp"
+            android:id="@+id/portfoliocard"
+            android:elevation="5dp"
+            android:padding="16dp"
+            android:layout_margin="5dp">
 
 
 
-            </FrameLayout>
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Portfolios"
-                    android:fontFamily="@font/ralewayblack"
-                    android:layout_marginTop="35dp"
-                    android:textColor="#ffffff"
-                    android:textSize="19sp"
-                    android:textAlignment="center"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="#00000000"
-            android:clickable="true"
-            android:elevation="10dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:focusable="true">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+
                 <com.facebook.drawee.view.SimpleDraweeView
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:id="@+id/quiz"
-                    app:actualImageResource="@drawable/blue"
+                    android:layout_weight="3"
+                    app:actualImageResource="@drawable/portfoliologo"
                     app:roundAsCircle="true"
                     android:elevation="10dp"
                     />
 
-                <ImageView
-                    android:contentDescription="Quiz Image"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:background="@color/transparent"
-                    android:elevation="15dp"
-                    android:paddingBottom="20dp"
-                    android:src="@drawable/quiz"
-                    android:tint="#ffffff" />
 
 
 
 
-            </FrameLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:layout_weight="1"
+                    android:text="Portfolios"
                     android:layout_gravity="center"
-                    android:layout_marginTop="35dp"
-                    android:text="Quiz"
-                    android:textSize="19sp"
-                    android:fontFamily="@font/ralewayblack"
-                    android:textColor="#ffffff"
                     android:textAlignment="center"
-                    android:textStyle="bold" />
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    />
             </LinearLayout>
 
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp"
+            android:id="@+id/quizcard"
+            android:elevation="5dp"
+            android:padding="16dp"
+            android:layout_margin="5dp">
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="3"
+                    app:actualImageResource="@drawable/quizlogo"
+                    app:roundAsCircle="true"
+                    android:elevation="10dp"
+                    />
+
+
+
+
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:layout_weight="1"
+                    android:text="Quiz"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    />
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
 
     </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        app:cardCornerRadius="5dp"
+        android:id="@+id/forumcard"
+        android:elevation="5dp"
+        android:padding="16dp"
+        android:layout_margin="5dp">
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+
+                android:layout_gravity="center"
+
+                app:actualImageResource="@drawable/fourmlogo"
+                app:roundAsCircle="true"
+                android:elevation="10dp"
+                />
+
+
+
+
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Forum"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="16sp"
+                />
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
 
 
 </LinearLayout>

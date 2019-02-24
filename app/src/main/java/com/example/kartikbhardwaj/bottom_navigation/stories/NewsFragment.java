@@ -54,7 +54,7 @@ public class NewsFragment extends Fragment{
         final Context context = getContext();
         newsRV = view.findViewById(R.id.fragment_news_rv);
         newsRV.setHasFixedSize(true);
-        newsRV.setLayoutManager(new LinearLayoutManager(context));
+        newsRV.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         Fresco.initialize(context);
         if (newsDate.size()==0) jsonParse();
         return view;

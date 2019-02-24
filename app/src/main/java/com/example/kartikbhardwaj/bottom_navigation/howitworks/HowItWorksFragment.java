@@ -31,23 +31,17 @@ public class HowItWorksFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Fresco.initialize(getContext());
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-        MainActivity.bottomNavigationView.setVisibility(GONE);
+
         return inflater.inflate(R.layout.activity_how_it_works,null);
     }
     @Override
     public void onViewCreated(@NonNull final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        fabSkip=view.findViewById(R.id.fabSkip);
+
         viewPager = (ViewPager) view.findViewById(R.id.how_it_works_pager);
         viewPager.setAdapter(new HowItWorksAdapter(getChildFragmentManager()));
 
-        fabSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getContext(),MainActivity.class);
-                startActivity(intent);
-            }
-        });
+
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tab_layout_how);
         tabLayout.setupWithViewPager(viewPager, true);
     }
