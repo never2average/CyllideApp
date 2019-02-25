@@ -67,15 +67,19 @@ public class QuizRulesActivity extends AppCompatActivity {
 
                 @Override
                 public void onResponse(String response) {
-                    byte[] encryptionKey = "##gdvhcbxkwjlei23**ukefdvhbxjscmn".getBytes(StandardCharsets.UTF_8);
+                    Log.e("RealityCheck","Inside onResponse");
+
+                    byte[] encryptionKey = "##gdvhcbxkwjlei23**ukefdvhbxjscm".getBytes(StandardCharsets.UTF_8);
+                    Log.e("RealityCheck", String.valueOf(encryptionKey.length));
                     AdvancedEncryptionStandard advancedEncryptionStandard = new AdvancedEncryptionStandard(encryptionKey);
-                    byte[] decryptedText = new byte[0];
                     try {
-                        decryptedText = advancedEncryptionStandard.decrypt(response.getBytes(StandardCharsets.UTF_8));
+                        byte[] decryptedText = advancedEncryptionStandard.decrypt(response.getBytes(StandardCharsets.UTF_8));
+                        Log.e("RealityCheck",new String(decryptedText));
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        Log.e("RealityCheck","exception", e);
+
                     }
-                    Log.e("",new String(decryptedText));
+
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -91,6 +95,7 @@ public class QuizRulesActivity extends AppCompatActivity {
             };
 
             requestQueue.add(stringRequest);
+            Log.e("RealityCheck","Request sent");
         } catch (Exception e) {
             e.printStackTrace();
         }
