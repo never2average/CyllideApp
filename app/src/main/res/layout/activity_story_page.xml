@@ -9,8 +9,7 @@
     <com.facebook.drawee.view.SimpleDraweeView
         android:layout_width="match_parent"
         android:layout_height="225dp"
-        android:id="@+id/storyThumbImage"
-        app:placeholderImage="@drawable/red"/>
+        android:id="@+id/storyThumbImage"/>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
