@@ -7,13 +7,16 @@
     android:background="#fcfcfc"
     android:gravity="center"
     android:orientation="vertical"
-    android:weightSum="3"
-    android:paddingStart="10dp"
-    android:paddingEnd="10dp"
+    android:paddingStart="18dp"
+    android:paddingEnd="18dp"
+    android:paddingTop="55dp"
+    android:paddingBottom="20dp"
     >
 
 
     <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="6dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -23,8 +26,9 @@
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
             app:cardCornerRadius="5dp"
             android:layout_margin="5dp"
             android:layout_marginRight="32dp"
@@ -37,15 +41,15 @@
 
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/stories"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:layout_weight="3"
                     android:elevation="10dp"
@@ -54,22 +58,22 @@
 
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:padding="8dp"
                     android:text="Stories"
                     android:textAlignment="center"
                     android:textColor="#000"
-                    android:textSize="16sp" />
+                    android:textSize="19sp" />
             </LinearLayout>
 
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="100dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             app:cardCornerRadius="5dp"
             android:padding="16dp"
             android:id="@+id/contestcard"
@@ -77,16 +81,16 @@
             android:layout_marginRight="32dp"
             android:layout_marginLeft="32dp"
             android:elevation="5dp"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <com.facebook.drawee.view.SimpleDraweeView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:id="@+id/contest"
                     app:actualImageResource="@drawable/contestlogo"
@@ -103,13 +107,12 @@
 
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
                     android:layout_weight="1"
                     android:text="Contest"
-                    android:textSize="16sp"
-                    android:padding="8dp"
+                    android:textSize="19sp"
                     android:textColor="#000"
 
                     />
@@ -121,6 +124,8 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -130,8 +135,9 @@
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
             app:cardCornerRadius="5dp"
             android:id="@+id/portfoliocard"
             android:elevation="5dp"
@@ -141,14 +147,14 @@
 
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
 
                 <com.facebook.drawee.view.SimpleDraweeView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:layout_weight="3"
                     app:actualImageResource="@drawable/portfoliologo"
@@ -163,15 +169,15 @@
 
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:padding="8dp"
                     android:layout_weight="1"
                     android:text="Portfolios"
-                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:textAlignment="center"
                     android:textColor="#000"
-                    android:textSize="16sp"
+                    android:textSize="19sp"
                     />
             </LinearLayout>
 
@@ -179,8 +185,9 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
             app:cardCornerRadius="5dp"
             android:id="@+id/quizcard"
             android:elevation="5dp"
@@ -190,14 +197,14 @@
 
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
 
                 <com.facebook.drawee.view.SimpleDraweeView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:layout_weight="3"
                     app:actualImageResource="@drawable/quizlogo"
@@ -212,15 +219,15 @@
 
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:padding="8dp"
                     android:layout_weight="1"
                     android:text="Quiz"
-                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:textAlignment="center"
                     android:textColor="#000"
-                    android:textSize="16sp"
+                    android:textSize="19sp"
                     />
             </LinearLayout>
 
@@ -232,8 +239,9 @@
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
         app:cardCornerRadius="5dp"
         android:id="@+id/forumcard"
         android:elevation="5dp"
@@ -243,18 +251,17 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
 
             <com.facebook.drawee.view.SimpleDraweeView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:layout_gravity="center"
-
-                app:actualImageResource="@drawable/fourmlogo"
+                app:actualImageResource="@drawable/forumlogo"
                 app:roundAsCircle="true"
                 android:elevation="10dp"
                 />
@@ -266,15 +273,16 @@
 
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:padding="8dp"
                 android:layout_marginRight="8dp"
                 android:text="Forum"
-                android:layout_gravity="center"
+                android:gravity="center"
                 android:textAlignment="center"
                 android:textColor="#000"
-                android:textSize="16sp"
+                android:textSize="19sp"
                 />
         </LinearLayout>
 
