@@ -41,6 +41,7 @@ import java.util.Calendar;
 import java.util.Map;
 
 import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 public class QuizRulesActivity extends AppCompatActivity {
 
@@ -63,22 +64,34 @@ public class QuizRulesActivity extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(this);
             String URL = "http://api.cyllide.com/api/client/quiz/get/latest";
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            final StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
 
                 @Override
                 public void onResponse(String response) {
+                    Log.e("RealityCheck",response);
                     Log.e("RealityCheck","Inside onResponse");
 
-                    byte[] encryptionKey = "##gdvhcbxkwjlei23**ukefdvhbxjscm".getBytes(StandardCharsets.UTF_8);
-                    Log.e("RealityCheck", String.valueOf(encryptionKey.length));
-                    AdvancedEncryptionStandard advancedEncryptionStandard = new AdvancedEncryptionStandard(encryptionKey);
-                    try {
-                        byte[] decryptedText = advancedEncryptionStandard.decrypt(response.getBytes(StandardCharsets.UTF_8));
-                        Log.e("RealityCheck",new String(decryptedText));
-                    } catch (Exception e) {
-                        Log.e("RealityCheck","exception", e);
-
-                    }
+//My method
+//                    byte[] msg = hex2byte(response.getBytes());
+//                    String secretKeyString="##gdvhcbxkwjlei23**ukefdvhbxjscm";
+//                    byte[] result = new byte[0];
+//                    try {
+//                        result = decrypt(secretKeyString, msg);
+//                        Log.e("RealityCheck",result.toString());
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+                    //======================================================
+//                    byte[] encryptionKey = "##gdvhcbxkwjlei23**ukefdvhbxjscm".getBytes(StandardCharsets.UTF_8);
+//                    Log.e("RealityCheck", String.valueOf(encryptionKey.length));
+//                    AdvancedEncryptionStandard advancedEncryptionStandard = new AdvancedEncryptionStandard(encryptionKey);
+//                    try {
+//                        byte[] decryptedText = advancedEncryptionStandard.decrypt(response.getBytes(StandardCharsets.UTF_8));
+//                        Log.e("RealityCheck",new String(decryptedText));
+//                    } catch (Exception e) {
+//                        Log.e("RealityCheck","exception", e);
+//
+//                    }
 
                 }
             }, new Response.ErrorListener() {
@@ -141,4 +154,38 @@ public class QuizRulesActivity extends AppCompatActivity {
             }
         }.start();
     }
+
+
+    public static byte[] hex2byte(byte[] b) {
+        if ((b.length % 2) != 0)
+            throw new IllegalArgumentException("hello");
+        byte[] b2 = new byte[b.length / 2];
+        for (int n = 0; n < b.length; n += 2) {
+            String item = new String(b, n, 2);
+            b2[n / 2] = (byte) Integer.parseInt(item, 16);
+        }
+        return b2;
+
+    }
+    public static byte[] decrypt(String secretKeyString, byte[] encryptedMsg)
+
+            throws Exception {
+        Key key = generateKey(secretKeyString);
+        Cipher c = Cipher.getInstance("AES");
+        c.init(Cipher.DECRYPT_MODE, key);
+        byte[] decValue = c.doFinal(encryptedMsg);
+        return decValue;
+
+    }
+
+    private static Key generateKey(String secretKeyString) throws Exception {
+
+        Key key = new SecretKeySpec(secretKeyString.getBytes(), "AES");
+
+        return key;
+
+    }
+
 }
+
+
