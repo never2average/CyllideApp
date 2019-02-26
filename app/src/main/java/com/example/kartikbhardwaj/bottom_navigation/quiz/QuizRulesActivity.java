@@ -92,6 +92,14 @@ public class QuizRulesActivity extends AppCompatActivity {
                 public Map<String, String> getHeaders() {
                     return mHeaders;
                 }
+
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse nr) {
+                    int n = nr.statusCode;
+                    Log.d("Res Code",""+n);
+                    return super.parseNetworkResponse(nr);
+                }
+
             };
 
             requestQueue.add(stringRequest);
