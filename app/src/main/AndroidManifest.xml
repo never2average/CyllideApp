@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".quiz.QuizRulesActivity"></activity>
+        <activity android:name=".quiz.QuizRulesActivity" />
         <activity android:name=".Contests.testPortfolioActivity" />
         <activity android:name=".Contests.ContestLeaderboard" />
         <activity android:name=".quiz.QuizWaitingActivity" />
@@ -56,6 +56,7 @@
             android:name=".notification.NotificationActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Charts.ChartActivity" />
+        <activity android:name=".PhoneAuth"></activity>
     </application>
 
 </manifest>

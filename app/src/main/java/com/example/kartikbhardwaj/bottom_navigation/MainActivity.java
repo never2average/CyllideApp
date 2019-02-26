@@ -1,6 +1,5 @@
 package com.example.kartikbhardwaj.bottom_navigation;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,41 +8,29 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.MyPortfolio;
-import com.example.kartikbhardwaj.bottom_navigation.howitworks.HowItWorksFragment;
-import com.example.kartikbhardwaj.bottom_navigation.notification.NotificationActivity;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity{
 
+
     Toolbar toolbar;
-    public static BottomNavigationView bottomNavigationView;
-    CircleImageView imageButton;
-    ImageView notificationImage;
     ImageView logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        bottomNavigationView =findViewById(R.id.bottom_navigation);
-//        bottomNavigationView.setOnNavigationItemSelectedListener(this);
-      //  bottomNavigationView.setSelectedItemId(R.id.home);
         logo=findViewById(R.id.logo);
         SharedPreferences.Editor editor = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE).edit();
         editor.putString("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiQnVyam9zZSIsImV4cCI6MTU4MjU1NzQzNH0.M9K5ZcW515hWwBe3gNHdVB6AhQRpubfuQFn7xvrpLNg");
         editor.apply();
-//        startService(new Intent(this, QuizID.class));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,26 +43,6 @@ public class MainActivity extends AppCompatActivity{
 
         toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-//        notificationImage=findViewById(R.id.notification);
-//        imageButton=findViewById(R.id.user_image);
-
-//
-//        imageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent profileIntent =new Intent(MainActivity.this,Profile_Activity.class);
-//                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,imageButton,ViewCompat.getTransitionName(imageButton));
-//                startActivity(profileIntent,options.toBundle());
-//            }
-//        });
-//        notificationImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent notificationIntent =new Intent(MainActivity.this,NotificationActivity.class);
-//                startActivity(notificationIntent);
-//            }
-//        });
     }
 
         public boolean loadfragment(Fragment fragment) {
