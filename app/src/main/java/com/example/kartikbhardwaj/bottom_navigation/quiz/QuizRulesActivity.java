@@ -3,6 +3,7 @@ package com.example.kartikbhardwaj.bottom_navigation.quiz;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.collection.ArrayMap;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -46,6 +47,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class QuizRulesActivity extends AppCompatActivity {
 
     Button startQuizButton;
+    Dialog revivePopup;
     Calendar startTime = Calendar.getInstance();
 
     @Override
@@ -72,15 +74,16 @@ public class QuizRulesActivity extends AppCompatActivity {
                     Log.e("RealityCheck","Inside onResponse");
 
 //My method
-//                    byte[] msg = hex2byte(response.getBytes());
-//                    String secretKeyString="##gdvhcbxkwjlei23**ukefdvhbxjscm";
-//                    byte[] result = new byte[0];
-//                    try {
-//                        result = decrypt(secretKeyString, msg);
-//                        Log.e("RealityCheck",result.toString());
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
+
+                    try {
+                        byte[] msg = hex2byte(response.getBytes());
+                        String secretKeyString="##gdvhcbxkwjlei23**ukefdvhbxjscm";
+                        byte[] result;
+                        result = decrypt(secretKeyString, msg);
+                        Log.e("RealityCheck",result.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     //======================================================
 //                    byte[] encryptionKey = "##gdvhcbxkwjlei23**ukefdvhbxjscm".getBytes(StandardCharsets.UTF_8);
 //                    Log.e("RealityCheck", String.valueOf(encryptionKey.length));
@@ -146,6 +149,10 @@ public class QuizRulesActivity extends AppCompatActivity {
                 startQuizButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        revivePopup= new Dialog(QuizRulesActivity.this
+                        );
+                        revivePopup.setContentView(R.layout.quiz_revive_popup);
+                        revivePopup.show();
 
 
 
