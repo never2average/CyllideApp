@@ -107,46 +107,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 /*Comment later*/
-//                Intent intent=new Intent(getContext(), StartingScreenActivity.class);
-//                getContext().startActivity(intent);
-//
-//                if(Calendar.getInstance().getTimeInMillis()<startTime.getTimeInMillis()){
-//                    quizPopup.setContentView(R.layout.quiz_notstarted_popupxml);
-//                    quizPopup.getWindow();
-//                    timer=quizPopup.findViewById(R.id.timer);
-//                    new CountDownTimer(startTime.getTimeInMillis()-Calendar.getInstance().getTimeInMillis(),1000){
-//                        @Override
-//                        public void onTick(long millisUntilFinished) {
-//                            //converting millis to sec,min,hour
-//                            String hour=String.valueOf(millisUntilFinished/(1000*3600));
-//                            String minute=String.valueOf((millisUntilFinished/(1000*60))%60);
-//                            String second=String.valueOf(((millisUntilFinished/1000)%60)%60);
-//
-//                            // formatted the time to string
-//                            SimpleDateFormat df =new SimpleDateFormat("HH:mm:ss");
-//                            String time=df.format(millisUntilFinished);
-//                            //timer.setText(hour+" :"+minute+" : "+second);
-//                            timer.setText(time);
-//                        }
-//
-//                        @Override
-//                        public void onFinish() {
-//                            Intent intent=new Intent(getContext(), StartingScreenActivity.class);
-//                            getContext().startActivity(intent);
-//
-//
-//
-//                        }
-//                    }.start();
-//                    quizPopup.show();
-                Intent intent = new Intent(getContext(), QuizRulesActivity.class);// StartingScreenActivity.class);
+                Intent intent = new Intent(getContext(), QuizRulesActivity.class);
                 getContext().startActivity(intent);
-
-
-
-
-
-
                 }
 
         });
