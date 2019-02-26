@@ -59,16 +59,6 @@ public class MainActivity extends AppCompatActivity{
 //        notificationImage=findViewById(R.id.notification);
 //        imageButton=findViewById(R.id.user_image);
 
-
-        logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(MainActivity.this,SplashScreen.class);
-                startActivity(intent);
-
-            }
-        });
 //
 //        imageButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
