@@ -40,12 +40,27 @@
 
 
     <FrameLayout
-        android:layout_marginTop="0dp"
+        android:id="@+id/container1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/container1"
-        android:background="@android:color/transparent"
-        />
+        android:layout_marginTop="0dp"
+        android:background="@android:color/transparent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="5dp"
+            app:cardElevation="7dp">
+
+            <WebView
+                android:id="@+id/web_view_chart_portfolio"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></WebView>
+
+        </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
 
 
 </LinearLayout>

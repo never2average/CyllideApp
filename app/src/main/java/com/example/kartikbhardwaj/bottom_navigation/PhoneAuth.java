@@ -1,6 +1,7 @@
 package com.example.kartikbhardwaj.bottom_navigation;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.collection.ArrayMap;
 
 import android.database.Cursor;
 import android.net.Uri;
@@ -9,8 +10,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PhoneAuth extends AppCompatActivity {
 
@@ -35,6 +49,69 @@ public class PhoneAuth extends AppCompatActivity {
 //                readSMS();
                 boolean isPhoneValid = checkvalid(input_phoneNo);
                 if(isPhoneValid){
+                    final Map<String, String> mHeaders = new ArrayMap<String, String>();
+                    mHeaders.put("phone", input_phoneNo);
+                    mHeaders.put("username", input_scName);
+
+
+                    try {
+                        RequestQueue requestQueue;
+                        requestQueue = Volley.newRequestQueue(getBaseContext());
+                        String URL = "http://api.cyllide.com/api/client/auth/otp/send";
+
+
+
+
+                        final StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+
+                            @Override
+                            public void onResponse(String response) {
+                                Log.e("RealityCheck",response);
+                                Log.e("RealityCheck","Inside onResponse");
+
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("VOLLEY", error.toString());
+                            }
+                        })
+
+
+                            {
+                                @Override
+                                public Map<String, String> getHeaders () {
+                                return mHeaders;
+                            }
+
+
+
+                            @Override
+                            protected Response<String> parseNetworkResponse(NetworkResponse nr) {
+                                int n = nr.statusCode;
+                                Log.d("Res Code",""+n);
+                                return super.parseNetworkResponse(nr);
+                            }
+
+
+
+
+                            @Override
+                            protected Map<String, String> getParams() {
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("username", input_phoneNo.trim());
+                                params.put("phone", input_scName.trim());
+                                return params;
+                            }
+
+                        };
+
+                        requestQueue.add(stringRequest);
+                        Log.e("RealityCheck","Request sent");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     //Volley Code Goes Here
                 }
                 else{
