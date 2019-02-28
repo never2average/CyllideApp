@@ -20,16 +20,17 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="match_parent"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
             app:cardElevation="7dp">
 
             <WebView
                 android:id="@+id/web_view_chart_portfolio"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></WebView>
+                android:layout_height="match_parent"/>
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -45,6 +46,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             app:cardCornerRadius="15dp"
+            android:id="@+id/stockchooser"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="10dp"
             app:cardBackgroundColor="@color/colorPrimaryDark"
@@ -58,6 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
+                android:contentDescription="Choose Stocks"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -71,6 +74,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             app:cardCornerRadius="15dp"
+            android:id="@+id/order_history"
             app:cardBackgroundColor="@color/colorPrimaryDark"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -81,6 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <ImageView
+                    android:contentDescription="Order History"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
@@ -95,6 +100,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="20dp"
             app:cardCornerRadius="15dp"
+            android:id="@+id/portfolio_positions"
             app:cardBackgroundColor="@color/colorPrimaryDark"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -105,6 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <ImageView
+                    android:contentDescription="Portfolio Positions"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"

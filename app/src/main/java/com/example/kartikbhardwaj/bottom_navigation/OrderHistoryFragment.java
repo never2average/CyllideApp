@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 
 
-public class OrderHistory extends Fragment {
+public class OrderHistoryFragment extends Fragment {
 
 
     @Override
