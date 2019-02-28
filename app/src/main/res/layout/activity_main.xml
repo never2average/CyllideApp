@@ -27,9 +27,9 @@
                 android:layout_height="80dp"
                 android:layout_gravity="center"
                 android:contentDescription="companyLogo"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:src="@drawable/cyllidelogo" />
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:src="@drawable/logo" />
 
             <TextView
                 android:id="@+id/heading"

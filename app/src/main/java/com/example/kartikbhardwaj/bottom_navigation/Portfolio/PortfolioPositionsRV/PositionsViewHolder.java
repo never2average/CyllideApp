@@ -12,7 +12,6 @@ public class PositionsViewHolder extends RecyclerView.ViewHolder {
 
     TextView positionTickerTV;
     TextView positionQuantityTV,positionCurrPriceTV,positionTypeTV,positionValueTV;
-    FrameLayout minusBtn;
 
 
     public PositionsViewHolder(@NonNull View itemView) {
@@ -22,7 +21,6 @@ public class PositionsViewHolder extends RecyclerView.ViewHolder {
         positionTickerTV=itemView.findViewById(R.id.tv_pos_ticker);
         positionTypeTV=itemView.findViewById(R.id.pos_type);
         positionValueTV=itemView.findViewById(R.id.pos_total_amt);
-        minusBtn=itemView.findViewById(R.id.minus_button);
     }
 
     public void populate(PositionsModel item){

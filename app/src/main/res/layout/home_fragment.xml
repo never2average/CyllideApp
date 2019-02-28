@@ -24,8 +24,9 @@
         android:clipToPadding="false"
         android:gravity="center"
         android:orientation="horizontal">
-
-        <androidx.cardview.widget.CardView
+    
+    
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
@@ -52,8 +53,9 @@
                     android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:layout_weight="3"
+                    android:padding="20dp"
                     android:elevation="10dp"
-                    app:actualImageResource="@drawable/storieslogo"
+                    app:actualImageResource="@mipmap/storieslogo"
                     app:roundAsCircle="true" />
 
 
@@ -67,11 +69,9 @@
                     android:textColor="#000"
                     android:textSize="19sp" />
             </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_weight="1"
             app:cardCornerRadius="5dp"
@@ -92,19 +92,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_gravity="center"
+                    android:padding="20dp"
                     android:id="@+id/contest"
-                    app:actualImageResource="@drawable/contestlogo"
+                    app:actualImageResource="@mipmap/contestlogo"
                     app:roundAsCircle="true"
                     android:elevation="10dp"
                     android:layout_weight="3"
                     />
-
-
-
-
-
-
-
 
                 <TextView
                     android:layout_width="match_parent"
@@ -114,12 +108,10 @@
                     android:text="Contest"
                     android:textSize="19sp"
                     android:textColor="#000"
-
                     />
 
-
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 
@@ -134,7 +126,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
@@ -157,16 +149,11 @@
                     android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:layout_weight="3"
-                    app:actualImageResource="@drawable/portfoliologo"
+                    android:padding="20dp"
+                    app:actualImageResource="@mipmap/portfoliologo"
                     app:roundAsCircle="true"
                     android:elevation="10dp"
                     />
-
-
-
-
-
-
 
                 <TextView
                     android:layout_width="match_parent"
@@ -182,9 +169,9 @@
             </LinearLayout>
 
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
@@ -207,16 +194,11 @@
                     android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:layout_weight="3"
-                    app:actualImageResource="@drawable/quizlogo"
+                    android:padding="20dp"
+                    app:actualImageResource="@mipmap/quizlogo"
                     app:roundAsCircle="true"
                     android:elevation="10dp"
                     />
-
-
-
-
-
-
 
                 <TextView
                     android:layout_width="match_parent"
@@ -232,13 +214,13 @@
             </LinearLayout>
 
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
 
 
     </LinearLayout>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.7"
@@ -260,18 +242,12 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:padding="20dp"
                 android:layout_gravity="center"
-                app:actualImageResource="@drawable/forumlogo"
+                app:actualImageResource="@mipmap/forumlogo"
                 app:roundAsCircle="true"
                 android:elevation="10dp"
                 />
-
-
-
-
-
-
-
             <TextView
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -287,7 +263,7 @@
         </LinearLayout>
 
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
 </LinearLayout>
