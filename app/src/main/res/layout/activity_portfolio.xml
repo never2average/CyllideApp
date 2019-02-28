@@ -7,43 +7,15 @@
     tools:context=".Portfolio.PortfolioActivity"
     android:id="@+id/portfolio_layout"
     android:orientation="vertical"
-    android:background="#fefefe"
     >
 
 
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            android:id="@+id/tool_bar1"
-            android:background="@color/colorPrimary"
-            android:layout_marginLeft="-14dp"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Portfolio"
-                    android:textColor="#fff"
-                    android:layout_weight="3"
-                    android:gravity="center"
-                    android:textSize="21sp"
-                    android:id="@+id/tool_bar_title"/>
-
-            </LinearLayout>
-
-        </androidx.appcompat.widget.Toolbar>
-
-
     <FrameLayout
-        android:id="@+id/container1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:layout_marginTop="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:id="@+id/container1"
         android:background="@android:color/transparent">
 
         <com.google.android.material.card.MaterialCardView
@@ -60,7 +32,88 @@
                 android:layout_height="match_parent"></WebView>
 
         </com.google.android.material.card.MaterialCardView>
+
+
     </FrameLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.55"
+        android:layout_marginBottom="12dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            app:cardCornerRadius="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            android:layout_height="match_parent"
+            app:cardElevation="8dp"
+            android:layout_weight="1">
+
+        <LinearLayout
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:src="@drawable/stockanalysis"/>
+
+        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:cardCornerRadius="15dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/orders_pending"/>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="20dp"
+            app:cardCornerRadius="15dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/portfoliopositions"/>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
 
 
 </LinearLayout>
