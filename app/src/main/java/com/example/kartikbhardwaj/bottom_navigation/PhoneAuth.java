@@ -1,5 +1,6 @@
 package com.example.kartikbhardwaj.bottom_navigation;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.collection.ArrayMap;
 
@@ -17,6 +18,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.mashape.unirest.http.HttpResponse;
@@ -117,6 +123,31 @@ public class PhoneAuth extends AppCompatActivity {
                 else{
                     Toast.makeText(PhoneAuth.this,"InvalidPhoneNumber",Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        SmsRetrieverClient client = SmsRetriever.getClient(this /* context */);
+
+// Starts SmsRetriever, which waits for ONE matching SMS message until timeout
+// (5 minutes). The matching SMS message will be sent via a Broadcast Intent with
+// action SmsRetriever#SMS_RETRIEVED_ACTION.
+        Task<Void> task = client.startSmsRetriever();
+
+// Listen for success/failure of the start Task. If in a background thread, this
+// can be made blocking using Tasks.await(task, [timeout]);
+        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // Successfully started retriever, expect broadcast intent
+                // ...
+            }
+        });
+
+        task.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Failed to start retriever, inspect Exception for more details
+                // ...
             }
         });
     }
