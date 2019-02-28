@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -45,6 +46,9 @@ public class PortfolioActivity extends AppCompatActivity {
 
         stockName = getIntent().getStringExtra("stock_name");
         newStockName=getIntent().getStringExtra("newStockName");
+        WebView webView = (WebView) findViewById(R.id.web_view_chart_portfolio);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("file:///android_asset/tt.html");
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);

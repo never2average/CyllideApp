@@ -4,6 +4,7 @@
     package="com.example.kartikbhardwaj.bottom_navigation">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_SMS"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
@@ -56,7 +57,9 @@
             android:name=".notification.NotificationActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Charts.ChartActivity" />
-        <activity android:name=".PhoneAuth"></activity>
+        <activity android:name=".PhoneAuth">
+
+        </activity>
     </application>
 
 </manifest>
