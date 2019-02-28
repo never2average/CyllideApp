@@ -28,6 +28,8 @@ import com.example.kartikbhardwaj.bottom_navigation.stories.NewsData;
 import com.example.kartikbhardwaj.bottom_navigation.stories.StoriesActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.material.card.MaterialCardView;
+
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +56,7 @@ public class HomeFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
 
-    CardView stories, contest, portfolios, quiz;
+    MaterialCardView stories, contest, portfolios, quiz;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

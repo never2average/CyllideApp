@@ -16,123 +16,113 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.ViewGroup;
+import android.view.View;
 import android.webkit.WebView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
+import android.widget.FrameLayout;
 
-import com.example.kartikbhardwaj.bottom_navigation.HomeFragment;
-import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
-import com.example.kartikbhardwaj.bottom_navigation.PasswordChangeStatus;
+import com.example.kartikbhardwaj.bottom_navigation.OrderHistoryFragment;
 import com.example.kartikbhardwaj.bottom_navigation.R;
-import com.example.kartikbhardwaj.bottom_navigation.StatsFragment;
-import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.card.MaterialCardView;
+import com.nex3z.togglebuttongroup.button.LabelToggle;
 
 
 public class PortfolioActivity extends AppCompatActivity {
 
-    TextView toolBarTitle;
-    String stockName;
-    String newStockName;
-    String  buttonStatus;
-    String rvStatus;
-
+    MaterialCardView stockAnalysis, orderHistory, portfolioPositions;
+    FrameLayout fl;
+    LabelToggle oneDay, oneWeek, oneMonth, oneYear, sixMonths;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolio);
-        toolBarTitle=findViewById(R.id.tool_bar_title);
-        androidx.appcompat.widget.Toolbar toolbar =findViewById(R.id.tool_bar1);
 
-        stockName = getIntent().getStringExtra("stock_name");
-        newStockName=getIntent().getStringExtra("newStockName");
-        WebView webView = (WebView) findViewById(R.id.web_view_chart_portfolio);
+        final WebView webView = (WebView) findViewById(R.id.web_view_chart_portfolio);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("file:///android_asset/tt.html");
+        webView.loadUrl("file:///android_asset/oneday.html");
 
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(false);
+        oneDay = findViewById(R.id.nifty_one_day);
+        oneDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                webView.loadUrl("file:///android_asset/oneday.html");
+            }
+        });
+
+        oneWeek = findViewById(R.id.nifty_one_wk);
+        oneWeek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                webView.loadUrl("file:///android_asset/oneweek.html");
+            }
+        });
+
+        oneMonth = findViewById(R.id.nifty_one_mon);
+        oneMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                webView.loadUrl("file:///android_asset/onemonth.html");
+            }
+        });
+
+        sixMonths = findViewById(R.id.nifty_six_mon);
+        sixMonths.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                webView.loadUrl("file:///android_asset/sixmonths.html");
+            }
+        });
+
+        oneYear = findViewById(R.id.nifty_one_yr);
+        oneYear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                webView.loadUrl("file:///android_asset/oneyear.html");
+            }
+        });
 
 
+        fl = findViewById(R.id.portfolio_container);
 
 
-
-
-        if(PasswordChangeStatus.rvCardstatus)
-        {
-            toolBarTitle.setText(stockName);
-
-
-        }
-
-        if(PasswordChangeStatus.buttonstatus)
-        {
-            toolBarTitle.setText(newStockName);
-
-        }
-
-
-        AvailableStocksFragment fragment=new AvailableStocksFragment();
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.container1,fragment);
-        fragmentTransaction.commit();
-
-
-
-        }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            case R.id.stockanalysis:
-
+        stockAnalysis = findViewById(R.id.stockchooser);
+        stockAnalysis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fl.removeAllViews();
                 AvailableStocksFragment fragment1=new AvailableStocksFragment();
                 FragmentManager fragmentManager=getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container1,fragment1);
+                fragmentTransaction.replace(R.id.portfolio_container,fragment1);
                 fragmentTransaction.commit();
-                return true;
+            }
+        });
 
-            case R.id.portfoliopositions:
+        orderHistory = findViewById(R.id.order_history);
+        orderHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fl.removeAllViews();
+                OrderHistoryFragment fragment1 = new OrderHistoryFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.portfolio_container, fragment1);
+                fragmentTransaction.commit();
+            }
+        });
 
-                PortfolioPositionsFragment fragment=new PortfolioPositionsFragment();
-                FragmentManager fragmentManager1=getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction1 = fragmentManager1.beginTransaction();
-                fragmentTransaction1.replace(R.id.container1,fragment);
-                fragmentTransaction1.commit();
-                item.setChecked(true);
-                return true;
-
-            case R.id.orderspending:
-
-                PendingOrdersFragment fragment3=new PendingOrdersFragment();
-                FragmentManager fragmentManager3=getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction3 = fragmentManager3.beginTransaction();
-                fragmentTransaction3.replace(R.id.container1,fragment3);
-                fragmentTransaction3.commit();
-                item.setChecked(true);
-                return true;
-
-        }
-        return super.onOptionsItemSelected(item);
+        portfolioPositions = findViewById(R.id.portfolio_positions);
+        portfolioPositions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fl.removeAllViews();
+                PortfolioPositionsFragment fragment1 = new PortfolioPositionsFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.portfolio_container, fragment1);
+                fragmentTransaction.commit();
+            }
+        });
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.portfolioappbaritems,menu);
-        MenuItem item=menu.findItem(R.id.stockanalysis);
-        item.setChecked(true);
-
-        return true;
-    }
-
 }
