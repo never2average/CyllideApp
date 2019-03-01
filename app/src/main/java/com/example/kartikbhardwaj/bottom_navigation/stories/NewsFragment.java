@@ -31,6 +31,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
 import static android.content.ContentValues.TAG;
 
@@ -56,8 +60,38 @@ public class NewsFragment extends Fragment{
         newsRV.setHasFixedSize(true);
         newsRV.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         Fresco.initialize(context);
-        if (newsDate.size()==0) jsonParse();
+        if (newsDate.size()==0){
+//            jsonParse();
+            readCachedNews();
+        }
         return view;
+    }
+
+    private void readCachedNews() {
+        Realm realm = Realm.getDefaultInstance();
+        try {
+            realm.executeTransactionAsync(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    RealmResults<NewsModel> data = realm.where(NewsModel.class)
+                            .sort("newsDate", Sort.DESCENDING)
+                            .findAll();
+                    if(data.size()==0){
+                        jsonParse();
+                    }
+                    if (getActivity() != null) {
+                        final NewsAdapter mAdapter = new NewsAdapter(data);
+                        newsRV.setAdapter(mAdapter);
+                    } else {
+                        Log.e(TAG, "getActivity() returned null in onStart()");
+                    }
+                    NewsAdapter newsAdapter= new NewsAdapter(data);
+                    newsRV.setAdapter(newsAdapter);
+                }
+            });
+        } finally {
+            realm.close();
+        }
     }
 
 
@@ -84,18 +118,11 @@ public class NewsFragment extends Fragment{
                                 newsDate.add(article.getString("publishedAt"));
 
                             }
-                            List<NewsModel> data = new ArrayList<>(12);
+
                             for (int i = 0; i < newsTitle.size(); i++) {
-                                data.add(new NewsModel(newsTitle.get(i),newsThumbnailSource.get(i),newsDate.get(i),newsSource.get(i),newsDescription.get(i),url.get(i),author.get(i)));
+                                addToRealm(new NewsModel(newsTitle.get(i),newsThumbnailSource.get(i),newsDate.get(i),newsSource.get(i),newsDescription.get(i),url.get(i),author.get(i)));
                             }
-                            if (getActivity() != null) {
-                                final NewsAdapter mAdapter = new NewsAdapter(data);
-                                newsRV.setAdapter(mAdapter);
-                            } else {
-                                Log.e(TAG, "getActivity() returned null in onStart()");
-                            }
-                            NewsAdapter newsAdapter= new NewsAdapter(data);
-                            newsRV.setAdapter(newsAdapter);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -109,5 +136,20 @@ public class NewsFragment extends Fragment{
         requestQueue.add(request);
 
     }
+
+    private void addToRealm(final NewsModel newsArticle){
+        Realm realm = Realm.getDefaultInstance();
+        try {
+            realm.executeTransactionAsync(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.insertOrUpdate(newsArticle);
+                }
+            });
+        } finally {
+            realm.close();
+        }
+    }
+
 
 }

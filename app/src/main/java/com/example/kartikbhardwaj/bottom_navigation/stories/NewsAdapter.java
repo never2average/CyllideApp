@@ -10,11 +10,14 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
+public class NewsAdapter extends RealmRecyclerViewAdapter<NewsModel,NewsViewHolder>{
     List<NewsModel> partList;
 
-    public NewsAdapter(List<NewsModel> partList) {
+    public NewsAdapter(OrderedRealmCollection<NewsModel> partList) {
+        super(partList,true);
         this.partList = partList;
     }
 

@@ -1,7 +1,20 @@
 package com.example.kartikbhardwaj.bottom_navigation.stories;
 
-public class NewsModel {
-    private String newsName,newsDescription,newsImageURL,newsDate, newsSource, newsUrl, newsAuthor;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
+
+public class NewsModel extends RealmObject {
+    private String newsName;
+    private String newsDescription;
+    private String newsImageURL;
+    private String newsDate;
+    private String newsSource;
+    @PrimaryKey
+    @Required
+    private String newsUrl;
+    private String newsAuthor;
+
 
     public NewsModel(String newsName, String newsImageURL, String newsDate, String newsSource, String newsDescription, String newsUrl, String newsAuthor)
     {
