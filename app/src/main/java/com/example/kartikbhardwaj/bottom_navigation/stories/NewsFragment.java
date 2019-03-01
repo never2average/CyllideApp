@@ -88,10 +88,9 @@ public class NewsFragment extends Fragment {
                 .sort("newsDate", Sort.DESCENDING)
                 .findAll();
         if (data.size() == 0) {
-            //Need to fetch data now, cancelling scheduled task so it don't interfere
-            MainApplication.cancelNewsUpdateWork();
-            //Task is rescheduled after Response (or lack thereof) is received
-            jsonParse();
+            //Replace the previously scheduled task so that it runs as soon as there is a network connection
+            MainApplication.setUpNewsUpdateWorker();
+            //TODO: Check if this works in a clean app install
         } else {
             Log.e("NewsFragment", "Reading data from cache, have " + data.size() + " items");
             for (NewsModel newsArticle : data) {

@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkInfo;
@@ -45,7 +46,8 @@ public class MainApplication extends Application {
                 .setConstraints(networkConstraint)
                 .addTag(NEWS_UPDATE_TAG)
                 .build();
-        WorkManager.getInstance().enqueue(newsUpdater);
+        WorkManager.getInstance().enqueueUniquePeriodicWork(NEWS_UPDATE_TAG,
+                ExistingPeriodicWorkPolicy.REPLACE,newsUpdater);
         Log.e("MainApplication", "Scheduled New Worker!");
     }
 
