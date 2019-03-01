@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.kartikbhardwaj.bottom_navigation.MainApplication;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
@@ -31,6 +32,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.WorkManager;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
@@ -40,6 +42,7 @@ import static android.content.ContentValues.TAG;
 
 public class NewsFragment extends Fragment{
 
+    private Realm realmInstance;
     RequestQueue requestQueue;
     private RecyclerView newsRV;
     ArrayList<String> newsTitle=new ArrayList<>();
@@ -49,6 +52,16 @@ public class NewsFragment extends Fragment{
     ArrayList<String> newsSource=new ArrayList<>();
     ArrayList<String> url=new ArrayList<>();
     ArrayList<String> author=new ArrayList<>();
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Log.e("NewsFragment","Realm instance initialized");
+        realmInstance = Realm.getDefaultInstance();
+
+    }
 
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
@@ -65,33 +78,41 @@ public class NewsFragment extends Fragment{
             readCachedNews();
         }
         return view;
+
+
     }
 
     private void readCachedNews() {
-        Realm realm = Realm.getDefaultInstance();
-        try {
-            realm.executeTransactionAsync(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    RealmResults<NewsModel> data = realm.where(NewsModel.class)
-                            .sort("newsDate", Sort.DESCENDING)
-                            .findAll();
-                    if(data.size()==0){
-                        jsonParse();
-                    }
-                    if (getActivity() != null) {
-                        final NewsAdapter mAdapter = new NewsAdapter(data);
-                        newsRV.setAdapter(mAdapter);
-                    } else {
-                        Log.e(TAG, "getActivity() returned null in onStart()");
-                    }
-                    NewsAdapter newsAdapter= new NewsAdapter(data);
-                    newsRV.setAdapter(newsAdapter);
-                }
-            });
-        } finally {
-            realm.close();
+        realmInstance.beginTransaction();
+        RealmResults<NewsModel> data = realmInstance.where(NewsModel.class)
+                .sort("newsDate", Sort.DESCENDING)
+                .findAll();
+        if(data.size()==0){
+            //Need to fetch data now, cancelling scheduled task so it don't interfere
+            MainApplication.cancelNewsUpdateWork();
+            //Task is rescheduled after Response (or lack thereof) is received
+            jsonParse();
+        } else {
+            Log.e("NewsFragment","Reading data from cache, have "+data.size()+" items");
+            for(NewsModel newsArticle : data){
+                newsTitle.add(newsArticle.getNewsName());
+                newsThumbnailSource.add(newsArticle.getNewsImageURL());
+                newsDate.add(newsArticle.getNewsDate());
+                newsSource.add(newsArticle.getNewsSource());
+                newsDescription.add(newsArticle.getNewsDescription());
+                url.add(newsArticle.getNewsUrl());
+                author.add(newsArticle.getNewsAuthor());
+            }
         }
+        realmInstance.commitTransaction();
+
+        if (getActivity() != null) {
+            final NewsAdapter mAdapter = new NewsAdapter(data);
+            newsRV.setAdapter(mAdapter);
+        } else {
+            Log.e(TAG, "getActivity() returned null in onStart()");
+        }
+
     }
 
 
@@ -126,11 +147,15 @@ public class NewsFragment extends Fragment{
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        finally {
+                            MainApplication.setUpNewsUpdateWorker();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                MainApplication.setUpNewsUpdateWorker();
             }
         });
         requestQueue.add(request);
@@ -138,18 +163,22 @@ public class NewsFragment extends Fragment{
     }
 
     private void addToRealm(final NewsModel newsArticle){
-        Realm realm = Realm.getDefaultInstance();
-        try {
-            realm.executeTransactionAsync(new Realm.Transaction() {
+        realmInstance.executeTransactionAsync(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
                     realm.insertOrUpdate(newsArticle);
                 }
-            });
-        } finally {
-            realm.close();
-        }
+        });
+
     }
 
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.e("NewsFragment","NewsFragment About To Be Destroyed");
+        realmInstance.close();
+
+    }
 }

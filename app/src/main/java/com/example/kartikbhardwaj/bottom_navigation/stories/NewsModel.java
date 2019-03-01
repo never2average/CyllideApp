@@ -15,6 +15,10 @@ public class NewsModel extends RealmObject {
     private String newsUrl;
     private String newsAuthor;
 
+    //Required for Realm
+    public NewsModel(){
+
+    }
 
     public NewsModel(String newsName, String newsImageURL, String newsDate, String newsSource, String newsDescription, String newsUrl, String newsAuthor)
     {

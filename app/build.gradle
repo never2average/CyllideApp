@@ -71,6 +71,8 @@ dependencies {
 
 
     implementation 'io.realm:android-adapters:2.1.1'
+    implementation "android.arch.work:work-runtime:1.0.0-rc02"
+
 
 }
 apply plugin: 'announce'

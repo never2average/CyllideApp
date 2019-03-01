@@ -1,5 +1,6 @@
 package com.example.kartikbhardwaj.bottom_navigation.stories;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ public class NewsAdapter extends RealmRecyclerViewAdapter<NewsModel,NewsViewHold
 
     public NewsAdapter(OrderedRealmCollection<NewsModel> partList) {
         super(partList,true);
+        Log.e("NewsAdapter","Creating NewsAdapter");
         this.partList = partList;
     }
 
