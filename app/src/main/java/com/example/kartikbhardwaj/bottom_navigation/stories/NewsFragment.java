@@ -90,7 +90,6 @@ public class NewsFragment extends Fragment {
         if (data.size() == 0) {
             //Replace the previously scheduled task so that it runs as soon as there is a network connection
             MainApplication.setUpNewsUpdateWorker();
-            //TODO: Check if this works in a clean app install
         } else {
             Log.e("NewsFragment", "Reading data from cache, have " + data.size() + " items");
             for (NewsModel newsArticle : data) {
@@ -111,62 +110,6 @@ public class NewsFragment extends Fragment {
         } else {
             Log.e(TAG, "getActivity() returned null in onStart()");
         }
-
-    }
-
-
-    private void jsonParse() {
-        requestQueue = Volley.newRequestQueue(getContext());
-        final String newsURL = "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=f6bddf738e64468280f0a7173b265b41";
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, newsURL, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("articles");
-
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject article = jsonArray.getJSONObject(i);
-
-                                newsTitle.add(article.getString("title"));
-                                newsThumbnailSource.add(article.getString("urlToImage"));
-                                newsSource.add(article.getJSONObject("source").getString("name"));
-                                url.add(article.getString("url"));
-                                author.add(article.getString("author"));
-                                newsDescription.add(article.getString("description"));
-                                newsDate.add(article.getString("publishedAt"));
-
-                            }
-
-                            for (int i = 0; i < newsTitle.size(); i++) {
-                                addToRealm(new NewsModel(newsTitle.get(i), newsThumbnailSource.get(i), newsDate.get(i), newsSource.get(i), newsDescription.get(i), url.get(i), author.get(i)));
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } finally {
-                            MainApplication.setUpNewsUpdateWorker();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                MainApplication.setUpNewsUpdateWorker();
-            }
-        });
-        requestQueue.add(request);
-
-    }
-
-    private void addToRealm(final NewsModel newsArticle) {
-        realmInstance.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.insertOrUpdate(newsArticle);
-            }
-        });
 
     }
 

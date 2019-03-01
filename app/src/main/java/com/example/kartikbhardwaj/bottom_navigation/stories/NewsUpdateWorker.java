@@ -73,9 +73,7 @@ public class NewsUpdateWorker extends Worker {
             e.printStackTrace();
         } catch (TimeoutException e) {
             e.printStackTrace();
-        }
-
-        finally {
+        } finally {
             if(!realmInstance.isClosed()){
                 realmInstance.close();
             }
