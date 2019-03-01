@@ -1,6 +1,7 @@
 package com.example.kartikbhardwaj.bottom_navigation.stories;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,6 +37,7 @@ public class NewsUpdateWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
+        Log.e("NewsUpdateWorker","Worker was called!");
         initRealm();
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -60,6 +62,7 @@ public class NewsUpdateWorker extends Worker {
                     ));
                 }
                 realmInstance.close();
+                Log.e("NewsUpdateWorker", "Worker returning after success");
                 return Result.success();
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -76,6 +79,8 @@ public class NewsUpdateWorker extends Worker {
             if(!realmInstance.isClosed()){
                 realmInstance.close();
             }
+
+            Log.e("NewsUpdateWorker", "Worker returning after failure");
             return Result.failure();
         }
 

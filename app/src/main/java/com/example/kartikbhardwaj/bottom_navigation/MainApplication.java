@@ -21,6 +21,7 @@ import io.realm.RealmConfiguration;
 public class MainApplication extends Application {
 
     public static final String NEWS_UPDATE_TAG = "update news data in cache";
+    private static final int UPDATE_FREQUENCY_MINUTES = 15;
 
     @Override
     public void onCreate() {
@@ -39,7 +40,7 @@ public class MainApplication extends Application {
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build();
         PeriodicWorkRequest newsUpdater = new PeriodicWorkRequest.Builder(NewsUpdateWorker.class,
-                30, TimeUnit.MINUTES)
+                UPDATE_FREQUENCY_MINUTES, TimeUnit.MINUTES)
                 .setConstraints(networkConstraint)
                 .addTag(NEWS_UPDATE_TAG)
                 .build();
