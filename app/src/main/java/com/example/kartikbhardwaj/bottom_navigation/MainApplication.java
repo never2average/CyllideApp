@@ -2,6 +2,7 @@ package com.example.kartikbhardwaj.bottom_navigation;
 
 import android.app.Activity;
 import android.app.Application;
+import android.util.Log;
 
 import com.example.kartikbhardwaj.bottom_navigation.stories.NewsUpdateWorker;
 
@@ -45,7 +46,7 @@ public class MainApplication extends Application {
                 .addTag(NEWS_UPDATE_TAG)
                 .build();
         WorkManager.getInstance().enqueue(newsUpdater);
-
+        Log.e("MainApplication", "Scheduled New Worker!");
     }
 
     public static void cancelNewsUpdateWork(){
