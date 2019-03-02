@@ -1,11 +1,11 @@
-package com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableStocksRV;
+package com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableIndicesRV;
 
-public class AvailableStocksModel {
+public class AvailableIndexModel {
     private String indexName;
     private String indexValue;
     private double indexChanges;
 
-    public AvailableStocksModel(String indexName, String indexValue, double indexChanges) {
+    public AvailableIndexModel(String indexName, String indexValue, double indexChanges) {
         this.indexName = indexName;
         this.indexValue = indexValue;
         this.indexChanges = indexChanges;

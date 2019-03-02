@@ -24,7 +24,7 @@ public class PositionsViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void populate(PositionsModel item){
-        positionValueTV.setText(item.getPositionValue());
+        positionValueTV.setText("₹ "+item.getPositionValue());
         positionTypeTV.setText(item.getPositionType());
         positionTickerTV.setText(item.getPositionTicker());
         positionCurrPriceTV.setText(item.getPositionCurrPrice());

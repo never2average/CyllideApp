@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableStockRV.AvailableStockAdapter;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableStockRV.AvailableStockModel;
-import com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableStocksRV.AvailableStocksAdapter;
-import com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableStocksRV.AvailableStocksModel;
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableIndicesRV.AvailableIndexAdapter;
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableIndicesRV.AvailableIndexModel;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 
 import java.util.ArrayList;
@@ -37,10 +36,10 @@ public class AvailableStocksFragment extends Fragment {
     private Double stockPrices[]={70000.0,1020.0,240.0,170.0,1000.0};
     private Double priceChanges[]={-3.1,6.23,-7.29,1.9,2.34};
 
-    private List<AvailableStocksModel> dummyData() {
-        List<AvailableStocksModel> stocksModelList = new ArrayList<>();
+    private List<AvailableIndexModel> dummyData() {
+        List<AvailableIndexModel> stocksModelList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            stocksModelList.add(new AvailableStocksModel(indexNames[i],indexValues[i],indexChanges[i]));
+            stocksModelList.add(new AvailableIndexModel(indexNames[i],indexValues[i],indexChanges[i]));
         }
         return stocksModelList;
     }
@@ -62,8 +61,8 @@ public class AvailableStocksFragment extends Fragment {
         View view=inflater.inflate(R.layout.available_stocks_fragment,null);
         RV=view.findViewById(R.id.showstocks);
         RV.setLayoutManager(new LinearLayoutManager(getActivity()));
-        final List<AvailableStocksModel> data1=dummyData();
-        AvailableStocksAdapter stocksAdapter=new AvailableStocksAdapter(data1);
+        final List<AvailableIndexModel> data1=dummyData();
+        AvailableIndexAdapter stocksAdapter=new AvailableIndexAdapter(data1);
         RV.setAdapter(stocksAdapter);
         searchView=view.findViewById(R.id.searchbarstocks);
 //        searchView.setIconifiedByDefault(false);
@@ -84,7 +83,7 @@ public class AvailableStocksFragment extends Fragment {
                     return true;
                 }
                 else{
-                    RV.setAdapter(new AvailableStocksAdapter(data1));
+                    RV.setAdapter(new AvailableIndexAdapter(data1));
                     return true;
                 }
             }

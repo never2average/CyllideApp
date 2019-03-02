@@ -22,16 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public class PositionsAdapter extends RecyclerView.Adapter<PositionsViewHolder>  {
     List<PositionsModel> positionsModels;
 
-
-   private View mView;
-   private String positionType;
-  private   double previousBalance;
-   private double quantity;
-   private double newBalance;
-  private   double orderPrice;
-   private TextView tv;
-
-
     @NonNull
     @Override
     public PositionsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,8 +31,7 @@ public class PositionsAdapter extends RecyclerView.Adapter<PositionsViewHolder> 
         return holder;
     }
 
-    public PositionsAdapter(List<PositionsModel> positionsModels,View mView) {
-        this.mView=mView;
+    public PositionsAdapter(List<PositionsModel> positionsModels) {
         this.positionsModels = positionsModels;
     }
 

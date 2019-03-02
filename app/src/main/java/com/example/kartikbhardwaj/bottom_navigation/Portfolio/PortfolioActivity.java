@@ -1,26 +1,14 @@
 package com.example.kartikbhardwaj.bottom_navigation.Portfolio;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
-import com.example.kartikbhardwaj.bottom_navigation.OrderHistoryFragment;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.google.android.material.card.MaterialCardView;
 import com.nex3z.togglebuttongroup.button.LabelToggle;

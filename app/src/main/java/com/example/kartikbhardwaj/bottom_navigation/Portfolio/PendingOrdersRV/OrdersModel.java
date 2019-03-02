@@ -2,10 +2,10 @@ package com.example.kartikbhardwaj.bottom_navigation.Portfolio.PendingOrdersRV;
 
 public class OrdersModel {
 
-  private   String OrderType;
-  private   String PositionType;
-  private   String Quantity;
-  private   String ExecutionPrice;
+  private String OrderType;
+  private String PositionType;
+  private String Quantity;
+  private String ExecutionPrice;
   private String StockTicker;
   private String CurrentStockPrice;
 

@@ -1,22 +1,29 @@
 <html>
 <head>
     <script type="text/javascript" src="loader.js"></script>
+    <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
 
+      var settings = {
+          "url": "http://data.cyllide.com/data/nifty50",
+          "method": "GET",
+          "headers": {
+             "value": "1 day"
+           }
+      }
+
+      $.ajax(settings).done(function (response) {
+            console.log(response);
+      });
+
       function drawChart() {
+
+
+
+
         var data = google.visualization.arrayToDataTable([
-          ['', ''],
-          ['1',  1000],
-          ['2',  1170],
-          ['3',  660],
-          ['4',  1030],
-          ['5', 2134],
-          ['6',123],
-          ['7', 235],
-          ['8', 925],
-          ['9', 400]
         ]);
 
         var options = {
