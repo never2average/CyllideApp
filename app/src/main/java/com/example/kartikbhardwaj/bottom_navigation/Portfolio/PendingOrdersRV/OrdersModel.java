@@ -2,18 +2,14 @@ package com.example.kartikbhardwaj.bottom_navigation.Portfolio.PendingOrdersRV;
 
 public class OrdersModel {
 
-  private String OrderType;
   private String PositionType;
   private String Quantity;
-  private String ExecutionPrice;
   private String StockTicker;
   private String CurrentStockPrice;
 
-    public OrdersModel(String orderType, String positionType, String quantity, String executionPrice, String stockTicker, String currentStockPrice) {
-        OrderType = orderType;
+    public OrdersModel(String positionType, String quantity, String stockTicker, String currentStockPrice) {
         PositionType = positionType;
         Quantity = quantity;
-        ExecutionPrice = executionPrice;
         StockTicker = stockTicker;
         CurrentStockPrice = currentStockPrice;
     }
@@ -35,14 +31,6 @@ public class OrdersModel {
         StockTicker = stockTicker;
     }
 
-    public String getOrderType() {
-        return OrderType;
-    }
-
-    public void setOrderType(String orderType) {
-        OrderType = orderType;
-    }
-
     public String getPositionType() {
         return PositionType;
     }
@@ -59,11 +47,4 @@ public class OrdersModel {
         Quantity = quantity;
     }
 
-    public String getExecutionPrice() {
-        return ExecutionPrice;
-    }
-
-    public void setExecutionPrice(String executionPrice) {
-        ExecutionPrice = executionPrice;
-    }
 }

@@ -19,6 +19,7 @@ import android.view.View;
 
 import com.example.kartikbhardwaj.bottom_navigation.Contests.WeeklyActivity;
 //import com.example.kartikbhardwaj.bottom_navigation.stories.NewsData;
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.MyPortfolio;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioActivity;
 import com.example.kartikbhardwaj.bottom_navigation.quiz.QuizActivity;
 import com.example.kartikbhardwaj.bottom_navigation.quiz.QuizActivityTest;
@@ -100,7 +101,7 @@ public class HomeFragment extends Fragment {
         portfolios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(), PortfolioActivity.class);
+                Intent intent=new Intent(getContext(), MyPortfolio.class);
                 startActivity(intent);
             }
         });

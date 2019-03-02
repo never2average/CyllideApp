@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,8 +17,10 @@ import com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableStockRV.A
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableStockRV.AvailableStockModel;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableIndicesRV.AvailableIndexAdapter;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableIndicesRV.AvailableIndexModel;
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.BalanceClass;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +29,7 @@ public class AvailableStocksFragment extends Fragment {
 
 
     SearchView searchView;
+    public TextView BalanceTXTV;
     RecyclerView RV;
     private String indexNames[]={"Nifty Auto","Nifty IT","Nifty Pharma","Nifty","Sensex"};
     private String indexValues[]={"1920","5120","2340","11000","35000"};
@@ -64,6 +68,9 @@ public class AvailableStocksFragment extends Fragment {
         final List<AvailableIndexModel> data1=dummyData();
         AvailableIndexAdapter stocksAdapter=new AvailableIndexAdapter(data1);
         RV.setAdapter(stocksAdapter);
+        BalanceTXTV = view.findViewById(R.id.balance);
+        DecimalFormat formatter = new DecimalFormat("#,###.00");
+        BalanceTXTV.setText("₹ " + String.valueOf(formatter.format(BalanceClass.balance)));
         searchView=view.findViewById(R.id.searchbarstocks);
 //        searchView.setIconifiedByDefault(false);
 //        searchView.clearFocus();
@@ -91,4 +98,8 @@ public class AvailableStocksFragment extends Fragment {
         return view;
 
     }
+    public void setTextViewText(String value){
+        BalanceTXTV.setText(value);
+    }
+
 }

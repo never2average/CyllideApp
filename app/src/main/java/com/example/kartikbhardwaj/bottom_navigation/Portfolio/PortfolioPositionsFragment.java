@@ -12,11 +12,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PendingOrdersRV.OrdersAdapter;
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PendingOrdersRV.OrdersModel;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.BalanceClass;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.PositionsAdapter;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.PositionsModel;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,14 +27,21 @@ import java.util.List;
 public class PortfolioPositionsFragment extends Fragment {
 
 
-    public TextView BalanceTXTV;
-    private RecyclerView RV;
+
+    private RecyclerView positionsRV, pendingOrdersRV;
 
 
-    private List<PositionsModel> dummyData(){
+    private List<PositionsModel> dummyPortfolioPositionsData(){
         List<PositionsModel> data= new ArrayList<>();
         for(int i=0;i<3;i++){
             data.add(new PositionsModel("RELIANCE","100", "220.13", "LONG", "23400"));
+        }
+        return data;
+    }
+    private List<OrdersModel> dummyPendingOrdersData() {
+        List<OrdersModel> data = new ArrayList<>(12);
+        for (int i = 0; i < 4; i++) {
+            data.add(new OrdersModel("Long","10","RELIANCE","144.32"));
         }
         return data;
     }
@@ -40,16 +50,6 @@ public class PortfolioPositionsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        BalanceTXTV = view.findViewById(R.id.balance);
-        // seting balance in textview
-        BalanceTXTV.setText("₹ " + String.valueOf(BalanceClass.balance));
-
-
-
-    }
-    public void setTextViewText(String value){
-        BalanceTXTV.setText(value);
     }
 
 
@@ -58,22 +58,22 @@ public class PortfolioPositionsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.portfolio_positions_fragment,null);
-        RV = rootView.findViewById(R.id.positions_rv);
-        RV.setLayoutManager(new LinearLayoutManager(getActivity()));
+        positionsRV = rootView.findViewById(R.id.positions_rv);
+        positionsRV.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        List<PositionsModel> data1 =dummyData();
-        PositionsAdapter positionsAdapter= new PositionsAdapter(data1);//,rootView);
-        RV.setAdapter(positionsAdapter);
+        pendingOrdersRV = rootView.findViewById(R.id.pending_Orders_RV);
+        pendingOrdersRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        List<PositionsModel> data1 =dummyPortfolioPositionsData();
+        PositionsAdapter positionsAdapter= new PositionsAdapter(data1);
+        positionsRV.setAdapter(positionsAdapter);
+
+        List<OrdersModel> ordersModels = dummyPendingOrdersData();
+        OrdersAdapter ordersAdapter = new OrdersAdapter(ordersModels);
+        pendingOrdersRV.setAdapter(ordersAdapter);
+
         return rootView;
     }
 
-
-
-   public void setBalance()
-    {
-        BalanceTXTV.setText("₹ " + String.valueOf(BalanceClass.balance));
-
-
-    }
 }
 
