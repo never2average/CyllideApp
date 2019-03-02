@@ -43,15 +43,8 @@ import static android.content.ContentValues.TAG;
 public class NewsFragment extends Fragment {
 
     private Realm realmInstance;
-    RequestQueue requestQueue;
     private RecyclerView newsRV;
-    ArrayList<String> newsTitle = new ArrayList<>();
-    ArrayList<String> newsThumbnailSource = new ArrayList<>();
-    ArrayList<String> newsDate = new ArrayList<>();
-    ArrayList<String> newsDescription = new ArrayList<>();
-    ArrayList<String> newsSource = new ArrayList<>();
-    ArrayList<String> url = new ArrayList<>();
-    ArrayList<String> author = new ArrayList<>();
+
 
 
     @Override
@@ -73,8 +66,7 @@ public class NewsFragment extends Fragment {
         newsRV.setHasFixedSize(true);
         newsRV.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         Fresco.initialize(context);
-        if (newsDate.size() == 0) {
-//            jsonParse();
+        if (newsRV.getAdapter() == null) {
             readCachedNews();
         }
         return view;
@@ -83,27 +75,16 @@ public class NewsFragment extends Fragment {
     }
 
     private void readCachedNews() {
-        realmInstance.beginTransaction();
         RealmResults<NewsModel> data = realmInstance.where(NewsModel.class)
                 .sort("newsDate", Sort.DESCENDING)
                 .findAll();
         if (data.size() == 0) {
+            Log.e("NewsFragment","Setting up worker to fetch news");
             //Replace the previously scheduled task so that it runs as soon as there is a network connection
             MainApplication.setUpNewsUpdateWorker();
         } else {
-            Log.e("NewsFragment", "Reading data from cache, have " + data.size() + " items");
-            for (NewsModel newsArticle : data) {
-                newsTitle.add(newsArticle.getNewsName());
-                newsThumbnailSource.add(newsArticle.getNewsImageURL());
-                newsDate.add(newsArticle.getNewsDate());
-                newsSource.add(newsArticle.getNewsSource());
-                newsDescription.add(newsArticle.getNewsDescription());
-                url.add(newsArticle.getNewsUrl());
-                author.add(newsArticle.getNewsAuthor());
-            }
+            Log.e("NewsFragment", "Reading data from memory, have " + data.size() + " items");
         }
-        realmInstance.commitTransaction();
-
         if (getActivity() != null) {
             final NewsAdapter mAdapter = new NewsAdapter(data);
             newsRV.setAdapter(mAdapter);
@@ -117,7 +98,7 @@ public class NewsFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.e("NewsFragment", "NewsFragment About To Be Destroyed");
+        Log.e("NewsFragment", "NewsFragment About To Be Destroyed, closing Realm");
         realmInstance.close();
 
     }

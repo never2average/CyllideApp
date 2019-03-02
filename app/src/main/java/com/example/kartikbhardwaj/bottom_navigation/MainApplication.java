@@ -23,16 +23,13 @@ import io.realm.RealmConfiguration;
 public class MainApplication extends Application {
 
     public static final String NEWS_UPDATE_TAG = "update news data in cache";
-    private static final int UPDATE_FREQUENCY_MINUTES = 15;
+    private static final int UPDATE_FREQUENCY_MINUTES = 30;
 
     @Override
     public void onCreate() {
         super.onCreate();
         Realm.init(this);
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder()
-                .name("application.realm")
-                .schemaVersion(0)
-                .build();
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder().build();
         Realm.setDefaultConfiguration(realmConfig);
         setUpNewsUpdateWorker();
     }

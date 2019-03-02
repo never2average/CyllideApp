@@ -24,9 +24,12 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 public class NewsUpdateWorker extends Worker {
-    Realm realmInstance;
+    public static final String NEWS_WORKER_TAG = "NewsUpdateWorker";
+    private Realm realmInstance;
+    private static final int NUM_NEWS_ARTICLES_CACHED = 15;
 
     public NewsUpdateWorker(Context context, WorkerParameters workerParameters) {
         super(context, workerParameters);
@@ -37,7 +40,7 @@ public class NewsUpdateWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        Log.e("NewsUpdateWorker","Worker was called!");
+        Log.e(NEWS_WORKER_TAG,"Worker was called!");
         initRealm();
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -48,8 +51,8 @@ public class NewsUpdateWorker extends Worker {
         try {
             try {
                 JSONArray jsonArray = future.get(60,TimeUnit.SECONDS).getJSONArray("articles");
-
                 for (int i = 0; i < jsonArray.length(); i++) {
+                    Log.e(NEWS_WORKER_TAG,"Adding JSONOBJECT to realm");
                     JSONObject article = jsonArray.getJSONObject(i);
                     addToRealm(new NewsModel(
                             article.getString("title"),
@@ -61,48 +64,73 @@ public class NewsUpdateWorker extends Worker {
                             article.getString("author")
                     ));
                 }
+                deleteOldNews();
                 realmInstance.close();
-                Log.e("NewsUpdateWorker", "Worker returning after success");
+                Log.e(NEWS_WORKER_TAG, "Worker returning after success");
                 return Result.success();
             } catch (JSONException e) {
+                realmInstance.close();
                 e.printStackTrace();
+                Log.e(NEWS_WORKER_TAG, "Worker returning after failure");
+                return Result.failure();
             }
         } catch (InterruptedException e) {
+            realmInstance.close();
             e.printStackTrace();
+            Log.e(NEWS_WORKER_TAG, "Worker returning after failure");
+            return Result.failure();
         } catch (ExecutionException e) {
+            realmInstance.close();
             e.printStackTrace();
+            Log.e(NEWS_WORKER_TAG, "Worker returning after failure");
+            return Result.failure();
         } catch (TimeoutException e) {
+            realmInstance.close();
             e.printStackTrace();
-        } finally {
-            if(!realmInstance.isClosed()){
-                realmInstance.close();
-            }
-
-            Log.e("NewsUpdateWorker", "Worker returning after failure");
+            Log.e(NEWS_WORKER_TAG, "Worker returning after failure");
             return Result.failure();
         }
-
-
     }
 
     private void initRealm() {
         Realm.init(getApplicationContext());
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder()
-                .name("application.realm")
-                .schemaVersion(0)
-                .build();
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder().build();
         realmInstance = Realm.getInstance(realmConfig);
-
     }
 
     private void addToRealm(final NewsModel newsArticle) {
-        realmInstance.executeTransactionAsync(new Realm.Transaction() {
+        realmInstance.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.insertOrUpdate(newsArticle);
             }
         });
+    }
+
+    private void deleteOldNews(){
+        Log.e(NEWS_WORKER_TAG,"Deleting Old news!");
+        realmInstance.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<NewsModel> newsList = realmInstance.where(NewsModel.class).findAll();
+                Log.e(NEWS_WORKER_TAG,"Current Size: "+newsList.size());
+                int numOfArticlesToRemove = newsList.size() - NUM_NEWS_ARTICLES_CACHED;
+                Log.e(NEWS_WORKER_TAG,"Num of articles to delete: "+numOfArticlesToRemove);
+                if(numOfArticlesToRemove > 0){
+                    RealmResults<NewsModel> oldNews = realmInstance.where(NewsModel.class).sort("newsDate")
+                            .limit(numOfArticlesToRemove).findAll();
+                    if(oldNews.deleteAllFromRealm()){
+                        Log.e(NEWS_WORKER_TAG,"Successfully deleted old news");
+                    } else {
+                        Log.e(NEWS_WORKER_TAG,"Couldn't delete old news");
+                    }
+                }
+            }
+        });
+
+
 
     }
+
 
 }
