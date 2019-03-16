@@ -24,17 +24,11 @@ import com.example.kartikbhardwaj.bottom_navigation.R;
 
 
 public class MyPortfolio extends AppCompatActivity {
-    Button createNewPortfolio;
-    Dialog popup;
     EditText newportfolioName;
     Button createPortfolio;
     String portfolioName;
     TextView errorhint;
     PasswordChangeStatus status;
-
-
-
-
 
 
     RecyclerView RV;
@@ -62,10 +56,9 @@ public class MyPortfolio extends AppCompatActivity {
         final Context context = MyPortfolio.this;
 
 
-        createNewPortfolio=findViewById(R.id.new_portfolio);
+        createPortfolio=findViewById(R.id.create_button);
 
 
-        popup=new Dialog(this);
 
         RV.setHasFixedSize(true);
         RV.setLayoutManager(new LinearLayoutManager(context));
@@ -73,17 +66,6 @@ public class MyPortfolio extends AppCompatActivity {
         final MyPortfolioAdapter mAdapter = new MyPortfolioAdapter(data);
         RV.setAdapter(mAdapter);
 
-
-        createNewPortfolio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                popup.setContentView(R.layout.portfolio_nameset_popup);
-                newportfolioName=popup.findViewById(R.id.portfolio_name);
-                createPortfolio=popup.findViewById(R.id.create_button);
-                errorhint=popup.findViewById(R.id.error);
-                popup.getWindow().setBackgroundDrawableResource(android.R.color.white);
-                popup.show();
 
      createPortfolio.setOnClickListener(new View.OnClickListener() {
          @Override
@@ -104,31 +86,12 @@ public class MyPortfolio extends AppCompatActivity {
                  Intent portfolioIntent = new Intent(MyPortfolio.this,PortfolioActivity.class);
                  portfolioIntent.putExtra("buttonstatus","on");
                  portfolioIntent.putExtra("newStockName",newportfolioName.getText().toString());
-
                  PasswordChangeStatus.buttonstatus=true;
-
-
-
-             startActivity(portfolioIntent);
-
-
-             popup.dismiss();
-
+                 startActivity(portfolioIntent);
              }
 
          }
      });
-
-
-
-
-
-
-
-            }
-        });
-
-
 
     }
 }

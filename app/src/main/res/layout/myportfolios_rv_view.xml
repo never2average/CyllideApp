@@ -45,14 +45,6 @@
                 android:textSize="25sp"
                 android:textColor="@color/colorPrimaryDark"
                 android:id="@+id/return1"/>
-            <ImageView
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-               android:src="@drawable/edit_icon"
-                android:tint="@color/colorPrimaryDark"/>
         </LinearLayout>
 
 

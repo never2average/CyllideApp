@@ -5,11 +5,16 @@
     android:layout_height="wrap_content">
 
 
-    <androidx.cardview.widget.CardView
-
+    <com.google.android.material.card.MaterialCardView
         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="70dp"
+        app:cardElevation="3dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        app:cardCornerRadius="8dp">
 
         <LinearLayout
             android:id="@+id/stockcard"
@@ -39,7 +44,7 @@
                 android:layout_weight="4"
                 android:layout_height="match_parent"/>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <net.cachapa.expandablelayout.ExpandableLayout
         android:id="@+id/expandablepositionoptions"
@@ -50,6 +55,8 @@
         app:el_parallax="0.5">
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
+            app:cardBackgroundColor="@color/primary_light"
+
             android:layout_height="match_parent">
         <LinearLayout
             android:paddingTop="2dp"
@@ -63,6 +70,13 @@
             android:layout_weight="0.5"
             android:id="@+id/purchasebtn"
             android:src="@drawable/ic_add_position"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:id="@+id/purchasebtn"
+                android:src="@drawable/ic_view_eye"/>
 
             <ImageView
                 android:layout_width="0dp"

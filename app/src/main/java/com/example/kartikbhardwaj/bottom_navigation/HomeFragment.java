@@ -18,15 +18,17 @@ import android.view.View;
 
 import com.example.kartikbhardwaj.bottom_navigation.Contests.WeeklyActivity;
 //import com.example.kartikbhardwaj.bottom_navigation.stories.NewsData;
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.MyPortfolio;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioActivity;
 import com.example.kartikbhardwaj.bottom_navigation.phone_authentication.PhoneAuth;
 import com.example.kartikbhardwaj.bottom_navigation.quiz.QuizRulesActivity;
 import com.example.kartikbhardwaj.bottom_navigation.stories.StoriesActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.material.card.MaterialCardView;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import java.util.Calendar;
 
 public class HomeFragment extends Fragment {
@@ -44,7 +46,7 @@ public class HomeFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
 
-    CardView stories, contest, portfolios, quiz;
+    MaterialCardView stories, contest, portfolios, quiz;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -88,7 +90,7 @@ public class HomeFragment extends Fragment {
         portfolios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(), PortfolioActivity.class);
+                Intent intent=new Intent(getContext(), MyPortfolio.class);
                 startActivity(intent);
             }
         });

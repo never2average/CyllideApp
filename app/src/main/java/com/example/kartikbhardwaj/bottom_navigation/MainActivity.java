@@ -69,40 +69,8 @@ public class MainActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//        Fragment fragment = null;
-//
-//        switch (menuItem.getItemId()) {
-//            case R.id.referrals:
-//                fragment = new ReferralFragment();
-//                break;
-//
-//            case R.id.home:
-//                fragment = new HomeFragment();
-//                break;
-//
-//            case R.id.stats:
-//                fragment = new StatsFragment();
-//                break;
-//
-//            case R.id.howitworks:
-//                fragment=new HowItWorksFragment();
-//                break;
-//        }
-//
-//        return loadfragment(fragment);
-//    }
-
     public void switchToPortfolioActivity(View view){
         Intent portfolioIntent =new Intent(MainActivity.this,MyPortfolio.class);
         startActivity(portfolioIntent);
     }
-
-//
-//    public void loadertest(View view)
-//    {
-//        Intent intent = new Intent(MainActivity.this,SplashScreen.class);
-//        startActivity(intent);
-//    }
 }

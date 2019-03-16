@@ -1,0 +1,57 @@
+<html>
+<head>
+    <script type="text/javascript" src="loader.js"></script>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      var settings = {
+          "url": "http://data.cyllide.com/data/nifty50",
+          "method": "GET",
+          "headers": {
+             "value": "1 day"
+           }
+      }
+
+      $.ajax(settings).done(function (response) {
+            console.log(response);
+      });
+
+      function drawChart() {
+
+
+
+
+        var data = google.visualization.arrayToDataTable([
+        ]);
+
+        var options = {
+        	lineWidth: 5,
+          pointSize: 0,
+          pointsVisible: false,
+
+          'chartArea': {'width': '100%', 'height': '100%'},
+          series: {
+          	0: {color : '#1A0C57',
+          	opacity: 0.50}
+          },
+          legend: { position: 'none' },
+          hAxis: {
+          gridLineColor: '#fff'},
+          vAxis: {
+          	gridlines: {count : 0},
+          },
+
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+</head>
+<body>
+<div id="curve_chart" style="width: 100%; height: 100%"></div>
+</body>
+</html>

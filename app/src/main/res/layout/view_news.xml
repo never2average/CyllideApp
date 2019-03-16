@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="18sp"
+    android:paddingTop="12sp"
+    android:paddingBottom="12sp"
     android:id="@+id/newsll"
     android:paddingHorizontal="18sp">
 
@@ -25,7 +26,8 @@
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/news_image_view"
                 android:layout_width="match_parent"
-                android:layout_height="225dp"
+                android:layout_height="0dp"
+                android:layout_weight="5"
                 android:layout_gravity="center_horizontal"
                 android:cropToPadding="false"
                 android:paddingBottom="12sp"
@@ -36,7 +38,8 @@
             <TextView
                 android:id="@+id/news_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
                 android:paddingBottom="10sp"
                 android:textSize="22sp"
                 android:padding="8dp"
@@ -47,11 +50,11 @@
                 android:clickable="true"/>
 
             <TextView
+                android:paddingStart="5dp"
                 android:id="@+id/news_desc"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10sp"
-                android:textSize="12sp"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
                 android:fontFamily="@font/ralewaylight"
                 android:textColor="#232323"
                 android:clickable="true"/>
@@ -60,7 +63,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp"
+                android:layout_weight="0.5">
 
                 <TextView
                     android:layout_width="0dp"
@@ -75,15 +79,8 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:id="@+id/news_date"/>
-
-
             </LinearLayout>
 
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#000000" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

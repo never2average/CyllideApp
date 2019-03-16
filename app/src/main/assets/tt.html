@@ -4,6 +4,14 @@
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
+      var ticker = "";
+      var frequency = "";
+
+      function getFromAndroid(){
+        var tf = Android.getFromAndroid()
+        ticker = tf[0];
+        frequency = fg[1];
+        }
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([

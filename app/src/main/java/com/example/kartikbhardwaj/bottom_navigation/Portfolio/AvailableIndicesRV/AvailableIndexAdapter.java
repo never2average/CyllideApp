@@ -1,4 +1,4 @@
-package com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableStocksRV;
+package com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableIndicesRV;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,25 +11,25 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class AvailableStocksAdapter extends RecyclerView.Adapter<AvailableStocksViewHolder> {
-    public AvailableStocksAdapter(List<AvailableStocksModel> data) {
+public class AvailableIndexAdapter extends RecyclerView.Adapter<AvailableIndexViewHolder> {
+    public AvailableIndexAdapter(List<AvailableIndexModel> data) {
         this.data = data;
     }
 
-    List<AvailableStocksModel> data;
+    List<AvailableIndexModel> data;
 
     @NonNull
     @Override
-    public AvailableStocksViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AvailableIndexViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater=LayoutInflater.from(parent.getContext());
         View view=inflater.inflate(R.layout.financial_index_card,parent,false);
-        AvailableStocksViewHolder holder = new AvailableStocksViewHolder(view);
+        AvailableIndexViewHolder holder = new AvailableIndexViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AvailableStocksViewHolder holder, int position) {
-        AvailableStocksModel stocksModel=data.get(position);
+    public void onBindViewHolder(@NonNull AvailableIndexViewHolder holder, int position) {
+        AvailableIndexModel stocksModel=data.get(position);
         holder.populate(stocksModel);
 
     }

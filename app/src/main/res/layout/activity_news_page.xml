@@ -1,95 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
-
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/newsThumbImage"
-        android:layout_width="match_parent"
-        android:layout_height="225dp"
-        android:layout_gravity="center_horizontal"
-        android:cropToPadding="false"
-        android:paddingBottom="12sp"
-        fresco:placeholderImage="@android:drawable/ic_menu_camera"
-        />
-
-    <TextView
-        android:layout_marginStart="4dp"
-        android:id="@+id/newsNameTV"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="10sp"
-        android:textSize="22sp"
-        android:fontFamily="@font/ralewaymedium"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        />
-
+    android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/newsThumbImage"
+            android:layout_width="match_parent"
+            android:layout_height="225dp"
+            android:layout_gravity="center_horizontal"
+            android:cropToPadding="false"
+            android:paddingBottom="12sp"
+            fresco:placeholderImage="@android:drawable/ic_menu_camera" />
 
         <TextView
+            android:id="@+id/newsNameTV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_marginStart="4dp"
-            android:layout_width="0dp"
-            android:layout_weight="2"
+            android:fontFamily="@font/ralewaymedium"
+            android:paddingBottom="10sp"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:id="@+id/newsSourceTV"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:id="@+id/newsSourceTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_weight="2"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/newsDateTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="2"
+                android:gravity="right"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#000000" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_weight="0.18"
+                    android:gravity="center_vertical"
+                    android:text="Author:" />
+
+                <TextView
+                    android:id="@+id/newsAuthorTV"
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:paddingStart="2dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/newsContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/login_text"
+            android:layout_marginStart="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="80dp"
+            android:paddingBottom="140dp"
+            android:text="You need to login to access the content"
+            android:textAlignment="center"
+            android:visibility="visible"
             />
 
-        <TextView
-            android:gravity="right"
-            android:layout_marginEnd="4dp"
-            android:layout_width="0dp"
-            android:layout_weight="2"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:id="@+id/newsDateTV"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:text="LOGIN"
+            android:visibility="visible"
             />
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="#000000"
-        />
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="0.18"
-                android:layout_height="25dp"
-                android:text="Author:"
-                android:gravity="center_vertical"
-                />
-            <TextView
-                android:paddingStart="2dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="25dp"
-                android:id="@+id/newsAuthorTV"
-                />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/newsContent"
-        />
 
-</LinearLayout>
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.example.kartikbhardwaj.bottom_navigation.stories;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +11,17 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
+public class NewsAdapter extends RealmRecyclerViewAdapter<NewsModel,NewsViewHolder>{
     List<NewsModel> partList;
 
-    public NewsAdapter(List<NewsModel> partList) {
+    public NewsAdapter(OrderedRealmCollection<NewsModel> partList) {
+        super(partList,true);
+        Log.e("NewsAdapter","Creating NewsAdapter");
         this.partList = partList;
     }
-
     @NonNull
     @Override
     public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

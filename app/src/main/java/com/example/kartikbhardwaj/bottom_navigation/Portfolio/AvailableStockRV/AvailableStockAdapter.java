@@ -32,7 +32,6 @@ public class AvailableStockAdapter extends RecyclerView.Adapter<AvailableStockVi
     public void onBindViewHolder(@NonNull AvailableStockViewHolder holder, int position) {
         AvailableStockModel stocksModel=data.get(position);
         holder.populate(stocksModel);
-
     }
 
     @Override

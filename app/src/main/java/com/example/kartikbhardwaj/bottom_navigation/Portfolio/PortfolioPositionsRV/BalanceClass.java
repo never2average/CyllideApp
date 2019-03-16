@@ -2,5 +2,5 @@ package com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPosition
 
 public class BalanceClass {
 
-    public static double balance=1000.0;
+    public static double balance=1000000.0;
 }

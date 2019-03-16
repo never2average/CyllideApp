@@ -22,16 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public class PositionsAdapter extends RecyclerView.Adapter<PositionsViewHolder>  {
     List<PositionsModel> positionsModels;
 
-
-   private View mView;
-   private String positionType;
-  private   double previousBalance;
-   private double quantity;
-   private double newBalance;
-  private   double orderPrice;
-   private TextView tv;
-
-
     @NonNull
     @Override
     public PositionsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,60 +31,13 @@ public class PositionsAdapter extends RecyclerView.Adapter<PositionsViewHolder> 
         return holder;
     }
 
-    public PositionsAdapter(List<PositionsModel> positionsModels,View mView) {
-        this.mView=mView;
+    public PositionsAdapter(List<PositionsModel> positionsModels) {
         this.positionsModels = positionsModels;
     }
 
     @Override
     public void onBindViewHolder(@NonNull final PositionsViewHolder holder, final int position) {
         PositionsModel positionsModel=positionsModels.get(position);
-        holder.minusBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                int position = holder.getAdapterPosition();
-
-                positionType=PortfolioPositionsInterface.positionType.get(position);
-                quantity= PortfolioPositionsInterface.Quantity.get(position);
-                orderPrice=PortfolioPositionsInterface.orderPrice.get(position);
-
-                // function to modify balance when element is delleted
-
-
-
-                    previousBalance=BalanceClass.balance;
-                    newBalance=previousBalance+quantity*orderPrice;
-                    BalanceClass.balance=newBalance;
-                PortfolioPositionsFragment fragment =new PortfolioPositionsFragment();
-                //tv =fragment.BalanceTXTV
-               // fragment.BalanceTXTV.setText("$ "+String.valueOf(BalanceClass.balance));
-
-               //  fragment.setTextViewText(String.valueOf(BalanceClass.balance));
-
-
-
-                    // remove item from recycler view
-                positionsModels.remove(position);
-
-                notifyItemRemoved(position);
-
-                notifyItemRangeChanged(position,positionsModels.size());
-
-
-                // remove item from array list
-
-                PortfolioPositionsInterface.positionType.remove(position);
-                PortfolioPositionsInterface.orderType.remove(position);
-                PortfolioPositionsInterface.stockTicker.remove(position);
-                PortfolioPositionsInterface.orderPrice.remove(position);
-                PortfolioPositionsInterface.Quantity.remove(position);
-               String balance= holder.positionCurrPriceTV.getText().toString();
-               Float balance1 = Float.valueOf(balance);
-
-
-            }
-        });
         holder.populate(positionsModel);
     }
 
