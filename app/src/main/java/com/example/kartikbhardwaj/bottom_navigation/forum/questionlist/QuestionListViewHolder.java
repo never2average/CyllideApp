@@ -26,7 +26,7 @@ public class QuestionListViewHolder extends RecyclerView.ViewHolder {
     }
     public void populate(QuestionListModel stocksModel) {
         questionTV.setText(stocksModel.getQuestionText());
-        upvoteTV = itemView.findViewById(stocksModel.getUpVotes());
+        upvoteTV.setText(String.valueOf(stocksModel.getUpVotes()));
         tagList = stocksModel.getQuestionTags();
         if(tagList.size() == 4){
             commentTV1.setText(tagList.get(0));

@@ -15,6 +15,10 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListViewHo
 
     List<QuestionListModel> questionListModels;
 
+    public QuestionListAdapter(List<QuestionListModel> questionListModels) {
+        this.questionListModels = questionListModels;
+    }
+
     @NonNull
     @Override
     public QuestionListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
