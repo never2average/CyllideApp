@@ -48,7 +48,6 @@ public class NewsPageActivity extends AppCompatActivity {
         image=findViewById(R.id.newsThumbImage);
         authorTv=findViewById(R.id.newsAuthorTV);
         newsContentTv = findViewById(R.id.newsContent);
-        loginText = findViewById(R.id.login_text);
 
         name= getIntent().getStringExtra("newsname");
         description= getIntent().getStringExtra("newsdesc");
@@ -88,15 +87,11 @@ public class NewsPageActivity extends AppCompatActivity {
 
                     try {
                         JSONObject jsonObject = new JSONObject(response);
-                        loginText.setVisibility(View.INVISIBLE);
-                        loginButton.setVisibility(View.INVISIBLE);
                         newsContentTv.setText(jsonObject.getString("message"));
 
                         Log.e("RealityCheck",response);
                         Log.e("RealityCheck","Inside onResponse");
                     } catch (JSONException e) {
-                        loginText.setVisibility(View.VISIBLE);
-                        loginButton.setVisibility(View.VISIBLE);
                         e.printStackTrace();
                     }
 
@@ -104,8 +99,6 @@ public class NewsPageActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    loginText.setVisibility(View.VISIBLE);
-                    loginButton.setVisibility(View.VISIBLE);
                     Log.e("VOLLEY", error.toString());
                 }
             })
