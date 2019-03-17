@@ -20,6 +20,7 @@ import com.example.kartikbhardwaj.bottom_navigation.Contests.WeeklyActivity;
 //import com.example.kartikbhardwaj.bottom_navigation.stories.NewsData;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.MyPortfolio;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioActivity;
+import com.example.kartikbhardwaj.bottom_navigation.forum.ForumActivity;
 import com.example.kartikbhardwaj.bottom_navigation.phone_authentication.PhoneAuth;
 import com.example.kartikbhardwaj.bottom_navigation.quiz.QuizRulesActivity;
 import com.example.kartikbhardwaj.bottom_navigation.stories.StoriesActivity;
@@ -46,7 +47,7 @@ public class HomeFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
 
-    MaterialCardView stories, contest, portfolios, quiz;
+    MaterialCardView stories, contest, portfolios, quiz, forum;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class HomeFragment extends Fragment {
         contest = view.findViewById(R.id.contestcard);
         portfolios = view.findViewById(R.id.portfoliocard);
         quiz = view.findViewById(R.id.quizcard);
+        forum = view.findViewById(R.id.forumcard);
         final Context context = getContext();
         quizPopup=new Dialog(view.getContext());
 
@@ -111,6 +113,13 @@ public class HomeFragment extends Fragment {
                 getContext().startActivity(intent);
                 }
 
+        });
+        forum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ForumActivity.class);
+                getContext().startActivity(intent);
+            }
         });
         }
 

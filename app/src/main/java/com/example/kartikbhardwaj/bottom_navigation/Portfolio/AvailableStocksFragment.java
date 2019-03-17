@@ -72,8 +72,8 @@ public class AvailableStocksFragment extends Fragment {
         DecimalFormat formatter = new DecimalFormat("#,###.00");
         BalanceTXTV.setText("₹ " + String.valueOf(formatter.format(BalanceClass.balance)));
         searchView=view.findViewById(R.id.searchbarstocks);
-//        searchView.setIconifiedByDefault(false);
-//        searchView.clearFocus();
+        searchView.setIconifiedByDefault(false);
+        searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
