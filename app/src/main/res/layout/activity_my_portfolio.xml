@@ -24,6 +24,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1.5"
         android:maxLines="1"
+        android:layout_marginStart="10dp"
         android:hint="enter portfolio name"
         android:id="@+id/portfolio_name"/>
     <Button

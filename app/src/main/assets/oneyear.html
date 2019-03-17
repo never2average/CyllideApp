@@ -1,23 +1,24 @@
 <html>
 <head>
     <script type="text/javascript" src="loader.js"></script>
+    <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+      google.charts.load('current', {'packages':['corechart']})
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['', ''],
-          ['1',  1000],
-          ['2',  1170],
-          ['3',  660],
-          ['4',  1030],
-          ['5', 2134],
-          ['6',123],
-          ['7', 235],
-          ['8', 925],
-          ['9', 400]
-        ]);
+      var settings = {
+          "url": "http://localhost:5000/data/nifty50",
+          "method": "GET",
+          "headers": {
+             "value": "1 year"
+           }
+      }
+
+      $.ajax(settings).done(function (response) {
+            drawChart(response.data);
+      });
+
+      function drawChart(array) {
+        var data = google.visualization.arrayToDataTable(array);
 
         var options = {
         	lineWidth: 5,
@@ -31,11 +32,13 @@
           },
           legend: { position: 'none' },
           hAxis: {
+          gridlines: {count : 0},
           gridLineColor: '#fff'},
           vAxis: {
           	gridlines: {count : 0},
+          	gridLineColor: '#fff'
           },
-
+          interpolateNulls: true
         };
 
         var chart = new google.visualization.AreaChart(document.getElementById('curve_chart'));

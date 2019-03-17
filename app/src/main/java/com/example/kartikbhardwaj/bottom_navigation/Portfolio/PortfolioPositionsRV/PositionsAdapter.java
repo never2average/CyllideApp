@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kartikbhardwaj.bottom_navigation.Portfolio.Balance;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioActivity;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsFragment;
 import com.example.kartikbhardwaj.bottom_navigation.R;

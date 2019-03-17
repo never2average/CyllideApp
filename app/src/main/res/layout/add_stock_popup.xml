@@ -101,7 +101,7 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#FFA100"
+                    android:background="@color/colorPrimaryDark"
                     android:text="Place Order"
                     android:textSize="20sp"
                     android:textColor="#fff"

@@ -7,10 +7,15 @@ public class OrderHistoryModel {
     private double entryPrice, exitPrice;
     private int quantity;
 
-    public OrderHistoryModel(String stockTicker, String positionType, String exitTime, double entryPrice, double exitPrice, int quantity) {
+    public OrderHistoryModel(String stockTicker, Boolean positionType, Long exitTime, double entryPrice, double exitPrice, int quantity) {
         this.stockTicker = stockTicker;
-        this.positionType = positionType;
-        this.exitTime = exitTime;
+        if(positionType){
+           this.positionType = "LONG";
+        }
+        else{
+            this.positionType = "SHORT";
+        }
+        this.exitTime = String.valueOf(exitTime);
         this.entryPrice = entryPrice;
         this.exitPrice = exitPrice;
         this.quantity = quantity;

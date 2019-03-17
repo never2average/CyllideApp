@@ -1,5 +1,7 @@
 package com.example.kartikbhardwaj.bottom_navigation.Portfolio.PendingOrdersRV;
 
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.PositionsModel;
+
 public class OrdersModel {
 
   private String PositionType;
@@ -7,9 +9,14 @@ public class OrdersModel {
   private String StockTicker;
   private String CurrentStockPrice;
 
-    public OrdersModel(String positionType, String quantity, String stockTicker, String currentStockPrice) {
-        PositionType = positionType;
-        Quantity = quantity;
+    public OrdersModel(Boolean positionType, Integer quantity, String stockTicker, String currentStockPrice) {
+        if(positionType){
+            PositionType = "LONG";
+        }
+        else{
+            PositionType = "SHORT";
+        }
+        Quantity = String.valueOf(quantity);
         StockTicker = stockTicker;
         CurrentStockPrice = currentStockPrice;
     }

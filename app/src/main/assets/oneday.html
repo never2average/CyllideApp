@@ -3,11 +3,10 @@
     <script type="text/javascript" src="loader.js"></script>
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+      google.charts.load('current', {'packages':['corechart']})
 
       var settings = {
-          "url": "http://data.cyllide.com/data/nifty50",
+          "url": "http://localhost:5000/data/nifty50",
           "method": "GET",
           "headers": {
              "value": "1 day"
@@ -15,16 +14,11 @@
       }
 
       $.ajax(settings).done(function (response) {
-            console.log(response);
+            drawChart(response.data);
       });
 
-      function drawChart() {
-
-
-
-
-        var data = google.visualization.arrayToDataTable([
-        ]);
+      function drawChart(array) {
+        var data = google.visualization.arrayToDataTable(array);
 
         var options = {
         	lineWidth: 5,
@@ -38,11 +32,13 @@
           },
           legend: { position: 'none' },
           hAxis: {
+          gridlines: {count : 0},
           gridLineColor: '#fff'},
           vAxis: {
           	gridlines: {count : 0},
+          	gridLineColor: '#fff'
           },
-
+          interpolateNulls: true
         };
 
         var chart = new google.visualization.AreaChart(document.getElementById('curve_chart'));

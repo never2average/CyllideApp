@@ -3,12 +3,17 @@ package com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPosition
 public class PositionsModel {
     private String positionTicker,positionQuantity,positionCurrPrice,positionType,positionValue;
 
-    public PositionsModel(String positionTicker, String positionQuantity, String positionCurrPrice, String positionType, String positionValue) {
+    public PositionsModel(String positionTicker, int positionQuantity, String positionCurrPrice, Boolean positionType, Double positionValue) {
         this.positionTicker = positionTicker;
-        this.positionQuantity = positionQuantity;
+        this.positionQuantity = String.valueOf(positionQuantity);
         this.positionCurrPrice = positionCurrPrice;
-        this.positionType = positionType;
-        this.positionValue = positionValue;
+        if(positionType){
+            this.positionType = "LONG";
+        }
+        else{
+            this.positionType = "SHORT";
+        }
+        this.positionValue = String.valueOf(positionValue);
     }
 
     public String getPositionTicker() {

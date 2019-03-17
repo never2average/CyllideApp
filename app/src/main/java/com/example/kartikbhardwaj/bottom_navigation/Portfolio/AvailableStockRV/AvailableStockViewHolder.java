@@ -1,6 +1,7 @@
 package com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableStockRV;
 
 import com.example.kartikbhardwaj.bottom_navigation.Charts.ChartActivity;
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.CurrentPositions;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.nex3z.togglebuttongroup.SingleSelectToggleGroup;
 
@@ -13,8 +14,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +35,7 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
     double priceAtPlace;
     String positiontype;
     Dialog popup;
+    Button placeOrder;
 
     public AvailableStockViewHolder(@NonNull final View itemView) {
         super(itemView);
@@ -73,7 +79,6 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                 popup.setContentView(R.layout.add_stock_popup);
                 stockQuantity=popup.findViewById(R.id.stockquantity);
                 stockTickerSelected=popup.findViewById(R.id.stock_ticker_selected);
-
                 stockTickerSelected.setText(stockName.getText().toString());
 
 
@@ -90,11 +95,9 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                     @Override
                     public void onCheckedChanged(SingleSelectToggleGroup group, int checkedId) {
                         switch (checkedId){
-
                             case R.id.Buy:
                                 positiontype ="LONG";
                                 break;
-
                             case R.id.Sell:
                                 positiontype="SHORT";
                                 break;
@@ -102,6 +105,28 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                     }
                 });
 
+                placeOrder = popup.findViewById(R.id.place_order);
+
+                placeOrder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CurrentPositions.tickerName.add(stockName.getText().toString());
+                        try {
+                            CurrentPositions.tickerQuantity.add(Integer.parseInt(stockQuantity.getText().toString()));
+                            if(positiontype.equals("LONG")){
+                                CurrentPositions.tickerPositionType.add(true);
+                            }
+                            else{
+                                CurrentPositions.tickerPositionType.add(true);
+                            }
+                            CurrentPositions.tickerEntryTime.add(System.currentTimeMillis()/1000L);
+                            popup.dismiss();
+                        }
+                        catch(NumberFormatException e){
+                            Toast.makeText(itemView.getContext(),"Enter a Valid Number",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
 
             }
         });

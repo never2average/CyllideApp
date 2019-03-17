@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PendingOrdersRV.OrdersAdapter;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PendingOrdersRV.OrdersModel;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.BalanceClass;
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.CurrentPositions;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.PositionsAdapter;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.PositionsModel;
 import com.example.kartikbhardwaj.bottom_navigation.R;
@@ -26,22 +27,25 @@ import java.util.List;
 
 public class PortfolioPositionsFragment extends Fragment {
 
-
-
     private RecyclerView positionsRV, pendingOrdersRV;
 
 
-    private List<PositionsModel> dummyPortfolioPositionsData(){
+    private List<PositionsModel> portfolioPositionsData(){
         List<PositionsModel> data= new ArrayList<>();
-        for(int i=0;i<3;i++){
-            data.add(new PositionsModel("RELIANCE","100", "220.13", "LONG", "23400"));
+        for(int i = 0; i<CurrentPositions.tickerName.size(); i++){
+            if(System.currentTimeMillis()/1000L - CurrentPositions.tickerEntryTime.get(i) >= 300){
+                data.add(new PositionsModel(CurrentPositions.tickerName.get(i),CurrentPositions.tickerQuantity.get(i),String.valueOf(1234.23),CurrentPositions.tickerPositionType.get(i),CurrentPositions.tickerQuantity.get(i)*1234.23));
+                BalanceClass.balance-=(CurrentPositions.tickerQuantity.get(i)*1234.23);
+            }
         }
         return data;
     }
-    private List<OrdersModel> dummyPendingOrdersData() {
+    private List<OrdersModel> pendingOrdersData() {
         List<OrdersModel> data = new ArrayList<>(12);
-        for (int i = 0; i < 4; i++) {
-            data.add(new OrdersModel("Long","10","RELIANCE","144.32"));
+        for (int i = 0; i < CurrentPositions.tickerName.size(); i++) {
+            if(System.currentTimeMillis()/1000L - CurrentPositions.tickerEntryTime.get(i) < 300){
+                data.add(new OrdersModel(CurrentPositions.tickerPositionType.get(i),CurrentPositions.tickerQuantity.get(i),CurrentPositions.tickerName.get(i),String.valueOf(1234.23)));
+            }
         }
         return data;
     }
@@ -64,11 +68,11 @@ public class PortfolioPositionsFragment extends Fragment {
         pendingOrdersRV = rootView.findViewById(R.id.pending_Orders_RV);
         pendingOrdersRV.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        List<PositionsModel> data1 =dummyPortfolioPositionsData();
+        List<PositionsModel> data1 = portfolioPositionsData();
         PositionsAdapter positionsAdapter= new PositionsAdapter(data1);
         positionsRV.setAdapter(positionsAdapter);
 
-        List<OrdersModel> ordersModels = dummyPendingOrdersData();
+        List<OrdersModel> ordersModels = pendingOrdersData();
         OrdersAdapter ordersAdapter = new OrdersAdapter(ordersModels);
         pendingOrdersRV.setAdapter(ordersAdapter);
 

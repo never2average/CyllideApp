@@ -1,5 +1,6 @@
 package com.example.kartikbhardwaj.bottom_navigation.Portfolio;
 
+import com.example.kartikbhardwaj.bottom_navigation.Portfolio.OrderHistoryRV.ClosedPositions;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,9 +23,18 @@ public class OrderHistoryFragment extends Fragment {
     private RecyclerView RV;
 
     private List<OrderHistoryModel> dummyData() {
-        List<OrderHistoryModel> data = new ArrayList<>(12);
-        for (int i = 0; i < 3; i++) {
-            data.add(new OrderHistoryModel("RELIANCE","Long","01-03-2018 21:47",25.12,25.45,25));
+        List<OrderHistoryModel> data = new ArrayList<>();
+        for (int i = 0; i < ClosedPositions.tickerName.size(); i++) {
+            data.add(
+                    new OrderHistoryModel(
+                            ClosedPositions.tickerName.get(i),
+                            ClosedPositions.tickerPositionType.get(i),
+                            ClosedPositions.tickerExitTime.get(i),
+                            ClosedPositions.tickerEntryPrice.get(i),
+                            ClosedPositions.tickerExitPrice.get(i),
+                            ClosedPositions.tickerQuantity.get(i)
+                    )
+            );
         }
         return data;
     }

@@ -28,8 +28,6 @@ public class MyPortfolio extends AppCompatActivity {
     Button createPortfolio;
     String portfolioName;
     TextView errorhint;
-    PasswordChangeStatus status;
-
 
     RecyclerView RV;
 
@@ -57,6 +55,7 @@ public class MyPortfolio extends AppCompatActivity {
 
 
         createPortfolio=findViewById(R.id.create_button);
+        newportfolioName = findViewById(R.id.portfolio_name);
 
 
 
@@ -76,7 +75,7 @@ public class MyPortfolio extends AppCompatActivity {
 
              if(portfolioName.equals(""))
              {
-                 errorhint.setText("This feild cannot be empty ");
+                 errorhint.setText("This field cannot be empty ");
 
              }
                else
@@ -91,7 +90,8 @@ public class MyPortfolio extends AppCompatActivity {
              }
 
          }
-     });
+        }
+     );
 
     }
 }
