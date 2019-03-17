@@ -25,7 +25,7 @@ public class ForumActivity extends AppCompatActivity {
         tags.add("Business");
         List<QuestionListModel> questionList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            questionList.add(new QuestionListModel("How do stock exchanges work?",0,tags));
+            questionList.add(new QuestionListModel("How do stock exchanges work?",tags));
         }
         return questionList;
     }

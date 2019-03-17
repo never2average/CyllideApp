@@ -16,13 +16,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp">
-        <androidx.appcompat.widget.SearchView
+        <com.arlib.floatingsearchview.FloatingSearchView
+            android:id="@+id/floating_search_view"
             android:layout_width="0dp"
-            android:id="@+id/search_questions"
-            android:layout_weight="9"
+            android:layout_weight="8"
             android:layout_height="match_parent"
-            android:layout_marginEnd="3dp"
-            android:background="@drawable/search_background"/>
+            app:floatingSearch_searchHint="Search..."
+            app:floatingSearch_suggestionsListAnimDuration="250"
+            app:floatingSearch_showSearchKey="false"
+            app:floatingSearch_leftActionMode="noLeftAction"
+            app:floatingSearch_close_search_on_keyboard_dismiss="true"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/question_sort_icon"
@@ -40,7 +43,7 @@
 
 </LinearLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/askquestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add_white"
