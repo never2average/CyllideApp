@@ -1,8 +1,6 @@
 package com.example.kartikbhardwaj.bottom_navigation.stories;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.android.volley.NetworkResponse;
@@ -13,8 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.Volley;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,7 +40,6 @@ public class NewsUpdateWorker extends Worker {
 
     }
 
-
     @NonNull
     @Override
     public Result doWork() {
@@ -56,7 +52,7 @@ public class NewsUpdateWorker extends Worker {
         final Map<String, String> mHeaders = new ArrayMap<String, String>();
         mHeaders.put("token", token);
         final String newsURL = "http://api.cyllide.com/api/client/stories/view";
-        JsonObjectRequest request = new JsonObjectRequest(newsURL, null, future, future){
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, newsURL, null, future, future){
             @Override
             public Map<String, String> getHeaders() {
                 return mHeaders;

@@ -34,8 +34,8 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         name=news.getNewsName();
         description=news.getNewsDescription();
         imageURL=news.getNewsImageURL();
-        date=news.getNewsDate();
-        source=news.getNewsSource();
+//        date=news.getNewsDate();
+//        source=news.getNewsSource();
         url=news.getNewsUrl();
         author=news.getNewsAuthor();
 

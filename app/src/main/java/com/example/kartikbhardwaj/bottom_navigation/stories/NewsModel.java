@@ -11,7 +11,6 @@ public class NewsModel extends RealmObject {
     private String newsUrl;
     private String newsAuthor;
     @PrimaryKey
-    @Required
     private int newsID;
 
     //Required for Realm
