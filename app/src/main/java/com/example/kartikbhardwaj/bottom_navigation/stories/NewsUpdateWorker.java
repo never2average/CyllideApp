@@ -3,6 +3,7 @@ package com.example.kartikbhardwaj.bottom_navigation.stories;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -65,10 +66,12 @@ public class NewsUpdateWorker extends Worker {
                 return super.parseNetworkResponse(nr);
             }
         };
+        request.setRetryPolicy(new DefaultRetryPolicy( 60000, 5,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(request);
         try {
             try {
-                JSONArray jsonArray = future.get(60,TimeUnit.SECONDS).getJSONArray("data");
+                JSONArray jsonArray = future.get(1L,TimeUnit.MINUTES).getJSONArray("data");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     Log.e(NEWS_WORKER_TAG,"Adding JSONOBJECT to realm");
                     JSONObject article = jsonArray.getJSONObject(i);
@@ -87,34 +90,36 @@ public class NewsUpdateWorker extends Worker {
             } catch (JSONException e) {
                 realmInstance.close();
                 e.printStackTrace();
-                Log.e(NEWS_WORKER_TAG, "Worker returning after failure");
+                Log.e(NEWS_WORKER_TAG, "Worker returning after failure due to JSON exception");
                 return Result.failure();
             }
         } catch (InterruptedException e) {
             realmInstance.close();
             e.printStackTrace();
-            Log.e(NEWS_WORKER_TAG, "Worker returning after failure");
+            Log.e(NEWS_WORKER_TAG, "Worker returning after failure due to interruption");
             return Result.failure();
+        } catch (TimeoutException e) {
+                realmInstance.close();
+                e.printStackTrace();
+                Log.e(NEWS_WORKER_TAG, "Worker returning after failure due to timeout");
+                return Result.failure();
         } catch (ExecutionException e) {
             realmInstance.close();
             e.printStackTrace();
-            Log.e(NEWS_WORKER_TAG, "Worker returning after failure");
-            return Result.failure();
-        } catch (TimeoutException e) {
-            realmInstance.close();
-            e.printStackTrace();
-            Log.e(NEWS_WORKER_TAG, "Worker returning after failure");
+            Log.e(NEWS_WORKER_TAG, "Worker returning after failure due to execution exception");
             return Result.failure();
         }
     }
 
     private void initRealm() {
         Realm.init(getApplicationContext());
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder().build();
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded().build();
         realmInstance = Realm.getInstance(realmConfig);
     }
 
     private void addToRealm(final NewsModel newsArticle) {
+        Log.e(NEWS_WORKER_TAG, "Adding news item");
         realmInstance.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
