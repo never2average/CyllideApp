@@ -33,8 +33,8 @@ public class StoriesActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("News"));
         tabLayout.addTab(tabLayout.newTab().setText("Stories"));
 
-        final ViewPager viewPager =
-                (ViewPager) findViewById(R.id.view_pager);
+        final customViewPager viewPager =
+                 findViewById(R.id.view_pager);
         final PagerAdapter adapter = new StoriesPagerAdapter
                 (getSupportFragmentManager(),
                         tabLayout.getTabCount());

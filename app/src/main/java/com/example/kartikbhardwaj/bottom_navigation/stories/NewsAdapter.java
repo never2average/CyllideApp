@@ -22,7 +22,6 @@ public class NewsAdapter extends RealmRecyclerViewAdapter<NewsModel,NewsViewHold
         Log.e("NewsAdapter","Creating NewsAdapter");
         this.partList = partList;
     }
-
     @NonNull
     @Override
     public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

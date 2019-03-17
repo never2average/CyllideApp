@@ -53,6 +53,7 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(itemView.getContext(),ChartActivity.class);
+                intent.putExtra("ticker",stockName.getText().toString());
                 itemView.getContext().startActivity(intent);
             }
         });

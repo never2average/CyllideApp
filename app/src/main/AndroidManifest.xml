@@ -4,7 +4,7 @@
     package="com.example.kartikbhardwaj.bottom_navigation">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
@@ -16,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".phone_authentication.OTPVerification"></activity>
         <activity android:name=".quiz.QuizRulesActivity" />
         <activity android:name=".Contests.testPortfolioActivity" />
         <activity android:name=".Contests.ContestLeaderboard" />
@@ -58,9 +59,7 @@
             android:name=".notification.NotificationActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Charts.ChartActivity" />
-        <activity android:name=".PhoneAuth">
-
-        </activity>
+        <activity android:name=".phone_authentication.PhoneAuth"></activity>
 
         <receiver
             android:name=".MySMSBroadcastReceiver"

@@ -3,14 +3,25 @@
     <script type="text/javascript" src="loader.js"></script>
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript">
+
       google.charts.load('current', {'packages':['corechart']})
+      var ticker = "";
+      var frequency = "";
+
+      function getFromAndroid(){
+        var tf = Android.getFromAndroid()
+        ticker = tf[0];
+        frequency = fg[1];
+        }
+
+      getFromAndroid();
 
       var settings = {
-          "url": "http://localhost:5000/data/stock/close",
+          "url": "http://data.cyllide.com/data/stock/close",
           "method": "GET",
           "headers": {
-             "value": "1 day",
-             "ticker": "RELIANCE"
+             "value": frequency,
+             "ticker": ticker
            }
       }
 
