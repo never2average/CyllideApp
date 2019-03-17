@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.example.kartikbhardwaj.bottom_navigation.phone_authentication.OTPVerification">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:padding="16dp"
+        android:text="VERIFYING"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please enter the verification code sent to +919844381031"
+        android:textAlignment="center"
+        android:textColor="@android:color/white" />
+
+    <com.mukesh.OtpView
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:id="@+id/otp_view"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="12dp"
+        android:inputType="number"
+        android:textColor="@android:color/white"
+        app:hideLineWhenFilled="true"
+        app:itemCount="6"
+        app:itemSpacing="6dp"
+        app:state_filled="true"
+        app:viewType="line" />
+
+    <Button
+        android:id="@+id/validate_button"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:text="VERIFY"
+        android:textColor="@android:color/white" />
+</LinearLayout>

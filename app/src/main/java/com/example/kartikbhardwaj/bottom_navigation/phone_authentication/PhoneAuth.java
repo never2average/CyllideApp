@@ -1,9 +1,9 @@
-package com.example.kartikbhardwaj.bottom_navigation;
+package com.example.kartikbhardwaj.bottom_navigation.phone_authentication;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.collection.ArrayMap;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,16 +18,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.auth.api.phone.SmsRetriever;
-import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,67 +55,78 @@ public class PhoneAuth extends AppCompatActivity {
                     final Map<String, String> mHeaders = new ArrayMap<String, String>();
                     mHeaders.put("phone", input_phoneNo);
                     mHeaders.put("username", input_scName);
+                    Intent intent = new Intent(getBaseContext(),OTPVerification.class);
+                    startActivity(intent);
 
 
-                    try {
-                        RequestQueue requestQueue;
-                        requestQueue = Volley.newRequestQueue(getBaseContext());
-                        String URL = "http://api.cyllide.com/api/client/auth/otp/send";
-
-
-
-
-                        final StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-
-                            @Override
-                            public void onResponse(String response) {
-                                Log.e("RealityCheck",response);
-                                Log.e("RealityCheck","Inside onResponse");
-
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.e("VOLLEY", error.toString());
-                            }
-                        })
-
-
-                            {
-                                @Override
-                                public Map<String, String> getHeaders () {
-                                return mHeaders;
-                            }
-
-
-
-                            @Override
-                            protected Response<String> parseNetworkResponse(NetworkResponse nr) {
-                                int n = nr.statusCode;
-                                Log.d("Res Code",""+n);
-                                return super.parseNetworkResponse(nr);
-                            }
-
-
-
-
-                            @Override
-                            protected Map<String, String> getParams() {
-                                Map<String, String> params = new HashMap<String, String>();
-                                params.put("username", input_phoneNo.trim());
-                                params.put("phone", input_scName.trim());
-                                return params;
-                            }
-
-                        };
-
-                        requestQueue.add(stringRequest);
-                        Log.e("RealityCheck","Request sent");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    //Volley Code Goes Here
+//                    try {
+//                        RequestQueue requestQueue;
+//                        requestQueue = Volley.newRequestQueue(getBaseContext());
+//                        String URL = "http://api.cyllide.com/api/client/auth/otp/send";
+//
+//
+//
+//
+//                        final StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+//
+//                            @Override
+//                            public void onResponse(String response) {
+//                                Log.e("RealityCheck",response);
+//                                Log.e("RealityCheck","Inside onResponse");
+//                                // TODO Verify the response first.
+//                                try {
+//                                    JSONObject jsonObject = new JSONObject(response);
+//                                }
+//                                catch (JSONException e) {
+//                                    Log.e("RealityCheck","Error",e);
+//                                }
+//                                Intent intent = new Intent(getBaseContext(),OTPVerification.class);
+//                                startActivity(intent);
+//
+//                            }
+//                        }, new Response.ErrorListener() {
+//                            @Override
+//                            public void onErrorResponse(VolleyError error) {
+//                                Log.e("VOLLEY", error.toString());
+//                            }
+//                        })
+//
+//
+//                            {
+//                                @Override
+//                                public Map<String, String> getHeaders () {
+//                                return mHeaders;
+//                            }
+//
+//
+//
+//                            @Override
+//                            protected Response<String> parseNetworkResponse(NetworkResponse nr) {
+//                                int n = nr.statusCode;
+//                                Log.d("Res Code",""+n);
+//                                return super.parseNetworkResponse(nr);
+//                            }
+//
+//
+//
+//
+//                            @Override
+//                            protected Map<String, String> getParams() {
+//                                Map<String, String> params = new HashMap<String, String>();
+//                                params.put("username", input_phoneNo.trim());
+//                                params.put("phone", input_scName.trim());
+//                                return params;
+//                            }
+//
+//                        };
+//
+//                        requestQueue.add(stringRequest);
+//                        Log.e("RealityCheck","Request sent");
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    //Volley Code Goes Here
                 }
                 else{
                     Toast.makeText(PhoneAuth.this,"InvalidPhoneNumber",Toast.LENGTH_LONG).show();
@@ -126,30 +134,30 @@ public class PhoneAuth extends AppCompatActivity {
             }
         });
 
-        SmsRetrieverClient client = SmsRetriever.getClient(this /* context */);
-
-// Starts SmsRetriever, which waits for ONE matching SMS message until timeout
-// (5 minutes). The matching SMS message will be sent via a Broadcast Intent with
-// action SmsRetriever#SMS_RETRIEVED_ACTION.
-        Task<Void> task = client.startSmsRetriever();
-
-// Listen for success/failure of the start Task. If in a background thread, this
-// can be made blocking using Tasks.await(task, [timeout]);
-        task.addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                // Successfully started retriever, expect broadcast intent
-                // ...
-            }
-        });
-
-        task.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                // Failed to start retriever, inspect Exception for more details
-                // ...
-            }
-        });
+//        SmsRetrieverClient client = SmsRetriever.getClient(this /* context */);
+//
+//// Starts SmsRetriever, which waits for ONE matching SMS message until timeout
+//// (5 minutes). The matching SMS message will be sent via a Broadcast Intent with
+//// action SmsRetriever#SMS_RETRIEVED_ACTION.
+//        Task<Void> task = client.startSmsRetriever();
+//
+//// Listen for success/failure of the start Task. If in a background thread, this
+//// can be made blocking using Tasks.await(task, [timeout]);
+//        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                // Successfully started retriever, expect broadcast intent
+//                // ...
+//            }
+//        });
+//
+//        task.addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                // Failed to start retriever, inspect Exception for more details
+//                // ...
+//            }
+//        });
     }
 
 

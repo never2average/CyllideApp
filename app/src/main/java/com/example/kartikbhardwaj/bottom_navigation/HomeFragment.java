@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -21,26 +20,16 @@ import com.example.kartikbhardwaj.bottom_navigation.Contests.WeeklyActivity;
 //import com.example.kartikbhardwaj.bottom_navigation.stories.NewsData;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.MyPortfolio;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioActivity;
-import com.example.kartikbhardwaj.bottom_navigation.quiz.QuizActivity;
-import com.example.kartikbhardwaj.bottom_navigation.quiz.QuizActivityTest;
+import com.example.kartikbhardwaj.bottom_navigation.phone_authentication.PhoneAuth;
 import com.example.kartikbhardwaj.bottom_navigation.quiz.QuizRulesActivity;
-import com.example.kartikbhardwaj.bottom_navigation.quiz.StartingScreenActivity;
-import com.example.kartikbhardwaj.bottom_navigation.stories.NewsData;
 import com.example.kartikbhardwaj.bottom_navigation.stories.StoriesActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
+
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.material.card.MaterialCardView;
-
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 public class HomeFragment extends Fragment {
     Calendar startTime =Calendar.getInstance();
@@ -109,8 +98,16 @@ public class HomeFragment extends Fragment {
         quiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Comment later*/
-                Intent intent = new Intent(getContext(), QuizRulesActivity.class);
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("AUTHENTICATION",Context.MODE_PRIVATE);
+                String token = sharedPreferences.getString("token", "Not found!");
+                Intent intent;
+                if(token.equals("Not found!")){
+                    intent = new Intent(getContext(), PhoneAuth.class);
+                }
+                else{
+                    intent = new Intent(getContext(), QuizRulesActivity.class);
+                }
+
                 getContext().startActivity(intent);
                 }
 

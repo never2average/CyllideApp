@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
 import com.example.kartikbhardwaj.bottom_navigation.R;
+import com.example.kartikbhardwaj.bottom_navigation.phone_authentication.PhoneAuth;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -31,9 +33,10 @@ import java.util.Map;
 
 public class NewsPageActivity extends AppCompatActivity {
     private String name,description,imageURL,date,source, url, author;
-    private TextView nameTv, descTv, sourceTv, dateTv, authorTv, newsContentTv;
+    private TextView nameTv, descTv, sourceTv, dateTv, authorTv, newsContentTv,loginText;
     private SimpleDraweeView image;
     private ImageView back;
+    private Button loginButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,8 @@ public class NewsPageActivity extends AppCompatActivity {
         image=findViewById(R.id.newsThumbImage);
         authorTv=findViewById(R.id.newsAuthorTV);
         newsContentTv = findViewById(R.id.newsContent);
+        loginButton = findViewById(R.id.login_button);
+        loginText = findViewById(R.id.login_text);
 
         name= getIntent().getStringExtra("newsname");
         description= getIntent().getStringExtra("newsdesc");
@@ -84,11 +89,15 @@ public class NewsPageActivity extends AppCompatActivity {
 
                     try {
                         JSONObject jsonObject = new JSONObject(response);
+                        loginText.setVisibility(View.INVISIBLE);
+                        loginButton.setVisibility(View.INVISIBLE);
                         newsContentTv.setText(jsonObject.getString("message"));
 
                         Log.e("RealityCheck",response);
                         Log.e("RealityCheck","Inside onResponse");
                     } catch (JSONException e) {
+                        loginText.setVisibility(View.VISIBLE);
+                        loginButton.setVisibility(View.VISIBLE);
                         e.printStackTrace();
                     }
 
@@ -96,6 +105,8 @@ public class NewsPageActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    loginText.setVisibility(View.VISIBLE);
+                    loginButton.setVisibility(View.VISIBLE);
                     Log.e("VOLLEY", error.toString());
                 }
             })
@@ -122,6 +133,14 @@ public class NewsPageActivity extends AppCompatActivity {
             Log.e("RealityCheck","Request sent");
         } catch (Exception e) {
             e.printStackTrace();
+            loginText.setVisibility(View.VISIBLE);
+            loginButton.setVisibility(View.VISIBLE);
+            loginButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getBaseContext(), PhoneAuth.class);
+                }
+            });
         }
 
         //Volley Code Goes Here

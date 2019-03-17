@@ -31,7 +31,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 import androidx.work.WorkManager;
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -62,9 +64,11 @@ public class NewsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_news, container, false);
         final Activity activity = getActivity();
         final Context context = getContext();
+        SnapHelper snapHelper = new PagerSnapHelper();
         newsRV = view.findViewById(R.id.fragment_news_rv);
         newsRV.setHasFixedSize(true);
         newsRV.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        snapHelper.attachToRecyclerView(newsRV);
         Fresco.initialize(context);
         if (newsRV.getAdapter() == null) {
             readCachedNews();
