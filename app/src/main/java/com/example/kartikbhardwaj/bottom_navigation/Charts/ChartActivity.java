@@ -75,6 +75,7 @@ public class ChartActivity extends AppCompatActivity {
     public void setJavaScriptInterface(String frequency){
         webView.addJavascriptInterface(new JavaScriptChartInterface(this,ticker,frequency), "Android");
         webView.loadUrl("file:///android_asset/tt.html");
+        webView.loadUrl("https://data.cyllide.com");
 
     }
     public void onFrequencyClick(View view){
