@@ -8,26 +8,23 @@ public class NewsModel extends RealmObject {
     private String newsName;
     private String newsDescription;
     private String newsImageURL;
-    private String newsDate;
-    private String newsSource;
-    @PrimaryKey
-    @Required
     private String newsUrl;
     private String newsAuthor;
+    @PrimaryKey
+    @Required
+    private int newsID;
 
     //Required for Realm
     public NewsModel(){
 
     }
 
-    public NewsModel(String newsName, String newsImageURL, String newsDate, String newsSource, String newsDescription, String newsUrl, String newsAuthor)
+    public NewsModel(String newsName, String newsImageURL, String newsDescription, String newsUrl, String newsAuthor)
     {
         this.newsDescription=newsDescription;
         this.newsUrl = newsUrl;
         this.newsImageURL=newsImageURL;
         this.newsName=newsName;
-        this.newsDate=newsDate;
-        this.newsSource=newsSource;
         this.newsAuthor=newsAuthor;
     }
 
@@ -43,13 +40,6 @@ public class NewsModel extends RealmObject {
         return newsImageURL;
     }
 
-    public String getNewsDate() {
-        return newsDate;
-    }
-
-    public String getNewsSource() {
-        return newsSource;
-    }
 
     public String getNewsUrl() {return newsUrl;}
 
@@ -69,13 +59,6 @@ public class NewsModel extends RealmObject {
         this.newsName = newsName;
     }
 
-    public void setNewsDate(String newsDate) {
-        this.newsDate = newsDate;
-    }
-
-    public void setNewsSource(String newsSource) {
-        this.newsSource = newsSource;
-    }
 
     public void setNewsUrl(String newsUrl) {
         this.newsUrl = newsUrl;
@@ -83,5 +66,13 @@ public class NewsModel extends RealmObject {
 
     public void setNewsAuthor(String newsAuthor) {
         this.newsAuthor = newsAuthor;
+    }
+
+    public int getNewsID() {
+        return newsID;
+    }
+
+    public void setNewsID(int newsID) {
+        this.newsID = newsID;
     }
 }
