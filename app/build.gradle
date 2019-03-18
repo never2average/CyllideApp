@@ -73,7 +73,7 @@ dependencies {
 
     implementation 'io.realm:android-adapters:2.1.1'
     implementation "android.arch.work:work-runtime:1.0.0-rc02"
-
+    implementation 'com.github.clans:fab:1.6.4'
 
 }
 apply plugin: 'announce'
