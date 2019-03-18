@@ -55,6 +55,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static java.security.AccessController.getContext;
+
 public class Profile_Activity extends AppCompatActivity {
 
     ImageButton cross;
