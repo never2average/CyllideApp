@@ -21,16 +21,12 @@ public class ForumActivity extends AppCompatActivity {
 
 
     RecyclerView forumRV;
-    ArrayList<String> tags;
     FloatingActionButton askQuestion;
 
     private List<QuestionListModel> dummyData() {
-        tags = new ArrayList<>();
-        tags.add("Finance");
-        tags.add("Business");
         List<QuestionListModel> questionList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            questionList.add(new QuestionListModel("How do stock exchanges work?",tags));
+            questionList.add(new QuestionListModel("How do stock exchanges work?"));
         }
         return questionList;
     }
@@ -53,5 +49,6 @@ public class ForumActivity extends AppCompatActivity {
                 startActivity(questioningIntent);
             }
         });
+
     }
 }
