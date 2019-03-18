@@ -16,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".forum.questionlist.questionPage.QuestionAnswerActivity"></activity>
         <activity android:name=".forum.ForumActivity" />
         <activity android:name=".phone_authentication.OTPVerification" />
         <activity android:name=".quiz.QuizRulesActivity" />
