@@ -34,7 +34,46 @@
             android:layout_weight="1"
             android:layout_height="match_parent"/>
     </LinearLayout>
-
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <ToggleButton
+                android:textOff="Finance"
+                android:textOn="Finance"
+                android:layout_margin="5dp"
+                android:padding="6dp"
+                android:layout_width="wrap_content"
+                android:background="@drawable/tag_filter"
+                android:layout_height="wrap_content" />
+            <ToggleButton
+                android:textOff="Capital MARKETS"
+                android:textOn="Capital MARKETS"
+                android:layout_margin="5dp"
+                android:padding="6dp"
+                android:layout_width="wrap_content"
+                android:background="@drawable/tag_filter"
+                android:layout_height="wrap_content" />
+            <ToggleButton
+                android:textOff="Macro Economics"
+                android:textOn="Macro Economics"
+                android:layout_margin="5dp"
+                android:padding="6dp"
+                android:layout_width="wrap_content"
+                android:background="@drawable/tag_filter"
+                android:layout_height="wrap_content" />
+            <ToggleButton
+                android:textOff="Business"
+                android:textOn="Business"
+                android:layout_margin="5dp"
+                android:padding="6dp"
+                android:layout_width="wrap_content"
+                android:background="@drawable/tag_filter"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        </HorizontalScrollView>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/topquesrecycler"
         android:layout_marginTop="8dp"
