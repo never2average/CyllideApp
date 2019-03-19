@@ -22,6 +22,15 @@
             android:layout_height="match_parent"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18dp"
+        android:layout_marginVertical="3dp"
+        android:text="Select a tag"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -30,14 +39,28 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="Finance"
+            android:tag="released"
+            android:id="@+id/btntag1"
+            app:cornerRadius="5dp"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/colorPrimary"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="3dp"
             android:layout_marginRight="7dp"
             android:layout_marginLeft="7dp"
             android:layout_height="match_parent" />
         <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:id="@+id/btntag2"
+            android:tag="released"
             android:layout_marginRight="7dp"
             android:text="Stock Markets"
+            app:cornerRadius="5dp"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/colorPrimary"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="3dp"
             android:layout_marginLeft="7dp"
             android:layout_height="match_parent" />
     </LinearLayout>
@@ -47,14 +70,28 @@
         android:layout_weight="1">
         <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
+            android:id="@+id/btntag3"
             android:layout_weight="1"
             android:layout_marginRight="7dp"
             android:text="Business"
+            app:cornerRadius="5dp"
+            android:tag="released"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/colorPrimary"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="3dp"
             android:layout_marginLeft="7dp"
             android:layout_height="match_parent" />
         <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
             android:layout_weight="1"
+            app:cornerRadius="5dp"
+            android:tag="released"
+            android:id="@+id/btntag4"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/colorPrimary"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="3dp"
             android:layout_marginRight="7dp"
             android:text="Macro Economics"
             android:layout_marginLeft="7dp"

@@ -8,13 +8,13 @@
         android:right="15dp"
         android:bottom="15dp"
         /-->
-    <corners android:radius="5dp"/>
+    <corners android:radius="1dp"/>
     <size
-        android:width="50dp"
-        android:height="50dp"/>
+        android:width="20dp"
+        android:height="10dp"/>
     <stroke
         android:dashGap="0dp"
-        android:width="2dp"
+        android:width="0.1dp"
         android:color="@color/white"/>
 
 </shape>

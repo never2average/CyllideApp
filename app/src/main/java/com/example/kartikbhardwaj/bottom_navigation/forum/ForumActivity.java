@@ -47,6 +47,7 @@ public class ForumActivity extends AppCompatActivity {
     List<QuestionListModel> questionList;
     FloatingSearchView searchQuestions;
 
+
     private void displayQuestions(JSONArray responseData){
         questionList = new ArrayList<>();
         for (int i = 0; i < responseData.length(); i++) {
@@ -56,8 +57,6 @@ public class ForumActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 Log.d("JSON Error",e.toString());
             }
-
-
         }
         questionListAdapter = new QuestionListAdapter(questionList);
         forumRV.setAdapter(questionListAdapter);
@@ -117,5 +116,6 @@ public class ForumActivity extends AppCompatActivity {
             }
         };
         questionRequestQueue.add(stringRequest);
+
     }
 }
