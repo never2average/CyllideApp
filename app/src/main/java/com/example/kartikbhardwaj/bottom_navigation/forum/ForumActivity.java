@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.example.kartikbhardwaj.bottom_navigation.forum.askquestion.AskQuestion;
 import com.example.kartikbhardwaj.bottom_navigation.forum.questionlist.QuestionListAdapter;
@@ -43,10 +44,12 @@ public class ForumActivity extends AppCompatActivity {
     private RequestQueue questionRequestQueue;
     private Map<String, String> requestHeaders = new ArrayMap<String, String>();
     JSONObject questionObject;
+    List<QuestionListModel> questionList, filterList;
+    FloatingSearchView searchQuestions;
 
 
     private void displayQuestions(JSONArray responseData){
-        List<QuestionListModel> questionList = new ArrayList<>();
+        questionList = new ArrayList<>();
         for (int i = 0; i < responseData.length(); i++) {
             try {
                 questionObject=responseData.getJSONObject(i);
@@ -76,8 +79,36 @@ public class ForumActivity extends AppCompatActivity {
                 startActivity(questioningIntent);
             }
         });
+        searchQuestions = findViewById(R.id.search_questions);
+        searchQuestions.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+            @Override
+            public void onSearchTextChanged(String oldQuery, String newQuery) {
+                if (questionList!=null && questionList.size() != 0) {
+                    if (newQuery.equals("")) {
+                        Log.d("newQuery",newQuery);
+                        questionListAdapter = new QuestionListAdapter(questionList);
+                        forumRV.setAdapter(questionListAdapter);
+                    } else {
+                        applyFilter(newQuery, questionList);
+                    }
+                }
+            }
+        });
+
 
     }
+
+    private void applyFilter(String newQuery, List<QuestionListModel> questionList) {
+        filterList = new ArrayList<>();
+        for(QuestionListModel questionListModel: questionList){
+            if(questionListModel.getQuestionText().contains(newQuery)){
+                filterList.add(questionListModel);
+            }
+        }
+        questionListAdapter = new QuestionListAdapter(filterList);
+        forumRV.setAdapter(questionListAdapter);
+    }
+
     private void getQuestions(){
         questionRequestQueue = Volley.newRequestQueue(this);
         requestHeaders.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");

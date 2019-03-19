@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -32,19 +32,28 @@
 
     </LinearLayout>
 
-
-    <androidx.appcompat.widget.SearchView
-        android:clickable="true"
-        android:focusable="true"
+    <com.arlib.floatingsearchview.FloatingSearchView
         android:id="@+id/searchbarstocks"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="30dp"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/search_background">
-    </androidx.appcompat.widget.SearchView>
+        android:layout_height="49dp"
+        app:floatingSearch_searchHint="Search..."
+        app:floatingSearch_suggestionsListAnimDuration="250"
+        app:floatingSearch_showSearchKey="false"
+        app:floatingSearch_leftActionMode="noLeftAction"
+        app:floatingSearch_close_search_on_keyboard_dismiss="true"/>
+
+    <!--<androidx.appcompat.widget.SearchView-->
+        <!--android:clickable="true"-->
+        <!--android:focusable="true"-->
+        <!--android:id="@+id/searchbarstocks"-->
+        <!--android:layout_marginTop="30dp"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_marginBottom="30dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:background="@drawable/search_background">-->
+    <!--</androidx.appcompat.widget.SearchView>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

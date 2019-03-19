@@ -80,7 +80,7 @@ public class NewsFragment extends Fragment {
 
     private void readCachedNews() {
         RealmResults<NewsModel> data = realmInstance.where(NewsModel.class)
-                .sort("newsDate", Sort.DESCENDING)
+                .sort("newsID", Sort.DESCENDING)
                 .findAll();
         if (data.size() == 0) {
             Log.e("NewsFragment","Setting up worker to fetch news");
