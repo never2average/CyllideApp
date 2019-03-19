@@ -32,6 +32,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.Calendar;
 
+import static java.security.AccessController.getContext;
+
 public class HomeFragment extends Fragment {
     Calendar startTime =Calendar.getInstance();
     Dialog quizPopup;

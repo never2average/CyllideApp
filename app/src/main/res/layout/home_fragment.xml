@@ -11,6 +11,7 @@
     android:paddingEnd="18dp"
     android:paddingTop="55dp"
     android:paddingBottom="20dp"
+    android:layout_marginBottom="100dp"
     >
 
 
