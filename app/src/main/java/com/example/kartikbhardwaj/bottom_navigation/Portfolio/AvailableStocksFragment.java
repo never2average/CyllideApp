@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableStockRV.AvailableStockAdapter;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableStockRV.AvailableStockModel;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableIndicesRV.AvailableIndexAdapter;
@@ -28,7 +29,7 @@ import java.util.List;
 public class AvailableStocksFragment extends Fragment {
 
 
-    SearchView searchView;
+    FloatingSearchView searchView;
     public TextView BalanceTXTV;
     RecyclerView RV;
     private String indexNames[]={"Nifty Auto","Nifty IT","Nifty Pharma","Nifty","Sensex"};
@@ -72,29 +73,47 @@ public class AvailableStocksFragment extends Fragment {
         DecimalFormat formatter = new DecimalFormat("#,###.00");
         BalanceTXTV.setText("₹ " + String.valueOf(formatter.format(BalanceClass.balance)));
         searchView=view.findViewById(R.id.searchbarstocks);
-        searchView.setIconifiedByDefault(false);
+        //searchView.setIconifiedByDefault(false);
         searchView.clearFocus();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                List<AvailableStockModel> data2=dummyData2(query);
-                RV.setAdapter(new AvailableStockAdapter(data2));
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if(newText.equals("")==false) {
-                    List<AvailableStockModel> data2 = dummyData2(newText);
+            public void onSearchTextChanged(String oldQuery, final String newQuery) {
+                if(newQuery.equals("")==false) {
+                    List<AvailableStockModel> data2 = dummyData2(newQuery);
                     RV.setAdapter(new AvailableStockAdapter(data2));
-                    return true;
+//                    return true;
                 }
                 else{
                     RV.setAdapter(new AvailableIndexAdapter(data1));
-                    return true;
+//                    return true;
                 }
+
+                //get suggestions based on newQuery
+
+                //pass them on to the search view
             }
         });
+//        searchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                List<AvailableStockModel> data2=dummyData2(query);
+//                RV.setAdapter(new AvailableStockAdapter(data2));
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                if(newText.equals("")==false) {
+//                    List<AvailableStockModel> data2 = dummyData2(newText);
+//                    RV.setAdapter(new AvailableStockAdapter(data2));
+//                    return true;
+//                }
+//                else{
+//                    RV.setAdapter(new AvailableIndexAdapter(data1));
+//                    return true;
+//                }
+//            }
+//        });
         return view;
 
     }

@@ -15,6 +15,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.kartikbhardwaj.bottom_navigation.faq_view.Faq_Activity;
 import com.example.kartikbhardwaj.bottom_navigation.howitworks.Fragment0;
+import com.razerdp.widget.animatedpieview.AnimatedPieView;
+import com.razerdp.widget.animatedpieview.AnimatedPieViewConfig;
+import com.razerdp.widget.animatedpieview.data.SimplePieInfo;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,7 +33,6 @@ public class ProfileFragment extends Fragment {
     ImageButton cross;
     Button save;
     TextView username;
-    CardView faqs;
     CardView toptraders;
     CircleImageView profilePic;
     Uri defaultProfilePic =Uri.parse("android.resource://com.example.kartikbhardwaj.bottom_navigation/drawable/profile_pic");
@@ -42,7 +44,12 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.activity_profile_,null);
+
+        View view= inflater.inflate(R.layout.activity_profile_,null);
+
+
+        return view;
+
 
     }
 
@@ -51,13 +58,19 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         toptraders=view.findViewById(R.id.toptraders);
-        faqs=view.findViewById(R.id.faq);
 
 
 
         cross=view.findViewById(R.id.cross_btn);
         username=view.findViewById(R.id.username);
         profilePic=view.findViewById(R.id.profile_pic);
+        AnimatedPieView mAnimatedPieView = view.findViewById(R.id.win_perc);
+        AnimatedPieViewConfig config =  new  AnimatedPieViewConfig ();
+        config.startAngle(-90).addData(
+                new SimplePieInfo( 75.0f , R.color.primary_light_max,"Win %")).addData (
+                new SimplePieInfo( 25.0f ,R.color.primary_dark_max, "Loss %" )).duration( 2000 );
+        mAnimatedPieView.applyConfig (config);
+        mAnimatedPieView.start();
 
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,16 +81,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        faqs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//               // intent to faq activity
-                Intent faqintent =new Intent(getContext(), Faq_Activity.class);
-                startActivity(faqintent);
-
-
-            }
-        });
 
 
 

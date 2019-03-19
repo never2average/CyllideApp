@@ -39,7 +39,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         public NotificationViewHolder(View itemView) {
             super(itemView);
             notifNameTv = itemView.findViewById(R.id.tv_notif_name);
-            notifTimeTv = itemView.findViewById(R.id.tv_notif_time);
+            notifTimeTv = itemView.findViewById(R.id.tv_notif_date);
             tick = itemView.findViewById(R.id.tick);
             notifll = itemView.findViewById(R.id.notifll);
         }

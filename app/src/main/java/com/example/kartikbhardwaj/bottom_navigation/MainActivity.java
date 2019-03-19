@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.kartikbhardwaj.bottom_navigation.faq_view.Faq_Activity;
 import com.example.kartikbhardwaj.bottom_navigation.howitworks.HowItWorksFragment;
 import com.example.kartikbhardwaj.bottom_navigation.notification.NotificationActivity;
 import com.example.kartikbhardwaj.bottom_navigation.HomeFragment;
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity{
      com.github.clans.fab.FloatingActionButton howItWorks;
      com.github.clans.fab.FloatingActionButton profile;
      com.github.clans.fab.FloatingActionButton home;
-    com.github.clans.fab.FloatingActionButton stats;
+    com.github.clans.fab.FloatingActionButton faq;
 
 
 
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity{
         howItWorks=findViewById(R.id.howitworks);
         home=findViewById(R.id.home);
         profile=findViewById(R.id.profile);
-        stats=findViewById(R.id.stats);
+        faq=findViewById(R.id.faq);
 
 
         fabMenu.setClosedOnTouchOutside(true);
@@ -117,12 +119,15 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-        stats .setOnClickListener(new View.OnClickListener()  {
+       faq .setOnClickListener(new View.OnClickListener()  {
+
             @Override
             public void onClick(View v) {
                 // ((FloatingActionsMenu) findViewById(R.id.multiple_actions_down)).removeButton(removeAction);
-                swapstatFragment();
                 fabMenu.close(true);
+                Intent faqIntent=new Intent(MainActivity.this, Faq_Activity.class);
+                startActivity(faqIntent);
+
 
 
             }
