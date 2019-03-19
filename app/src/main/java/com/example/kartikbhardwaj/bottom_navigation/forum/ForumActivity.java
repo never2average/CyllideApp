@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.example.kartikbhardwaj.bottom_navigation.forum.askquestion.AskQuestion;
 import com.example.kartikbhardwaj.bottom_navigation.forum.questionlist.QuestionListAdapter;
@@ -43,9 +44,11 @@ public class ForumActivity extends AppCompatActivity {
     private RequestQueue questionRequestQueue;
     private Map<String, String> requestHeaders = new ArrayMap<String, String>();
     JSONObject questionObject;
+    List<QuestionListModel> questionList;
+    FloatingSearchView searchQuestions;
 
     private void displayQuestions(JSONArray responseData){
-        List<QuestionListModel> questionList = new ArrayList<>();
+        questionList = new ArrayList<>();
         for (int i = 0; i < responseData.length(); i++) {
             try {
                 questionObject=responseData.getJSONObject(i);
@@ -77,6 +80,8 @@ public class ForumActivity extends AppCompatActivity {
                 startActivity(questioningIntent);
             }
         });
+        searchQuestions = 
+
 
     }
     private void getQuestions(){
