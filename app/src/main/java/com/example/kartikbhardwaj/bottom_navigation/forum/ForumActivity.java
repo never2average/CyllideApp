@@ -44,6 +44,7 @@ public class ForumActivity extends AppCompatActivity {
     private Map<String, String> requestHeaders = new ArrayMap<String, String>();
     JSONObject questionObject;
 
+
     private void displayQuestions(JSONArray responseData){
         List<QuestionListModel> questionList = new ArrayList<>();
         for (int i = 0; i < responseData.length(); i++) {
@@ -53,8 +54,6 @@ public class ForumActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 Log.d("JSON Error",e.toString());
             }
-
-
         }
         questionListAdapter = new QuestionListAdapter(questionList);
         forumRV.setAdapter(questionListAdapter);
@@ -112,5 +111,6 @@ public class ForumActivity extends AppCompatActivity {
             }
         };
         questionRequestQueue.add(stringRequest);
+
     }
 }
