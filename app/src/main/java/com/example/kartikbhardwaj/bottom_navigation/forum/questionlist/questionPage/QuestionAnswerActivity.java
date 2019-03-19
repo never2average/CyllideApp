@@ -43,7 +43,12 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 		QuestionAnswerAdapter adapter = new QuestionAnswerAdapter(answers);
 		ansRecyclerView.setAdapter(adapter);
 		ansRecyclerView.setHasFixedSize(true);
-		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this){
+			@Override
+            public boolean canScrollVertically(){
+			    return false;
+            }
+		};
 		ansRecyclerView.setLayoutManager(layoutManager);
 
 
