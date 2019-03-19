@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class AvailableStockAdapter extends RecyclerView.Adapter<AvailableStockViewHolder> {
+    int selectedCardPosition = -1;
 
     public AvailableStockAdapter(List<AvailableStockModel> data) {
         this.data = data;
@@ -29,8 +30,29 @@ public class AvailableStockAdapter extends RecyclerView.Adapter<AvailableStockVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AvailableStockViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final AvailableStockViewHolder holder, final int position) {
         AvailableStockModel stocksModel=data.get(position);
+        holder.stockCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.expandableLayout.isExpanded()) {
+                    holder.expandableLayout.setExpanded(false);
+                }
+                else{
+                    holder.expandableLayout.setExpanded(true);
+                    notifyItemChanged(selectedCardPosition);
+                    selectedCardPosition = position;
+                    notifyItemChanged(selectedCardPosition);
+
+                }
+            }
+        });
+        if(position != selectedCardPosition){
+            holder.expandableLayout.setExpanded(false);
+        }
+        else{
+            holder.expandableLayout.setExpanded(true);
+        }
         holder.populate(stocksModel);
     }
 
