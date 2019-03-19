@@ -155,14 +155,14 @@
             />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/stats"
+            android:id="@+id/faq"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/stats_icon"
+            android:src="@drawable/faq_icon"
             android:tint="@android:color/white"
 
             fab:fab_size="mini"
-            fab:fab_label="Stats"
+            fab:fab_label="FAQ"
             fab:fab_colorNormal="@android:color/white"
             fab:fab_colorPressed="@color/primary_light_max"
             fab:fab_colorRipple="@color/primary_light_max"
@@ -210,7 +210,7 @@
             android:src="@drawable/ic_lightbulb_outline_black_24dp"
 
             fab:fab_size="mini"
-            fab:fab_label="Hoe it works"
+            fab:fab_label="How it works"
             fab:fab_colorNormal="@android:color/white"
             fab:fab_colorPressed="@color/primary_light_max"
             fab:fab_colorRipple="@color/primary_light_max"
