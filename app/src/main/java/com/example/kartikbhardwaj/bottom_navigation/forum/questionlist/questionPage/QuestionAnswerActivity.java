@@ -1,5 +1,6 @@
 package com.example.kartikbhardwaj.bottom_navigation.forum.questionlist.questionPage;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,11 +12,26 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kartikbhardwaj.bottom_navigation.R;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.util.ArrayMap;
 import android.util.Log;
 import android.widget.ImageView;
+=======
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.animation.OvershootInterpolator;
+import android.widget.EditText;
+>>>>>>> 8ab67789fc1d7b7a9908444715e9a9ee8b731254
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -27,12 +43,15 @@ import java.util.Map;
 
 public class QuestionAnswerActivity extends AppCompatActivity {
 
+	FloatingActionMenu contributeMenu;
+	FloatingActionButton commentButton, answerButton;
 	RecyclerView ansRecyclerView;
 	String question;
 	TextView questionDetail, questionTitle;
 	String questionID;
 	private RequestQueue answerQueue;
 	private Map<String, String> requestHeaders = new ArrayMap<String, String>();
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +72,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
             Log.d("InvalidQid",e.toString());
         }
     }
+
 
     private void fillAnswers(String questionID) {
 	    answerQueue = Volley.newRequestQueue(this);
@@ -77,5 +97,4 @@ public class QuestionAnswerActivity extends AppCompatActivity {
         };
 	    answerQueue.add(answers);
     }
-
 }

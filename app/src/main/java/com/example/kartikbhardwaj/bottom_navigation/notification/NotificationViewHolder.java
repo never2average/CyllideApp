@@ -18,13 +18,14 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder
     private TextView notifNameTv, notifTimeTv;
     private ImageView tick;
     private LinearLayout notifll;
+    private TextView notivDateTV;
 
 
     public NotificationViewHolder(View itemView)
     {
         super(itemView);
         notifNameTv=itemView.findViewById(R.id.tv_notif_name);
-        notifTimeTv=itemView.findViewById(R.id.tv_notif_time);
+        notifTimeTv=itemView.findViewById(R.id.tv_notif_date);
         tick=itemView.findViewById(R.id.tick);
         notifll=itemView.findViewById(R.id.notifll);
     }
@@ -33,7 +34,6 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder
     {
         notifName=notif.getNotifName();
         notifTime=notif.getNotifTime();
-
         notifNameTv.setText(notifName);
         notifTimeTv.setText(notifTime);
         tick.setOnClickListener(new View.OnClickListener() {

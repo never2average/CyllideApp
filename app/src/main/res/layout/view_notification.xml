@@ -1,37 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/notifll"
     android:paddingHorizontal="5dp"
     android:paddingTop="5dp"
     android:weightSum="7">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="6">
-        <TextView
-        android:layout_width="wrap_content"
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_notif_name"
-        android:textSize="18sp"
-        android:fontFamily="@font/ralewayregular"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:id="@+id/tv_notif_time"
-            android:fontFamily="@font/ralewaylight"/>
-    </LinearLayout>
-    <ImageView
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/tick"
-        android:src="@drawable/ic_done_black_24dp"
-        android:clickable="true"/>
+        android:layout_margin="6dp"
+        app:cardElevation="3dp"
+        app:cardCornerRadius="5dp">
+
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="7">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_notif_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ralewayregular"
+                    android:text="Your friend kartik invited u  "
+                    android:textSize="20sp"
+                    android:textColor="@color/colorPrimary"/>
+
+                <TextView
+                    android:id="@+id/tv_notif_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ralewaylight"
+                    android:textSize="15sp"
+                    android:text="12/10/18 8:00pm"/>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/tick"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:src="@drawable/ic_done_black_24dp" />
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
 
 
 
