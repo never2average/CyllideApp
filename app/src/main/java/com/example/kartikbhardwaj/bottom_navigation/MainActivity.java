@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-       stats .setOnClickListener(new View.OnClickListener()  {
+        stats .setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
                 // ((FloatingActionsMenu) findViewById(R.id.multiple_actions_down)).removeButton(removeAction);
