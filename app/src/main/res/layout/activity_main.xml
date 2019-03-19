@@ -71,7 +71,6 @@
         android:layout_alignParentLeft="true"
         android:layout_gravity="bottom|right"
         android:layout_marginRight="0dp"
-        android:layout_marginBottom="0dp"
         android:layout_marginLeft="0dp"
         fab:menu_fab_size="normal"
         fab:menu_showShadow="true"

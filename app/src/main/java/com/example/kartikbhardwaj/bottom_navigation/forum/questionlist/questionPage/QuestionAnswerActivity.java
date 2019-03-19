@@ -18,6 +18,11 @@ import com.github.clans.fab.FloatingActionMenu;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
+import android.widget.ImageView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.animation.OvershootInterpolator;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -47,7 +52,14 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 		question = getIntent().getStringExtra("questionTitle");
 		questionTitle.setText(question);
 		ansRecyclerView.setHasFixedSize(true);
-		ansRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this){
+			@Override
+            public boolean canScrollVertically(){
+			    return false;
+            }
+		};
+		ansRecyclerView.setLayoutManager(layoutManager);
+
         try {
             questionID = new JSONObject(getIntent().getStringExtra("questionID")).getString("$oid");
             fillAnswers(questionID);
