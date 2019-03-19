@@ -4,11 +4,10 @@ public class NotificationModel {
     private String notifName;
     private String notifTime;
 
-    public NotificationModel(String notifName, String notifTime)
-    {
-        this.notifName=notifName;
-        this.notifTime=notifTime;
 
+    public NotificationModel(String notifName, String notifTime) {
+        this.notifName = notifName;
+        this.notifTime = notifTime;
     }
 
     public String getNotifName() {
