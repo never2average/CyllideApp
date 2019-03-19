@@ -28,6 +28,7 @@ public class QuestionListViewHolder extends RecyclerView.ViewHolder {
     public void populate(QuestionListModel stocksModel) {
 		question=stocksModel.getQuestionText();
         questionTV.setText(stocksModel.getQuestionText());
+
         questionCard.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -36,6 +37,7 @@ public class QuestionListViewHolder extends RecyclerView.ViewHolder {
 				itemView.getContext().startActivity(intent);
 			}
 		});
+
 
     }
 
