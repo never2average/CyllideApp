@@ -15,12 +15,6 @@ import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -40,8 +34,6 @@ import java.util.Map;
 
 public class QuestionAnswerActivity extends AppCompatActivity {
 
-	FloatingActionMenu contributeMenu;
-	FloatingActionButton commentButton, answerButton;
 	RecyclerView ansRecyclerView;
 	String question;
 	TextView questionDetail, questionTitle;
