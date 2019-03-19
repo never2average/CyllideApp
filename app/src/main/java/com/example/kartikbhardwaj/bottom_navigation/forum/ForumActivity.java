@@ -1,7 +1,5 @@
 package com.example.kartikbhardwaj.bottom_navigation.forum;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +9,7 @@ import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
+import android.widget.ToggleButton;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -25,16 +24,16 @@ import com.example.kartikbhardwaj.bottom_navigation.forum.askquestion.AskQuestio
 import com.example.kartikbhardwaj.bottom_navigation.forum.questionlist.QuestionListAdapter;
 import com.example.kartikbhardwaj.bottom_navigation.forum.questionlist.QuestionListModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.nex3z.togglebuttongroup.button.LabelToggle;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class ForumActivity extends AppCompatActivity {
 
@@ -46,6 +45,8 @@ public class ForumActivity extends AppCompatActivity {
     JSONObject questionObject;
     List<QuestionListModel> questionList, filterList;
     FloatingSearchView searchQuestions;
+    LabelToggle toggleButtonNewest,toggleButtonMostViewed;
+    boolean sortMode = false;
 
 
     private void displayQuestions(JSONArray responseData){
@@ -59,6 +60,7 @@ public class ForumActivity extends AppCompatActivity {
             }
         }
         questionListAdapter = new QuestionListAdapter(questionList);
+        filterList = questionList;
         forumRV.setAdapter(questionListAdapter);
     }
 
@@ -70,7 +72,34 @@ public class ForumActivity extends AppCompatActivity {
         askQuestion = findViewById(R.id.askquestion);
         forumRV=findViewById(R.id.topquesrecycler);
         forumRV.setLayoutManager(new LinearLayoutManager(this));
+        toggleButtonNewest = findViewById(R.id.toggle_tab_newest);
+        toggleButtonMostViewed = findViewById(R.id.toggle_tab_most_viewed);
         getQuestions();
+
+        toggleButtonNewest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(filterList==null){
+                    return;
+                }
+                Collections.sort(filterList, new CustomComparatorDate());
+                questionListAdapter = new QuestionListAdapter(filterList);
+                forumRV.setAdapter(questionListAdapter);
+                }
+        });
+
+        toggleButtonMostViewed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(filterList==null){
+                    return;
+                }
+
+                Collections.sort(filterList,new CustomComparatorMostViewed());
+                questionListAdapter = new QuestionListAdapter(filterList);
+                forumRV.setAdapter(questionListAdapter);
+            }
+        });
 
         askQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +133,12 @@ public class ForumActivity extends AppCompatActivity {
             if(questionListModel.getQuestionText().toUpperCase().contains(newQuery.toUpperCase())){
                 filterList.add(questionListModel);
             }
+        }
+        if(sortMode){
+            toggleButtonNewest.performClick();
+        }
+        else{
+            toggleButtonMostViewed.performClick();
         }
         questionListAdapter = new QuestionListAdapter(filterList);
         forumRV.setAdapter(questionListAdapter);
