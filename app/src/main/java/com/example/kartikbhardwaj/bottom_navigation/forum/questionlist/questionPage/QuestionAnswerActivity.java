@@ -15,23 +15,9 @@ import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.util.ArrayMap;
 import android.util.Log;
-import android.widget.ImageView;
-=======
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.animation.OvershootInterpolator;
-import android.widget.EditText;
->>>>>>> 8ab67789fc1d7b7a9908444715e9a9ee8b731254
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -43,8 +29,6 @@ import java.util.Map;
 
 public class QuestionAnswerActivity extends AppCompatActivity {
 
-	FloatingActionMenu contributeMenu;
-	FloatingActionButton commentButton, answerButton;
 	RecyclerView ansRecyclerView;
 	String question;
 	TextView questionDetail, questionTitle;
@@ -78,7 +62,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 	    answerQueue = Volley.newRequestQueue(this);
 	    requestHeaders.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
 	    requestHeaders.put("qid",questionID);
-        String requestEndpoint = "http://api.cyllide.com/api/client/portfolio/display/one";
+        String requestEndpoint = "http://api.cyllide.com/api/client/query/display/one";
         StringRequest answers = new StringRequest(Request.Method.GET, requestEndpoint, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
