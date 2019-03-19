@@ -101,7 +101,7 @@ public class ForumActivity extends AppCompatActivity {
     private void applyFilter(String newQuery, List<QuestionListModel> questionList) {
         filterList = new ArrayList<>();
         for(QuestionListModel questionListModel: questionList){
-            if(questionListModel.getQuestionText().contains(newQuery)){
+            if(questionListModel.getQuestionText().toUpperCase().contains(newQuery.toUpperCase())){
                 filterList.add(questionListModel);
             }
         }

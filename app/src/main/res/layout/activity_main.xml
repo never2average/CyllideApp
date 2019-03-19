@@ -61,30 +61,12 @@
 
     </FrameLayout>
 
-    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:layout_marginEnd="11dp"-->
-        <!--android:layout_marginBottom="20dp"-->
-        <!--android:foregroundTint="@android:color/white"-->
-        <!--android:src="@drawable/bottom"-->
-        <!--android:tint="#fff"-->
-        <!--app:backgroundTint="@color/colorPrimary"-->
-        <!--app:elevation="6dp"-->
-        <!--app:pressedTranslationZ="12dp" />-->
-
-
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fabMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="11dp"
-        android:layout_marginBottom="20dp"
         android:src="@drawable/bottom"
         android:layout_alignParentLeft="true"
         android:layout_gravity="bottom|right"
@@ -214,125 +196,7 @@
             fab:fab_colorPressed="@color/primary_light_max"
             fab:fab_colorRipple="@color/primary_light_max"
             />
-
-
-
-
-
-
     </com.github.clans.fab.FloatingActionMenu>
-
-    <!--<com.getbase.floatingactionbutton.FloatingActionsMenu-->
-        <!--android:id="@+id/right_labels"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_gravity="bottom|right"-->
-        <!--android:layout_marginStart="296dp"-->
-        <!--android:layout_marginLeft="296dp"-->
-        <!--android:layout_marginBottom="15dp"-->
-        <!--fab:fab_addButtonColorNormal="@color/white"-->
-        <!--fab:fab_addButtonColorPressed="@color/colorPrimary"-->
-
-        <!--fab:fab_addButtonPlusIconColor="@color/colorPrimaryDark"-->
-        <!--fab:fab_addButtonSize="mini"-->
-        <!--fab:fab_labelsPosition="right">-->
-
-
-        <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
-            <!--android:layout_width="40dp"-->
-            <!--android:layout_height="40dp"-->
-            <!--fab:fab_colorNormal="@color/white"-->
-            <!--fab:fab_colorPressed="@color/colorPrimary"-->
-            <!--fab:fab_size="mini"-->
-            <!--fab:fab_title="home"-->
-            <!--android:id="@+id/home"-->
-
-            <!--android:src="@drawable/home_icon"/>-->
-
-        <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
-            <!--android:layout_width="40dp"-->
-            <!--android:layout_height="40dp"-->
-            <!--fab:fab_colorNormal="@color/white"-->
-            <!--fab:fab_colorPressed="@color/colorPrimary"-->
-            <!--fab:fab_title="referral"-->
-            <!--android:src="@drawable/referral_icon"-->
-            <!--app:fab_size="mini"-->
-            <!--android:id="@+id/referral"/>-->
-
-        <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
-            <!--android:layout_width="40dp"-->
-            <!--android:layout_height="40dp"-->
-            <!--fab:fab_colorNormal="@color/white"-->
-            <!--fab:fab_colorPressed="@color/colorPrimary"-->
-            <!--fab:fab_size="mini"-->
-            <!--fab:fab_title="notification"-->
-            <!--android:id="@+id/notification"-->
-            <!--android:src="@drawable/notification_icon"/>-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-         <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
-
-            <!--android:layout_height="40dp"-->
-            <!--android:layout_width="40dp"-->
-            <!--fab:fab_colorNormal="@color/white"-->
-            <!--fab:fab_colorPressed="@color/colorPrimaryDark"-->
-            <!--app:fab_title="stats"-->
-            <!--android:src="@drawable/stats_icon"-->
-            <!--app:fab_size="mini"-->
-             <!--android:id="@+id/stats"-->
-
-
-
-            <!--/>-->
-        <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
-
-            <!--android:layout_height="40dp"-->
-            <!--android:layout_width="40dp"-->
-            <!--fab:fab_colorNormal="@color/white"-->
-            <!--fab:fab_colorPressed="@color/colorPrimaryDark"-->
-            <!--app:fab_title="profile"-->
-            <!--android:id="@+id/profile"-->
-            <!--app:fab_size="mini"-->
-            <!--android:src="@drawable/referral_icon"-->
-
-
-
-            <!--/>-->
-
-        <!--<com.getbase.floatingactionbutton.AddFloatingActionButton-->
-            <!--android:layout_width="40dp"-->
-            <!--android:layout_height="40dp"-->
-            <!--fab:fab_colorNormal="@color/white"-->
-
-             <!--fab:fab_colorPressed="@color/colorPrimaryDark"-->
-            <!--app:fab_size="mini"-->
-            <!--android:src="@drawable/gift"-->
-            <!--android:id="@+id/howitworks"-->
-            <!--/>-->
-
-
-
-
-
-
-
-    <!--</com.getbase.floatingactionbutton.FloatingActionsMenu>-->
-    <!--android:foregroundTint="@android:color/white"-->
-    <!--android:tint="#fff"-->
 
 
 

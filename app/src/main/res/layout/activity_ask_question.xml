@@ -13,13 +13,23 @@
         android:layout_height="0dp"
         android:layout_weight="8"
         android:orientation="vertical">
+        <TextView
+            android:text="Ask Your Question"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="7">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:id="@+id/question_text"
+            android:gravity="start"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
     <TextView
@@ -66,8 +76,7 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
         <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
             android:id="@+id/btntag3"
@@ -101,6 +110,7 @@
     <com.google.android.material.button.MaterialButton
         android:gravity="center"
         android:textSize="30sp"
+        android:id="@+id/proceedtoask"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.2"
