@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="8">
+            android:weightSum="10">
             <LinearLayout
                 android:layout_width="0.0dp"
                 android:layout_height="match_parent"
@@ -24,24 +24,31 @@
                 android:background="@color/colorPrimary"
                 android:layout_weight="1"
                 android:gravity="center">
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="27dp"
+                    android:backgroundTint="@color/colorPrimary"
                     android:tint="@color/white"
+                    android:id="@+id/upButton"
+                    android:clickable="true"
                     android:src="@drawable/ic_keyboard_arrow_up_black_24dp" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="0"
+                    android:id="@+id/upvoteCount"
                     android:textColor="@color/white"
                     android:textAlignment="center"
                     android:textSize="22dp"
                     android:inputType="number"
                     android:lines="1"
                     android:paddingBottom="3dp"/>
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="27dp"
+                    android:clickable="true"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:id="@+id/downButton"
                     android:tint="@color/white"
                     android:src="@drawable/ic_keyboard_arrow_down_black_24dp" />
 
@@ -50,7 +57,7 @@
                 android:layout_width="0.0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_weight="7">
+                android:layout_weight="9">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -63,11 +70,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="@color/deeppurple"
+                    android:background="@color/accentBlue"
                     android:weightSum="2">
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:background="@color/accentBlue"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:weightSum="2">
@@ -102,6 +110,7 @@
                         android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
+                        android:layout_gravity="end"
                         android:weightSum="2">
                         <TextView
                             android:layout_width="wrap_content"

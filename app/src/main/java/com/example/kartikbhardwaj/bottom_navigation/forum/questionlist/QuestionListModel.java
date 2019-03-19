@@ -1,6 +1,5 @@
 package com.example.kartikbhardwaj.bottom_navigation.forum.questionlist;
 
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -19,6 +18,7 @@ public class QuestionListModel {
         this.questionNumViews = questionNumViews;
         this.questionLastUpdateTime = questionLastUpdateTime;
         this.questionTags = questionTags;
+
     }
 
     public JSONObject getQuestionID() {
@@ -41,6 +41,7 @@ public class QuestionListModel {
         return questionLastUpdateTime;
     }
 
+
     public void setQuestionLastUpdateTime(Long questionLastUpdateTime) {
         this.questionLastUpdateTime = questionLastUpdateTime;
     }
@@ -60,5 +61,6 @@ public class QuestionListModel {
     public void setQuestionText(String questionText) {
         this.questionText = questionText;
     }
+
 
 }
