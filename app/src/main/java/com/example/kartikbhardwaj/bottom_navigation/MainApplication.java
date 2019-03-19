@@ -29,7 +29,8 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Realm.init(this);
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder().build();
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(realmConfig);
         setUpNewsUpdateWorker();
     }
