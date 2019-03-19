@@ -8,20 +8,21 @@
       var ticker = "";
       var frequency = "";
 
-      function getFromAndroid(){
+    function getFromAndroid(){
         var tf = Android.getFromAndroid()
-        ticker = tf[0];
-        frequency = fg[1];
+        ticker = tf[0]
+        frequency = tf[1]
         }
 
       getFromAndroid();
+      alert(ticker);
 
       var settings = {
           "url": "http://data.cyllide.com/data/stock/close",
           "method": "GET",
           "headers": {
-             "value": frequency,
-             "ticker": ticker
+             "value": "1 day",
+             "ticker": "RELIANCE"
            }
       }
 

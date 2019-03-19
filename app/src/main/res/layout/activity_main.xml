@@ -36,6 +36,7 @@
             <TextView
                 android:id="@+id/heading"
                 android:layout_width="0dp"
+                android:fontFamily="@font/open_sans"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="4"
@@ -82,6 +83,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/bottom"
         android:layout_alignParentLeft="true"
         android:layout_gravity="bottom|right"
         android:layout_marginRight="0dp"
@@ -328,9 +332,8 @@
 
 
     <!--</com.getbase.floatingactionbutton.FloatingActionsMenu>-->
-
-
-
+    <!--android:foregroundTint="@android:color/white"-->
+    <!--android:tint="#fff"-->
 
 
 
