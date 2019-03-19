@@ -4,31 +4,35 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 
 import android.os.Bundle;
+import android.util.ArrayMap;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class QuestionAnswerActivity extends AppCompatActivity {
 
 	RecyclerView ansRecyclerView;
 	String question;
 	TextView questionDetail, questionTitle;
-	String answeredBy[] = {"answer1","answer2","answer3","answer4"};
-	String answer[] = {"This is the answer to the first question.","This is the answer two the second question. This is a long answer. Currently residing in the code itself.","answer3","answer4"};
-	String dateStamp[] = {"date1","date2","date3","date4"};
-
-	private List<QuestionAnswerModel> dummyData() {
-		List<QuestionAnswerModel> data = new ArrayList<>(5);
-		for (int i = 0; i < 4; i++) {
-			data.add(new QuestionAnswerModel(answer[i], answeredBy[i], dateStamp[i]));
-		}
-		return data;
-	}
+	String questionID;
+	private RequestQueue answerQueue;
+	private Map<String, String> requestHeaders = new ArrayMap<String, String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +41,41 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 		ansRecyclerView = findViewById(R.id.ansRV);
 		questionDetail = findViewById(R.id.questionDetailText);
 		questionTitle = findViewById(R.id.questionTitle);
-		question = getIntent().getStringExtra("question title");
+		question = getIntent().getStringExtra("questionTitle");
 		questionTitle.setText(question);
-		List<QuestionAnswerModel> answers = dummyData();
-		QuestionAnswerAdapter adapter = new QuestionAnswerAdapter(answers);
-		ansRecyclerView.setAdapter(adapter);
 		ansRecyclerView.setHasFixedSize(true);
-		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-		ansRecyclerView.setLayoutManager(layoutManager);
+		ansRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        try {
+            questionID = new JSONObject(getIntent().getStringExtra("questionID")).getString("$oid");
+            fillAnswers(questionID);
 
+        } catch (JSONException e) {
+            Log.d("InvalidQid",e.toString());
+        }
+    }
 
-	}
+    private void fillAnswers(String questionID) {
+	    answerQueue = Volley.newRequestQueue(this);
+	    requestHeaders.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+	    requestHeaders.put("qid",questionID);
+        String requestEndpoint = "http://api.cyllide.com/api/client/portfolio/display/one";
+        StringRequest answers = new StringRequest(Request.Method.GET, requestEndpoint, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("answerResponse",response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("answerError", error.toString());
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() {
+                return requestHeaders;
+            }
+        };
+	    answerQueue.add(answers);
+    }
+
 }
