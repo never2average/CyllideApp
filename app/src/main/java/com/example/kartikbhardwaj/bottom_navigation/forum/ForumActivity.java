@@ -3,6 +3,8 @@ package com.example.kartikbhardwaj.bottom_navigation.forum;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.example.kartikbhardwaj.bottom_navigation.MainApplication;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.example.kartikbhardwaj.bottom_navigation.forum.askquestion.AskQuestion;
 import com.example.kartikbhardwaj.bottom_navigation.forum.questionlist.QuestionListAdapter;
@@ -47,7 +50,7 @@ public class ForumActivity extends AppCompatActivity {
     FloatingSearchView searchQuestions;
     LabelToggle toggleButtonNewest,toggleButtonMostViewed;
     boolean sortMode = false;
-
+    private Realm realmInstance;
 
     private void displayQuestions(JSONArray responseData){
         questionList = new ArrayList<>();
@@ -69,13 +72,15 @@ public class ForumActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forum);
+        Log.d("ForumActivity", "Initializing Realm");
+        realmInstance = Realm.getDefaultInstance();
         askQuestion = findViewById(R.id.askquestion);
         forumRV=findViewById(R.id.topquesrecycler);
         forumRV.setLayoutManager(new LinearLayoutManager(this));
         toggleButtonNewest = findViewById(R.id.toggle_tab_newest);
         toggleButtonMostViewed = findViewById(R.id.toggle_tab_most_viewed);
-        getQuestions();
-
+        //getQuestions();
+        readCachedQuestions();
         toggleButtonNewest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,6 +149,19 @@ public class ForumActivity extends AppCompatActivity {
         forumRV.setAdapter(questionListAdapter);
     }
 
+    private void readCachedQuestions(){
+        RealmResults<QuestionListModel> questionListRealm = realmInstance.where(QuestionListModel.class)
+                .findAll();
+        //update questions in background thread
+        MainApplication.setUpQuestionUpdateWorker();
+        //set list
+        //TODO: Change Adapter to implement RealmBaseAdapter
+        questionList = realmInstance.copyFromRealm(questionListRealm);;
+        questionListAdapter = new QuestionListAdapter(questionList);
+        filterList = questionList;
+        forumRV.setAdapter(questionListAdapter);
+    }
+
     private void getQuestions(){
         questionRequestQueue = Volley.newRequestQueue(this);
         requestHeaders.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
@@ -178,5 +196,12 @@ public class ForumActivity extends AppCompatActivity {
         };
         questionRequestQueue.add(stringRequest);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("ForumActivity", "Closing realm instance");
+        realmInstance.close();
     }
 }
