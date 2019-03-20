@@ -17,7 +17,9 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import static android.content.ContentValues.TAG;
 
@@ -47,8 +49,14 @@ public class StoriesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         storiesRV = view.findViewById(R.id.fragment_stories_rv);
         final Context context = getContext();
+        SnapHelper snapHelper = new PagerSnapHelper();
+
+
+
         storiesRV.setHasFixedSize(true);
         storiesRV.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        snapHelper.attachToRecyclerView(storiesRV);
+
     }
 
     @Override
