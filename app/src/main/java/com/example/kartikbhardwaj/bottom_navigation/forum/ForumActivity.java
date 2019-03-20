@@ -154,8 +154,9 @@ public class ForumActivity extends AppCompatActivity {
                 .findAll();
         //update questions in background thread
         MainApplication.setUpQuestionUpdateWorker();
-        //set RV
-        questionList = questionListRealm;
+        //set list
+        //TODO: Change Adapter to implement RealmBaseAdapter
+        questionList = realmInstance.copyFromRealm(questionListRealm);;
         questionListAdapter = new QuestionListAdapter(questionList);
         filterList = questionList;
         forumRV.setAdapter(questionListAdapter);

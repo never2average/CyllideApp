@@ -23,6 +23,7 @@ public class MainApplication extends Application {
     public static final String NEWS_UPDATE_TAG = "update news data in cache";
     public static final String QUESTION_UPDATE_TAG = "fetch new questions";
     private static final int NEWS_UPDATE_FREQUENCY_MINUTES = 30;
+    private static final int QUESTION_UPDATE_FREQUENCY_MINUTES = 30;
 
     @Override
     public void onCreate() {
@@ -32,6 +33,7 @@ public class MainApplication extends Application {
                 .deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(realmConfig);
         setUpNewsUpdateWorker();
+        setUpQuestionUpdateWorker();
     }
 
     public static void setUpNewsUpdateWorker() {
@@ -52,12 +54,13 @@ public class MainApplication extends Application {
         Constraints networkConstraint = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build();
-        OneTimeWorkRequest questionUpdater = new OneTimeWorkRequest.Builder(QuestionListUpdateWorker.class)
+        PeriodicWorkRequest questionUpdater = new PeriodicWorkRequest.Builder(
+                QuestionListUpdateWorker.class, QUESTION_UPDATE_FREQUENCY_MINUTES, TimeUnit.MINUTES)
                 .setConstraints(networkConstraint)
                 .addTag(QUESTION_UPDATE_TAG)
                 .build();
-        WorkManager.getInstance().enqueueUniqueWork(QUESTION_UPDATE_TAG,
-                ExistingWorkPolicy.KEEP, questionUpdater);
+        WorkManager.getInstance().enqueueUniquePeriodicWork(QUESTION_UPDATE_TAG,
+                ExistingPeriodicWorkPolicy.KEEP, questionUpdater);
         Log.e("MainApplication", "Scheduled New Questions Worker!");
     }
 
