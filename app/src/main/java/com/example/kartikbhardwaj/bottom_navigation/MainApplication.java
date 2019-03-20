@@ -1,21 +1,19 @@
 package com.example.kartikbhardwaj.bottom_navigation;
 
-import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
 
+import com.example.kartikbhardwaj.bottom_navigation.forum.questionlist.QuestionListUpdateWorker;
 import com.example.kartikbhardwaj.bottom_navigation.stories.NewsUpdateWorker;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.work.Constraints;
 import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.ExistingWorkPolicy;
 import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -23,7 +21,9 @@ import io.realm.RealmConfiguration;
 public class MainApplication extends Application {
 
     public static final String NEWS_UPDATE_TAG = "update news data in cache";
-    private static final int UPDATE_FREQUENCY_MINUTES = 30;
+    public static final String QUESTION_UPDATE_TAG = "fetch new questions";
+    private static final int NEWS_UPDATE_FREQUENCY_MINUTES = 30;
+    private static final int QUESTION_UPDATE_FREQUENCY_MINUTES = 30;
 
     @Override
     public void onCreate() {
@@ -33,6 +33,7 @@ public class MainApplication extends Application {
                 .deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(realmConfig);
         setUpNewsUpdateWorker();
+        setUpQuestionUpdateWorker();
     }
 
     public static void setUpNewsUpdateWorker() {
@@ -40,13 +41,27 @@ public class MainApplication extends Application {
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build();
         PeriodicWorkRequest newsUpdater = new PeriodicWorkRequest.Builder(NewsUpdateWorker.class,
-                UPDATE_FREQUENCY_MINUTES, TimeUnit.MINUTES)
+                NEWS_UPDATE_FREQUENCY_MINUTES, TimeUnit.MINUTES)
                 .setConstraints(networkConstraint)
                 .addTag(NEWS_UPDATE_TAG)
                 .build();
         WorkManager.getInstance().enqueueUniquePeriodicWork(NEWS_UPDATE_TAG,
-                ExistingPeriodicWorkPolicy.REPLACE,newsUpdater);
-        Log.e("MainApplication", "Scheduled New Worker!");
+                ExistingPeriodicWorkPolicy.REPLACE, newsUpdater);
+        Log.e("MainApplication", "Scheduled New News Worker!");
+    }
+
+    public static void setUpQuestionUpdateWorker(){
+        Constraints networkConstraint = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+        PeriodicWorkRequest questionUpdater = new PeriodicWorkRequest.Builder(
+                QuestionListUpdateWorker.class, QUESTION_UPDATE_FREQUENCY_MINUTES, TimeUnit.MINUTES)
+                .setConstraints(networkConstraint)
+                .addTag(QUESTION_UPDATE_TAG)
+                .build();
+        WorkManager.getInstance().enqueueUniquePeriodicWork(QUESTION_UPDATE_TAG,
+                ExistingPeriodicWorkPolicy.KEEP, questionUpdater);
+        Log.e("MainApplication", "Scheduled New Questions Worker!");
     }
 
     public static void cancelNewsUpdateWork(){

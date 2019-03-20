@@ -19,24 +19,26 @@ public class QuestionListViewHolder extends RecyclerView.ViewHolder {
     private MaterialCardView questionCard;
     private String question;
     ArrayList<String> tagList= new ArrayList<>();
+    private View questionView;
 
     public QuestionListViewHolder(@NonNull View itemView) {
         super(itemView);
+        questionView = itemView;
         questionCard = itemView.findViewById(R.id.question_card);
         questionTV = itemView.findViewById(R.id.questionText);
     }
-    public void populate(QuestionListModel stocksModel) {
+    public void populate(final QuestionListModel stocksModel) {
 		question=stocksModel.getQuestionText();
         questionTV.setText(stocksModel.getQuestionText());
         questionCard.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent=new Intent(itemView.getContext(), QuestionAnswerActivity.class);
-				intent.putExtra("question title",question);
+				intent.putExtra("questionTitle",question);
+				intent.putExtra("questionID",stocksModel.getQuestionID().toString());
 				itemView.getContext().startActivity(intent);
 			}
 		});
-
 
     }
 
