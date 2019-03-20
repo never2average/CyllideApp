@@ -14,7 +14,10 @@ import com.android.volley.toolbox.Volley;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
+import android.app.DownloadManager;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -42,8 +45,11 @@ public class QuestionAnswerActivity extends AppCompatActivity {
     ArrayList<QuestionAnswerModel> questionAnswerModels = new ArrayList<>();
 	TextView questionTitle, questionAskedByText, questionLastModifiedText;
 	String questionID;
-	private RequestQueue answerQueue;
+	TextInputEditText answerBody;
+	private RequestQueue answerQueue, postQueue;
 	private Map<String, String> requestHeaders = new ArrayMap<String, String>();
+    private Map<String, String> requestHeadersPost = new ArrayMap<String, String>();
+	MaterialButton postAnswer;
 
 
 	@Override
@@ -52,10 +58,18 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_question_answer);
 		ansRecyclerView = findViewById(R.id.ansRV);
 		questionTitle = findViewById(R.id.questionTitle);
+		answerBody = findViewById(R.id.answer_body);
 		questionAskedByText = findViewById(R.id.question_asked_by_text);
 		questionLastModifiedText = findViewById(R.id.last_updated_question_text);
 		ansRecyclerView.setHasFixedSize(true);
 		questionTagRecyclerView = findViewById(R.id.question_tags_reyclerview);
+		postAnswer = findViewById(R.id.post_answer);
+		postAnswer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                postAnswerVolley(answerBody.getText().toString());
+            }
+        });
 		RecyclerView.LayoutManager  tagsLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
     RecyclerView.LayoutManager answerLayoutManager = new LinearLayoutManager(this){
 			@Override
@@ -74,6 +88,31 @@ public class QuestionAnswerActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(),"Answer could not be sent",Toast.LENGTH_SHORT).show();
             Log.d("InvalidQid",e.toString());
         }
+    }
+
+    private void postAnswerVolley(String answerBody) {
+	    postQueue = Volley.newRequestQueue(this);
+        String requestEndpoint = "http://api.cyllide.com/api/client/answer/add";
+        requestHeadersPost.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        requestHeadersPost.put("qid",questionID);
+        requestHeadersPost.put("answerBody",answerBody);
+	    StringRequest postAnswer = new StringRequest(Request.Method.POST, requestEndpoint, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() {
+                return requestHeadersPost;
+            }
+        };
+	    postQueue.add(postAnswer);
     }
 
 
