@@ -59,7 +59,7 @@
                         android:textSize="@dimen/labels_text_size"/>
 
                     <TextView
-                        android:id="@+id/questionDetailText"
+                        android:id="@+id/question_asked_by_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="1dp"
@@ -80,6 +80,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/last_updated_question_text"
                     android:text="Today"
                     android:textColor="@color/black"
                     android:textSize="@dimen/labels_text_size"
@@ -89,6 +90,13 @@
 
             </LinearLayout>
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/question_tags_reyclerview">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
 
 

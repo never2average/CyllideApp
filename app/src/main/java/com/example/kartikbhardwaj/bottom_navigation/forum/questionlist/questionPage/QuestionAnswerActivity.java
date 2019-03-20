@@ -24,19 +24,23 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 public class QuestionAnswerActivity extends AppCompatActivity {
 
-	RecyclerView ansRecyclerView;
-	String question;
-	TextView questionDetail, questionTitle;
+	RecyclerView ansRecyclerView, questionTagRecyclerView;
+    ArrayList<QuestionTagModel> questionTagModels = new ArrayList<>();
+    ArrayList<QuestionAnswerModel> questionAnswerModels = new ArrayList<>();
+	TextView questionTitle, questionAskedByText, questionLastModifiedText;
 	String questionID;
 	private RequestQueue answerQueue;
 	private Map<String, String> requestHeaders = new ArrayMap<String, String>();
@@ -47,24 +51,27 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_question_answer);
 		ansRecyclerView = findViewById(R.id.ansRV);
-		questionDetail = findViewById(R.id.questionDetailText);
 		questionTitle = findViewById(R.id.questionTitle);
-		question = getIntent().getStringExtra("questionTitle");
-		questionTitle.setText(question);
+		questionAskedByText = findViewById(R.id.question_asked_by_text);
+		questionLastModifiedText = findViewById(R.id.last_updated_question_text);
 		ansRecyclerView.setHasFixedSize(true);
-    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this){
+		questionTagRecyclerView = findViewById(R.id.question_tags_reyclerview);
+		RecyclerView.LayoutManager  tagsLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+    RecyclerView.LayoutManager answerLayoutManager = new LinearLayoutManager(this){
 			@Override
             public boolean canScrollVertically(){
 			    return false;
             }
 		};
-		ansRecyclerView.setLayoutManager(layoutManager);
+		ansRecyclerView.setLayoutManager(answerLayoutManager);
+		questionTagRecyclerView.setLayoutManager(tagsLayoutManager);
 
         try {
             questionID = new JSONObject(getIntent().getStringExtra("questionID")).getString("$oid");
             fillAnswers(questionID);
 
         } catch (JSONException e) {
+            Toast.makeText(getBaseContext(),"Answer could not be sent",Toast.LENGTH_SHORT).show();
             Log.d("InvalidQid",e.toString());
         }
     }
@@ -78,7 +85,35 @@ public class QuestionAnswerActivity extends AppCompatActivity {
         StringRequest answers = new StringRequest(Request.Method.GET, requestEndpoint, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("answerResponse",response);
+                try {
+                    JSONObject responseData = new JSONObject(response).getJSONObject("message");
+                    questionTitle.setText(responseData.getString("queryBody"));
+                    questionAskedByText.setText(responseData.getString("queryUID"));
+                    String utcTime = responseData.getJSONObject("queryLastUpdateTime").getString("$date");
+                    Date lastUpdated = new Date(Long.parseLong(utcTime));
+                    questionLastModifiedText.setText(lastUpdated.toString());
+                    JSONArray tagList = responseData.getJSONArray("queryTags");
+                    JSONArray answerList = responseData.getJSONArray("answerList");
+                    for(int i=0;i<tagList.length();i++){
+                        questionTagModels.add(new QuestionTagModel(tagList.getString(i)));
+                    }
+                    for(int i=0;i<answerList.length();i++){
+                        JSONObject singleAnswer = answerList.getJSONObject(i);
+                       questionAnswerModels.add(new QuestionAnswerModel(singleAnswer.getJSONObject("_id").getString("$oid"),singleAnswer.getString("answerBody"),singleAnswer.getInt("answerUpvotes"),singleAnswer.getString("answerUID"),singleAnswer.getJSONObject("answerTime").getLong("$date")));
+                    }
+
+                    Log.d("answerResponse",response);
+                    QuestionTagAdapter questionTagAdapter = new QuestionTagAdapter(questionTagModels);
+                    QuestionAnswerAdapter questionAnswerAdapter = new QuestionAnswerAdapter(questionAnswerModels);
+                    questionTagRecyclerView.setAdapter(questionTagAdapter);
+                    ansRecyclerView.setAdapter(questionAnswerAdapter);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
             }
         }, new Response.ErrorListener() {
             @Override
