@@ -1,51 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fcfcfc">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:weightSum="3"
+        android:layout_height="match_parent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_gradient"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:background="#EDFBFD"/>
+    </LinearLayout>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fcfcfc"
+    android:background="#00000000"
     android:gravity="center"
     android:orientation="vertical"
     android:paddingStart="18dp"
     android:paddingEnd="18dp"
     android:paddingTop="55dp"
-    android:paddingBottom="20dp"
-    android:layout_marginBottom="100dp"
+    android:layout_marginBottom="30dp"
+    android:layout_marginTop="40dp"
     >
 
 
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="6dp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="200dp"
+        android:paddingVertical="15dp"
         android:baselineAligned="false"
         android:clipToPadding="false"
         android:gravity="center"
         android:orientation="horizontal">
-    
-    
+
+
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            app:cardCornerRadius="5dp"
-            android:layout_margin="5dp"
-            android:layout_marginRight="32dp"
-            android:layout_marginLeft="32dp"
+            app:cardCornerRadius="20dp"
+            android:layout_marginHorizontal="15dp"
             android:id="@+id/storiescard"
-            android:elevation="5dp"
-            android:padding="16dp"
-            app:cardElevation="5dp"
+            android:padding="20dp"
+            app:cardElevation="10dp"
             >
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_margin="16dp"
+                android:layout_gravity="center">
 
 
                 <com.facebook.drawee.view.SimpleDraweeView
@@ -53,11 +74,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_gravity="center"
-                    android:layout_weight="3"
-                    android:padding="20dp"
+                    android:layout_weight="2"
+                    android:padding="10dp"
+                    app:actualImageScaleType="fitCenter"
                     android:elevation="10dp"
-                    app:actualImageResource="@mipmap/storieslogo"
-                    app:roundAsCircle="true" />
+                    app:actualImageResource="@drawable/icon_stories"
+                    />
 
 
                 <TextView
@@ -75,38 +97,39 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_weight="1"
-            app:cardCornerRadius="5dp"
-            android:padding="16dp"
-            android:id="@+id/contestcard"
-            android:layout_margin="5dp"
-            android:layout_marginRight="32dp"
-            android:layout_marginLeft="32dp"
             android:layout_height="match_parent"
-            app:cardElevation="5dp">
+            app:cardCornerRadius="20dp"
+            android:layout_marginHorizontal="15dp"
+            android:padding="16dp"
+            app:cardElevation="10dp"
+            android:id="@+id/contestcard">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_margin="16dp"
+                android:layout_gravity="center">
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_gravity="center"
-                    android:padding="20dp"
+                    android:layout_weight="2"
+                    android:padding="10dp"
+                    app:actualImageScaleType="fitCenter"
                     android:id="@+id/contest"
-                    app:actualImageResource="@mipmap/contestlogo"
-                    app:roundAsCircle="true"
+                    app:actualImageResource="@drawable/icon_contest"
                     android:elevation="10dp"
-                    android:layout_weight="3"
                     />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
                     android:text="Contest"
+                    android:textAlignment="center"
                     android:textSize="19sp"
                     android:textColor="#000"
                     />
@@ -117,11 +140,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="200dp"
+        android:paddingVertical="15dp"
         android:baselineAligned="false"
         android:clipToPadding="false"
         android:gravity="center"
@@ -131,29 +152,27 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            app:cardCornerRadius="5dp"
-            android:id="@+id/portfoliocard"
-            android:elevation="5dp"
+            app:cardCornerRadius="20dp"
+            android:layout_marginHorizontal="15dp"
             android:padding="16dp"
-            app:cardElevation="5dp"
-            android:layout_margin="5dp">
-
-
-
+            app:cardElevation="10dp"
+            android:id="@+id/portfoliocard">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_margin="16dp"
+                android:layout_gravity="center">
 
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_gravity="center"
-                    android:layout_weight="3"
-                    android:padding="20dp"
-                    app:actualImageResource="@mipmap/portfoliologo"
-                    app:roundAsCircle="true"
+                    android:layout_weight="2"
+                    android:padding="10dp"
+                    app:actualImageScaleType="fitCenter"
+                    app:actualImageResource="@drawable/icon_portfolio"
                     android:elevation="10dp"
                     />
 
@@ -163,7 +182,7 @@
                     android:padding="8dp"
                     android:layout_weight="1"
                     android:text="Portfolios"
-                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:textAlignment="center"
                     android:textColor="#000"
                     android:textSize="19sp"
@@ -177,28 +196,27 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            app:cardCornerRadius="5dp"
-            android:id="@+id/quizcard"
-            app:cardElevation="5dp"
+            app:cardCornerRadius="20dp"
+            android:layout_marginHorizontal="15dp"
             android:padding="16dp"
-            android:layout_margin="5dp">
-
-
-
+            app:cardElevation="10dp"
+            android:id="@+id/quizcard">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_margin="16dp">
 
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_gravity="center"
-                    android:layout_weight="3"
-                    android:padding="20dp"
-                    app:actualImageResource="@mipmap/quizlogo"
-                    app:roundAsCircle="true"
+                    android:layout_weight="2"
+                    android:padding="10dp"
+                    app:actualImageScaleType="fitCenter"
+                    app:actualImageResource="@drawable/icon_quiz"
                     android:elevation="10dp"
                     />
 
@@ -208,7 +226,7 @@
                     android:padding="8dp"
                     android:layout_weight="1"
                     android:text="Quiz"
-                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:textAlignment="center"
                     android:textColor="#000"
                     android:textSize="19sp"
@@ -222,50 +240,61 @@
 
     </LinearLayout>
 
-    <com.google.android.material.card.MaterialCardView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.7"
-        app:cardCornerRadius="5dp"
-        android:id="@+id/forumcard"
-        app:cardElevation="5dp"
-        android:padding="16dp"
-        android:layout_margin="5dp">
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:paddingVertical="15dp"
+        android:baselineAligned="false"
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            app:cardCornerRadius="20dp"
+            android:layout_marginHorizontal="15dp"
+            android:padding="16dp"
+            app:cardElevation="10dp"
+            android:id="@+id/forumcard"
+            >
 
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:layout_width="0dp"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="20dp"
+                android:orientation="vertical"
                 android:layout_gravity="center"
-                app:actualImageResource="@mipmap/forumlogo"
-                app:roundAsCircle="true"
-                android:elevation="10dp"
-                />
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:padding="8dp"
-                android:layout_marginRight="8dp"
-                android:text="Forum"
-                android:gravity="center"
-                android:textAlignment="center"
-                android:textColor="#000"
-                android:textSize="19sp"
-                />
-        </LinearLayout>
+                android:layout_margin="16dp">
 
 
-    </com.google.android.material.card.MaterialCardView>
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:padding="10dp"
+                    app:actualImageScaleType="fitCenter"
+                    android:layout_gravity="center"
+                    app:actualImageResource="@drawable/icon_forum"
+                    android:elevation="10dp"
+                    />
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:padding="8dp"
+                    android:text="Forum"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="19sp"
+                    />
+            </LinearLayout>
 
+
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
 
 </LinearLayout>
+</FrameLayout>
