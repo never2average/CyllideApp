@@ -34,7 +34,6 @@ public class QuestionListViewHolder extends RecyclerView.ViewHolder {
 			@Override
 			public void onClick(View v) {
 				Intent intent=new Intent(itemView.getContext(), QuestionAnswerActivity.class);
-				intent.putExtra("questionTitle",question);
 				intent.putExtra("questionID",stocksModel.getQuestionID().toString());
 				itemView.getContext().startActivity(intent);
 			}

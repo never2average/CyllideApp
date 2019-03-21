@@ -16,14 +16,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".forum.questionlist.questionPage.QuestionAnswerActivity"></activity>
-        <activity android:name=".forum.askquestion.AskQuestion"></activity>
-        <activity android:name=".forum.ForumActivity" />
-        <activity android:name=".phone_authentication.OTPVerification" />
-        <activity android:name=".quiz.QuizRulesActivity" />
-        <activity android:name=".Contests.testPortfolioActivity" />
-        <activity android:name=".Contests.ContestLeaderboard" />
-        <activity android:name=".quiz.QuizWaitingActivity" />
+        <activity android:name=".phone_authentication.OTPVerification"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".quiz.QuizRulesActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Contests.testPortfolioActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Contests.ContestLeaderboard"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".quiz.QuizWaitingActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -33,19 +35,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".quiz.QuizActivityTest" />
+        <activity android:name=".quiz.QuizActivityTest"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Contests.WeeklyActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".stories.NewsData" />
-        <activity android:name=".stories.StoriesActivity" />
-        <activity android:name=".quiz.QuizActivity" />
-        <activity android:name=".quiz.StartingScreenActivity" />
-        <activity android:name=".Portfolio.PortfolioActivity" />
-        <activity android:name=".Portfolio.MyPortfolio" />
+        <activity android:name=".stories.NewsData"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".stories.StoriesActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".quiz.QuizActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".quiz.StartingScreenActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Portfolio.PortfolioActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Portfolio.MyPortfolio"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Profile_Activity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".faq_view.Faq_Activity"
             android:screenOrientation="portrait" />
@@ -61,9 +71,9 @@
         <activity
             android:name=".notification.NotificationActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Charts.ChartActivity" />
-        <activity android:name=".phone_authentication.PhoneAuth" />
-
+        <activity android:name=".Charts.ChartActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".phone_authentication.PhoneAuth"></activity>
         <receiver
             android:name=".MySMSBroadcastReceiver"
             android:exported="true">

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
+    android:fitsSystemWindows="true"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
 
     >
@@ -12,15 +13,17 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@color/colorPrimary"
+        android:layout_height="65dp"
+        android:background="@color/transparent"
         android:elevation="4dp"
+        android:paddingTop="10dp"
         android:paddingLeft="0dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
             android:layout_height="match_parent">
 
             <ImageView
@@ -31,16 +34,16 @@
                 android:contentDescription="companyLogo"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
-                android:src="@drawable/logo" />
+                android:src="@drawable/icon_logo" />
 
             <TextView
                 android:id="@+id/heading"
                 android:layout_width="0dp"
                 android:fontFamily="@font/open_sans"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
                 android:layout_weight="4"
-                android:gravity="center"
+                android:gravity="center|left"
+                android:paddingLeft="5dp"
                 android:paddingEnd="8dp"
                 android:text='@string/app_name'
                 android:textColor="#fff"
@@ -67,7 +70,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="11dp"
-        android:src="@drawable/bottom"
+        android:src="@drawable/ic_plus"
         android:layout_alignParentLeft="true"
         android:layout_gravity="bottom|right"
         android:layout_marginRight="0dp"
@@ -78,11 +81,11 @@
         fab:menu_shadowRadius="4dp"
         fab:menu_shadowXOffset="1dp"
         fab:menu_shadowYOffset="3dp"
-        fab:menu_colorNormal="@color/colorPrimary"
-        fab:menu_colorPressed="@color/colorPrimary"
+        fab:menu_colorNormal="@color/white"
+        fab:menu_colorPressed="@color/white"
         fab:menu_colorRipple="#99FFFFFF"
         fab:menu_animationDelayPerItem="50"
-        fab:menu_icon="@drawable/bottom"
+        fab:menu_icon="@drawable/ic_plus"
         fab:menu_buttonSpacing="0dp"
         fab:menu_labels_margin="0dp"
         fab:menu_labels_paddingTop="4dp"
