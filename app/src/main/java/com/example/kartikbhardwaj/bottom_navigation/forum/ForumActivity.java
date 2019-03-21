@@ -42,14 +42,13 @@ public class ForumActivity extends AppCompatActivity {
 
     QuestionListAdapter questionListAdapter;
     RecyclerView forumRV;
-    FloatingActionButton askQuestion;
+    LabelToggle askQuestion;
     private RequestQueue questionRequestQueue;
     private Map<String, String> requestHeaders = new ArrayMap<String, String>();
     JSONObject questionObject;
     List<QuestionListModel> questionList, filterList;
     FloatingSearchView searchQuestions;
-    LabelToggle toggleButtonNewest,toggleButtonMostViewed;
-    boolean sortMode = false;
+
     private Realm realmInstance;
 
     private void displayQuestions(JSONArray responseData){
@@ -67,6 +66,29 @@ public class ForumActivity extends AppCompatActivity {
         forumRV.setAdapter(questionListAdapter);
     }
 
+    public void sortByNewest(){
+        if(filterList==null){
+            return;
+        }
+        Collections.sort(filterList, new CustomComparatorDate());
+        questionListAdapter = new QuestionListAdapter(filterList);
+        forumRV.setAdapter(questionListAdapter);
+    }
+
+    public void sortByMostViewed(){
+
+        if(filterList==null){
+            return;
+        }
+
+        Collections.sort(filterList,new CustomComparatorMostViewed());
+        questionListAdapter = new QuestionListAdapter(filterList);
+        forumRV.setAdapter(questionListAdapter);
+
+    }
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,37 +96,13 @@ public class ForumActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forum);
         Log.d("ForumActivity", "Initializing Realm");
         realmInstance = Realm.getDefaultInstance();
-        askQuestion = findViewById(R.id.askquestion);
+        askQuestion = findViewById(R.id.ask_question);
         forumRV=findViewById(R.id.topquesrecycler);
         forumRV.setLayoutManager(new LinearLayoutManager(this));
-        toggleButtonNewest = findViewById(R.id.toggle_tab_newest);
-        toggleButtonMostViewed = findViewById(R.id.toggle_tab_most_viewed);
+
         //getQuestions();
         readCachedQuestions();
-        toggleButtonNewest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(filterList==null){
-                    return;
-                }
-                Collections.sort(filterList, new CustomComparatorDate());
-                questionListAdapter = new QuestionListAdapter(filterList);
-                forumRV.setAdapter(questionListAdapter);
-                }
-        });
 
-        toggleButtonMostViewed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(filterList==null){
-                    return;
-                }
-
-                Collections.sort(filterList,new CustomComparatorMostViewed());
-                questionListAdapter = new QuestionListAdapter(filterList);
-                forumRV.setAdapter(questionListAdapter);
-            }
-        });
 
         askQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,12 +137,7 @@ public class ForumActivity extends AppCompatActivity {
                 filterList.add(questionListModel);
             }
         }
-        if(sortMode){
-            toggleButtonNewest.performClick();
-        }
-        else{
-            toggleButtonMostViewed.performClick();
-        }
+
         questionListAdapter = new QuestionListAdapter(filterList);
         forumRV.setAdapter(questionListAdapter);
     }
