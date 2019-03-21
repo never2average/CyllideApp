@@ -76,35 +76,46 @@ public class ChartActivity extends AppCompatActivity {
     public void setJavaScriptInterface(String frequency){
         webView.addJavascriptInterface(new JavaScriptChartInterface(this,ticker,frequency), "Android");
         webView.loadUrl("file:///android_asset/tt.html");
-        webView.loadUrl("https://data.cyllide.com");
 
     }
     public void onFrequencyClick(View view){
-        oneDay.setBackgroundColor(ContextCompat.getColor(this,R.color.primary_light_max));
-        fiveDay.setBackgroundColor(ContextCompat.getColor(this,R.color.primary_light_max));
-        oneMonth.setBackgroundColor(ContextCompat.getColor(this,R.color.primary_light_max));
-        oneYear.setBackgroundColor(ContextCompat.getColor(this,R.color.primary_light_max));
-        sixMonth.setBackgroundColor(ContextCompat.getColor(this,R.color.primary_light_max));
+        oneDay.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
+        fiveDay.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
+        oneMonth.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
+        oneYear.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
+        sixMonth.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
+        oneDay.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary));
+        fiveDay.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary));
+        oneMonth.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary));
+        sixMonth.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary));
+        oneYear.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary));
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
 
         switch (view.getId()) {
             case R.id.chart_button_one_day:
-                oneDay.setBackgroundColor(ContextCompat.getColor(this,R.color.primary_light));
+                oneDay.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
+                oneDay.setTextColor(ContextCompat.getColor(this,R.color.white));
                 setJavaScriptInterface("1 day");
                 break;
             case R.id.chart_button_five_days:
-                fiveDay.setBackgroundColor(ContextCompat.getColor(this,R.color.primary_light));
+                fiveDay.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
+                fiveDay.setTextColor(ContextCompat.getColor(this,R.color.white));
                 setJavaScriptInterface("5 days");
                 break;
             case R.id.chart_button_one_month:
-                oneMonth.setBackgroundColor(ContextCompat.getColor(this,R.color.primary_light));
+                oneMonth.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
+                oneMonth.setTextColor(ContextCompat.getColor(this,R.color.white));
                 setJavaScriptInterface("1 month");
                 break;
             case R.id.chart_button_six_months:
-                sixMonth.setBackgroundColor(ContextCompat.getColor(this,R.color.primary_light));
+                sixMonth.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
+                sixMonth.setTextColor(ContextCompat.getColor(this,R.color.white));
                 setJavaScriptInterface("6 months");
                 break;
             case R.id.chart_button_one_year:
-                oneYear.setBackgroundColor(ContextCompat.getColor(this,R.color.primary_light));
+                oneYear.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
+                oneYear.setTextColor(ContextCompat.getColor(this,R.color.white));
                 setJavaScriptInterface("1 year");
                 break;
         }

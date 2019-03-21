@@ -74,7 +74,6 @@
         <activity android:name=".Charts.ChartActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".phone_authentication.PhoneAuth"></activity>
-
         <receiver
             android:name=".MySMSBroadcastReceiver"
             android:exported="true">

@@ -6,6 +6,7 @@ import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.nex3z.togglebuttongroup.SingleSelectToggleGroup;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
@@ -18,24 +19,25 @@ import android.widget.Toast;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
-
     private TextView stockName,stockValNet;
-    private ImageView plusBtn,analyzeBtn;
-    private LinearLayout stockCard;
-    private ExpandableLayout expandableLayout;
+    private ImageView plusBtn,analyzeBtn,purchaseBtn;
+    public LinearLayout stockCard;
+    public ExpandableLayout expandableLayout;
     private TextView stockTickerSelected;
     EditText stockQuantity;
     double priceAtPlace;
     String positiontype;
     Dialog popup;
     Button placeOrder;
+
+
+
+
 
     public AvailableStockViewHolder(@NonNull final View itemView) {
         super(itemView);
@@ -46,6 +48,7 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
         analyzeBtn=itemView.findViewById(R.id.analyzebtn);
         stockCard=itemView.findViewById(R.id.stockcard);
         expandableLayout=itemView.findViewById(R.id.expandablepositionoptions);
+        purchaseBtn = itemView.findViewById(R.id.purchasebtn1);
 
 
 
@@ -58,17 +61,15 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        stockCard.setOnClickListener(new View.OnClickListener() {
+        purchaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (expandableLayout.isExpanded()) {
-                    expandableLayout.setExpanded(false);
-                }
-                else{
-                    expandableLayout.setExpanded(true);
-                }
+            public void onClick(View view) {
+                view.setBackgroundResource(R.drawable.cross_icon);
+//                view.set
             }
         });
+
+
 
         plusBtn.setOnClickListener(new View.OnClickListener() {
             @Override

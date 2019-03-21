@@ -146,81 +146,13 @@ public class MainActivity extends AppCompatActivity{
         profile.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-                // ((FloatingActionsMenu) findViewById(R.id.multiple_actions_down)).removeButton(removeAction);
-               // Intent profileIntent=new Intent(MainActivity.this,Profile_Activity.class);
-               // startActivity(profileIntent);
                 swapProfileFragment();
-
                 fabMenu.close(true);
 
 
             }
         });
 
-
-
-
-
-// here
-     /*  final FloatingActionButton homeAction = (FloatingActionButton) findViewById(R.id.home);
-        homeAction.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View v) {
-               // ((FloatingActionsMenu) findViewById(R.id.multiple_actions_down)).removeButton(removeAction);
-                Toast.makeText(MainActivity.this,"home button clicked",Toast.LENGTH_SHORT).show();
-                swaphomeFragment();
-
-            }
-        });
-
-        final FloatingActionButton NotificationAction = (FloatingActionButton) findViewById(R.id.notification);
-        NotificationAction.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View v) {
-                // ((FloatingActionsMenu) findViewById(R.id.multiple_actions_down)).removeButton(removeAction);
-
-                Intent intent=new Intent(MainActivity.this, NotificationActivity.class);
-
-                startActivity(intent);
-            }
-        });
-
-
-
-        final FloatingActionButton ReferralsAction = (FloatingActionButton) findViewById(R.id.referral);
-        ReferralsAction.setTitle("Referrals");
-        ReferralsAction.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View v) {
-                // ((FloatingActionsMenu) findViewById(R.id.multiple_actions_down)).removeButton(removeAction);
-                swapFragment();
-
-            }
-        });
-
-
-
-        final FloatingActionButton statsAction = (FloatingActionButton) findViewById(R.id.stats);
-        statsAction.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View v) {
-                // ((FloatingActionsMenu) findViewById(R.id.multiple_actions_down)).removeButton(removeAction);
-                swapstatFragment();
-
-            }
-        });
-
-        final FloatingActionButton howItWorks = (FloatingActionButton) findViewById(R.id.howitworks);
-        howItWorks.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View v) {
-                // ((FloatingActionsMenu) findViewById(R.id.multiple_actions_down)).removeButton(removeAction);
-                swaphiwFragment();
-
-            }
-        });
-*/
-/// till here
 
 
         toolbar = findViewById(R.id.tool_bar);
@@ -248,7 +180,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onAnimationStart(Animator animation) {
                 fabMenu.getMenuIconView().setImageResource(fabMenu.isOpened()
-                        ? R.drawable.bottom : R.drawable.close_icon);
+                        ? R.drawable.ic_plus : R.drawable.ic_close);
             }
         });
 
@@ -297,15 +229,7 @@ public class MainActivity extends AppCompatActivity{
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
-            //return true;
-        }
-        //return false;
-
-//        HowItWorksFragment newGamefragment = new HowItWorksFragment();
-//        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.fragment_container, newGamefragment);
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
+         }
     }
     private void swapstatFragment(){
         StatsFragment fragment = new StatsFragment();
@@ -316,13 +240,7 @@ public class MainActivity extends AppCompatActivity{
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
-            //return true;
         }
-//        StatsFragment newGamefragment = new StatsFragment();
-//        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.fragment_container, newGamefragment);
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
     }
     private void swapFragment(){
         ReferralFragment fragment = new ReferralFragment();
@@ -332,13 +250,7 @@ public class MainActivity extends AppCompatActivity{
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
-            //return true;
         }
-//        ReferralFragment newGamefragment = new ReferralFragment();
-//        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.fragment_container, newGamefragment);
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
     }
 
     private void swaphomeFragment(){
@@ -350,14 +262,8 @@ public class MainActivity extends AppCompatActivity{
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
-            //return true;
         }
-//        HomeFragment newGamefragment = new HomeFragment();
-//        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.fragment_container, newGamefragment);
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
-    }
+}
 
 
     private void swapProfileFragment(){
@@ -369,13 +275,7 @@ public class MainActivity extends AppCompatActivity{
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
-            //return true;
-        }
-//        HomeFragment newGamefragment = new HomeFragment();
-//        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.fragment_container, newGamefragment);
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
+         }
     }
 
 
