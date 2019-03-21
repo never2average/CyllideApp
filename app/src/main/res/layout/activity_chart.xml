@@ -130,40 +130,7 @@
                 android:orientation="vertical"
                 android:padding="5dp">
 
-                <!--<com.google.android.material.tabs.TabLayout-->
-                    <!--android:id="@+id/tab_layout_chart"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="60dp"-->
-                    <!--android:layout_gravity="left"-->
-                    <!--android:background="@color/colorPrimary"-->
-                    <!--app:tabBackground="@color/colorPrimary"-->
-                    <!--app:tabGravity="fill"-->
-                    <!--app:tabIndicatorColor="@color/backgroundcolor"-->
-                    <!--app:tabMode="fixed"-->
-                    <!--app:tabTextColor="#ffffff" />-->
-
-                <!--<androidx.viewpager.widget.ViewPager-->
-                    <!--android:id="@+id/view_pager_chart"-->
-                    <!--android:layout_marginTop="60dp"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
-
-
-                    <!--<androidx.viewpager.widget.PagerTitleStrip-->
-                        <!--android:id="@+id/pager_title_strip"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="1000dp"-->
-                        <!--android:layout_gravity="top"-->
-                        <!--android:background="#33b5e5"-->
-                        <!--android:textColor="#fff"-->
-                        <!--android:paddingTop="4dp"-->
-                        <!--android:paddingBottom="4dp"></androidx.viewpager.widget.PagerTitleStrip>-->
-
-
-
-                <!--</androidx.viewpager.widget.ViewPager>-->
-
+               \
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -200,6 +167,7 @@
                                 android:layout_margin="3dp"
                                 android:gravity="start|center_vertical"
                                 android:text="1,2345.67"
+                                android:id="@+id/summary_previous_close"
                                 android:layout_height="50dp"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"/>
@@ -218,6 +186,7 @@
                                 android:layout_margin="3dp"
                                 android:gravity="start|center_vertical"
                                 android:text="1,2345.67"
+                                android:id="@+id/summary_open"
                                 android:layout_height="50dp"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"/>
@@ -236,6 +205,7 @@
                                 android:layout_margin="3dp"
                                 android:gravity="start|center_vertical"
                                 android:text="1,2345.67"
+                                android:id="@+id/summary_bid"
                                 android:layout_height="50dp"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"/>
@@ -254,6 +224,7 @@
                                 android:layout_margin="3dp"
                                 android:gravity="start|center_vertical"
                                 android:text="1,2345.67"
+                                android:id="@+id/summary_ask"
                                 android:layout_height="50dp"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"/>
@@ -272,6 +243,7 @@
                                 android:layout_margin="3dp"
                                 android:gravity="start|center_vertical"
                                 android:text="1,2345.67"
+                                android:id="@+id/summary_volume"
                                 android:layout_height="50dp"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"/>
@@ -290,6 +262,7 @@
                                 android:layout_margin="3dp"
                                 android:gravity="start|center_vertical"
                                 android:text="1,2345.67"
+                                android:id="@+id/summary_market_cap"
                                 android:layout_height="50dp"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"/>
@@ -308,6 +281,7 @@
                                 android:layout_margin="3dp"
                                 android:gravity="start|center_vertical"
                                 android:text="1,2345.67"
+                                android:id="@+id/summary_beta"
                                 android:layout_height="50dp"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"/>
@@ -324,6 +298,7 @@
                                 android:layout_weight="1"/>
                             <TextView
                                 android:layout_margin="3dp"
+                                android:id="@+id/summary_days_range"
                                 android:gravity="start|center_vertical"
                                 android:text="1,2345.67"
                                 android:layout_height="50dp"
@@ -367,6 +342,7 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"/>
                             <TextView
+                                android:id="@+id/income_gross_profit"
                                 android:layout_margin="3dp"
                                 android:gravity="start|center_vertical"
                                 android:text="1,2345.67"
@@ -386,6 +362,7 @@
                                 android:layout_weight="1"/>
                             <TextView
                                 android:layout_margin="3dp"
+                                android:id="@+id/income_net_operating_income"
                                 android:gravity="start|center_vertical"
                                 android:text="1,2345.67"
                                 android:layout_height="50dp"
@@ -403,6 +380,7 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"/>
                             <TextView
+                                android:id="@+id/income_operational_income"
                                 android:layout_margin="3dp"
                                 android:gravity="start|center_vertical"
                                 android:text="1,2345.67"
@@ -410,25 +388,6 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"/>
                         </TableRow>
-
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Cash flow from operations: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:layout_margin="3dp"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
-
 
 
                     </TableLayout>
@@ -467,6 +426,7 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"/>
                             <TextView
+                                android:id="@+id/balance_total_assets"
                                 android:layout_margin="3dp"
                                 android:gravity="start|center_vertical"
                                 android:text="1,2345.67"
@@ -486,6 +446,7 @@
                                 android:layout_weight="1"/>
                             <TextView
                                 android:layout_margin="3dp"
+                                android:id="@+id/balance_total_liabilities"
                                 android:gravity="start|center_vertical"
                                 android:text="1,2345.67"
                                 android:layout_height="50dp"
@@ -505,6 +466,7 @@
                             <TextView
                                 android:layout_margin="3dp"
                                 android:gravity="start|center_vertical"
+                                android:id="@+id/balance_net_tangible_assets"
                                 android:text="1,2345.67"
                                 android:layout_height="50dp"
                                 android:layout_width="0dp"

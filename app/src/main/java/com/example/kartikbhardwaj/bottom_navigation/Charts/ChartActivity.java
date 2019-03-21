@@ -2,17 +2,28 @@ package com.example.kartikbhardwaj.bottom_navigation.Charts;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.ArrayMap;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.kartikbhardwaj.bottom_navigation.R;
-import com.google.android.material.tabs.TabLayout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Map;
 
 
 public class ChartActivity extends AppCompatActivity {
@@ -20,6 +31,16 @@ public class ChartActivity extends AppCompatActivity {
     Button oneDay,fiveDay,oneMonth,sixMonth,oneYear;
     WebView webView;
     String ticker;
+    RequestQueue summaryRequestQueue;
+    RequestQueue incomeSheetRequestQueue;
+    RequestQueue balanceSheetRequestQueue;
+    private Map<String, String> summaryRequestHeaders = new ArrayMap<String, String>();
+    private Map<String, String> incomeSheetRequestHeaders = new ArrayMap<String, String>();
+    private Map<String, String> balanceSheetRequestHeaders = new ArrayMap<String, String>();
+    TextView summaryPreviousClose, summaryOpen, summaryBid, summaryAsk, summaryVolume,
+    summaryMarketCap, summaryBeta, summaryDayRange, incomeGrossProfit, incomeOperatingIncome,
+    incomeOperationalIncome, balanceAssets, balanceLiabilities,
+    balanceNetTangibleAssets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,42 +57,152 @@ public class ChartActivity extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("file:///android_asset/tt.html");
         webView.getSettings().setDomStorageEnabled(true);
+        balanceAssets = findViewById(R.id.balance_total_assets);
+
+
+        summaryAsk = findViewById(R.id.summary_ask);
+        summaryBeta = findViewById(R.id.summary_beta);
+        summaryPreviousClose = findViewById(R.id.summary_previous_close);
+        summaryOpen = findViewById(R.id.summary_open);
+        summaryBid = findViewById(R.id.summary_bid);
+        summaryVolume = findViewById(R.id.summary_volume);
+        summaryMarketCap = findViewById(R.id.summary_market_cap);
+        summaryDayRange = findViewById(R.id.summary_days_range);
+
+        incomeGrossProfit = findViewById(R.id.income_gross_profit);
+        incomeOperatingIncome = findViewById(R.id.income_net_operating_income);
+        incomeOperationalIncome = findViewById(R.id.income_operational_income);
+
+        balanceAssets = findViewById(R.id.balance_total_assets);
+        balanceLiabilities = findViewById(R.id.balance_total_liabilities);
+        balanceNetTangibleAssets = findViewById(R.id.balance_net_tangible_assets);
+
+        String summaryRequestEndPoint = "http://data.cyllide.com/data/stock/summary";
+        String incomeSheetRequestEndPoint = "http://data.cyllide.com/data/stock/income";
+        String balanceSheetRequestEndPoint = "http://data.cyllide.com/data/stock/balance";
+
+        summaryRequestHeaders.put("ticker",ticker.toUpperCase());
+        balanceSheetRequestHeaders.put("ticker",ticker.toUpperCase());
+        incomeSheetRequestHeaders.put("ticker", ticker.toUpperCase());
+
+        summaryRequestQueue = Volley.newRequestQueue(this);
+        balanceSheetRequestQueue = Volley.newRequestQueue(this);
+        incomeSheetRequestQueue = Volley.newRequestQueue(this);
+
+        StringRequest summaryRequest = new StringRequest(Request.Method.GET, summaryRequestEndPoint, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("Responses",response);
+
+                try {
+                    JSONObject responseObject = new JSONObject(response);
+
+                    summaryAsk.setText("₹ "+responseObject.getString("Ask"));
+                    summaryPreviousClose.setText("₹ "+responseObject.getString("Previous close"));
+                    summaryOpen.setText("₹ "+responseObject.getString("Open"));
+                    summaryBid.setText("₹ "+responseObject.getString("Bid"));
+                    summaryVolume.setText(responseObject.getString("Volume"));
+                    summaryMarketCap.setText("₹ "+responseObject.getString("Market cap"));
+                    summaryBeta.setText("₹ "+responseObject.getString("Beta (3Y monthly)"));
+                    summaryDayRange.setText("₹ "+responseObject.getString("Day's range"));
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Summary Error",error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                return summaryRequestHeaders;
+            }
+
+        };
+
+        StringRequest incomeSheetRequest = new StringRequest(Request.Method.GET, incomeSheetRequestEndPoint, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Log.e("Responses",response);
+
+                try {
+                    JSONObject responseObject = new JSONObject(response);
+
+                    incomeGrossProfit.setText("₹ "+responseObject.getString("Gross profit"));
+                    incomeOperatingIncome.setText("₹ "+responseObject.getString("Operating income or loss"));
+                    incomeOperationalIncome.setText("₹ "+responseObject.getString("Net income from continuing ops"));
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
 
 
-//        TabLayout tabLayout =
-//                (TabLayout) findViewById(R.id.tab_layout_chart);
-//        tabLayout.addTab(tabLayout.newTab().setText("Summary"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Income Statement"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Balance Sheet"));
-//
-//
-//        final ViewPager viewPager =
-//                (ViewPager) findViewById(R.id.view_pager_chart);
-//        final PagerAdapter adapter = new ChartPagerAdapter
-//                (getSupportFragmentManager(),
-//                        tabLayout.getTabCount());
-//        viewPager.setAdapter(adapter);
-//
-//        viewPager.addOnPageChangeListener(new
-//                TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                viewPager.setCurrentItem(tab.getPosition());
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//        });
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("incomeSheet Error",error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                return incomeSheetRequestHeaders;
+            }
+
+        };
+
+
+        StringRequest balanceSheetRequest = new StringRequest(Request.Method.GET, balanceSheetRequestEndPoint, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Log.e("Responses",response);
+
+                try {
+                    JSONObject responseObject = new JSONObject(response);
+
+                    balanceAssets.setText("₹ "+responseObject.getString("Total assets"));
+                    balanceLiabilities.setText("₹ "+responseObject.getString("Total liabilities"));
+                    incomeOperationalIncome.setText("₹ "+responseObject.getString("Net tangible assets"));
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("balanceSheet Error",error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                return balanceSheetRequestHeaders;
+            }
+
+        };
+        summaryRequestQueue.add(summaryRequest);
+        incomeSheetRequestQueue.add(incomeSheetRequest);
+        balanceSheetRequestQueue.add(balanceSheetRequest);
+
+
+
+
 }
     public void setJavaScriptInterface(String frequency){
         webView.addJavascriptInterface(new JavaScriptChartInterface(this,ticker,frequency), "Android");
