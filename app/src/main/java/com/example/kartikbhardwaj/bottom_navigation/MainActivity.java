@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onAnimationStart(Animator animation) {
                 fabMenu.getMenuIconView().setImageResource(fabMenu.isOpened()
-                        ? R.drawable.bottom : R.drawable.close_icon);
+                        ? R.drawable.ic_plus : R.drawable.ic_close);
             }
         });
 
