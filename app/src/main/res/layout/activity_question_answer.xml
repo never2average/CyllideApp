@@ -9,51 +9,88 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:nestedScrollingEnabled="false">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:nestedScrollingEnabled="false">
-
-
-
-        <TextView
-            android:id="@+id/questionTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Is this a simple sample question?"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20sp" />
-
-        <View
-            android:layout_margin="1dp"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/black" />
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:nestedScrollingEnabled="false">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
+
+
+            <TextView
+                android:id="@+id/questionTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Is this a simple sample question?"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_margin="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                    <TextView
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Asked By:"
+                            android:layout_marginEnd="1dp"
+                            android:textSize="@dimen/labels_text_size"/>
+
+                        <TextView
+                            android:id="@+id/questionDetailText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="1dp"
+                            android:text="notAnshuman"
+                            android:textSize="@dimen/labels_text_size"
+                            android:textColor="@color/black" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="1dp"
+                            android:text="Last Updated:"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Today"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/labels_text_size"
+                            android:layout_margin="1dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
                         android:text="Asked By:"
                         android:layout_marginEnd="1dp"
                         android:textSize="@dimen/labels_text_size"/>
@@ -100,23 +137,37 @@
 
 
 
-        <View
-            android:layout_margin="1dp"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/black" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ansRV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            <View
+                android:layout_margin="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black" />
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ansRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Your Answer:"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Post"
+                    android:layout_gravity="end"
+                    android:layout_margin="4dp"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/answer_body"
@@ -132,11 +183,12 @@
                 android:layout_margin="4dp"
                 android:text="Post" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
 
-    </LinearLayout>
-        </ScrollView>
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
