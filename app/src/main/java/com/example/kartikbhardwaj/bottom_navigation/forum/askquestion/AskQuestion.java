@@ -3,11 +3,13 @@ package com.example.kartikbhardwaj.bottom_navigation.forum.askquestion;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -17,9 +19,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kartikbhardwaj.bottom_navigation.R;
+import com.example.kartikbhardwaj.bottom_navigation.forum.questionlist.questionPage.QuestionAnswerActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -156,18 +163,35 @@ public class AskQuestion extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.d("AskError",response);
+                try {
+                    String qid = new JSONObject(response).getJSONObject("ID").toString();
+                    Intent intent = new Intent(getBaseContext(), QuestionAnswerActivity.class);
+                    intent.putExtra("questionID",qid);
+                    startActivity(intent);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("AskError",error.toString());
+                Toast.makeText(getBaseContext(),"Could not post question",Toast.LENGTH_SHORT).show();
 
             }
         }){
             @Override
             public Map<String, String> getHeaders() {
                 return requestHeaders;
+            }
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                int mStatusCode = response.statusCode;
+                Log.d("whats failing", String.valueOf(mStatusCode));
+                return super.parseNetworkResponse(response);
             }
         };
         askQuestionQueue.add(stringRequest);
