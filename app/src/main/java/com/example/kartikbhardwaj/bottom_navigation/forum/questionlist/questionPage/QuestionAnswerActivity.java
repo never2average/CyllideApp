@@ -12,6 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kartikbhardwaj.bottom_navigation.R;
+import com.example.kartikbhardwaj.bottom_navigation.forum.CustomComparatorAnswerUpVotes;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.material.button.MaterialButton;
@@ -33,7 +34,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -71,12 +75,14 @@ public class QuestionAnswerActivity extends AppCompatActivity {
             }
         });
 		RecyclerView.LayoutManager  tagsLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-    RecyclerView.LayoutManager answerLayoutManager = new LinearLayoutManager(this){
-			@Override
-            public boolean canScrollVertically(){
-			    return false;
-            }
-		};
+    RecyclerView.LayoutManager answerLayoutManager = new LinearLayoutManager(this)
+//    {
+//			@Override
+//            public boolean canScrollVertically(){
+//			    return false;
+//            }
+//		}
+		;
 		ansRecyclerView.setLayoutManager(answerLayoutManager);
 		questionTagRecyclerView.setLayoutManager(tagsLayoutManager);
 
@@ -99,11 +105,14 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 	    StringRequest postAnswer = new StringRequest(Request.Method.POST, requestEndpoint, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Toast.makeText(QuestionAnswerActivity.this,response,Toast.LENGTH_LONG).show();
+                fillAnswers(questionID);
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(QuestionAnswerActivity.this,error.toString(),Toast.LENGTH_LONG).show();
 
             }
         }){
@@ -125,6 +134,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.d("answerResponse",response);
                     JSONObject responseData = new JSONObject(response).getJSONObject("message");
                     questionTitle.setText(responseData.getString("queryBody"));
                     questionAskedByText.setText(responseData.getString("queryUID"));
@@ -140,8 +150,8 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                         JSONObject singleAnswer = answerList.getJSONObject(i);
                        questionAnswerModels.add(new QuestionAnswerModel(singleAnswer.getJSONObject("_id").getString("$oid"),singleAnswer.getString("answerBody"),singleAnswer.getInt("answerUpvotes"),singleAnswer.getString("answerUID"),singleAnswer.getJSONObject("answerTime").getLong("$date")));
                     }
+                    Collections.sort(questionAnswerModels,new CustomComparatorAnswerUpVotes());
 
-                    Log.d("answerResponse",response);
                     QuestionTagAdapter questionTagAdapter = new QuestionTagAdapter(questionTagModels);
                     QuestionAnswerAdapter questionAnswerAdapter = new QuestionAnswerAdapter(questionAnswerModels);
                     questionTagRecyclerView.setAdapter(questionTagAdapter);

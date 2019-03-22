@@ -29,14 +29,14 @@
                     android:layout_height="27dp"
                     android:backgroundTint="@color/colorPrimary"
                     android:tint="@color/white"
-                    android:id="@+id/upButton"
+                    android:id="@+id/answer_up_vote_button"
                     android:clickable="true"
                     android:src="@drawable/ic_keyboard_arrow_up_black_24dp" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:id="@+id/upvoteCount"
+                    android:id="@+id/answer_up_upvote_count"
                     android:textColor="@color/white"
                     android:textAlignment="center"
                     android:textSize="22dp"
@@ -48,7 +48,7 @@
                     android:layout_height="27dp"
                     android:clickable="true"
                     android:backgroundTint="@color/colorPrimary"
-                    android:id="@+id/downButton"
+                    android:id="@+id/answer_down_vote_button"
                     android:tint="@color/white"
                     android:src="@drawable/ic_keyboard_arrow_down_black_24dp" />
 
