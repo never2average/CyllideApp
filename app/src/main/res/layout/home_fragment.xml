@@ -89,7 +89,7 @@
                     android:text="Stories"
                     android:textAlignment="center"
                     android:textColor="#000"
-                    android:textSize="19sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -129,7 +129,7 @@
                     android:layout_weight="1"
                     android:text="Contest"
                     android:textAlignment="center"
-                    android:textSize="19sp"
+                    android:textSize="14sp"
                     android:textColor="#000"
                     />
 
@@ -184,7 +184,7 @@
                     android:layout_gravity="center"
                     android:textAlignment="center"
                     android:textColor="#000"
-                    android:textSize="19sp"
+                    android:textSize="14sp"
                     />
             </LinearLayout>
 
@@ -227,7 +227,7 @@
                     android:layout_gravity="center"
                     android:textAlignment="center"
                     android:textColor="#000"
-                    android:textSize="19sp"
+                    android:textSize="14sp"
                     />
             </LinearLayout>
 
@@ -253,6 +253,7 @@
             android:layout_height="match_parent"
             app:cardCornerRadius="20dp"
             android:layout_marginHorizontal="15dp"
+
             android:padding="16dp"
             app:cardElevation="10dp"
             android:id="@+id/forumcard"
@@ -286,7 +287,7 @@
                     android:layout_gravity="center"
                     android:textAlignment="center"
                     android:textColor="#000"
-                    android:textSize="19sp"
+                    android:textSize="14sp"
                     />
             </LinearLayout>
 
