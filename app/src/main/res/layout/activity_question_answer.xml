@@ -4,6 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
     tools:context=".forum.questionlist.questionPage.QuestionAnswerActivity">
     <ScrollView
         android:layout_width="match_parent"
@@ -34,6 +36,7 @@
                 android:background="@color/black" />
 
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -87,15 +90,15 @@
                             android:layout_margin="1dp"/>
 
                     </LinearLayout>
-
                 </LinearLayout>
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/question_tags_reyclerview">
-
+                android:id="@+id/question_tags_reyclerview"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp">
             </androidx.recyclerview.widget.RecyclerView>
 
 
@@ -104,6 +107,7 @@
                 android:layout_margin="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
+                android:layout_marginBottom="10dp"
                 android:background="@color/black" />
 
             <androidx.recyclerview.widget.RecyclerView

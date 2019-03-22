@@ -63,7 +63,7 @@ public class MonthlyFragment extends Fragment{
         Fresco.initialize(context);
         List<MonthlyModel> monthly = dummyData();
         if (activity != null) {
-            final MonthlyAdapter mAdapter = new MonthlyAdapter(monthly);
+            final MonthlyAdapter mAdapter = new MonthlyAdapter(monthly, getActivity());
             monthlyRV.setAdapter(mAdapter);
         } else {
             Log.e(TAG, "getActivity() returned null in onStart()");
