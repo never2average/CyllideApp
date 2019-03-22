@@ -1,5 +1,6 @@
 package com.example.kartikbhardwaj.bottom_navigation.Contests;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -8,7 +9,9 @@ import android.widget.TextView;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MonthlyViewHolder extends RecyclerView.ViewHolder {
@@ -19,9 +22,11 @@ public class MonthlyViewHolder extends RecyclerView.ViewHolder {
     private Boolean isPremium;
     private ProgressBar progressBar;
 
+    private FragmentActivity weeklyActivity;
+
     View view;
 
-    public MonthlyViewHolder(View itemView)
+    public MonthlyViewHolder(View itemView, FragmentActivity wa)
     {
         super(itemView);
         monthlyName = itemView.findViewById(R.id.monthly_name);
@@ -32,6 +37,7 @@ public class MonthlyViewHolder extends RecyclerView.ViewHolder {
         monthlyParticipantsRemaining = itemView.findViewById(R.id.monthly_participants_remaining);
         monthlyPremium = itemView.findViewById(R.id.monthly_color_strip);
         view = itemView;
+        weeklyActivity = wa;
     }
 
     public void populate(MonthlyModel news)
@@ -56,5 +62,11 @@ public class MonthlyViewHolder extends RecyclerView.ViewHolder {
             monthlyPremium.setBackground(null);
             monthlyPremium.setBackgroundColor(ResourcesCompat.getColor(view.getResources(), R.color.primary_light,null));
         }
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                weeklyActivity.startActivity(new Intent(weeklyActivity, MonthlyActivity.class));
+            }
+        });
     }
 }
