@@ -99,8 +99,8 @@ public class ForumActivity extends AppCompatActivity {
         forumRV = findViewById(R.id.topquesrecycler);
         forumRV.setLayoutManager(new LinearLayoutManager(this));
 
-        //getQuestions();
-        readCachedQuestions();
+        getQuestions();
+        //readCachedQuestions();
 
 
         askQuestion.setOnClickListener(new View.OnClickListener() {
@@ -190,7 +190,9 @@ public class ForumActivity extends AppCompatActivity {
 
     private void getQuestions() {
         questionRequestQueue = Volley.newRequestQueue(this);
-        requestHeaders.put("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        requestHeaders.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        //TODO remove the token key
+
         String requestEndpoint = "http://api.cyllide.com/api/client/query/display";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, requestEndpoint, new Response.Listener<String>() {
             @Override
