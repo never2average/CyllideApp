@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="350dp"
-    android:layout_height="300dp"
+    android:layout_height="wrap_content"
     >
 
 
@@ -25,29 +25,11 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Reliance"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
                 android:id="@+id/stock_ticker_selected"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-                <TextView
-                    android:gravity="center"
-                    android:text="Quantity:"
-                    android:textSize="17sp"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_height="match_parent"/>
-                <EditText
-                    android:id="@+id/stockquantity"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:inputType="number"/>
-            </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="10dp"
                 android:paddingStart="10dp"
@@ -56,20 +38,13 @@
                 android:layout_height="0dp"
                 android:layout_weight="2"
                 android:orientation="vertical">
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:text="Position:"
-                    android:layout_width="match_parent"/>
+
                 <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
                     android:layout_marginTop="10dp"
                     android:id="@+id/Position_choices"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:tbgCheckedButton="@+id/Buy"
-                    app:tbgFlow="true"
                     android:layout_gravity="center_horizontal"
                     app:tbgChildSpacing="auto">
 
@@ -77,14 +52,14 @@
                         android:layout_marginLeft="30dp"
                         android:id="@+id/Buy"
                         android:layout_width="wrap_content"
-                        android:textSize="25sp"
+                        android:textSize="19sp"
                         android:layout_height="wrap_content"
                         android:text="BUY"/>
 
                     <com.nex3z.togglebuttongroup.button.LabelToggle
                         android:id="@+id/Sell"
                         android:layout_width="wrap_content"
-                        android:textSize="25sp"
+                        android:textSize="19sp"
                         android:layout_height="wrap_content"
                         android:text="SELL"
                         android:layout_marginRight="25dp"/>
@@ -92,20 +67,43 @@
 
 
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1.1">
+                android:layout_weight="1">
+                <TextView
+                    android:gravity="center"
+                    android:text="Quantity:"
+                    android:textSize="19sp"
+                    android:textColor="#AEAEAE"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="match_parent"/>
+                <EditText
+                    android:id="@+id/stockquantity"
+                    android:layout_width="0dp"
+                    android:textSize="19sp"
+                    android:textColor="#AEAEAE"
+                    android:background="@color/transparent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="number"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1.4">
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/colorPrimaryDark"
                     android:text="Place Order"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textColor="#fff"
-                    android:layout_marginBottom="-2dp"
                     android:textStyle="bold"
                     android:id="@+id/place_order"/>
 

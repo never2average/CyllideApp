@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.google.android.material.card.MaterialCardView;
@@ -16,7 +17,7 @@ import com.nex3z.togglebuttongroup.button.LabelToggle;
 
 public class PortfolioActivity extends AppCompatActivity {
 
-    MaterialCardView stockAnalysis, orderHistory, portfolioPositions;
+    ImageView stockAnalysis, orderHistory, portfolioPositions;
     FrameLayout fl;
     LabelToggle oneDay, oneWeek, oneMonth, oneYear, sixMonths;
 
