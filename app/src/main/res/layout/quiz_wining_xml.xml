@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="326dp"
+        android:layout_height="499dp"
+        android:background="@drawable/quiz_wining_drawable"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"/>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cracker"
+            android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hurray!You Won"
+            android:textSize="23dp"
+            android:textColor="#00B9FF"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+            >
+
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="49dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="+91"
+                android:gravity="center_vertical"
+                />
+            <EditText
+                android:id="@+id/paytmNo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:inputType="number"/>
+
+        </LinearLayout>
+        <TextView
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Share Your PAYTM NO. With Us"
+            android:textColor="#00B9FF"/>
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/paytm"/>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

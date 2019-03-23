@@ -1,6 +1,9 @@
 package com.example.kartikbhardwaj.bottom_navigation;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,7 +32,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment {
 
-
     ImageButton cross;
     Button save;
     TextView username;
@@ -57,7 +59,23 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final Dialog dialog=new Dialog(getContext());
+        dialog.setContentView(R.layout.quiz_revival_xml);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
+
         toptraders=view.findViewById(R.id.toptraders);
+
+        toptraders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+
+            }
+        });
+
+
 
 
 
