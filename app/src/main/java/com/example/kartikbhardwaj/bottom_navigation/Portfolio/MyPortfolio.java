@@ -21,11 +21,12 @@ import com.example.kartikbhardwaj.bottom_navigation.faq_view.Faq_Activity;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.kartikbhardwaj.bottom_navigation.R;
+import com.google.android.material.button.MaterialButton;
 
 
 public class MyPortfolio extends AppCompatActivity {
     EditText newportfolioName;
-    Button createPortfolio;
+    MaterialButton createPortfolio;
     String portfolioName;
     TextView errorhint;
 

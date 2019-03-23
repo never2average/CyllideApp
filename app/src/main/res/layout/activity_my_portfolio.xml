@@ -4,44 +4,116 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Portfolio.MyPortfolio"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".Portfolio.MyPortfolio">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_margin="12dp"
-        app:cardElevation="3dp"
-        app:cardCornerRadius="10dp">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"
-        android:paddingEnd="12dp">
-    <EditText
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"
-        android:maxLines="1"
-        android:layout_marginStart="10dp"
-        android:hint="enter portfolio name"
-        android:id="@+id/portfolio_name"/>
-    <Button
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:text="Create New"
-        android:id="@+id/create_button"/>
-    </LinearLayout>
+        android:layout_height="0dp"
+        android:layout_margin="17dp"
+        app:cardCornerRadius="10dp"
+        android:layout_weight="2"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="5"
+            android:paddingHorizontal="6dp"
+            android:orientation="vertical"
+            >
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginVertical="6dp"
+                app:cardBackgroundColor="#EEEEEE"
+                android:layout_weight="1.5">
+
+                <EditText
+                    android:id="@+id/portfolio_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    android:textSize="15sp"
+                    android:background="@color/transparent"
+                    android:hint="Enter portfolio name"
+                    android:maxLines="1" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
+                android:layout_marginVertical="3dp">
+            <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|left"
+                >
+
+                    <com.nex3z.togglebuttongroup.button.LabelToggle
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="5dp"
+                        android:text="Small Cap"
+                        android:textSize="13sp"
+                        app:tbgMarkerColor="#31D5FF"
+                         />
+
+                    <com.nex3z.togglebuttongroup.button.LabelToggle
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="5dp"
+                        android:text="Mid Cap"
+                        android:textSize="13sp"
+                        app:tbgMarkerColor="#31D5FF" />
+
+                    <com.nex3z.togglebuttongroup.button.LabelToggle
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="5dp"
+                        android:text="Large Cap"
+                        android:textSize="13sp"
+                        app:tbgMarkerColor="#31D5FF" />
+
+                    <com.nex3z.togglebuttongroup.button.LabelToggle
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:text="Nifty 500"
+                        android:textSize="13sp"
+                        app:tbgMarkerColor="#31D5FF" />
+
+
+            </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
+            </HorizontalScrollView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/create_button"
+                app:cornerRadius="10dp"
+                android:layout_marginBottom="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:layout_weight="2"
+                android:backgroundTint="#31D5FF"
+                android:text="Create New" />
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.recyclerview.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/my_portfolio"
+        android:layout_margin="12dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="7"
         android:contextClickable="true"
         tools:ignore="UnusedAttribute" />
 

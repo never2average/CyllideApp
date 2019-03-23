@@ -75,6 +75,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Portfolio.MyPortfolio"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Profile_Activity"
