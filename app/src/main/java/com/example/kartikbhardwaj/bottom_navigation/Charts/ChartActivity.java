@@ -34,6 +34,7 @@ public class ChartActivity extends AppCompatActivity {
     RequestQueue summaryRequestQueue;
     RequestQueue incomeSheetRequestQueue;
     RequestQueue balanceSheetRequestQueue;
+    private Map<String,String> graphRequestHeaders = new ArrayMap<>();
     private Map<String, String> summaryRequestHeaders = new ArrayMap<String, String>();
     private Map<String, String> incomeSheetRequestHeaders = new ArrayMap<String, String>();
     private Map<String, String> balanceSheetRequestHeaders = new ArrayMap<String, String>();
@@ -81,13 +82,14 @@ public class ChartActivity extends AppCompatActivity {
         String incomeSheetRequestEndPoint = "http://data.cyllide.com/data/stock/income";
         String balanceSheetRequestEndPoint = "http://data.cyllide.com/data/stock/balance";
 
+
         summaryRequestHeaders.put("ticker",ticker.toUpperCase());
         balanceSheetRequestHeaders.put("ticker",ticker.toUpperCase());
         incomeSheetRequestHeaders.put("ticker", ticker.toUpperCase());
-
         summaryRequestQueue = Volley.newRequestQueue(this);
         balanceSheetRequestQueue = Volley.newRequestQueue(this);
         incomeSheetRequestQueue = Volley.newRequestQueue(this);
+
 
         StringRequest summaryRequest = new StringRequest(Request.Method.GET, summaryRequestEndPoint, new Response.Listener<String>() {
             @Override
