@@ -60,7 +60,7 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         final Dialog dialog=new Dialog(getContext());
-        dialog.setContentView(R.layout.quiz_revival_xml);
+        dialog.setContentView(R.layout.quiz_wining_xml);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 

@@ -10,6 +10,13 @@
         android:background="@drawable/quiz_wining_drawable"
         android:gravity="center_horizontal"
         android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cross_icon"
+            android:tint="@color/colorPrimary"
+            android:layout_gravity="right"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,14 +59,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="+91"
+                android:textSize="20dp"
                 android:gravity="center_vertical"
                 />
-            <EditText
-                android:id="@+id/paytmNo"
+            <!--<EditText-->
+                <!--android:id="@+id/paytmNo"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:inputType="number"/>-->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/Paytm"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:inputType="number"/>
+
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/paytm_ph_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="PAYTM No."
+                    android:inputType="textPassword"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
         </LinearLayout>
         <TextView
