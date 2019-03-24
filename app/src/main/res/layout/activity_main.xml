@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
+    android:background="@color/colorPrimaryDark"
     android:fitsSystemWindows="true"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
 
@@ -13,10 +14,9 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="56dp"
         android:background="@color/transparent"
         android:elevation="4dp"
-        android:paddingTop="10dp"
         android:paddingLeft="0dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">

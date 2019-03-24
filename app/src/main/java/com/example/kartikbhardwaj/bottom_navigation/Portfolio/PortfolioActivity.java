@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
+
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -30,7 +32,7 @@ import org.json.JSONObject;
 
 public class PortfolioActivity extends AppCompatActivity {
 
-    MaterialCardView stockAnalysis, orderHistory, portfolioPositions;
+    ImageView stockAnalysis, orderHistory, portfolioPositions;
     FrameLayout fl;
     LabelToggle oneDay, oneWeek, oneMonth, oneYear, sixMonths;
     RequestQueue requestQueue;

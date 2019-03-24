@@ -6,14 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".Portfolio.OrderHistoryFragment"
     android:orientation="vertical"
-    android:layout_marginTop="10dp">
+    >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="0dp"
         android:text="Order History"
-        android:textSize="30sp"
+        android:textSize="27sp"
+        android:textColor="#656565"
         android:layout_marginBottom="10dp"
         android:gravity="center"/>
 
