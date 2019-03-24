@@ -16,7 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Contests.PortfolioRV.LeaderboardsActivity"></activity>
+        <activity
+            android:name=".Contests.PortfolioRV.LeaderboardsActivity"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".Contests.MonthlyActivity"
             android:parentActivityName=".MainActivity"
@@ -47,9 +50,6 @@
         </activity>
         <activity
             android:name=".quiz.QuizActivityTest"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Contests.WeeklyActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".forum.ForumActivity"

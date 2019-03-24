@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.kartikbhardwaj.bottom_navigation.Contests.PortfolioViewerDialogFragment;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 
 import java.util.List;
@@ -20,6 +21,8 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.MyViewHolder> {
@@ -27,6 +30,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     private static final int width = 50, height = 50;//width and height params for profile pic
     CardView cv;
     Context context;
+    FragmentManager fragmentManager;
 
     private List<LeaderboardModel> leaderboardModelList;
 
@@ -46,7 +50,8 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
 
                 @Override
                 public void onClick(View view){
-                    Toast.makeText(context,"What next?",Toast.LENGTH_LONG).show();
+                    DialogFragment dialogFragment = new PortfolioViewerDialogFragment();
+                    dialogFragment.show(fragmentManager, "PortfolioViewer");
             }
             });
 
@@ -55,8 +60,9 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     }
 
 
-    public LeaderboardAdapter(List<LeaderboardModel> leaderboardList) {
+    public LeaderboardAdapter(List<LeaderboardModel> leaderboardList, FragmentManager fragmentManager) {
         this.leaderboardModelList = leaderboardList;
+        this.fragmentManager = fragmentManager;
     }
 
     @Override

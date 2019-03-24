@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -40,10 +43,17 @@ public class LeaderboardsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_leaderboards);
         leaderboardView = findViewById(R.id.leaderboard_recycler_view);
         RecyclerView.LayoutManager leaderboardLayoutManager = new LinearLayoutManager(this);
-        LeaderboardAdapter leaderboardAdapter = new LeaderboardAdapter(getDummyData());
+        LeaderboardAdapter leaderboardAdapter = new LeaderboardAdapter(getDummyData(),
+                getSupportFragmentManager());
         leaderboardView.setLayoutManager(leaderboardLayoutManager);
         leaderboardView.setAdapter(leaderboardAdapter);
-
+        ImageView backButton = findViewById(R.id.leaderboard_back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         loadDummyData();
 

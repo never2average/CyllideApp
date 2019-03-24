@@ -15,7 +15,7 @@
             android:layout_width="40dp"
             android:layout_height="60dp"
             android:padding="6dp"
-            android:id="@+id/newsbackbutton"
+            android:id="@+id/leaderboard_back_button"
             android:src="@drawable/ic_arrow_back_black_24dp"
             android:tint="@color/blue_light"
             android:background="#00000000"/>
