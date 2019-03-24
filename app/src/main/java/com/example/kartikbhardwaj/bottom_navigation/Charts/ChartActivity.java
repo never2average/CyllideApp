@@ -34,7 +34,6 @@ public class ChartActivity extends AppCompatActivity {
     RequestQueue summaryRequestQueue;
     RequestQueue incomeSheetRequestQueue;
     RequestQueue balanceSheetRequestQueue;
-    private Map<String,String> graphRequestHeaders = new ArrayMap<>();
     private Map<String, String> summaryRequestHeaders = new ArrayMap<String, String>();
     private Map<String, String> incomeSheetRequestHeaders = new ArrayMap<String, String>();
     private Map<String, String> balanceSheetRequestHeaders = new ArrayMap<String, String>();
@@ -47,7 +46,7 @@ public class ChartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        ticker = intent.getStringExtra("ticker");
+        ticker = intent.getStringExtra("ticker").toUpperCase();
         setContentView(R.layout.activity_chart);
         oneDay = findViewById(R.id.chart_button_one_day);
         fiveDay = findViewById(R.id.chart_button_five_days);
@@ -56,7 +55,8 @@ public class ChartActivity extends AppCompatActivity {
         oneYear = findViewById(R.id.chart_button_one_year);
         webView = (WebView) findViewById(R.id.web_view_chart);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("file:///android_asset/tt.html");
+//        webView.loadUrl("http://data.cyllide.com/data/chart/\""+ticker+"\"/\""+"1D\"");
+        webView.loadUrl("http://data.cyllide.com/data/chart/\"RELIANCE\"/\"1D\"");
         webView.getSettings().setDomStorageEnabled(true);
         balanceAssets = findViewById(R.id.balance_total_assets);
 
@@ -208,7 +208,7 @@ public class ChartActivity extends AppCompatActivity {
 }
     public void setJavaScriptInterface(String frequency){
         webView.addJavascriptInterface(new JavaScriptChartInterface(this,ticker,frequency), "Android");
-        webView.loadUrl("file:///android_asset/tt.html");
+        webView.loadUrl("http://data.cyllide.com/data/chart/\""+ticker+"\"/\""+frequency+"\"");
 
     }
     public void onFrequencyClick(View view){
@@ -229,27 +229,27 @@ public class ChartActivity extends AppCompatActivity {
             case R.id.chart_button_one_day:
                 oneDay.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
                 oneDay.setTextColor(ContextCompat.getColor(this,R.color.white));
-                setJavaScriptInterface("1 day");
+                setJavaScriptInterface("1D");
                 break;
             case R.id.chart_button_five_days:
                 fiveDay.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
                 fiveDay.setTextColor(ContextCompat.getColor(this,R.color.white));
-                setJavaScriptInterface("5 days");
+                setJavaScriptInterface("5D");
                 break;
             case R.id.chart_button_one_month:
                 oneMonth.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
                 oneMonth.setTextColor(ContextCompat.getColor(this,R.color.white));
-                setJavaScriptInterface("1 month");
+                setJavaScriptInterface("1M");
                 break;
             case R.id.chart_button_six_months:
                 sixMonth.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
                 sixMonth.setTextColor(ContextCompat.getColor(this,R.color.white));
-                setJavaScriptInterface("6 months");
+                setJavaScriptInterface("6M");
                 break;
             case R.id.chart_button_one_year:
                 oneYear.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
                 oneYear.setTextColor(ContextCompat.getColor(this,R.color.white));
-                setJavaScriptInterface("1 year");
+                setJavaScriptInterface("1Y");
                 break;
         }
 

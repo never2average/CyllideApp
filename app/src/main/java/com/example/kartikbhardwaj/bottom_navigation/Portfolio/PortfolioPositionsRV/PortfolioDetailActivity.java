@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableStocksFragment;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.OrderHistoryFragment;
@@ -19,7 +20,7 @@ import com.google.android.material.card.MaterialCardView;
 public class PortfolioDetailActivity extends AppCompatActivity {
 
     FrameLayout fl;
-    MaterialCardView stockAnalysisButton, orderHistoryButton, portfolioPositionsButton;
+    ImageView stockAnalysisButton, orderHistoryButton, portfolioPositionsButton;
 
 
     public void setNewFragment(Fragment fragment){

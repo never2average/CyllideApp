@@ -71,6 +71,8 @@
         android:padding="5dp">
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/colorPrimary"
+            android:backgroundTint="@color/white"
             android:id="@+id/chart_button_one_day"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -81,6 +83,8 @@
             android:layout_marginStart="1dp"
             android:layout_marginEnd="1dp"/>
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/colorPrimary"
+            android:backgroundTint="@color/white"
             android:layout_width="0dp"
             android:id="@+id/chart_button_five_days"
             android:layout_height="match_parent"
@@ -91,6 +95,8 @@
             android:layout_marginStart="1dp"
             android:layout_marginEnd="1dp"/>
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/colorPrimary"
+            android:backgroundTint="@color/white"
             android:layout_width="0dp"
             android:text="1M"
             android:id="@+id/chart_button_one_month"
@@ -101,6 +107,8 @@
             android:layout_marginStart="1dp"
             android:layout_marginEnd="1dp"/>
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/colorPrimary"
+            android:backgroundTint="@color/white"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -111,6 +119,8 @@
             android:layout_marginStart="1dp"
             android:layout_marginEnd="1dp"/>
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/colorPrimary"
+            android:backgroundTint="@color/white"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

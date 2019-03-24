@@ -105,12 +105,12 @@ public class HomeFragment extends Fragment {
                 SharedPreferences sharedPreferences = getContext().getSharedPreferences("AUTHENTICATION",Context.MODE_PRIVATE);
                 String token = sharedPreferences.getString("token", "Not found!");
                 Intent intent;
-                if(token.equals("Not found!")){
-                    intent = new Intent(getContext(), PhoneAuth.class);
-                }
-                else{
+//                if(token.equals("Not found!")){
+//                    intent = new Intent(getContext(), PhoneAuth.class);
+//                }
+//                else{
                     intent = new Intent(getContext(), QuizRulesActivity.class);
-                }
+//                }
 
                 getContext().startActivity(intent);
                 }
