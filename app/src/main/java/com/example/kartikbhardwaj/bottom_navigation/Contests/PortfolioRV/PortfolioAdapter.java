@@ -30,13 +30,13 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.MyVi
         public MyViewHolder(View view) {
             super(view);
             pflioName = (TextView) view.findViewById(R.id.pflioname);
-            pflioReturns = (TextView) view.findViewById(R.id.pflioreturns);
+            //pflioReturns = (TextView) view.findViewById(R.id.pflioreturns);
             cv= view.findViewById(R.id.popup_portfolio_card_view);
             context= view.getContext();
             cv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, ContestLeaderboard.class);
+                    Intent intent = new Intent(context, LeaderboardsActivity.class);
                     context.startActivity(intent);
                 }
             });
@@ -53,7 +53,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.MyVi
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.popup_portfolio_card, parent, false);
+                .inflate(R.layout.item_portfolio_list, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -62,7 +62,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.MyVi
     public void onBindViewHolder(MyViewHolder holder, int position) {
         PortfolioModel pflio = portfolioModelList.get(position);
         holder.pflioName.setText(pflio.getPortfolioName());
-        holder.pflioReturns.setText(Double.toString(pflio.getReturns()));
+        //holder.pflioReturns.setText(Double.toString(pflio.getReturns()));
     }
 
     @Override

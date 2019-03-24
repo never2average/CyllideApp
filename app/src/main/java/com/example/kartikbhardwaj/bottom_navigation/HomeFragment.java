@@ -16,8 +16,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.example.kartikbhardwaj.bottom_navigation.Contests.WeeklyActivity;
+
 //import com.example.kartikbhardwaj.bottom_navigation.stories.NewsData;
+import com.example.kartikbhardwaj.bottom_navigation.Contests.MonthlyActivity;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.MyPortfolio;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioActivity;
 import com.example.kartikbhardwaj.bottom_navigation.forum.ForumActivity;
@@ -87,7 +88,7 @@ public class HomeFragment extends Fragment {
         contest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),WeeklyActivity.class);
+                Intent intent=new Intent(getContext(), MonthlyActivity.class);
                 startActivity(intent);
                 }
         });
