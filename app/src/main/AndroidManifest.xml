@@ -16,9 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Contests.MonthlyActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".Contests.WeeklyActivity"/>
+        <activity android:name=".Contests.PortfolioRV.LeaderboardsActivity"></activity>
+        <activity
+            android:name=".Contests.MonthlyActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".phone_authentication.OTPVerification"
             android:screenOrientation="portrait" />
@@ -54,7 +56,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".forum.askquestion.AskQuestion"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".forum.questionlist.questionPage.QuestionAnswerActivity"
             android:screenOrientation="portrait" />

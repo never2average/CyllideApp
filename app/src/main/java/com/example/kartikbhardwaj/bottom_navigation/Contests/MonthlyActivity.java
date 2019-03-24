@@ -2,11 +2,13 @@ package com.example.kartikbhardwaj.bottom_navigation.Contests;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.kartikbhardwaj.bottom_navigation.Contests.PortfolioRV.PortfolioModel;
 import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.google.android.material.tabs.TabLayout;
@@ -14,12 +16,14 @@ import com.nex3z.togglebuttongroup.button.LabelToggle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-public class MonthlyActivity extends AppCompatActivity {
+public class MonthlyActivity extends AppCompatActivity implements PortfolioPickerDialogFragment.PortfolioPickerClickListener {
 
     private int curr_selection = 0;
+    //TODO: Shift string to res
     private String[] descs = {"Small cap is a term used to classify companies with a relatively small market capitalization. A company’s market capitalization is the market value of its outstanding shares. In India, normally a company below market capitalization of Rs.5000 crores is classified as small cap company.",
     "A company’s market capitalization is the market value of its outstanding shares. In India, normally a company with market capitalization above Rs.5000 crores and less than Rs.20000 crores is considered as mid cap company.",
     "Large cap is a term used to classify companies with a relatively large market capitalization. A company's market capitalization is the market value of its outstanding shares. In India, normally companies with the market capitalization higher than Rs.20,000 crores is considered as Large cap companies.",
@@ -90,10 +94,26 @@ public class MonthlyActivity extends AppCompatActivity {
             }
         });
 
+
+        Button joinButton  = findViewById(R.id.join_button);
+        joinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment dialog = new PortfolioPickerDialogFragment();
+                dialog.show(getSupportFragmentManager(), "PortfolioPicker");
+            }
+        });
+
     }
 
     private void updateDisplay(){
         descTV.setText(descs[curr_selection]);
     }
 
+    @Override
+    public void onItemClick(PortfolioModel portfolio) {
+
+        Log.e("MonthlyActivity", "portfolio "+ portfolio.getPortfolioName()+" was chosen");
+
+    }
 }
