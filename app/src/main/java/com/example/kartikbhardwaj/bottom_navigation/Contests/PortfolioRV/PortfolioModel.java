@@ -1,5 +1,7 @@
 package com.example.kartikbhardwaj.bottom_navigation.Contests.PortfolioRV;
 
+import androidx.annotation.NonNull;
+
 public class PortfolioModel {
     private String portfolioname;
     private double returns;
@@ -24,5 +26,11 @@ public class PortfolioModel {
 
     public void setReturns(double returns) {
         this.returns = returns;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return portfolioname;
     }
 }

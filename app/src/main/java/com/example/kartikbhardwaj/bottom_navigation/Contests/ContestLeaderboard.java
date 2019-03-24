@@ -33,7 +33,8 @@ public class ContestLeaderboard extends AppCompatActivity {
         setContentView(R.layout.activity_contest_leaderboard_free);
         leaderboardView = findViewById(R.id.leaderboard_recycler_view);
         RecyclerView.LayoutManager leaderboardLayoutManager = new LinearLayoutManager(this);
-        LeaderboardAdapter leaderboardAdapter = new LeaderboardAdapter(getDummyData());
+        LeaderboardAdapter leaderboardAdapter = new LeaderboardAdapter(getDummyData(),
+                getSupportFragmentManager());
         leaderboardView.setLayoutManager(leaderboardLayoutManager);
         leaderboardView.setAdapter(leaderboardAdapter);
     }

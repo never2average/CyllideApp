@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Contests.PortfolioRV.LeaderboardsActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="60dp"
+            android:padding="6dp"
+            android:id="@+id/leaderboard_back_button"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            android:tint="@color/blue_light"
+            android:background="#00000000"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:textStyle="normal"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/black"
+            android:text="Top Traders this Week"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/pos1_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="1st Position"
+                android:textColor="@color/blue_light"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/pos2_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="2nd Position"
+                android:textColor="@color/blue_light"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pos1_tv" />
+
+            <TextView
+                android:id="@+id/pos3_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="3rd Position"
+                android:textColor="@color/blue_light"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/pos2_tv"
+                app:layout_constraintTop_toBottomOf="@+id/pos1_tv" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:layout_weight="1.75"
+                android:orientation="vertical"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/lightgray"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="12,123,653 Portfolios"
+                        android:id="@+id/num_portfolios_tv"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Returns"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:layout_marginEnd="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/leaderboard_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
