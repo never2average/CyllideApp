@@ -4,6 +4,16 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+    <ImageView
+
+        android:layout_weight="0.5"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:id="@+id/crossbtn"
+        android:src="@drawable/cross_icon"
+        android:paddingLeft="3dp"
+        android:tint="@color/colorPrimary"
+        />
 
     <LinearLayout
         android:layout_marginBottom="2dp"
