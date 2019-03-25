@@ -102,10 +102,10 @@ public class QuizRulesActivity extends AppCompatActivity {
                                 if(Integer.parseInt(days)>0){
                                 startQuizButton.setText("Quiz Starts in "+days+" days "+hours+" hours.");
                                 }
-                                else if(Integer.parseInt(days)<0 && Integer.parseInt(hours)>0){
+                                else if(Integer.parseInt(days)<=0 && Integer.parseInt(hours)>0){
                                     startQuizButton.setText("Quiz Starts in "+hours+" hours "+minute+" minutes ");
                                 }
-                                else if(Integer.parseInt(hours)<0 && Integer.parseInt(minute)>0){
+                                else if(Integer.parseInt(hours)<=0 && Integer.parseInt(minute)>0){
                                     startQuizButton.setText("Quiz Starts in "+minute+" minutes "+second+" seconds ");
                                 }
                                 else{
