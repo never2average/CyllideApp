@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -41,6 +42,7 @@ public class ChartActivity extends AppCompatActivity {
     summaryMarketCap, summaryBeta, summaryDayRange, incomeGrossProfit, incomeOperatingIncome,
     incomeOperationalIncome, balanceAssets, balanceLiabilities,
     balanceNetTangibleAssets;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,14 @@ public class ChartActivity extends AppCompatActivity {
         summaryRequestQueue = Volley.newRequestQueue(this);
         balanceSheetRequestQueue = Volley.newRequestQueue(this);
         incomeSheetRequestQueue = Volley.newRequestQueue(this);
+
+
+        webView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return true;
+            }
+        });
 
 
         StringRequest summaryRequest = new StringRequest(Request.Method.GET, summaryRequestEndPoint, new Response.Listener<String>() {
