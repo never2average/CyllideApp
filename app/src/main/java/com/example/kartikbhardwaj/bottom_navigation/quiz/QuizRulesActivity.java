@@ -31,6 +31,7 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,6 +48,8 @@ import javax.crypto.spec.SecretKeySpec;
 public class QuizRulesActivity extends AppCompatActivity {
 
     Button startQuizButton;
+    private String quizID;
+    private long quizStartTime;
     Dialog revivePopup;
     Calendar startTime = Calendar.getInstance();
 
@@ -58,9 +61,10 @@ public class QuizRulesActivity extends AppCompatActivity {
 
         startQuizButton=findViewById(R.id.startQuizButton);
         SharedPreferences sharedPreferences = getSharedPreferences("AUTHENTICATION", 0);
-        String token = sharedPreferences.getString("token", "Not found!");
+        //TODO Remove hardcoded token
+       // String token = sharedPreferences.getString("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
         final Map<String, String> mHeaders = new ArrayMap<String, String>();
-        mHeaders.put("token", token);
+        mHeaders.put("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
         try {
             RequestQueue requestQueue;
             requestQueue = Volley.newRequestQueue(this);
@@ -72,29 +76,61 @@ public class QuizRulesActivity extends AppCompatActivity {
                 public void onResponse(String response) {
                     Log.e("RealityCheck",response);
                     Log.e("RealityCheck","Inside onResponse");
-
-//My method
-
                     try {
-                        byte[] msg = hex2byte(response.getBytes());
-                        String secretKeyString="##gdvhcbxkwjlei23**ukefdvhbxjscm";
-                        byte[] result;
-                        result = decrypt(secretKeyString, msg);
-                        Log.e("RealityCheck",result.toString());
-                    } catch (Exception e) {
+                        quizID = new JSONObject(response).getJSONObject("data").getJSONObject("_id").getString("$oid");
+                        quizStartTime = new JSONObject(response).getJSONObject("data").getJSONObject("quizStartTime").getLong("$date");
+                        Log.d("Response", quizID);
+                        Log.d("Response", Long.toString(quizStartTime));
+                        Log.d("Timer",Long.toString(quizStartTime-System.currentTimeMillis()));
+                        new CountDownTimer(quizStartTime-System.currentTimeMillis(),1000){
+                            @Override
+                            public void onTick(long millisUntilFinished) {
+                                String hour=String.valueOf(millisUntilFinished/(1000*3600));
+                                String days = String.valueOf(Integer.parseInt(hour)/24);
+                                String hours = String.valueOf(Integer.parseInt(hour)%24);
+                                String minute=String.valueOf((millisUntilFinished/(1000*60))%60);
+                                String second=String.valueOf(((millisUntilFinished/1000)%60)%60);
+                                SimpleDateFormat df =new SimpleDateFormat("MM:SS");
+                                if(Integer.parseInt(hour)>24){
+//                                    df = new SimpleDateFormat("DD:HH");
+                                }
+                                else if(Integer.parseInt(hour)<24 && Integer.parseInt(hour)>=1){
+//                                    df = new SimpleDateFormat("HH hours : MM minutes");
+                                }
+
+                                String time=df.format(millisUntilFinished);
+                                if(Integer.parseInt(days)>0){
+                                startQuizButton.setText("Quiz Starts in "+days+" days "+hours+" hours.");
+                                }
+                                else if(Integer.parseInt(days)<0 && Integer.parseInt(hours)>0){
+                                    startQuizButton.setText("Quiz Starts in "+hours+" hours "+minute+" minutes ");
+                                }
+                                else if(Integer.parseInt(hours)<0 && Integer.parseInt(minute)>0){
+                                    startQuizButton.setText("Quiz Starts in "+minute+" minutes "+second+" seconds ");
+                                }
+                                else{
+                                    startQuizButton.setText("Quiz Starts in "+second+" seconds ");
+                                }
+
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                startQuizButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        revivePopup= new Dialog(QuizRulesActivity.this
+                                        );
+                                        revivePopup.setContentView(R.layout.quiz_revive_popup);
+                                        revivePopup.show();
+                                    }
+                                });
+                            }
+                        }.start();
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    //======================================================
-//                    byte[] encryptionKey = "##gdvhcbxkwjlei23**ukefdvhbxjscm".getBytes(StandardCharsets.UTF_8);
-//                    Log.e("RealityCheck", String.valueOf(encryptionKey.length));
-//                    AdvancedEncryptionStandard advancedEncryptionStandard = new AdvancedEncryptionStandard(encryptionKey);
-//                    try {
-//                        byte[] decryptedText = advancedEncryptionStandard.decrypt(response.getBytes(StandardCharsets.UTF_8));
-//                        Log.e("RealityCheck",new String(decryptedText));
-//                    } catch (Exception e) {
-//                        Log.e("RealityCheck","exception", e);
-//
-//                    }
+
 
                 }
             }, new Response.ErrorListener() {
@@ -119,87 +155,14 @@ public class QuizRulesActivity extends AppCompatActivity {
             };
 
             requestQueue.add(stringRequest);
-            Log.e("RealityCheck","Request sent");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        new CountDownTimer(startTime.getTimeInMillis()- Calendar.getInstance().getTimeInMillis(),1000){
-            @Override
-            public void onTick(long millisUntilFinished) {
-                //converting millis to sec,min,hour
-                String hour=String.valueOf(millisUntilFinished/(1000*3600));
-                String minute=String.valueOf((millisUntilFinished/(1000*60))%60);
-                String second=String.valueOf(((millisUntilFinished/1000)%60)%60);
-                SimpleDateFormat df =new SimpleDateFormat("MM:SS");
-                // formatted the time to string
-                if(Integer.parseInt(hour)>24){
-                    df = new SimpleDateFormat("DD:HH");
-                }
-                else if(Integer.parseInt(hour)<24 && Integer.parseInt(hour)>=1){
-                    df = new SimpleDateFormat("HH:MM");
-                }
-
-                String time=df.format(millisUntilFinished);
-                //timer.setText(hour+" :"+minute+" : "+second);
-                startQuizButton.setText(time);
-            }
-
-            @Override
-            public void onFinish() {
-                startQuizButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        revivePopup= new Dialog(QuizRulesActivity.this
-                        );
-                        revivePopup.setContentView(R.layout.quiz_revive_popup);
-                        revivePopup.show();
 
 
-
-
-
-                    }
-
-//
-// }
-                });
-
-
-
-            }
-        }.start();
-    }
-
-
-    public static byte[] hex2byte(byte[] b) {
-        if ((b.length % 2) != 0)
-            throw new IllegalArgumentException("hello");
-        byte[] b2 = new byte[b.length / 2];
-        for (int n = 0; n < b.length; n += 2) {
-            String item = new String(b, n, 2);
-            b2[n / 2] = (byte) Integer.parseInt(item, 16);
-        }
-        return b2;
-
-    }
-    public static byte[] decrypt(String secretKeyString, byte[] encryptedMsg)
-
-            throws Exception {
-        Key key = generateKey(secretKeyString);
-        Cipher c = Cipher.getInstance("AES");
-        c.init(Cipher.DECRYPT_MODE, key);
-        byte[] decValue = c.doFinal(encryptedMsg);
-        return decValue;
 
     }
 
-    private static Key generateKey(String secretKeyString) throws Exception {
-
-        Key key = new SecretKeySpec(secretKeyString.getBytes(), "AES");
-
-        return key;
-
-    }
 
 }
 
