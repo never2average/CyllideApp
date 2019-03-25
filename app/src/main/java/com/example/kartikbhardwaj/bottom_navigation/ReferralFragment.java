@@ -21,11 +21,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 public class ReferralFragment extends Fragment {
 
     Button referralButton;
+    ImageView crossbtn;
 
     @Nullable
     @Override
@@ -37,7 +40,18 @@ public class ReferralFragment extends Fragment {
     public void onViewCreated(@NonNull final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         referralButton = view.findViewById(R.id.invitebutton);
+        crossbtn=view.findViewById(R.id.crossbtn);
         final Context context = getContext();
+        crossbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HomeFragment fragment = new HomeFragment();
+                FragmentManager fragmentManager=getFragmentManager();
+                FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container,fragment).commit();
+
+            }
+        });
     }
 
     @Override
@@ -51,6 +65,7 @@ public class ReferralFragment extends Fragment {
         super.onStart();
         Fresco.initialize(getContext());
         final Activity activity = getActivity();
+
         referralButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
