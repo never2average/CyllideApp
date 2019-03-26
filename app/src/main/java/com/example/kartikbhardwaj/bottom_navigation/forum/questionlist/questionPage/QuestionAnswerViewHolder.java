@@ -28,7 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 
-	private TextView answerTV, answeredByTV, answeredOnTV, upVoteCount,downVoteCount;
+	private TextView answerTV, answeredByTV, answeredOnTV, upVoteCount;
 	private RequestQueue upVoteRequestQueue;
 	ImageButton upVoteButton, downVoteButton;
 	private String answer, answeredBy;
@@ -43,7 +43,6 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 		answerTV = itemView.findViewById(R.id.answer_tv);
 		answeredOnTV = itemView.findViewById(R.id.answered_on_tv);
 		upVoteCount = itemView.findViewById(R.id.answer_up_upvote_count);
-		downVoteCount = itemView.findViewById(R.id.answer_down_upvote_count);
 
 		upVoteRequestQueue = Volley.newRequestQueue(itemView.getContext());
 		upVoteButton = itemView.findViewById(R.id.answer_up_vote_button);
@@ -58,8 +57,6 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 		answeredByTV.setText(answeredBy);
 		answerTV.setText(answer);
 		upVoteCount.setText(Integer.toString(answers.getAnswerUpVotes()));
-        downVoteCount.setText(Integer.toString(answers.getAnswerUpVotes()));
-
 
 		upVoteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
