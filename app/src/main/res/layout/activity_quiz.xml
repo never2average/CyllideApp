@@ -6,249 +6,155 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingBottom="10dp"
-    android:background="@color/background_color"
     tools:context="com.example.kartikbhardwaj.bottom_navigation.quiz.QuizActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
     <LinearLayout
-        android:id="@+id/active_users"
+        android:layout_margin="12dp"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="6dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="2dp">
-
+        android:layout_height="0dp"
+        android:layout_weight="1">
         <ImageView
-            android:id="@+id/eye_icon"
-            android:layout_width="20dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="8dp"
             android:src="@drawable/ic_view_eye"
-            android:tint="@color/colorPrimary" />
-
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
         <TextView
-            android:id="@+id/active_users_count"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp"
             android:gravity="center_vertical"
             android:text="3.8K"
-            android:textSize="13sp"
-            android:textStyle="bold" />
-
+            android:textSize="18sp"
+            android:layout_width="0dp"
+            android:layout_weight="9"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center">
+        <ProgressBar
+            android:id="@+id/questionTimeRemaining"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="12dp"
+            android:background="@drawable/progress_circle_remaining"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="100"
+            android:progressDrawable="@drawable/progress_circle"
+            android:rotation="-90"/>
 
     </LinearLayout>
-
-
-
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="150dp"
-        android:layout_height="129dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/cyllideblue_blue_text_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/active_users" />
-
-
-            <ProgressBar
-                android:id="@+id/progressBarCircle"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="300dp"
-                android:layout_height="200dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/progress_circle_remaining"
-                android:indeterminate="false"
-                android:max="100"
-                android:progress="100"
-                android:progressDrawable="@drawable/progress_circle"
-                android:rotation="-90"
-                app:layout_constraintBottom_toTopOf="@+id/cardView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <TextView
-        android:id="@+id/text_view_countdown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/progressBarCircle"
-        android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true"
-        android:freezesText="true"
-        android:text="00:30"
-        android:textColor="@android:color/black"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/progressBarCircle"
-        app:layout_constraintEnd_toEndOf="@+id/progressBarCircle"
-        app:layout_constraintStart_toStartOf="@+id/progressBarCircle"
-        app:layout_constraintTop_toTopOf="@+id/progressBarCircle" />
-
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardView"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="26dp"
-        android:elevation="4dp"
-        app:cardBackgroundColor="#959898"
-        app:cardCornerRadius="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBarCircle">
-
-        <FrameLayout
-            android:layout_width="293dp"
-            android:layout_height="93dp"
-            android:layout_gravity="center"
-            android:background="@color/colorPrimary" />
-
-        <TextView
-            android:textColor="@android:color/white"
-            android:id="@+id/text_view_question"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="16dp"
-            android:text="fxgcghvjbknlm;chvjbklm;hcgvjbknlmhgj kmghcj n,mghcj ,mgjh ngh jbnjhvb njm " />
-    </com.google.android.material.card.MaterialCardView>
-
-    <ProgressBar
-        android:id="@+id/option_1_progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_margin="12dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:progress="60"
-        android:visibility="gone" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/option_1_text"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_margin="10dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/roundcornerbutton"
-        android:onClick="checkAnswer"
-        android:text="efgiwrufowrigpojg"
-        android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/option_4_text" />
-
-    <ProgressBar
-        android:id="@+id/option_2_progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:progress="60"
-        android:visibility="gone" />
-
-
-    <Button
-        android:id="@+id/buttonB"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/roundcornerbutton"
-
-        android:text="Option B"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/option_1_text" />
-
-
-    <ProgressBar
-        android:id="@+id/option_3_progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:progress="60"
-        android:progressDrawable="@drawable/answer_progress_bar"
-        android:visibility="gone" />
-
-
-    <Button
-        android:id="@+id/option_3_text"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/roundcornerbutton"
-        android:onClick="checkAnswer"
-        android:text="Option C"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonB"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ProgressBar
-        android:id="@+id/option_4_progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:progress="60"
-        android:visibility="gone" />
-
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/option_4_text"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/roundcornerbutton"
-        android:onClick="checkAnswer"
-
-        android:text="Option D"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
+        android:layout_height="0dp"
+        android:layout_weight="8">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            app:cardBackgroundColor="#B309FB"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="12dp"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:id="@+id/questionText"
+                    android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="20dp"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:textColor="@android:color/white"
+                    android:id="@+id/optionA"
+                    android:gravity="center"
+                    android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="20dp"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:id="@+id/optionB"
+                    android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="20dp"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:id="@+id/optionC"
+                    android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="20dp"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:id="@+id/optionD"
+                    android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
 
 </LinearLayout>
 
