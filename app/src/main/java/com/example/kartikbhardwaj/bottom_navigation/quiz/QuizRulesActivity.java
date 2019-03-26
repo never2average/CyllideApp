@@ -52,6 +52,7 @@ public class QuizRulesActivity extends AppCompatActivity {
     private long quizStartTime;
     Dialog revivePopup;
     Calendar startTime = Calendar.getInstance();
+    private Map<String,String> questionHeaders = new ArrayMap<String, String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,6 @@ public class QuizRulesActivity extends AppCompatActivity {
         startQuizButton=findViewById(R.id.startQuizButton);
         SharedPreferences sharedPreferences = getSharedPreferences("AUTHENTICATION", 0);
         //TODO Remove hardcoded token
-       // String token = sharedPreferences.getString("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
         final Map<String, String> mHeaders = new ArrayMap<String, String>();
         mHeaders.put("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
         try {
@@ -119,10 +119,8 @@ public class QuizRulesActivity extends AppCompatActivity {
                                 startQuizButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        revivePopup= new Dialog(QuizRulesActivity.this
-                                        );
-                                        revivePopup.setContentView(R.layout.quiz_revive_popup);
-                                        revivePopup.show();
+                                        Intent quizSwitcher = new Intent(QuizRulesActivity.this,QuizActivity.class);
+                                        startActivity(quizSwitcher);
                                     }
                                 });
                             }
@@ -158,11 +156,41 @@ public class QuizRulesActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
     }
 
+    private void fetchQuestions(String quizID){
+        RequestQueue requestQueue;
+        requestQueue = Volley.newRequestQueue(this);
+        String URL = "http://api.cyllide.com/api/client/quiz/get";
+        questionHeaders.put("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        questionHeaders.put("quizID",quizID);
+        StringRequest questionRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Intent quizSwitcher = new Intent(QuizRulesActivity.this,QuizActivity.class);
+                quizSwitcher.putExtra("questions",response);
+                startActivity(quizSwitcher);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() {
+                return questionHeaders;
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse nr) {
+                int n = nr.statusCode;
+                Log.d("Res Code",""+n);
+                return super.parseNetworkResponse(nr);
+            }
+        };
+        requestQueue.add(questionRequest);
+    }
 
 }
 
