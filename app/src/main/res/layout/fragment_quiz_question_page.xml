@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="10dp"
-    tools:context="com.example.kartikbhardwaj.bottom_navigation.quiz.QuizActivity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_margin="12dp"
@@ -42,26 +39,10 @@
             app:cpb_background_progressbar_width="5dp"
             app:cpb_progressbar_color="@color/colorPrimary"
             app:cpb_progressbar_width="300dp" />
-        <!--<ProgressBar-->
-            <!--android:id="@+id/question_time_remaining"-->
-            <!--style="?android:attr/progressBarStyleHorizontal"-->
-            <!--android:layout_width="300dp"-->
-            <!--android:layout_height="200dp"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:layout_margin="12dp"-->
-            <!--android:background="@drawable/progress_circle_remaining"-->
-            <!--android:indeterminate="false"-->
-            <!--android:max="100"-->
-            <!--android:progress="0"-->
-            <!--android:progressDrawable="@drawable/progress_circle"-->
-            <!--android:rotation="-90"/>-->
+
 
     </LinearLayout>
 
-    <!--<FrameLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_weight="8"></FrameLayout>-->
     <LinearLayout
         android:orientation="vertical"
         android:layout_margin="12dp"
@@ -170,16 +151,5 @@
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 
+
 </LinearLayout>
-
-
-
-
-
-
-
-
-
-
-
-
