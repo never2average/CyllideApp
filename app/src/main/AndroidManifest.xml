@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
+
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+
 
     <application
         android:name=".MainApplication"
@@ -107,6 +111,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".phone_authentication.PhoneAuth" />
 
+        <receiver android:process=":remote" android:name=".backgroundservices.QuizAlarmManager"></receiver>
+
         <receiver
             android:name=".MySMSBroadcastReceiver"
             android:exported="true">
@@ -114,6 +120,20 @@
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
             </intent-filter>
         </receiver>
+
+        <receiver android:name=".backgroundservices.AutoStart">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".backgroundservices.GetLatestQuizIDService">
+        </service>
+
+
     </application>
+
+
 
 </manifest>

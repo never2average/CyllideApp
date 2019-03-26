@@ -26,6 +26,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kartikbhardwaj.bottom_navigation.AdvancedEncryptionStandard;
 import com.example.kartikbhardwaj.bottom_navigation.R;
+import com.example.kartikbhardwaj.bottom_navigation.backgroundservices.GetLatestQuizIDService;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -58,106 +59,105 @@ public class QuizRulesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_rules);
 
+        Intent serviceIntent = new Intent(this, GetLatestQuizIDService.class);
+        startService(serviceIntent);
+
 
         startQuizButton=findViewById(R.id.startQuizButton);
-        SharedPreferences sharedPreferences = getSharedPreferences("AUTHENTICATION", 0);
+        SharedPreferences sharedPreferences = getSharedPreferences("LATESTQUIZ", 0);
         //TODO Remove hardcoded token
-       // String token = sharedPreferences.getString("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
-        final Map<String, String> mHeaders = new ArrayMap<String, String>();
-        mHeaders.put("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
-        try {
-            RequestQueue requestQueue;
-            requestQueue = Volley.newRequestQueue(this);
-            String URL = "http://api.cyllide.com/api/client/quiz/get/latest";
-
-            final StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
-
-                @Override
-                public void onResponse(String response) {
-                    Log.e("RealityCheck",response);
-                    Log.e("RealityCheck","Inside onResponse");
-                    try {
-                        quizID = new JSONObject(response).getJSONObject("data").getJSONObject("_id").getString("$oid");
-                        quizStartTime = new JSONObject(response).getJSONObject("data").getJSONObject("quizStartTime").getLong("$date");
-                        Log.d("Response", quizID);
-                        Log.d("Response", Long.toString(quizStartTime));
-                        Log.d("Timer",Long.toString(quizStartTime-System.currentTimeMillis()));
-                        new CountDownTimer(quizStartTime-System.currentTimeMillis(),1000){
-                            @Override
-                            public void onTick(long millisUntilFinished) {
-                                String hour=String.valueOf(millisUntilFinished/(1000*3600));
-                                String days = String.valueOf(Integer.parseInt(hour)/24);
-                                String hours = String.valueOf(Integer.parseInt(hour)%24);
-                                String minute=String.valueOf((millisUntilFinished/(1000*60))%60);
-                                String second=String.valueOf(((millisUntilFinished/1000)%60)%60);
-                                SimpleDateFormat df =new SimpleDateFormat("MM:SS");
-                                if(Integer.parseInt(hour)>24){
-//                                    df = new SimpleDateFormat("DD:HH");
-                                }
-                                else if(Integer.parseInt(hour)<24 && Integer.parseInt(hour)>=1){
-//                                    df = new SimpleDateFormat("HH hours : MM minutes");
-                                }
-
-                                String time=df.format(millisUntilFinished);
-                                if(Integer.parseInt(days)>0){
-                                startQuizButton.setText("Quiz Starts in "+days+" days "+hours+" hours.");
-                                }
-                                else if(Integer.parseInt(days)<=0 && Integer.parseInt(hours)>0){
-                                    startQuizButton.setText("Quiz Starts in "+hours+" hours "+minute+" minutes ");
-                                }
-                                else if(Integer.parseInt(hours)<=0 && Integer.parseInt(minute)>0){
-                                    startQuizButton.setText("Quiz Starts in "+minute+" minutes "+second+" seconds ");
-                                }
-                                else{
-                                    startQuizButton.setText("Quiz Starts in "+second+" seconds ");
-                                }
-
-                            }
-
-                            @Override
-                            public void onFinish() {
-                                startQuizButton.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        revivePopup= new Dialog(QuizRulesActivity.this
-                                        );
-                                        revivePopup.setContentView(R.layout.quiz_revive_popup);
-                                        revivePopup.show();
-                                    }
-                                });
-                            }
-                        }.start();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("VOLLEY", error.toString());
-                }
-            })
-            {
-                @Override
-                public Map<String, String> getHeaders() {
-                    return mHeaders;
-                }
-
-                @Override
-                protected Response<String> parseNetworkResponse(NetworkResponse nr) {
-                    int n = nr.statusCode;
-                    Log.d("Res Code",""+n);
-                    return super.parseNetworkResponse(nr);
-                }
-
-            };
-
-            requestQueue.add(stringRequest);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String s  = sharedPreferences.getString("id","NOT FOUND");
+        Log.d("RealityCheck",s);
+//       // String token = sharedPreferences.getString("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+//        final Map<String, String> mHeaders = new ArrayMap<String, String>();
+//        mHeaders.put("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+//        try {
+//            RequestQueue requestQueue;
+//            requestQueue = Volley.newRequestQueue(this);
+//            String URL = "http://api.cyllide.com/api/client/quiz/get/latest";
+//
+//            final StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+//
+//                @Override
+//                public void onResponse(String response) {
+//                    Log.e("RealityCheck",response);
+//                    Log.e("RealityCheck","Inside onResponse");
+//                    try {
+//                        quizID = new JSONObject(response).getJSONObject("data").getJSONObject("_id").getString("$oid");
+//                        quizStartTime = new JSONObject(response).getJSONObject("data").getJSONObject("quizStartTime").getLong("$date");
+//                        Log.d("Response", quizID);
+//                        Log.d("Response", Long.toString(quizStartTime));
+//                        Log.d("Timer",Long.toString(quizStartTime-System.currentTimeMillis()));
+//                        new CountDownTimer(quizStartTime-System.currentTimeMillis(),1000){
+//                            @Override
+//                            public void onTick(long millisUntilFinished) {
+//                                String hour=String.valueOf(millisUntilFinished/(1000*3600));
+//                                String days = String.valueOf(Integer.parseInt(hour)/24);
+//                                String hours = String.valueOf(Integer.parseInt(hour)%24);
+//                                String minute=String.valueOf((millisUntilFinished/(1000*60))%60);
+//                                String second=String.valueOf(((millisUntilFinished/1000)%60)%60);
+//
+//
+//
+//                                if(Integer.parseInt(days)>0){
+//                                startQuizButton.setText("Quiz Starts in "+days+" days "+hours+" hours.");
+//                                }
+//                                else if(Integer.parseInt(days)<=0 && Integer.parseInt(hours)>0){
+//                                    startQuizButton.setText("Quiz Starts in "+days+" days "+hours+" hours "+minute+" minutes ");
+//                                }
+//                                else if(Integer.parseInt(hours)<=0 && Integer.parseInt(minute)>0){
+//                                    startQuizButton.setText("Quiz Starts in "+minute+" minutes "+second+" seconds ");
+//                                }
+//                                else{
+//                                    startQuizButton.setText("Quiz Starts in "+second+" seconds ");
+//                                }
+//
+//                            }
+//
+//                            @Override
+//                            public void onFinish() {
+//                                startQuizButton.setOnClickListener(new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View view) {
+//                                        revivePopup= new Dialog(QuizRulesActivity.this
+//                                        );
+//                                        revivePopup.setContentView(R.layout.quiz_revive_popup);
+//                                        revivePopup.show();
+//                                    }
+//                                });
+//                            }
+//                        }.start();
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//
+//                }
+//            }, new Response.ErrorListener() {
+//                @Override
+//                public void onErrorResponse(VolleyError error) {
+//                    Log.e("VOLLEY", error.toString());
+//                }
+//            })
+//            {
+//                @Override
+//                public Map<String, String> getHeaders() {
+//                    return mHeaders;
+//                }
+//
+//                @Override
+//                protected Response<String> parseNetworkResponse(NetworkResponse nr) {
+//                    int n = nr.statusCode;
+//                    Log.d("Res Code",""+n);
+//                    return super.parseNetworkResponse(nr);
+//                }
+//
+//            };
+//
+//            requestQueue.add(stringRequest);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
 
 
