@@ -1,11 +1,14 @@
 package com.example.kartikbhardwaj.bottom_navigation.Contests;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.kartikbhardwaj.bottom_navigation.Contests.PortfolioRV.LeaderboardsActivity;
 import com.example.kartikbhardwaj.bottom_navigation.Contests.PortfolioRV.PortfolioModel;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.google.android.material.tabs.TabLayout;
@@ -27,6 +31,7 @@ import java.util.Map;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 public class MonthlyActivity extends AppCompatActivity implements PortfolioPickerDialogFragment.PortfolioPickerClickListener {
 
@@ -44,7 +49,9 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
     private LabelToggle largeCapButton;
     private LabelToggle niftyButton;
     private TextView descTV, contestSignUpsTV;
-
+    private Button joinButton, viewButton;
+    private LinearLayout linearLayout;
+    LinearLayout.LayoutParams param, invisibleParam;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +65,8 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
         largeCapButton = findViewById(R.id.largecap_button);
         niftyButton = findViewById(R.id.nifty_button);
         contestSignUpsTV = findViewById(R.id.contest_sign_ups);
+
+        linearLayout = findViewById(R.id.if_portfolio_already_exists);
 
         descTV = findViewById(R.id.desc_tv);
         updateDisplay();
@@ -104,7 +113,12 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
 
         tabLayout.addTab(tabLayout.newTab().setText("Monthly"));
 
-        
+
+        param = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+
 
         imgView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,12 +128,22 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
         });
 
 
-        Button joinButton  = findViewById(R.id.contest_join_button);
+        joinButton = findViewById(R.id.contest_join_button);
         joinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MonthlyActivity.this, "Wait for a magic trick!",Toast.LENGTH_LONG).show();
+                DialogFragment dialog = new PortfolioPickerDialogFragment();
+                dialog.show(getSupportFragmentManager(), "PortfolioPicker");
+            }
+        });
 
+        viewButton = findViewById(R.id.contest_view_button);
+
+        viewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent leaderboardIntent = new Intent(MonthlyActivity.this, LeaderboardsActivity.class);
+                startActivity(leaderboardIntent);
             }
         });
 
@@ -139,9 +163,15 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
             public void onResponse(String response) {
 
                 try {
-                    String responseObject = new JSONObject(response).getJSONArray("message").getJSONObject(0).getString("signUps");
-                    contestSignUpsTV.setText("No. of Participants : "+responseObject);
-                    Log.d("MonthlyActivity",responseObject);
+                    JSONObject responseObject = new JSONObject(response).getJSONArray("message").getJSONObject(0);
+                    contestSignUpsTV.setText("No. of Participants : "+responseObject.getString("signUps"));
+                    if(responseObject.getBoolean("isAlreadyIn") == true) {
+                        viewButton.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        viewButton.setVisibility(View.GONE);
+                    }
+                    Log.d("MonthlyActivity",responseObject.toString());
 
 
                 } catch (JSONException e) {
@@ -162,8 +192,6 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
                 return requestHeader;
             }
         };
-//                DialogFragment dialog = new PortfolioPickerDialogFragment();
-//                dialog.show(getSupportFragmentManager(), "PortfolioPicker");
 
         requestQueue.add(stringRequest);
 

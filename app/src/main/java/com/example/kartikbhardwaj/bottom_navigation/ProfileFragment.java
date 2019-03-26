@@ -24,8 +24,12 @@ import com.razerdp.widget.animatedpieview.data.SimplePieInfo;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
@@ -56,12 +60,27 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+
+
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         final Dialog dialog=new Dialog(getContext());
         dialog.setContentView(R.layout.quiz_wining_xml);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
 
 
 
@@ -80,6 +99,18 @@ public class ProfileFragment extends Fragment {
 
 
         cross=view.findViewById(R.id.cross_btn);
+        cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HomeFragment fragment = new HomeFragment();
+                FragmentManager fragmentManager=getFragmentManager();
+                FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container,fragment).commit();
+
+
+
+            }
+        });
         username=view.findViewById(R.id.username);
         profilePic=view.findViewById(R.id.profile_pic);
         AnimatedPieView mAnimatedPieView = view.findViewById(R.id.win_perc);
@@ -104,6 +135,7 @@ public class ProfileFragment extends Fragment {
 
 
     }
+
 
 
     @Override

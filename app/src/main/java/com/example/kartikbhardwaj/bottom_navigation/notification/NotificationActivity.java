@@ -3,8 +3,14 @@ package com.example.kartikbhardwaj.bottom_navigation.notification;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
 import com.example.kartikbhardwaj.bottom_navigation.R;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +18,7 @@ import java.util.List;
 public class NotificationActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
+    ImageView crossBtn;
 
     String notifname[]={"Notification1","Notification2","Notification3"};
     String notiftime[]={"22:02","11:02","09:02"};
@@ -33,6 +40,7 @@ public class NotificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+        crossBtn=findViewById(R.id.cross_btn);
 
         if(notifs.isEmpty())
         {
@@ -47,5 +55,12 @@ public class NotificationActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+        crossBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent homeIntent = new Intent(NotificationActivity.this, MainActivity.class);
+                startActivity(homeIntent);
+            }
+        });
     }
 }

@@ -120,14 +120,6 @@ public class StartingScreenActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_CODE_QUIZ) {
-            if (resultCode == RESULT_OK) {
-                int score = data.getIntExtra(QuizActivity.EXTRA_SCORE, 0);
-                if (score > highscore) {
-                    updateHighscore(score);
-                }
-            }
-        }
     }
 
     private void loadCategories() {

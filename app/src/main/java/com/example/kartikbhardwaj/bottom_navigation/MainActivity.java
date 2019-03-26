@@ -34,17 +34,16 @@ import com.github.clans.fab.FloatingActionMenu;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity{
 
 
     Toolbar toolbar;
     ImageView logo;
-     com.github.clans.fab.FloatingActionButton notification;
+    CircleImageView profilepic;
+    ImageView notificationButton;
      com.github.clans.fab.FloatingActionButton referrals;
-     com.github.clans.fab.FloatingActionButton howItWorks;
-     com.github.clans.fab.FloatingActionButton profile;
-     com.github.clans.fab.FloatingActionButton home;
     com.github.clans.fab.FloatingActionButton faq;
 
 
@@ -78,6 +77,9 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         logo=findViewById(R.id.logo);
+        notificationButton=findViewById(R.id.notificationicon);
+        profilepic=findViewById(R.id.profilePic);
+
         SharedPreferences.Editor editor = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE).edit();
 //        editor.putString("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiQnVyam9zZSIsImV4cCI6MTU4MjU1NzQzNH0.M9K5ZcW515hWwBe3gNHdVB6AhQRpubfuQFn7xvrpLNg");
         editor.putString("token","Not found!");
@@ -100,38 +102,12 @@ public class MainActivity extends AppCompatActivity{
          final FloatingActionMenu fabMenu;
         fabMenu = findViewById(R.id.fabMenu);
         referrals=findViewById(R.id.referrals);
-        notification=findViewById(R.id.notification);
-        howItWorks=findViewById(R.id.howitworks);
-        home=findViewById(R.id.home);
-        profile=findViewById(R.id.profile);
         faq=findViewById(R.id.faq);
 
 
         fabMenu.setClosedOnTouchOutside(true);
 
-        home.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View v) {
-                // ((FloatingActionsMenu) findViewById(R.id.multiple_actions_down)).removeButton(removeAction);
-                Toast.makeText(MainActivity.this,"home button clicked",Toast.LENGTH_SHORT).show();
-                swaphomeFragment();
-                fabMenu.close(true);
 
-
-            }
-        });
-
-        notification.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View v) {
-                // ((FloatingActionsMenu) findViewById(R.id.multiple_actions_down)).removeButton(removeAction);
-
-                Intent intent=new Intent(MainActivity.this, NotificationActivity.class);
-
-                startActivity(intent);
-                fabMenu.close(true);
-            }
-        });
 
         referrals.setOnClickListener(new View.OnClickListener()  {
             @Override
@@ -157,31 +133,31 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-        howItWorks.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View v) {
-                // ((FloatingActionsMenu) findViewById(R.id.multiple_actions_down)).removeButton(removeAction);
-                swaphiwFragment();
-                fabMenu.close(true);
 
-
-            }
-        });
-
-        profile.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View v) {
-                swapProfileFragment();
-                fabMenu.close(true);
-
-
-            }
-        });
 
 
 
         toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+
+        profilepic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                swapProfileFragment();
+
+
+            }
+        });
+
+        notificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this, NotificationActivity.class);
+
+                startActivity(intent);
+
+            }
+        });
 
 
         // do not dellete this comment
