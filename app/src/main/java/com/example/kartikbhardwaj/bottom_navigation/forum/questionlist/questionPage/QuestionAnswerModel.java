@@ -24,8 +24,10 @@ public class QuestionAnswerModel {
 
 
 	private int answerUpVotes;
+	//private int answerDownVotes;
 
-	public QuestionAnswerModel(String answerID,  String answerDetail, int answerUpVotes, String answeredBy, long dateStamp)
+
+	public QuestionAnswerModel(String answerID,  String answerDetail, int answerUpVotes,String answeredBy, long dateStamp)
 	{
 		this.answerDetail=answerDetail;
 		this.answeredBy=answeredBy;

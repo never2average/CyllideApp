@@ -122,10 +122,10 @@ public class StartingScreenActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_CODE_QUIZ) {
             if (resultCode == RESULT_OK) {
-                int score = data.getIntExtra(QuizActivity.EXTRA_SCORE, 0);
-                if (score > highscore) {
-                    updateHighscore(score);
-                }
+//                int score = data.getIntExtra(QuizActivity.EXTRA_SCORE, 0);
+//                if (score > highscore) {
+//                    updateHighscore(score);
+//                }
             }
         }
     }

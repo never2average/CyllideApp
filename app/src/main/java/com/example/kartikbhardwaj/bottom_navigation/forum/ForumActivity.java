@@ -135,6 +135,12 @@ public class ForumActivity extends AppCompatActivity {
             public void onClick(View view) {
                 finance.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_on_click_background));
                 finance.setTextColor(getResources().getColor(R.color.white,null));
+                capitalMarkets.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
+                capitalMarkets.setTextColor(getResources().getColor(R.color.blue,null));
+                business.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
+                business.setTextColor(getResources().getColor(R.color.blue,null));
+                macroEconimics.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
+                macroEconimics.setTextColor(getResources().getColor(R.color.blue,null));
             }
         });
         capitalMarkets.setOnClickListener(new View.OnClickListener() {
@@ -142,6 +148,12 @@ public class ForumActivity extends AppCompatActivity {
             public void onClick(View view) {
                 capitalMarkets.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_on_click_background));
                 capitalMarkets.setTextColor(getResources().getColor(R.color.white,null));
+                finance.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
+                finance.setTextColor(getResources().getColor(R.color.blue,null));
+                business.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
+                business.setTextColor(getResources().getColor(R.color.blue,null));
+                macroEconimics.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
+                macroEconimics.setTextColor(getResources().getColor(R.color.blue,null));
             }
         });
         business.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +161,13 @@ public class ForumActivity extends AppCompatActivity {
             public void onClick(View view) {
                 business.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_on_click_background));
                 business.setTextColor(getResources().getColor(R.color.white,null));
+
+                finance.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
+                finance.setTextColor(getResources().getColor(R.color.blue,null));
+                capitalMarkets.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
+                capitalMarkets.setTextColor(getResources().getColor(R.color.blue,null));
+                macroEconimics.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
+                macroEconimics.setTextColor(getResources().getColor(R.color.blue,null));
             }
         });
         macroEconimics.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +175,12 @@ public class ForumActivity extends AppCompatActivity {
             public void onClick(View view) {
                 macroEconimics.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_on_click_background));
                 macroEconimics.setTextColor(getResources().getColor(R.color.white,null));
+                finance.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
+                finance.setTextColor(getResources().getColor(R.color.blue,null));
+                capitalMarkets.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
+                capitalMarkets.setTextColor(getResources().getColor(R.color.blue,null));
+                business.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
+                business.setTextColor(getResources().getColor(R.color.blue,null));
             }
         });
 
