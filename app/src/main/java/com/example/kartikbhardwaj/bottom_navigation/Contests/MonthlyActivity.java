@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.kartikbhardwaj.bottom_navigation.AppConstants;
 import com.example.kartikbhardwaj.bottom_navigation.Contests.PortfolioRV.LeaderboardsActivity;
 import com.example.kartikbhardwaj.bottom_navigation.Contests.PortfolioRV.PortfolioModel;
 import com.example.kartikbhardwaj.bottom_navigation.R;
@@ -75,6 +76,7 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
             @Override
             public void onClick(View v) {
                 curr_selection = "smallcap";
+                AppConstants.capex = "smallcap";
                 curr_selection_index = 0;
                 getVolleyData(curr_selection);
                 updateDisplay();
@@ -86,6 +88,7 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
             public void onClick(View v) {
                 curr_selection="midcap";
                 curr_selection_index = 1;
+                AppConstants.capex = "midcap";
                 getVolleyData(curr_selection);
                 updateDisplay();
             }
@@ -96,6 +99,7 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
             public void onClick(View v) {
                 curr_selection="largecap";
                 curr_selection_index = 2;
+                AppConstants.capex = "largecap";
                 getVolleyData(curr_selection);
                 updateDisplay();
             }
@@ -106,6 +110,7 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
             public void onClick(View v) {
                 curr_selection="nifty500";
                 curr_selection_index = 3;
+                AppConstants.capex="nifty500";
                 getVolleyData(curr_selection);
                 updateDisplay();
             }
@@ -134,6 +139,7 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
             public void onClick(View v) {
                 DialogFragment dialog = new PortfolioPickerDialogFragment();
                 dialog.show(getSupportFragmentManager(), "PortfolioPicker");
+
             }
         });
 
