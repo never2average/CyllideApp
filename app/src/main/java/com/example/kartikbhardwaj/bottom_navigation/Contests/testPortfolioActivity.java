@@ -17,13 +17,13 @@ import java.util.List;
 public class testPortfolioActivity extends AppCompatActivity {
     RecyclerView portfolioView;
 
-    private List<PortfolioModel> dummyData() {
-        List<PortfolioModel> data = new ArrayList<>(5);
-        for (int i = 0; i < 5; i++) {
-            data.add(new PortfolioModel("TEST_DAAATAAA", 0.0));
-        }//data is the list of objects to be set in the list item
-        return data;
-    }
+//    private List<PortfolioModel> dummyData() {
+//        List<PortfolioModel> data = new ArrayList<>(5);
+//        for (int i = 0; i < 5; i++) {
+//            data.add(new PortfolioModel("TEST_DAAATAAA", 0.0));
+//        }//data is the list of objects to be set in the list item
+//        return data;
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +33,11 @@ public class testPortfolioActivity extends AppCompatActivity {
         portfolioView= findViewById(R.id.portfolios);
         portfolioView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
-        List<PortfolioModel> data=dummyData();
+        //List<PortfolioModel> data=dummyData();
         //data.add(new PortfolioModel("lkl",0.0));
-        PortfolioAdapter portfolioAdapter = new PortfolioAdapter(data);
-        portfolioView.setLayoutManager(layoutManager);
-        portfolioView.setAdapter(portfolioAdapter);
-        Log.e("Lame",data.get(0).getPortfolioName());
+       // PortfolioAdapter portfolioAdapter = new PortfolioAdapter(data);
+       // portfolioView.setLayoutManager(layoutManager);
+       // portfolioView.setAdapter(portfolioAdapter);
+        //Log.e("Lame",data.get(0).getPortfolioName());
     }
 }
