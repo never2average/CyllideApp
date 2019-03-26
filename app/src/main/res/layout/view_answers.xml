@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginBottom="10dp">
+    android:layout_marginBottom="10dp"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -29,9 +29,9 @@
 
 
                 <LinearLayout
-                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -66,12 +66,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:text="Answered"
                                 android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
                                 android:fontFamily="@font/barlow_regular"
+                                android:text="Answered"
                                 android:textColor="@color/black"
-                                android:textSize="12sp"/>
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/answered_on_tv"
@@ -100,13 +100,14 @@
                     android:textSize="15dp" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="horizontal">
@@ -123,8 +124,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Upvote"
                             android:fontFamily="@font/barlow_regular"
+                            android:text="Upvote"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
 
@@ -153,21 +154,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Downvote"
                             android:fontFamily="@font/barlow_regular"
-                            android:textColor="@color/black"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/answer_down_upvote_count"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:inputType="number"
-                            android:lines="1"
-                            android:text="0"
-                            android:textAlignment="center"
+                            android:text="Downvote"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
 
