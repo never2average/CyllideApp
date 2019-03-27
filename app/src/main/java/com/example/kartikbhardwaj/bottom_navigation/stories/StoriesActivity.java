@@ -110,7 +110,7 @@ public class StoriesActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("StoriesActivity", "Got response: "+ response);
+                Log.e("StoriesActivity", "Got response: "+ response);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -124,6 +124,7 @@ public class StoriesActivity extends AppCompatActivity {
                 return mHeaders;
             }
         };
+        queue.add(request);
     }
 }
 
