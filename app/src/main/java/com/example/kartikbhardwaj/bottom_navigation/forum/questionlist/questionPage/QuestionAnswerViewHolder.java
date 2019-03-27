@@ -43,14 +43,10 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 		answerTV = itemView.findViewById(R.id.answer_tv);
 		answeredOnTV = itemView.findViewById(R.id.answered_on_tv);
 		upVoteCount = itemView.findViewById(R.id.answer_up_upvote_count);
+
 		upVoteRequestQueue = Volley.newRequestQueue(itemView.getContext());
 		upVoteButton = itemView.findViewById(R.id.answer_up_vote_button);
 		downVoteButton = itemView.findViewById(R.id.answer_down_vote_button);
-
-
-
-
-
 	}
 	public void populate(final QuestionAnswerModel answers)
 	{
@@ -62,10 +58,10 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 		answerTV.setText(answer);
 		upVoteCount.setText(Integer.toString(answers.getAnswerUpVotes()));
 
-
 		upVoteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+
 				getUpVoteVolley(answers.getAnswerID(),1);
 				Log.e("UpVote","Proabaly sent");
 
