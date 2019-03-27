@@ -1,6 +1,5 @@
 package com.example.kartikbhardwaj.bottom_navigation.quiz;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +25,9 @@ public class QuizFragment extends Fragment {
 //        Intent intent = getI;
         View view=inflater.inflate(R.layout.fragment_quiz_question_page,null);
         mainQuestion = view.findViewById(R.id.question_text);
-        optionA = view.findViewById(R.id.optionA);
-        optionB = view.findViewById(R.id.optionB);
-        optionC = view.findViewById(R.id.optionC);
+        optionA = view.findViewById(R.id.activity_quiz_option_1_text_view);
+        optionB = view.findViewById(R.id.activity_quiz_option_2_text_view);
+        optionC = view.findViewById(R.id.activity_quiz_option_3_text_view);
         optionD = view.findViewById(R.id.optionD);
 
 

@@ -82,7 +82,7 @@
                 android:layout_height="match_parent">
                 <TextView
                     android:textColor="@android:color/white"
-                    android:id="@+id/optionA"
+                    android:id="@+id/activity_quiz_option_1_text_view"
                     android:gravity="center"
                     android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
                     android:layout_width="match_parent"
@@ -103,7 +103,7 @@
                 <TextView
                     android:textColor="@android:color/white"
                     android:gravity="center"
-                    android:id="@+id/optionB"
+                    android:id="@+id/activity_quiz_option_2_text_view"
                     android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
@@ -123,7 +123,7 @@
                 <TextView
                     android:textColor="@android:color/white"
                     android:gravity="center"
-                    android:id="@+id/optionC"
+                    android:id="@+id/activity_quiz_option_3_text_view"
                     android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
