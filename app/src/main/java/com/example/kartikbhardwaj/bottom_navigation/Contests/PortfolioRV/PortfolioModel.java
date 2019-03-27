@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 public class PortfolioModel {
     private String portfolioname;
     private double returns;
+    private String id;
 
     public PortfolioModel(String portfolioname, double returns, String id) {
         this.portfolioname = portfolioname;
@@ -12,7 +13,6 @@ public class PortfolioModel {
         this.id = id;
     }
 
-    private String id;
 
     public String getId() {
         return id;

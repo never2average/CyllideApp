@@ -223,6 +223,7 @@ public class ForumActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.d("resp",response);
                     JSONArray responseData = new JSONObject(response).getJSONArray("message");
                     displayQuestions(responseData);
 

@@ -177,6 +177,7 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
                     else{
                         viewButton.setVisibility(View.GONE);
                     }
+                    AppConstants.contestID=responseObject.getJSONObject("_id").getString("$oid");
                     Log.d("MonthlyActivity",responseObject.toString());
 
 

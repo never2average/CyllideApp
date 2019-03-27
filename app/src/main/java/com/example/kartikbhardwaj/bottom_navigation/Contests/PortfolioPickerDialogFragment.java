@@ -46,6 +46,8 @@ public class PortfolioPickerDialogFragment extends DialogFragment {
     PortfolioPickerClickListener listener;
     private RequestQueue portfoliolist;
     Map<String,String> headers=new ArrayMap<>();
+    ArrayList<PortfolioModel> portfolioModels;
+    RecyclerView itemList;
 
 
     @Override
@@ -73,7 +75,7 @@ public class PortfolioPickerDialogFragment extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.dialog_portfolio_picker, null);
         builder.setView(dialogLayout);
-        final RecyclerView itemList = dialogLayout.findViewById(R.id.portfolios);
+        itemList = dialogLayout.findViewById(R.id.portfolios);
         itemList.setLayoutManager(new LinearLayoutManager(getContext()));
         fetchRelevantPortfolios();
         dialogLayout.findViewById(R.id.close_btn_image).setOnClickListener(new View.OnClickListener() {
@@ -97,9 +99,15 @@ public class PortfolioPickerDialogFragment extends DialogFragment {
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONArray jsonArray = new JSONArray(new JSONObject(response).getString("data"));
-                    Log.d("array",jsonArray.toString());
-                } catch (JSONException e) {
+                    JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+                    portfolioModels = new ArrayList<>();
+                    for(int i=0;i<jsonArray.length();i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        portfolioModels.add(new PortfolioModel(jsonObject.getString("portfolioName"),0.0,jsonObject.getJSONObject("_id").getString("$oid")));
+                    }
+                    PortfolioAdapter portfolioAdapter = new PortfolioAdapter(getContext(),portfolioModels);
+                    itemList.setAdapter(portfolioAdapter);
+                } catch (Exception e) {
                     Log.e("JSONERROR",e.toString());
                 }
             }
