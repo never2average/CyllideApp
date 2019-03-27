@@ -48,6 +48,7 @@ public class NewsUpdateWorker extends Worker {
         initRealm();
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        //TODO: Remove hard coded token
         String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8";
         final Map<String, String> mHeaders = new ArrayMap<String, String>();
         mHeaders.put("token", token);

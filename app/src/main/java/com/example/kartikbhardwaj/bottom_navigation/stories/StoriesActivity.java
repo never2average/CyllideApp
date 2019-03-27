@@ -70,5 +70,17 @@ public class StoriesActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Log start time
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //Log end time
+    }
 }
 
