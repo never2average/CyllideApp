@@ -3,6 +3,7 @@ package com.example.kartikbhardwaj.bottom_navigation.Contests.PortfolioRV;
 import android.content.Context;
 import android.content.Intent;
 import android.util.ArrayMap;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -56,6 +57,7 @@ public class PortfolioViewHolder extends RecyclerView.ViewHolder {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.d("error",response);
                 Intent intent = new Intent(context,LeaderboardsActivity.class);
                 context.startActivity(intent);
             }

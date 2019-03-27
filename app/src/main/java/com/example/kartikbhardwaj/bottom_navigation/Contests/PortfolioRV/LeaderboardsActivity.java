@@ -8,34 +8,43 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.ArrayMap;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.kartikbhardwaj.bottom_navigation.AppConstants;
 import com.example.kartikbhardwaj.bottom_navigation.LeaderboardRV.LeaderboardAdapter;
 import com.example.kartikbhardwaj.bottom_navigation.LeaderboardRV.LeaderboardModel;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class LeaderboardsActivity extends AppCompatActivity {
     RecyclerView leaderboardView;
+    RequestQueue leaderBRequestQ;
+    Map<String,String> leaderBrequestHdrs=new ArrayMap<>();
 
-    List<LeaderboardModel> getDummyData() {
-        List<LeaderboardModel> data = new ArrayList<>(5);
-        for (int i = 0; i <= 5; i++) {
-            LeaderboardModel a = new LeaderboardModel("Player " + Integer.toString(i), i, Float.parseFloat(Integer.toString(i)));
-            data.add(a);
-        }
-        return data;
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +52,7 @@ public class LeaderboardsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_leaderboards);
         leaderboardView = findViewById(R.id.leaderboard_recycler_view);
         RecyclerView.LayoutManager leaderboardLayoutManager = new LinearLayoutManager(this);
-        LeaderboardAdapter leaderboardAdapter = new LeaderboardAdapter(getDummyData(),
-                getSupportFragmentManager());
         leaderboardView.setLayoutManager(leaderboardLayoutManager);
-        leaderboardView.setAdapter(leaderboardAdapter);
         ImageView backButton = findViewById(R.id.leaderboard_back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,9 +61,9 @@ public class LeaderboardsActivity extends AppCompatActivity {
             }
         });
 
-        loadDummyData();
-
+getLeaderBoard();
     }
+
 
     private void loadDummyData() {
 
@@ -102,6 +108,39 @@ public class LeaderboardsActivity extends AppCompatActivity {
                         pos3.setCompoundDrawablesWithIntrinsicBounds(null, resource, null, null);
                     }
                 });
+    }
+
+    private void getLeaderBoard()
+    {
+        leaderBRequestQ= Volley.newRequestQueue(LeaderboardsActivity.this);
+        leaderBrequestHdrs.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        leaderBrequestHdrs.put("contestUID", AppConstants.contestID);
+        Log.d("Id",AppConstants.contestID);
+        String url = "http://api.cyllide.com/api/client/contest/leaderboard";
+        StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("error",response);
+                try {
+                    JSONArray arrayData=new JSONObject(response).getJSONArray("contestPortfolios");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders(){return leaderBrequestHdrs;}
+        };
+        leaderBRequestQ.add(stringRequest);
+
+
     }
 
 }
