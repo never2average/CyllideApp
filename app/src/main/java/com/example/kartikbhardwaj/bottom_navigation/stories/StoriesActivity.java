@@ -35,7 +35,7 @@ public class StoriesActivity extends AppCompatActivity {
     Toolbar toolbar;
     CircleImageView imageButton;
     ImageView back;
-    long startTime=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,45 +86,6 @@ public class StoriesActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //Log start time
-        startTime = System.currentTimeMillis();
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //Get time spent in foreground
-        long readTime = System.currentTimeMillis() - startTime;
-        //Send request to server
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        final Map<String, String> mHeaders = new ArrayMap<String, String>();
-        //TODO: Remove hardcoded token
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8";
-        mHeaders.put("token", token);
-        mHeaders.put("timeRead",String.valueOf(readTime));
-        mHeaders.put("contentID", null);
-        final String url = "http://api.cyllide.com/api/client/stories/update";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.e("StoriesActivity", "Got response: "+ response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("StoriesActivity", "Time logging error");
-                error.printStackTrace();
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() {
-                return mHeaders;
-            }
-        };
-        queue.add(request);
-    }
 }
 
