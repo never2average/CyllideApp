@@ -106,8 +106,8 @@ public class StoriesActivity extends AppCompatActivity {
         mHeaders.put("token", token);
         mHeaders.put("timeRead",String.valueOf(readTime));
         mHeaders.put("contentID", null);
-        final String newsURL = "http://api.cyllide.com/api/client/stories/update";
-        StringRequest request = new StringRequest(Request.Method.POST, newsURL, new Response.Listener<String>() {
+        final String url = "http://api.cyllide.com/api/client/stories/update";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("StoriesActivity", "Got response: "+ response);
