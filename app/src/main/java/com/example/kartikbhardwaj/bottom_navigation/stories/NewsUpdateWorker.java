@@ -48,8 +48,7 @@ public class NewsUpdateWorker extends Worker {
         initRealm();
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        String token = getApplicationContext().getSharedPreferences("AUTHENTICATION", 0)
-                .getString("token", "Not found!");
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8";
         final Map<String, String> mHeaders = new ArrayMap<String, String>();
         mHeaders.put("token", token);
         final String newsURL = "http://api.cyllide.com/api/client/stories/view";
