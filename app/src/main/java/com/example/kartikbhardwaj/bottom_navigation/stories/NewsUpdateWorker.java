@@ -73,7 +73,7 @@ public class NewsUpdateWorker extends Worker {
         try {
             try {
                 JSONObject obj = future.get(1L,TimeUnit.MINUTES);
-                Log.e("NewsUpdate", obj.toString(4));
+//                Log.e("NewsUpdate", obj.toString(4));
                 JSONArray jsonArray = obj.getJSONArray("data");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     Log.e(NEWS_WORKER_TAG,"Adding JSONOBJECT to realm");
