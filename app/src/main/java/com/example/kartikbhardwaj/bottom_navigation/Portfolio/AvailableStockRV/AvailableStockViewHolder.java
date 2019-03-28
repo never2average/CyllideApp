@@ -1,5 +1,11 @@
 package com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableStockRV;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.kartikbhardwaj.bottom_navigation.Charts.ChartActivity;
 import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioPositionsRV.CurrentPositions;
 import com.example.kartikbhardwaj.bottom_navigation.R;
@@ -9,6 +15,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.ArrayMap;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
+
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -34,9 +43,8 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
     String positiontype;
     Dialog popup;
     Button placeOrder;
-
-
-
+    private RequestQueue requestQueue;
+    Map<String,String> stringMap = new ArrayMap<>();
 
 
     public AvailableStockViewHolder(@NonNull final View itemView) {
@@ -134,7 +142,7 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void populate(AvailableStockModel stocksModel){
+    public void populate(AvailableStockModel stocksModel, Context context){
         stockName.setText(stocksModel.getIndexName());
         if(stocksModel.getIndexChanges()>=0){
             priceAtPlace= stocksModel.getIndexValue();
@@ -145,7 +153,32 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
             priceAtPlace= stocksModel.getIndexValue();
             stockValNet.setTextColor(Color.parseColor("#ff0000"));
             stockValNet.setText(stocksModel.getIndexValue()+"("+String.valueOf(stocksModel.getIndexChanges())+"%)"+"▼");
-
         }
+        getSingleValue(stocksModel.getIndexName(),context);
+    }
+
+    void getSingleValue(String ticker, Context context){
+        requestQueue = Volley.newRequestQueue(context);
+        String url = "http://data.cyllide.com/data/stock/close";
+        stringMap.put("value","1D");
+        stringMap.put("ticker",ticker);
+        stringMap.put("singleVal","True");
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                stockValNet.setText(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders(){
+                return stringMap;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 }

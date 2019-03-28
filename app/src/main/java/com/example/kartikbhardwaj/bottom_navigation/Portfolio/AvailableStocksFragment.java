@@ -73,47 +73,19 @@ public class AvailableStocksFragment extends Fragment {
         DecimalFormat formatter = new DecimalFormat("#,###.00");
         BalanceTXTV.setText("₹ " + String.valueOf(formatter.format(BalanceClass.balance)));
         searchView=view.findViewById(R.id.searchbarstocks);
-        //searchView.setIconifiedByDefault(false);
         searchView.clearFocus();
         searchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, final String newQuery) {
                 if(newQuery.equals("")==false) {
                     List<AvailableStockModel> data2 = dummyData2(newQuery);
-                    RV.setAdapter(new AvailableStockAdapter(data2));
-//                    return true;
+                    RV.setAdapter(new AvailableStockAdapter(data2,getContext()));
                 }
                 else{
                     RV.setAdapter(new AvailableIndexAdapter(data1));
-//                    return true;
                 }
-
-                //get suggestions based on newQuery
-
-                //pass them on to the search view
             }
         });
-//        searchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                List<AvailableStockModel> data2=dummyData2(query);
-//                RV.setAdapter(new AvailableStockAdapter(data2));
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                if(newText.equals("")==false) {
-//                    List<AvailableStockModel> data2 = dummyData2(newText);
-//                    RV.setAdapter(new AvailableStockAdapter(data2));
-//                    return true;
-//                }
-//                else{
-//                    RV.setAdapter(new AvailableIndexAdapter(data1));
-//                    return true;
-//                }
-//            }
-//        });
         return view;
 
     }

@@ -1,5 +1,6 @@
 package com.example.kartikbhardwaj.bottom_navigation.Portfolio.AvailableStockRV;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 public class AvailableStockAdapter extends RecyclerView.Adapter<AvailableStockViewHolder> {
     int selectedCardPosition = -1;
 
-    public AvailableStockAdapter(List<AvailableStockModel> data) {
-        this.data = data;
-    }
 
     List<AvailableStockModel> data;
+    Context context;
+
+    public AvailableStockAdapter(List<AvailableStockModel> data, Context context) {
+        this.data = data;
+        this.context = context;
+    }
+
 
     @NonNull
     @Override
@@ -53,7 +58,7 @@ public class AvailableStockAdapter extends RecyclerView.Adapter<AvailableStockVi
         else{
             holder.expandableLayout.setExpanded(true);
         }
-        holder.populate(stocksModel);
+        holder.populate(stocksModel, this.context);
     }
 
     @Override
