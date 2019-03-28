@@ -111,9 +111,21 @@
             app:cardElevation="5dp"
             app:cardCornerRadius="20dp"
             android:layout_marginBottom="10dp">
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+
+
+                <ProgressBar
+                    android:id="@+id/activity_quiz_option_1_progress_bar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:progress="60"
+                    android:progressDrawable="@drawable/answer_progress_bar"
+                    android:visibility="invisible" />
+
                 <TextView
                     android:textColor="@android:color/white"
                     android:id="@+id/activity_quiz_option_1_text_view"
@@ -121,7 +133,8 @@
                     android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
-            </LinearLayout>
+
+            </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/question_activity_option_2_card_view"
@@ -132,9 +145,19 @@
             app:cardElevation="5dp"
             app:cardCornerRadius="20dp"
             android:layout_marginBottom="10dp">
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <ProgressBar
+                    android:id="@+id/activity_quiz_option_2_progress_bar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:progress="60"
+                    android:progressDrawable="@drawable/answer_progress_bar"
+                    android:visibility="invisible" />
+
                 <TextView
                     android:textColor="@android:color/white"
                     android:gravity="center"
@@ -142,7 +165,7 @@
                     android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
-            </LinearLayout>
+            </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/question_activity_option_3_card_view"
@@ -153,9 +176,19 @@
             app:cardElevation="5dp"
             app:cardCornerRadius="20dp"
             android:layout_marginBottom="10dp">
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <ProgressBar
+                    android:id="@+id/activity_quiz_option_3_progress_bar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:progress="60"
+                    android:progressDrawable="@drawable/answer_progress_bar"
+                    android:visibility="invisible" />
+
                 <TextView
                     android:textColor="@android:color/white"
                     android:gravity="center"
@@ -163,7 +196,7 @@
                     android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
-            </LinearLayout>
+            </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/question_activity_option_4_card_view"
@@ -174,9 +207,19 @@
             app:cardElevation="5dp"
             app:cardCornerRadius="20dp"
             android:layout_marginBottom="10dp">
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <ProgressBar
+                    android:id="@+id/activity_quiz_option_4_progress_bar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:progress="100"
+                    android:progressDrawable="@drawable/answer_progress_bar"
+                    android:visibility="visible" />
+
                 <TextView
                     android:textColor="@android:color/white"
                     android:gravity="center"
@@ -184,7 +227,7 @@
                     android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
-            </LinearLayout>
+            </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 

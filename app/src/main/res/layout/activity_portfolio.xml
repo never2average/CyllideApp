@@ -104,18 +104,10 @@
 
 
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="4dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
                     android:orientation="vertical"
                     android:paddingVertical="30dp"
                     android:paddingHorizontal="15dp">
@@ -129,17 +121,17 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
-                            android:gravity="center_vertical|right"
+                            android:gravity="center_vertical|left"
                             android:text="Previous Close"
                             android:paddingEnd="2dp"
-                            android:textSize="19sp"/>
+                            android:textSize="15sp"/>
                         <TextView
                             android:id="@+id/previous_close_value"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center_vertical|start"
-                            android:textSize="20sp"/>
+                            android:textSize="15sp"/>
 
                     </LinearLayout>
                     <LinearLayout
@@ -151,17 +143,17 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
-                            android:gravity="center_vertical|right"
+                            android:gravity="center_vertical|left"
                             android:paddingEnd="2dp"
                             android:text="Open"
-                            android:textSize="19sp"/>
+                            android:textSize="15sp"/>
                         <TextView
                             android:id="@+id/open_value"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center_vertical|start"
-                            android:textSize="20sp"/>
+                            android:textSize="15sp"/>
 
 
                     </LinearLayout>
@@ -173,17 +165,17 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
-                            android:gravity="center_vertical|right"
+                            android:gravity="center_vertical|left"
                             android:paddingEnd="2dp"
                             android:text="Day's Range"
-                            android:textSize="19sp"/>
+                            android:textSize="15sp"/>
                         <TextView
                             android:id="@+id/days_range_value"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center_vertical|start"
-                            android:textSize="20sp"/>
+                            android:textSize="15sp"/>
 
 
                     </LinearLayout>
@@ -194,22 +186,22 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical|right"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical|left"
                             android:paddingEnd="2dp"
                             android:text="52-week Range"
-                            android:textSize="19sp"/>
+                            android:textSize="15sp"/>
                         <TextView
                             android:id="@+id/week_range_value"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center_vertical|start"
-                            android:textSize="20sp"/>
+                            android:textSize="15sp"/>
 
                     </LinearLayout>
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
 
 
