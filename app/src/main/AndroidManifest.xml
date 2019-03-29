@@ -70,9 +70,6 @@
             android:name=".quiz.QuizActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".quiz.StartingScreenActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Portfolio.PortfolioActivity"
             android:screenOrientation="portrait" />
         <activity

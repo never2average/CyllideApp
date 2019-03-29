@@ -10,7 +10,9 @@ import com.android.volley.toolbox.Volley;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -30,6 +32,7 @@ import java.util.Map;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -72,12 +75,14 @@ public class QuizActivity extends AppCompatActivity {
         option4PB = findViewById(R.id.activity_quiz_option_4_progress_bar);
 
 
+
+
         option1CV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectedOption = optionA.getText().toString();
-                option1CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
-                optionA.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+                option1CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+                optionA.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
                 option2CV.setClickable(false);
                 option3CV.setClickable(false);
                 option4CV.setClickable(false);
@@ -87,8 +92,8 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectedOption = optionB.getText().toString();
-                option2CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
-                optionB.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+                option2CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+                optionB.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
                 option1CV.setClickable(false);
                 option3CV.setClickable(false);
                 option4CV.setClickable(false);
@@ -98,8 +103,8 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectedOption = optionC.getText().toString();
-                option3CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
-                optionC.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+                option3CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+                optionC.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
                 option2CV.setClickable(false);
                 option1CV.setClickable(false);
                 option4CV.setClickable(false);
@@ -109,8 +114,8 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectedOption = optionD.getText().toString();
-                option4CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
-                optionD.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+                option4CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+                optionD.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
                 option1CV.setClickable(false);
                 option2CV.setClickable(false);
                 option3CV.setClickable(false);
@@ -235,6 +240,8 @@ public class QuizActivity extends AppCompatActivity {
         Log.d("changequestion","inside change question");
         questionID +=1;
 
+
+
         option1CV.setClickable(true);
         option2CV.setClickable(true);
         option3CV.setClickable(true);
@@ -245,15 +252,22 @@ public class QuizActivity extends AppCompatActivity {
         option3PB.setVisibility(View.INVISIBLE);
         option4PB.setVisibility(View.INVISIBLE);
 
-        option1CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
-        option2CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
-        option3CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
-        option4CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
 
-        optionA.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
-        optionB.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
-        optionC.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
-        optionD.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+        Log.d("Is it changing?",option2CV.getCardBackgroundColor().toString());
+
+
+        option1CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+        option2CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+        option3CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+        option4CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+        option2CV.refreshDrawableState();
+
+        Log.d("Is it changing?",option2CV.getCardBackgroundColor().toString());
+
+        optionA.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+        optionB.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+        optionC.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+        optionD.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
 
 
 
@@ -289,11 +303,24 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-    private void showAnswer(int questionID){
+    private void showAnswer(String response){
+        option1CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+        option2CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+        option3CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+        option4CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+
+
 
     }
 
     private void showRevival(){
+        SharedPreferences prefs = getSharedPreferences("COINS", MODE_PRIVATE);
+        String restoredText = prefs.getString("coinsRemaining", "0");
+        if (restoredText.equals("0")) {
+
+            DialogFragment dialogFragment = new DialogFragment()
+            return;
+        }
         Toast.makeText(QuizActivity.this,"Revival popup",Toast.LENGTH_SHORT).show();
 
     }
