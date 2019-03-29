@@ -46,49 +46,74 @@ public class QuizActivity extends AppCompatActivity {
     JSONArray jsonQuestionArray;
     Map<String,String> answerRequestHeader = new ArrayMap<>();
     ProgressBar option1PB, option2PB, option3PB, option4PB;
-    private int questionID = 0;
+    private int questionID = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_quiz);
+
         mainQuestion = findViewById(R.id.questionText);
+
         optionA = findViewById(R.id.activity_quiz_option_1_text_view);
         optionB = findViewById(R.id.activity_quiz_option_2_text_view);
         optionC = findViewById(R.id.activity_quiz_option_3_text_view);
         optionD = findViewById(R.id.activity_quiz_option_4_text_view);
+
         option1CV = findViewById(R.id.question_activity_option_1_card_view);
         option2CV = findViewById(R.id.question_activity_option_2_card_view);
         option3CV = findViewById(R.id.question_activity_option_3_card_view);
         option4CV = findViewById(R.id.question_activity_option_4_card_view);
-        option1PB = findViewById(R.id.option_1_progress_bar);
-        option2PB = findViewById(R.id.option_2_progress_bar);
-        option3PB = findViewById(R.id.option_3_progress_bar);
-        option4PB = findViewById(R.id.option_4_progress_bar);
+
+        option1PB = findViewById(R.id.activity_quiz_option_1_progress_bar);
+        option2PB = findViewById(R.id.activity_quiz_option_2_progress_bar);
+        option3PB = findViewById(R.id.activity_quiz_option_3_progress_bar);
+        option4PB = findViewById(R.id.activity_quiz_option_4_progress_bar);
 
 
         option1CV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectedOption = "option1";
+                selectedOption = optionA.getText().toString();
+                option1CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+                optionA.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+                option2CV.setClickable(false);
+                option3CV.setClickable(false);
+                option4CV.setClickable(false);
             }
         });
         option2CV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectedOption = "option2";
+                selectedOption = optionB.getText().toString();
+                option2CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+                optionB.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+                option1CV.setClickable(false);
+                option3CV.setClickable(false);
+                option4CV.setClickable(false);
             }
         });
         option3CV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectedOption = "option3";
+                selectedOption = optionC.getText().toString();
+                option3CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+                optionC.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+                option2CV.setClickable(false);
+                option1CV.setClickable(false);
+                option4CV.setClickable(false);
             }
         });
         option4CV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectedOption = "option4";
+                selectedOption = optionD.getText().toString();
+                option4CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+                optionD.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+                option1CV.setClickable(false);
+                option2CV.setClickable(false);
+                option3CV.setClickable(false);
             }
         });
 
@@ -96,8 +121,7 @@ public class QuizActivity extends AppCompatActivity {
 
 
 
-       // barTimer = findViewById(R.id.barTimer);
-        circularProgressBar = (CircularProgressBar)findViewById(R.id.question_time_remaining);
+        circularProgressBar = findViewById(R.id.question_time_remaining);
         textTimer = findViewById(R.id.textTimer);
         Intent intent = getIntent();
         String allQuestions = intent.getStringExtra("questions");
@@ -108,7 +132,7 @@ public class QuizActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        changeQuestion(questionID);
+        changeQuestion();
 
 
 
@@ -133,18 +157,11 @@ public class QuizActivity extends AppCompatActivity {
                 if(textTimer.getText().equals("00:00")){
                     showAnswer(questionID);
                     textTimer.setText("STOP");
-                    if(checkAnswer(questionID)){
-                        if(questionID == 9){
-                            finishQuiz(questionID);
-                        }
-                        else{
-                            questionID += 1;
-                            changeQuestion(questionID);
-                        }
-
+                    if(questionID == 9){
+                        finishQuiz(questionID);
                     }
                     else{
-                        finishQuiz(questionID);
+                        checkAnswer(questionID);
                     }
 
 
@@ -160,23 +177,86 @@ public class QuizActivity extends AppCompatActivity {
 
     }
 
-    private boolean checkAnswer(int questionID){
+    private boolean checkAnswer(final int questionID){
 //        if(selectedOption)
         String url = "http://api.cyllide.com/api/client/quiz/submit";
         try {
             JSONObject quizObject = jsonQuestionArray.getJSONObject(questionID);
-            String id = quizObject.getString();//WRITE STRING NAME
+            String id = quizObject.getJSONObject("_id").getString("$oid");
+            answerRequestHeader.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+            //TODO remove the token key
+            answerRequestHeader.put("optionValue",selectedOption);
+            answerRequestHeader.put ("questionID",id);
+            quizAnswersRequestQueue = Volley.newRequestQueue(QuizActivity.this);
+            StringRequest submissionRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.d("submissionResponse", response);
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+                        Log.d("changequestion","inside response question");
+                        if(jsonResponse.getString("data").equals("Correct")){
+                            Log.d("changequestion","calling change change question");
+                            changeQuestion();
+
+                        }
+                        else{
+                            showRevival();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+              @Override
+              public Map<String,String> getHeaders(){
+
+                  return answerRequestHeader;
+              }
+            };
+
+            quizAnswersRequestQueue.add(submissionRequest);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        String id;
-                //TODO write volley here
         return true;
     }
 
-    private void changeQuestion(int questionID){
+    private void changeQuestion(){
+        Log.d("changequestion","inside change question");
+        questionID +=1;
+
+        option1CV.setClickable(true);
+        option2CV.setClickable(true);
+        option3CV.setClickable(true);
+        option4CV.setClickable(true);
+
+        option1PB.setVisibility(View.INVISIBLE);
+        option2PB.setVisibility(View.INVISIBLE);
+        option3PB.setVisibility(View.INVISIBLE);
+        option4PB.setVisibility(View.INVISIBLE);
+
+        option1CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+        option2CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+        option3CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+        option4CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+
+        optionA.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+        optionB.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+        optionC.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+        optionD.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+
+
+
         JSONObject jsonObject = null;
         try {
             circularProgressBar.setProgress(0);
@@ -201,15 +281,20 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void finishQuiz(int questionID){
-        if(questionID == 9){
-            Toast.makeText(this,"You  lol",Toast.LENGTH_LONG);
+        if(questionID != 9){
+            Toast.makeText(this,"You  lol",Toast.LENGTH_LONG).show();
         }
         else{
-            Toast.makeText(this,"You Win lol",Toast.LENGTH_LONG);
+            Toast.makeText(this,"You Win lol",Toast.LENGTH_LONG).show();
         }
     }
 
     private void showAnswer(int questionID){
+
+    }
+
+    private void showRevival(){
+        Toast.makeText(QuizActivity.this,"Revival popup",Toast.LENGTH_SHORT).show();
 
     }
 
