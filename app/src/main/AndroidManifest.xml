@@ -39,9 +39,6 @@
             android:name=".quiz.QuizRulesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Contests.testPortfolioActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Contests.ContestLeaderboard"
             android:screenOrientation="portrait" />
         <activity
@@ -53,9 +50,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".quiz.QuizActivityTest"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".forum.ForumActivity"
             android:screenOrientation="portrait" />
