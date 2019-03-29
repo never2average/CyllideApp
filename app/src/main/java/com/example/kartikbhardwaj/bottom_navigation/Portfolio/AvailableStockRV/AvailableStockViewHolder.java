@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.util.ArrayMap;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -144,34 +148,37 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
 
     public void populate(AvailableStockModel stocksModel, Context context){
         stockName.setText(stocksModel.getIndexName());
-        if(stocksModel.getIndexChanges()>=0){
-            priceAtPlace= stocksModel.getIndexValue();
-            stockValNet.setTextColor(Color.parseColor("#00ff00"));
-            stockValNet.setText(stocksModel.getIndexValue()+"(+"+String.valueOf(stocksModel.getIndexChanges())+"%)"+"▲");
-        }
-        else{
-            priceAtPlace= stocksModel.getIndexValue();
-            stockValNet.setTextColor(Color.parseColor("#ff0000"));
-            stockValNet.setText(stocksModel.getIndexValue()+"("+String.valueOf(stocksModel.getIndexChanges())+"%)"+"▼");
-        }
         getSingleValue(stocksModel.getIndexName(),context);
     }
 
     void getSingleValue(String ticker, Context context){
         requestQueue = Volley.newRequestQueue(context);
         String url = "http://data.cyllide.com/data/stock/close";
-        stringMap.put("value","1D");
-        stringMap.put("ticker",ticker);
+        stringMap.put("value","1221D122");
+        stringMap.put("ticker","122"+ticker+"122");
         stringMap.put("singleVal","True");
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                stockValNet.setText(response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String string = jsonObject.getString("data");
+                    if(jsonObject.getDouble("movement")>=0){
+                        stockValNet.setTextColor(Color.parseColor("#00ff00"));
+                        stockValNet.setText(string+"(+"+String.valueOf(jsonObject.getDouble("movement")).substring(0,5)+"%)"+"▲");
+                    }
+                    else{
+                        stockValNet.setTextColor(Color.parseColor("#ff0000"));
+                        stockValNet.setText(string+"("+String.valueOf(jsonObject.getDouble("movement")).substring(0,5)+"%)"+"▼");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.d("resp", error.toString());
             }
         }){
             @Override
