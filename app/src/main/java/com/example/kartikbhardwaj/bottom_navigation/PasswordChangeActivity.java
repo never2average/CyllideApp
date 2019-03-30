@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -55,7 +54,7 @@ public class PasswordChangeActivity extends AppCompatActivity {
                 PasswordChangeStatus.passwordChangeStatusfunc(true);
 
 
-                Intent profileIntent = new Intent(PasswordChangeActivity.this,Profile_Activity.class);
+                Intent profileIntent = new Intent(PasswordChangeActivity.this, ProfileActivity.class);
                 startActivity(profileIntent);
                 finish();
 

@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,16 +17,9 @@ import android.widget.Toast;
 import com.example.kartikbhardwaj.bottom_navigation.faq_view.Faq_Activity;
 import com.example.kartikbhardwaj.bottom_navigation.howitworks.HowItWorksFragment;
 import com.example.kartikbhardwaj.bottom_navigation.notification.NotificationActivity;
-import com.example.kartikbhardwaj.bottom_navigation.HomeFragment;
-import com.example.kartikbhardwaj.bottom_navigation.StatsFragment;
 
 
-import com.example.kartikbhardwaj.bottom_navigation.stories.StoriesActivity;
-
-
-import com.example.kartikbhardwaj.bottom_navigation.Portfolio.MyPortfolio;
-import com.example.kartikbhardwaj.bottom_navigation.howitworks.HowItWorksFragment;
-import com.example.kartikbhardwaj.bottom_navigation.notification.NotificationActivity;
+import com.example.kartikbhardwaj.bottom_navigation.portfolio.MyPortfolio;
 import com.github.clans.fab.FloatingActionMenu;
 
 
@@ -69,6 +61,14 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+    private void setApplicationConstants(){
+        SharedPreferences sharedPreferences = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE);
+        AppConstants.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8";
+//TODO remove hardcoded string using SharedPrefrences
+
+    }
+
+
 
 
 
@@ -80,22 +80,9 @@ public class MainActivity extends AppCompatActivity{
         notificationButton=findViewById(R.id.notificationicon);
         profilepic=findViewById(R.id.profilePic);
 
-        SharedPreferences.Editor editor = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE).edit();
-//        editor.putString("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiQnVyam9zZSIsImV4cCI6MTU4MjU1NzQzNH0.M9K5ZcW515hWwBe3gNHdVB6AhQRpubfuQFn7xvrpLNg");
-        editor.putString("token","Not found!");
-        editor.apply();
+        setApplicationConstants();
 
 
-
-// floating action button
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-//                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
-//            }
-//        });
         loadfragment(new HomeFragment());
 
 
@@ -112,7 +99,6 @@ public class MainActivity extends AppCompatActivity{
         referrals.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-                // ((FloatingActionsMenu) findViewById(R.id.multiple_actions_down)).removeButton(removeAction);
                 swapFragment();
                 fabMenu.close(true);
 
@@ -123,7 +109,6 @@ public class MainActivity extends AppCompatActivity{
        faq .setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-                // ((FloatingActionsMenu) findViewById(R.id.multiple_actions_down)).removeButton(removeAction);
                 fabMenu.close(true);
                 Intent faqIntent=new Intent(MainActivity.this, Faq_Activity.class);
                 startActivity(faqIntent);
@@ -210,7 +195,7 @@ public class MainActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.pic:
-                Intent profileIntent=new Intent(this,Profile_Activity.class);
+                Intent profileIntent=new Intent(this, ProfileActivity.class);
                 startActivity(profileIntent);
         }
         return super.onOptionsItemSelected(item);

@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.kartikbhardwaj.bottom_navigation.AppConstants;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 
 import org.json.JSONException;
@@ -88,8 +89,7 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 		String requestURL = "http://api.cyllide.com/api/client/answer/upvote";
 		requestHeader.put("aid",id);
 		requestHeader.put("votes",Integer.toString(vote));
-		requestHeader.put("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
-		//TODO REMOVE HARDCODED KEY
+		requestHeader.put("token", AppConstants.token);
 		StringRequest stringRequest = new StringRequest(Request.Method.GET, requestURL, new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Portfolio.OrderHistoryFragment"
+    tools:context=".portfolio.OrderHistoryFragment"
     android:orientation="vertical"
     >
 
@@ -19,6 +19,7 @@
         android:gravity="center"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:id="@+id/order_history_rv"
         android:layout_height="0dp"

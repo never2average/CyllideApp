@@ -8,15 +8,12 @@
     </item>
 
     <item android:id="@android:id/progress"
-        android:top="3dp"
-        android:bottom="3dp"
-        android:left="3dp"
-        android:right="3dp">
+        >
 
         <scale android:scaleWidth="100%">
             <shape>
-                <corners android:radius="30dp"/>
-                <solid android:color="#ffe082"/>
+                <corners android:radius="20dp"/>
+                <solid android:color="@color/green"/>
             </shape>
         </scale>
     </item>

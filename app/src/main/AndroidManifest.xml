@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
+
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+
 
     <application
         android:name=".MainApplication"
@@ -18,27 +22,24 @@
         android:theme="@style/AppTheme.NoActionBar">
 
         <activity
-            android:name=".Contests.PortfolioRV.LeaderboardsActivity"
+            android:name=".contests.portfolioRV.LeaderboardsActivity"
             android:screenOrientation="portrait"
             />
 
 
-        <activity android:name=".Portfolio.PortfolioPositionsRV.PortfolioDetailActivity"></activity>
+        <activity android:name=".portfolio.PortfolioDetailActivity"></activity>
         <activity
-            android:name=".Contests.MonthlyActivity"
+            android:name=".contests.MonthlyActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".phone_authentication.OTPVerification"
+            android:name=".authentication.OTPVerification"
             android:screenOrientation="portrait" />
         <activity
             android:name=".quiz.QuizRulesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Contests.testPortfolioActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Contests.ContestLeaderboard"
+            android:name=".contests.ContestLeaderboard"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
@@ -49,9 +50,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".quiz.QuizActivityTest"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".forum.ForumActivity"
             android:screenOrientation="portrait" />
@@ -71,17 +70,14 @@
             android:name=".quiz.QuizActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".quiz.StartingScreenActivity"
+            android:name=".portfolio.PortfolioActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Portfolio.PortfolioActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Portfolio.MyPortfolio"
+            android:name=".portfolio.MyPortfolio"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Profile_Activity"
+            android:name=".ProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -100,9 +96,14 @@
             android:name=".notification.NotificationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Charts.ChartActivity"
+            android:name=".charts.ChartActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".phone_authentication.PhoneAuth" />
+        <activity android:name=".authentication.PhoneAuth" />
+
+        <receiver
+            android:name=".background.services.QuizAlarmManager">
+
+        </receiver>
 
         <receiver
             android:name=".MySMSBroadcastReceiver"
@@ -111,6 +112,20 @@
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
             </intent-filter>
         </receiver>
+
+        <receiver android:name=".background.services.AutoStart">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".background.services.GetLatestQuizIDService">
+        </service>
+
+
     </application>
+
+
 
 </manifest>
