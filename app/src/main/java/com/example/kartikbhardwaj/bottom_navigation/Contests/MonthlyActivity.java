@@ -168,7 +168,7 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
             @Override
             public void onResponse(String response) {
 
-                try {
+                try { Log.d("error1",response);
                     JSONObject responseObject = new JSONObject(response).getJSONArray("message").getJSONObject(0);
                     contestSignUpsTV.setText("No. of Participants : "+responseObject.getString("signUps"));
                     if(responseObject.getBoolean("isAlreadyIn") == true) {
