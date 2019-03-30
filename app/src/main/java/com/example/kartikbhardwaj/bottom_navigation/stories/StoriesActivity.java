@@ -6,14 +6,12 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
-import com.example.kartikbhardwaj.bottom_navigation.Profile_Activity;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class StoriesActivity extends AppCompatActivity {

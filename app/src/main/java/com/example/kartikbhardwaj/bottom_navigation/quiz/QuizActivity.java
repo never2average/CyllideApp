@@ -7,7 +7,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.kartikbhardwaj.bottom_navigation.AppConstants;
 import com.example.kartikbhardwaj.bottom_navigation.R;
+import com.google.android.material.card.MaterialCardView;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import android.app.Dialog;
@@ -44,7 +46,7 @@ public class QuizActivity extends AppCompatActivity {
     CircularProgressBar circularProgressBar;
     String selectedOption = "noOption";
     TextView mainQuestion, optionA, optionB, optionC, optionD, textTimer;
-    CardView option1CV,option2CV,option3CV,option4CV;
+    MaterialCardView option1CV,option2CV,option3CV,option4CV;
     RequestQueue quizAnswersRequestQueue;
     JSONArray jsonQuestionArray;
     Map<String,String> answerRequestHeader = new ArrayMap<>();
@@ -86,6 +88,7 @@ public class QuizActivity extends AppCompatActivity {
                 option2CV.setClickable(false);
                 option3CV.setClickable(false);
                 option4CV.setClickable(false);
+                option1CV.setPressed(true);
             }
         });
         option2CV.setOnClickListener(new View.OnClickListener() {
@@ -93,10 +96,12 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectedOption = optionB.getText().toString();
                 option2CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
+                option2CV.setBackgroundDrawable(ContextCompat.getDrawable(QuizActivity.this,R.drawable.bulb));
                 optionB.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
                 option1CV.setClickable(false);
                 option3CV.setClickable(false);
                 option4CV.setClickable(false);
+                option2CV.setPressed(true);
             }
         });
         option3CV.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +113,7 @@ public class QuizActivity extends AppCompatActivity {
                 option2CV.setClickable(false);
                 option1CV.setClickable(false);
                 option4CV.setClickable(false);
+                option3CV.setPressed(true);
             }
         });
         option4CV.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +125,7 @@ public class QuizActivity extends AppCompatActivity {
                 option1CV.setClickable(false);
                 option2CV.setClickable(false);
                 option3CV.setClickable(false);
+                option4CV.setPressed(true);
             }
         });
 
@@ -160,7 +167,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 if(textTimer.getText().equals("00:00")){
-                    showAnswer(questionID);
+                    showAnswer("");
                     textTimer.setText("STOP");
                     if(questionID == 9){
                         finishQuiz(questionID);
@@ -188,8 +195,7 @@ public class QuizActivity extends AppCompatActivity {
         try {
             JSONObject quizObject = jsonQuestionArray.getJSONObject(questionID);
             String id = quizObject.getJSONObject("_id").getString("$oid");
-            answerRequestHeader.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
-            //TODO remove the token key
+            answerRequestHeader.put("token", AppConstants.token);
             answerRequestHeader.put("optionValue",selectedOption);
             answerRequestHeader.put ("questionID",id);
             quizAnswersRequestQueue = Volley.newRequestQueue(QuizActivity.this);
@@ -258,9 +264,14 @@ public class QuizActivity extends AppCompatActivity {
 
         option1CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
         option2CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+        option2CV.setBackgroundDrawable(ContextCompat.getDrawable(QuizActivity.this,R.drawable.hourglass));
         option3CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
         option4CV.setCardBackgroundColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
-        option2CV.refreshDrawableState();
+
+        option1CV.setPressed(false);
+        option2CV.setPressed(false);
+        option3CV.setPressed(false);
+        option4CV.setPressed(false);
 
         Log.d("Is it changing?",option2CV.getCardBackgroundColor().toString());
 
@@ -318,7 +329,7 @@ public class QuizActivity extends AppCompatActivity {
         String restoredText = prefs.getString("coinsRemaining", "0");
         if (restoredText.equals("0")) {
 
-            DialogFragment dialogFragment = new DialogFragment()
+            DialogFragment dialogFragment = new DialogFragment();
             return;
         }
         Toast.makeText(QuizActivity.this,"Revival popup",Toast.LENGTH_SHORT).show();

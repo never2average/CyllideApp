@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Contests.ContestLeaderboard">
+    tools:context=".contests.ContestLeaderboard">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_weight="0.1"

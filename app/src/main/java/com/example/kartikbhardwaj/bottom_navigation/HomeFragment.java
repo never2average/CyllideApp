@@ -10,7 +10,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -18,22 +17,17 @@ import android.view.View;
 
 
 //import com.example.kartikbhardwaj.bottom_navigation.stories.NewsData;
-import com.example.kartikbhardwaj.bottom_navigation.Contests.MonthlyActivity;
-import com.example.kartikbhardwaj.bottom_navigation.Portfolio.MyPortfolio;
-import com.example.kartikbhardwaj.bottom_navigation.Portfolio.PortfolioActivity;
+import com.example.kartikbhardwaj.bottom_navigation.contests.MonthlyActivity;
+import com.example.kartikbhardwaj.bottom_navigation.portfolio.MyPortfolio;
 import com.example.kartikbhardwaj.bottom_navigation.forum.ForumActivity;
-import com.example.kartikbhardwaj.bottom_navigation.phone_authentication.PhoneAuth;
 import com.example.kartikbhardwaj.bottom_navigation.quiz.QuizRulesActivity;
 import com.example.kartikbhardwaj.bottom_navigation.stories.StoriesActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.material.card.MaterialCardView;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.Calendar;
-
-import static java.security.AccessController.getContext;
 
 public class HomeFragment extends Fragment {
     Calendar startTime =Calendar.getInstance();

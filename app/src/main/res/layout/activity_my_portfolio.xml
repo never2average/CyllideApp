@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Portfolio.MyPortfolio">
+    tools:context=".portfolio.MyPortfolio">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -45,12 +45,14 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:scrollbars="none"
                 android:layout_weight="1.5"
                 android:layout_marginVertical="3dp">
             <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical|left"
+                android:id="@+id/my_portfolio_create_capex_toggle_group"
                 >
 
                     <com.nex3z.togglebuttongroup.button.LabelToggle
@@ -59,10 +61,12 @@
                         android:layout_marginEnd="5dp"
                         android:text="Small Cap"
                         android:textSize="13sp"
+                        android:id="@+id/my_portfolio_capex_small_cap_toggle_btn"
                         app:tbgMarkerColor="#31D5FF"
                          />
 
                     <com.nex3z.togglebuttongroup.button.LabelToggle
+                        android:id="@+id/my_portfolio_capex_mid_cap_toggle_btn"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -72,6 +76,7 @@
                         app:tbgMarkerColor="#31D5FF" />
 
                     <com.nex3z.togglebuttongroup.button.LabelToggle
+                        android:id="@+id/my_portfolio_capex_large_cap_toggle_btn"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -81,6 +86,7 @@
                         app:tbgMarkerColor="#31D5FF" />
 
                     <com.nex3z.togglebuttongroup.button.LabelToggle
+                        android:id="@+id/my_portfolio_capex_nifty_cap_toggle_btn"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="5dp"
@@ -94,7 +100,7 @@
             </HorizontalScrollView>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/create_button"
+                android:id="@+id/my_portfolio_create_new_btn"
                 app:cornerRadius="10dp"
                 android:layout_marginBottom="3dp"
                 android:layout_width="match_parent"
@@ -107,6 +113,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:overScrollMode="never"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/my_portfolio"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Portfolio.PortfolioActivity"
+    tools:context=".portfolio.PortfolioActivity"
     android:id="@+id/portfolio_layout"
     android:orientation="vertical"
     >

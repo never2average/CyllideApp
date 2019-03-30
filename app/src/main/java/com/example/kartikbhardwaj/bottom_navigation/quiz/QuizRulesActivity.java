@@ -8,43 +8,27 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.kartikbhardwaj.bottom_navigation.AdvancedEncryptionStandard;
+import com.example.kartikbhardwaj.bottom_navigation.AppConstants;
 import com.example.kartikbhardwaj.bottom_navigation.R;
-import com.example.kartikbhardwaj.bottom_navigation.backgroundservices.GetLatestQuizIDService;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
+import com.example.kartikbhardwaj.bottom_navigation.background.services.GetLatestQuizIDService;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
-
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
 
 public class QuizRulesActivity extends AppCompatActivity {
 
@@ -72,7 +56,7 @@ public class QuizRulesActivity extends AppCompatActivity {
 
 
         final Map<String, String> mHeaders = new ArrayMap<String, String>();
-        mHeaders.put("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        mHeaders.put("token", AppConstants.token);
         try {
             RequestQueue requestQueue;
             requestQueue = Volley.newRequestQueue(this);

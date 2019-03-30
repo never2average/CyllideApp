@@ -140,7 +140,7 @@ public class ProfileFragment extends Fragment {
 
     @Override
    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
+
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK){

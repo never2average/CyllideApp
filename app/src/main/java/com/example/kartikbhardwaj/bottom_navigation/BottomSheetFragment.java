@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 
 import com.example.kartikbhardwaj.bottom_navigation.howitworks.HowItWorksFragment;
 import com.example.kartikbhardwaj.bottom_navigation.notification.NotificationActivity;
-import com.example.kartikbhardwaj.bottom_navigation.stories.StoriesActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import androidx.annotation.NonNull;
@@ -54,7 +53,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(), Profile_Activity.class);
+                Intent intent=new Intent(getContext(), ProfileActivity.class);
                 getContext().startActivity(intent);
             }
         });

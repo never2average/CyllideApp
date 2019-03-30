@@ -22,24 +22,24 @@
         android:theme="@style/AppTheme.NoActionBar">
 
         <activity
-            android:name=".Contests.PortfolioRV.LeaderboardsActivity"
+            android:name=".contests.portfolioRV.LeaderboardsActivity"
             android:screenOrientation="portrait"
             />
 
 
-        <activity android:name=".Portfolio.PortfolioPositionsRV.PortfolioDetailActivity"></activity>
+        <activity android:name=".portfolio.PortfolioDetailActivity"></activity>
         <activity
-            android:name=".Contests.MonthlyActivity"
+            android:name=".contests.MonthlyActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".phone_authentication.OTPVerification"
+            android:name=".authentication.OTPVerification"
             android:screenOrientation="portrait" />
         <activity
             android:name=".quiz.QuizRulesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Contests.ContestLeaderboard"
+            android:name=".contests.ContestLeaderboard"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
@@ -70,14 +70,14 @@
             android:name=".quiz.QuizActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Portfolio.PortfolioActivity"
+            android:name=".portfolio.PortfolioActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Portfolio.MyPortfolio"
+            android:name=".portfolio.MyPortfolio"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Profile_Activity"
+            android:name=".ProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -96,12 +96,12 @@
             android:name=".notification.NotificationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Charts.ChartActivity"
+            android:name=".charts.ChartActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".phone_authentication.PhoneAuth" />
+        <activity android:name=".authentication.PhoneAuth" />
 
         <receiver
-            android:name=".backgroundservices.QuizAlarmManager">
+            android:name=".background.services.QuizAlarmManager">
 
         </receiver>
 
@@ -113,14 +113,14 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".backgroundservices.AutoStart">
+        <receiver android:name=".background.services.AutoStart">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
             </intent-filter>
         </receiver>
 
         <service
-            android:name=".backgroundservices.GetLatestQuizIDService">
+            android:name=".background.services.GetLatestQuizIDService">
         </service>
 
 
