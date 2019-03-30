@@ -153,13 +153,8 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
     void getSingleValue(String ticker, Context context){
         requestQueue = Volley.newRequestQueue(context);
         String url = "http://data.cyllide.com/data/stock/close";
-<<<<<<< HEAD:app/src/main/java/com/example/kartikbhardwaj/bottom_navigation/Portfolio/AvailableStockRV/AvailableStockViewHolder.java
-        stringMap.put("value","1221D122");
-        stringMap.put("ticker","122"+ticker+"122");
-=======
         stringMap.put("value","1231D123");
         stringMap.put("ticker","123"+ticker+"123");
->>>>>>> 8e3b7901958553cdc7a0c125607fd3d1b37ee02d:app/src/main/java/com/example/kartikbhardwaj/bottom_navigation/portfolio/AvailableStockRV/AvailableStockViewHolder.java
         stringMap.put("singleVal","True");
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override

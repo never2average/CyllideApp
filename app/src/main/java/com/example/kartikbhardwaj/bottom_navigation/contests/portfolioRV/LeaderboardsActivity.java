@@ -1,11 +1,5 @@
 package com.example.kartikbhardwaj.bottom_navigation.contests.portfolioRV;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.ArrayMap;
@@ -25,17 +19,19 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.kartikbhardwaj.bottom_navigation.AppConstants;
-import com.example.kartikbhardwaj.bottom_navigation.LeaderboardRV.LeaderboardAdapter;
-import com.example.kartikbhardwaj.bottom_navigation.LeaderboardRV.LeaderboardModel;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class LeaderboardsActivity extends AppCompatActivity {
     RecyclerView leaderboardView;
@@ -50,7 +46,9 @@ public class LeaderboardsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_leaderboards);
         leaderboardView = findViewById(R.id.leaderboard_recycler_view);
         RecyclerView.LayoutManager leaderboardLayoutManager = new LinearLayoutManager(this);
+
         leaderboardView.setLayoutManager(leaderboardLayoutManager);
+
         ImageView backButton = findViewById(R.id.leaderboard_back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +57,7 @@ public class LeaderboardsActivity extends AppCompatActivity {
             }
         });
 
-getLeaderBoard();
+        getLeaderBoard();
     }
 
 
