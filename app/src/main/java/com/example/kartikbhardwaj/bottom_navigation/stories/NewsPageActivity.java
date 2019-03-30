@@ -1,6 +1,7 @@
 package com.example.kartikbhardwaj.bottom_navigation.stories;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.collection.ArrayMap;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,10 +27,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NewsPageActivity extends AppCompatActivity {
-    private String name,description,imageURL,date,source, url, author;
+    private String name,description,imageURL,date,source, url, author, mongoID;
     private TextView nameTv, descTv, sourceTv, dateTv, authorTv, newsContentTv,loginText;
     private SimpleDraweeView image;
     private ImageView back;
+    long startTime=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class NewsPageActivity extends AppCompatActivity {
         source=getIntent().getStringExtra("newssource");
         url=getIntent().getStringExtra("newsurl");
         author=getIntent().getStringExtra("newsauthor");
+        mongoID = getIntent().getStringExtra("mongoid");
         nameTv.setText(name);
         sourceTv.setText(source);
         dateTv.setText(date);
@@ -122,6 +126,48 @@ public class NewsPageActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Log start time
+        startTime = System.currentTimeMillis();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //Get time spent in foreground
+        long readTime = System.currentTimeMillis() - startTime;
+        //Send request to server
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        final Map<String, String> mHeaders = new ArrayMap<String, String>();
+        //TODO: Remove hardcoded token
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8";
+        mHeaders.put("token", token);
+        mHeaders.put("timeRead",String.valueOf(readTime));
+        mHeaders.put("contentID", mongoID);
+        final String url = "http://api.cyllide.com/api/client/stories/update";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("NewsPageActivity", "Got response: "+ response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("NewsPageActivity", "Time logging error");
+                error.printStackTrace();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() {
+                return mHeaders;
+            }
+        };
+        queue.add(request);
+    }
+
 }
 
         //Volley Code Goes Here

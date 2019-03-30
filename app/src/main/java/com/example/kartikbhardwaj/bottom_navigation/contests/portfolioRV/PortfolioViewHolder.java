@@ -57,7 +57,6 @@ public class PortfolioViewHolder extends RecyclerView.ViewHolder {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 Log.d("RegisterPortfolio",response);
                 Intent intent = new Intent(context,LeaderboardsActivity.class);
                 context.startActivity(intent);
