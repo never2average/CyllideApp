@@ -93,6 +93,8 @@ public class PortfolioPositionsFragment extends Fragment {
         List<OrdersModel> ordersModels = pendingOrdersData();
         OrdersAdapter ordersAdapter = new OrdersAdapter(ordersModels);
         pendingOrdersRV.setAdapter(ordersAdapter);
+        getPendingOrders(getContext());
+        getHoldingPositions(getContext());
 
         return rootView;
     }
@@ -110,6 +112,7 @@ public class PortfolioPositionsFragment extends Fragment {
                 try {
                     Log.d("resp",response);
                     JSONArray responseData = new JSONObject(response).getJSONArray("message");
+                    //TODO SET STUFF
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -151,6 +154,7 @@ public class PortfolioPositionsFragment extends Fragment {
                 try {
                     Log.d("resp",response);
                     JSONArray responseData = new JSONObject(response).getJSONArray("message");
+                    //TODO SET STUFF
 
                 } catch (JSONException e) {
                     e.printStackTrace();

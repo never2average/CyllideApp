@@ -62,6 +62,7 @@ public class OrderHistoryFragment extends Fragment {
                 try {
                     Log.d("resp",response);
                     JSONArray responseData = new JSONObject(response).getJSONArray("message");
+                    //TODO SET STUFF
 
                 } catch (JSONException e) {
                     e.printStackTrace();
