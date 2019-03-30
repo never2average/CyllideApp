@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:background="@color/colorPrimaryDark"
     android:fitsSystemWindows="true"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity"
 
     >
 
@@ -19,21 +19,19 @@
         android:elevation="4dp"
         android:paddingLeft="0dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        >
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profilePic"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:id="@+id/profilePic"
-                android:src="@drawable/user_icon"
                 android:clickable="true"
-                />
+                android:src="@drawable/ic_account_circle_white_24dp" />
 
             <ImageView
                 android:id="@+id/logo"
@@ -48,9 +46,9 @@
             <TextView
                 android:id="@+id/heading"
                 android:layout_width="0dp"
-                android:fontFamily="@font/open_sans"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
+                android:fontFamily="@font/open_sans"
                 android:gravity="center|left"
                 android:paddingLeft="0dp"
                 android:paddingEnd="8dp"
@@ -58,14 +56,15 @@
                 android:textColor="#fff"
 
                 android:textSize="24sp" />
+
             <ImageView
+                android:id="@+id/notificationicon"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:id="@+id/notificationicon"
-                android:src="@drawable/notification_icon"
                 android:layout_marginRight="8dp"
-                android:clickable="true"/>
+                android:clickable="true"
+                android:src="@drawable/notification_icon" />
 
 
         </LinearLayout>
@@ -73,9 +72,9 @@
     </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-            android:id="@+id/fragment_container"
 
         >
 
@@ -85,61 +84,45 @@
         android:id="@+id/fabMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="11dp"
-        android:src="@drawable/ic_plus"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|right"
-        android:layout_marginRight="0dp"
         android:layout_marginLeft="0dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="0dp"
+        android:src="@drawable/ic_plus"
+        fab:menu_animationDelayPerItem="50"
+        fab:menu_backgroundColor="#ccffffff"
+        fab:menu_buttonSpacing="0dp"
+        fab:menu_colorNormal="@color/white"
+        fab:menu_colorPressed="@color/white"
+        fab:menu_colorRipple="#99FFFFFF"
+        fab:menu_fab_label=""
         fab:menu_fab_size="normal"
-        fab:menu_showShadow="true"
+        fab:menu_icon="@drawable/ic_plus"
+        fab:menu_labels_colorNormal="@color/colorPrimary"
+        fab:menu_labels_colorPressed="@color/primary_light_max"
+        fab:menu_labels_colorRipple="@color/primary_light_max"
+        fab:menu_labels_cornerRadius="3dp"
+        fab:menu_labels_ellipsize="none"
+        fab:menu_labels_margin="0dp"
+        fab:menu_labels_maxLines="-1"
+        fab:menu_labels_padding="8dp"
+        fab:menu_labels_paddingBottom="4dp"
+        fab:menu_labels_paddingLeft="8dp"
+        fab:menu_labels_paddingRight="8dp"
+        fab:menu_labels_paddingTop="4dp"
+        fab:menu_labels_position="left"
+        fab:menu_labels_showShadow="true"
+        fab:menu_labels_singleLine="false"
+        fab:menu_labels_textColor="#FFFFFF"
+        fab:menu_labels_textSize="14sp"
+        fab:menu_openDirection="up"
         fab:menu_shadowColor="#66000000"
         fab:menu_shadowRadius="4dp"
         fab:menu_shadowXOffset="1dp"
         fab:menu_shadowYOffset="3dp"
-        fab:menu_colorNormal="@color/white"
-        fab:menu_colorPressed="@color/white"
-        fab:menu_colorRipple="#99FFFFFF"
-        fab:menu_animationDelayPerItem="50"
-        fab:menu_icon="@drawable/ic_plus"
-        fab:menu_buttonSpacing="0dp"
-        fab:menu_labels_margin="0dp"
-        fab:menu_labels_paddingTop="4dp"
-        fab:menu_labels_paddingRight="8dp"
-        fab:menu_labels_paddingBottom="4dp"
-        fab:menu_labels_paddingLeft="8dp"
-        fab:menu_labels_padding="8dp"
-        fab:menu_labels_textColor="#FFFFFF"
-        fab:menu_labels_textSize="14sp"
-        fab:menu_labels_cornerRadius="3dp"
-        fab:menu_labels_colorNormal="@color/colorPrimary"
-        fab:menu_labels_colorPressed="@color/primary_light_max"
-        fab:menu_labels_colorRipple="@color/primary_light_max"
-        fab:menu_labels_showShadow="true"
-        fab:menu_labels_singleLine="false"
-        fab:menu_labels_ellipsize="none"
-        fab:menu_labels_maxLines="-1"
-        fab:menu_labels_position="left"
-        fab:menu_openDirection="up"
-        fab:menu_backgroundColor="#ccffffff"
-        fab:menu_fab_label=""
-        >
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        fab:menu_showShadow="true">
 
 
         <com.github.clans.fab.FloatingActionButton
@@ -149,30 +132,13 @@
             android:src="@drawable/faq_icon"
             android:tint="@android:color/white"
 
-            fab:fab_size="mini"
-            fab:fab_label="FAQ"
             fab:fab_colorNormal="@android:color/white"
             fab:fab_colorPressed="@color/primary_light_max"
             fab:fab_colorRipple="@color/primary_light_max"
+            fab:fab_label="FAQ"
+            fab:fab_size="mini"
 
             />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         <com.github.clans.fab.FloatingActionButton
@@ -182,29 +148,16 @@
             android:src="@drawable/referral_icon"
             android:tint="@android:color/white"
 
-            fab:fab_size="mini"
-            fab:fab_label="Referrals"
             fab:fab_colorNormal="@android:color/transparent"
             fab:fab_colorPressed="@color/primary_light_max"
             fab:fab_colorRipple="@color/primary_light_max"
+            fab:fab_label="Referrals"
+            fab:fab_size="mini"
 
             />
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     </com.github.clans.fab.FloatingActionMenu>
-
 
 
 </FrameLayout>
