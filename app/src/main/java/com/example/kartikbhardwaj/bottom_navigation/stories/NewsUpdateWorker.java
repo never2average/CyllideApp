@@ -12,6 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonObject;
 
 
 import org.json.JSONArray;
@@ -48,8 +49,8 @@ public class NewsUpdateWorker extends Worker {
         initRealm();
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        String token = getApplicationContext().getSharedPreferences("AUTHENTICATION", 0)
-                .getString("token", "Not found!");
+        //TODO: Remove hard coded token
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8";
         final Map<String, String> mHeaders = new ArrayMap<String, String>();
         mHeaders.put("token", token);
         final String newsURL = "http://api.cyllide.com/api/client/stories/view";
@@ -71,7 +72,9 @@ public class NewsUpdateWorker extends Worker {
         requestQueue.add(request);
         try {
             try {
-                JSONArray jsonArray = future.get(1L,TimeUnit.MINUTES).getJSONArray("data");
+                JSONObject obj = future.get(1L,TimeUnit.MINUTES);
+//                Log.e("NewsUpdate", obj.toString(4));
+                JSONArray jsonArray = obj.getJSONArray("data");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     Log.e(NEWS_WORKER_TAG,"Adding JSONOBJECT to realm");
                     JSONObject article = jsonArray.getJSONObject(i);
@@ -80,7 +83,8 @@ public class NewsUpdateWorker extends Worker {
                             article.getString("contentPic"),
                             article.getString("contentType"),
                             article.getString("contentMarkdownLink"),
-                            article.getString("contentAuthor")
+                            article.getString("contentAuthor"),
+                            article.getJSONObject("_id").getString("$oid")
                     ));
                 }
                 deleteOldNews();
@@ -123,14 +127,6 @@ public class NewsUpdateWorker extends Worker {
         realmInstance.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                Number currentIdNum = realm.where(NewsModel.class).max("newsID");
-                int nextId;
-                if(currentIdNum == null) {
-                    nextId = 1;
-                } else {
-                    nextId = currentIdNum.intValue() + 1;
-                }
-                newsArticle.setNewsID(nextId);
                 realm.insertOrUpdate(newsArticle);
             }
         });
@@ -157,9 +153,6 @@ public class NewsUpdateWorker extends Worker {
             }
         });
 
-
-
     }
-
 
 }
