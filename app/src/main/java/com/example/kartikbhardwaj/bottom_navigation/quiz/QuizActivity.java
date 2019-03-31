@@ -248,7 +248,7 @@ public class QuizActivity extends AppCompatActivity {
                         Log.d("changequestion","inside response question");
                         showAnswer("");
                         if(jsonResponse.getString("data").equals("Correct")){
-                            quizActivityAnswerIndicator.setImageResource(R.drawable.ic_quiz_answer_correct);
+                            quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
                             Log.d("changequestion","calling change change question");
 
                             Handler handler = new Handler();
@@ -264,7 +264,7 @@ public class QuizActivity extends AppCompatActivity {
 
                         }
                         else{
-                            quizActivityAnswerIndicator.setImageResource(R.drawable.ic_quiz_answer_wrong);
+                            quizActivityAnswerIndicator.setImageResource(R.drawable.ic_cancel);
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 public void run() {
