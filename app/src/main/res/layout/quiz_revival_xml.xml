@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="292dp"
-    android:layout_height="306dp">
+    android:layout_width="350dp"
+    android:layout_height="500dp"
+    android:background="@color/transparent">
 
 
 
@@ -24,6 +25,7 @@
     android:layout_height="wrap_content"
     android:src="@drawable/qiuz_money_bag"/>
        <TextView
+           android:id="@+id/quiz_revival_coins_left"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:text="50 Coins Left"
@@ -49,6 +51,7 @@
               <!--/>-->
 
           <com.google.android.material.card.MaterialCardView
+              android:id="@+id/quiz_revivial_yes_card_view"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               app:cardBackgroundColor="@color/colorPrimary"
@@ -56,11 +59,11 @@
               android:layout_gravity="center_vertical"
               android:clickable="true"
               android:focusable="true"
-              android:foreground="?android:selectableItemBackground"
               >
 
 
               <TextView
+                  android:id="@+id/text_view_yes"
                   android:gravity="center"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
@@ -70,7 +73,8 @@
 
                   android:layout_weight="1"
 
-                  android:clickable="true"/>
+                  android:clickable="true"
+                  />
 
           </com.google.android.material.card.MaterialCardView>
           <View
@@ -85,6 +89,7 @@
               <!--android:layout_weight="1"/>-->
 
           <com.google.android.material.card.MaterialCardView
+              android:id="@+id/quiz_revival_no_card_view"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               app:cardBackgroundColor="@color/colorPrimary"
@@ -92,10 +97,10 @@
               android:layout_weight="1"
               android:clickable="true"
               android:focusable="true"
-              android:foreground="?android:selectableItemBackground"
               >
 
               <TextView
+                  android:id="@+id/text_view_no"
                   android:gravity="center"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"

@@ -158,7 +158,7 @@ public class QuizRulesActivity extends AppCompatActivity {
 
     }
 
-    private void fetchQuestions(String quizID){
+    private void fetchQuestions(final String quizID){
         RequestQueue requestQueue;
         requestQueue = Volley.newRequestQueue(this);
         String URL = "http://api.cyllide.com/api/client/quiz/get";
@@ -169,6 +169,7 @@ public class QuizRulesActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 Intent quizSwitcher = new Intent(QuizRulesActivity.this,QuizActivity.class);
                 quizSwitcher.putExtra("questions",response);
+                quizSwitcher.putExtra("quizID",quizID);
                 startActivity(quizSwitcher);
             }
         }, new Response.ErrorListener() {

@@ -42,6 +42,8 @@ import java.util.Map;
 public class PortfolioPositionsFragment extends Fragment {
 
     private RecyclerView positionsRV, pendingOrdersRV;
+    List positionsModel;
+    List ordersModel;
     RequestQueue pendingOrderQueue;
     RequestQueue holdingPositionsQueue;
     Map<String, String> pendingOrderRequestHeader = new ArrayMap<>();
@@ -93,13 +95,13 @@ public class PortfolioPositionsFragment extends Fragment {
         List<OrdersModel> ordersModels = pendingOrdersData();
         OrdersAdapter ordersAdapter = new OrdersAdapter(ordersModels);
         pendingOrdersRV.setAdapter(ordersAdapter);
-        getPendingOrders(getContext());
-        getHoldingPositions(getContext());
+        getPendingOrders(getContext(),pendingOrdersRV);
+        getHoldingPositions(getContext(),positionsRV);
 
         return rootView;
     }
 
-    private void getPendingOrders(Context context){
+    private void getPendingOrders(Context context, final RecyclerView pendingOrdersRV){
         String url = getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
         pendingOrderQueue = Volley.newRequestQueue(context);
         pendingOrderRequestHeader.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
@@ -111,8 +113,8 @@ public class PortfolioPositionsFragment extends Fragment {
             public void onResponse(String response) {
                 try {
                     Log.d("resp",response);
-                    JSONArray responseData = new JSONObject(response).getJSONArray("message");
-                    //TODO SET STUFF
+                    JSONArray responseData = new JSONObject(response).getJSONArray("data");
+                    populatePendingOrdersRV(responseData,pendingOrdersRV );
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -141,7 +143,7 @@ public class PortfolioPositionsFragment extends Fragment {
     }
 
 
-    private void getHoldingPositions(Context context){
+    private void getHoldingPositions(Context context, final RecyclerView recyclerView){
         String url = getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
         holdingPositionsQueue = Volley.newRequestQueue(context);
         holdingPositionRequestHeader.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
@@ -153,8 +155,8 @@ public class PortfolioPositionsFragment extends Fragment {
             public void onResponse(String response) {
                 try {
                     Log.d("resp",response);
-                    JSONArray responseData = new JSONObject(response).getJSONArray("message");
-                    //TODO SET STUFF
+                    JSONArray responseData = new JSONObject(response).getJSONArray("data");
+                    populateHoldingPositionsRV(responseData, recyclerView);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -180,6 +182,47 @@ public class PortfolioPositionsFragment extends Fragment {
         };
         holdingPositionsQueue.add(stringRequest);
 
+    }
+
+    private void populateHoldingPositionsRV(JSONArray jsonArray, RecyclerView recyclerView) {
+        positionsModel = new ArrayList<>();
+        for(int i=0; i<jsonArray.length(); i++){
+            try {
+                positionsModel.add(new PositionsModel(
+                                jsonArray.getJSONObject(i).getString("ticker"),
+                                jsonArray.getJSONObject(i).getInt("quantity"),
+                                jsonArray.getJSONObject(i).getString("entryPrice"),
+                                jsonArray.getJSONObject(i).getBoolean("longPosition"),
+                                jsonArray.getJSONObject(i).getDouble("entryPrice")*jsonArray.getJSONObject(i).getInt("quantity")
+                        ));
+                Log.d("portfolioHistory",jsonArray.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        PositionsAdapter myPositionAdapter = new PositionsAdapter(positionsModel);
+        recyclerView.setAdapter(myPositionAdapter);
+    }
+
+    private void populatePendingOrdersRV(JSONArray jsonArray, RecyclerView recyclerView) {
+        ordersModel = new ArrayList<>();
+        for(int i=0; i<jsonArray.length(); i++){
+            try {
+                ordersModel.add(
+                        new OrdersModel(
+                                jsonArray.getJSONObject(i).getBoolean("longPosition"),
+                                jsonArray.getJSONObject(i).getInt("quantity"),
+                                jsonArray.getJSONObject(i).getString("ticker"),
+                                "Placeholder"
+                                )
+                );
+                Log.d("portfolioHistory",jsonArray.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        OrdersAdapter myOrdersAdapter = new OrdersAdapter(ordersModel);
+        recyclerView.setAdapter(myOrdersAdapter);
     }
 
 

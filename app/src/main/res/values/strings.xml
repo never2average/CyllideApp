@@ -5,4 +5,5 @@
     <string name="Portfolio_Position_title">POSITIONS</string>
     <string name="title_activity_random_shit">RandomShit</string>
     <string name="apiBaseURL">http://api.cyllide.com/api/client/</string>
+    <string name="dataApiBaseURL">http://data.cyllide.com/data/</string>
 </resources>

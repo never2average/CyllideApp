@@ -53,6 +53,25 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_margin="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:src="@drawable/quiz_waiting"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/startQuizButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:padding="15dp"
+        android:text="QUIZ STARTS IN 1H 29M"
+        app:cornerRadius="7dp" />
+
+
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -139,49 +158,6 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
-        android:padding="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardElevation="3dp"
-        app:cardCornerRadius="5dp">
-        <LinearLayout
-            android:padding="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="4dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="PRIZES"
-            android:gravity="center"
-            android:textSize="26sp"
-            android:layout_margin="2dp"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_margin="8dp"
-            android:layout_marginEnd="10dp"
-            android:textSize="18sp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:text="Black Lamborgini"/>
-        </LinearLayout>
 
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/startQuizButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="16dp"
-        android:padding="15dp"
-        android:text="QUIZ STARTS IN 1H 29M"
-        app:cornerRadius="7dp" />
 
 </LinearLayout>
