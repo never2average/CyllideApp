@@ -108,11 +108,14 @@ public class QuizRulesActivity extends AppCompatActivity {
 
                             @Override
                             public void onFinish() {
+                                Intent quizSwitcher = new Intent(QuizRulesActivity.this,QuizActivity.class);
+                                startActivity(quizSwitcher);
                                 startQuizButton.setOnClickListener(new View.OnClickListener() {
+
+
                                     @Override
                                     public void onClick(View view) {
-                                        Intent quizSwitcher = new Intent(QuizRulesActivity.this,QuizActivity.class);
-                                        startActivity(quizSwitcher);
+
                                     }
                                 });
                             }
@@ -162,7 +165,7 @@ public class QuizRulesActivity extends AppCompatActivity {
         RequestQueue requestQueue;
         requestQueue = Volley.newRequestQueue(this);
         String URL = "http://api.cyllide.com/api/client/quiz/get";
-        questionHeaders.put("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        questionHeaders.put("token", AppConstants.token);
         questionHeaders.put("quizID",quizID);
         StringRequest questionRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
