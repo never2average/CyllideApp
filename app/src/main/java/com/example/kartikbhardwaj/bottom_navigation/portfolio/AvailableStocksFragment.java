@@ -1,6 +1,8 @@
 package com.example.kartikbhardwaj.bottom_navigation.portfolio;
 
 import android.os.Bundle;
+import android.util.ArrayMap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.example.kartikbhardwaj.bottom_navigation.AppConstants;
 import com.example.kartikbhardwaj.bottom_navigation.portfolio.AvailableStockRV.AvailableStockAdapter;
 import com.example.kartikbhardwaj.bottom_navigation.portfolio.AvailableStockRV.AvailableStockModel;
 import com.example.kartikbhardwaj.bottom_navigation.portfolio.AvailableIndicesRV.AvailableIndexAdapter;
@@ -20,9 +30,13 @@ import com.example.kartikbhardwaj.bottom_navigation.portfolio.AvailableIndicesRV
 import com.example.kartikbhardwaj.bottom_navigation.portfolio.PortfolioPositionsRV.BalanceClass;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class AvailableStocksFragment extends Fragment {
@@ -30,6 +44,8 @@ public class AvailableStocksFragment extends Fragment {
 
     FloatingSearchView searchView;
     public TextView BalanceTXTV;
+    Map<String, String> stockListHeader = new ArrayMap<>();
+    RequestQueue stockListRequestQueue;
     RecyclerView RV;
     private String indexNames[]={"Nifty Auto","Nifty IT","Nifty Pharma","Nifty","Sensex"};
     private String indexValues[]={"1920","5120","2340","11000","35000"};
@@ -70,6 +86,7 @@ public class AvailableStocksFragment extends Fragment {
         RV.setAdapter(stocksAdapter);
         BalanceTXTV = view.findViewById(R.id.balance);
         DecimalFormat formatter = new DecimalFormat("#,###.00");
+        getStockList();
         BalanceTXTV.setText("₹ " + String.valueOf(formatter.format(BalanceClass.balance)));
         searchView=view.findViewById(R.id.searchbarstocks);
         searchView.clearFocus();
@@ -88,6 +105,44 @@ public class AvailableStocksFragment extends Fragment {
         return view;
 
     }
+
+    private void getStockList() {
+        String url = getResources().getString(R.string.dataApiBaseURL)+"stocks/list";
+        stockListRequestQueue = Volley.newRequestQueue(getContext());
+        stockListHeader.put("indexType", AppConstants.capex);
+        StringRequest stockListStringRequest = new StringRequest(Request.Method.GET,url,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.d("StockList",response);
+                    JSONObject jsonObject = new JSONObject(response);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Question Error", error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                return stockListHeader;
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                int mStatusCode = response.statusCode;
+                Log.d("whats failing", String.valueOf(mStatusCode));
+                return super.parseNetworkResponse(response);
+            }
+        };
+        stockListRequestQueue.add(stockListStringRequest);
+
+    }
+
     public void setTextViewText(String value){
         BalanceTXTV.setText(value);
     }

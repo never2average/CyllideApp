@@ -1,15 +1,22 @@
 package com.example.kartikbhardwaj.bottom_navigation.portfolio;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
+import pl.droidsonroids.gif.GifImageView;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -18,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.kartikbhardwaj.bottom_navigation.CustomWebView;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.nex3z.togglebuttongroup.button.LabelToggle;
 
@@ -33,14 +41,19 @@ public class PortfolioActivity extends AppCompatActivity {
     LabelToggle oneDay, oneWeek, oneMonth, oneYear, sixMonths;
     RequestQueue requestQueue;
     TextView previousCloseTV,openTV,dailyRangeTV,yearlyRangeTV;
+    private GifImageView progressLoader;
+    private WebView webView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolio);
+        webView = (WebView) findViewById(R.id.web_view_chart_portfolio);
+        progressLoader = findViewById(R.id.web_view_loading);
+       webView.setWebViewClient(new CustomWebView(progressLoader,webView));
 
-        final WebView webView = (WebView) findViewById(R.id.web_view_chart_portfolio);
+       // webView.setWebViewClient(new CustomWebView());
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("file:///android_asset/oneday.html");
 
@@ -135,6 +148,28 @@ public class PortfolioActivity extends AppCompatActivity {
 
 
     }
+
+
+//    public class CustomWebView extends WebViewClient {
+//
+//
+//
+//        @Override
+//        public void onPageStarted(WebView webview, String url, Bitmap favicon) {
+//            webview.setVisibility(webview.INVISIBLE);
+//        }
+//
+//        @Override
+//        public void onPageFinished(WebView view, String url) {
+//
+//            spinner.setVisibility(View.GONE);
+//
+//            view.setVisibility(webView.VISIBLE);
+//            super.onPageFinished(view, url);
+//
+//        }
+//
+//    }
 
     private void getNiftySummary() {
 

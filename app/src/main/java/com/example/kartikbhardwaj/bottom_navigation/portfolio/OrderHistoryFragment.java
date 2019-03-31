@@ -9,6 +9,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kartikbhardwaj.bottom_navigation.AppConstants;
 import com.example.kartikbhardwaj.bottom_navigation.R;
+import com.example.kartikbhardwaj.bottom_navigation.portfolio.OrderHistoryRV.OrderHistoryAdapter;
+import com.example.kartikbhardwaj.bottom_navigation.portfolio.OrderHistoryRV.OrderHistoryModel;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -22,6 +24,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import androidx.fragment.app.Fragment;
@@ -34,6 +38,7 @@ public class OrderHistoryFragment extends Fragment {
     private RecyclerView orderHistoryRV;
     private RequestQueue orderHistoryQueue;
     private Map<String,String> orderHistoryMap = new ArrayMap<>();
+    List orderHistoryList;
 
 
 
@@ -45,11 +50,11 @@ public class OrderHistoryFragment extends Fragment {
         orderHistoryRV = view.findViewById(R.id.order_history_rv);
         orderHistoryRV.setLayoutManager(new LinearLayoutManager(view.getContext()));
         orderHistoryRV.setHasFixedSize(true);
-        getFinishedOrders(view.getContext());
+        getFinishedOrders(view.getContext(),orderHistoryRV);
         return view;
     }
 
-    private void getFinishedOrders(Context context){
+    private void getFinishedOrders(Context context, final RecyclerView orderHistoryRV){
         String url = getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
         orderHistoryQueue = Volley.newRequestQueue(context);
         orderHistoryMap.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
@@ -61,11 +66,13 @@ public class OrderHistoryFragment extends Fragment {
             public void onResponse(String response) {
                 try {
                     Log.d("resp",response);
-                    JSONArray responseData = new JSONObject(response).getJSONArray("message");
+                    JSONArray responseData = new JSONObject(response).getJSONArray("data");
+                    populateOrderHistoryRV(responseData,orderHistoryRV);
+
                     //TODO SET STUFF
 
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.d("ERROR",e.toString());
                 }
             }
         }, new Response.ErrorListener() {
@@ -88,5 +95,30 @@ public class OrderHistoryFragment extends Fragment {
         };
         orderHistoryQueue.add(stringRequest);
 
+    }
+
+    private void populateOrderHistoryRV(JSONArray jsonArray, RecyclerView recyclerView) {
+        orderHistoryList = new ArrayList<>();
+        for(int i=0; i<jsonArray.length(); i++){
+            try {
+                orderHistoryList.add(
+                        new OrderHistoryModel(
+                                jsonArray.getJSONObject(i).getString("ticker"),
+                                Boolean.parseBoolean(jsonArray.getJSONObject(i).getString("longPosition")),
+                                jsonArray.getJSONObject(i).getJSONObject("exitTime").getLong("$date"),
+                                jsonArray.getJSONObject(i).getDouble("entryPrice"),
+                                jsonArray.getJSONObject(i).getDouble("exitPrice"),
+                                jsonArray.getJSONObject(i).getInt("quantity")
+
+
+                        )
+                );
+                Log.d("portfolioHistory",jsonArray.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+         OrderHistoryAdapter myOrderHistoryAdapter = new OrderHistoryAdapter(orderHistoryList);
+        recyclerView.setAdapter(myOrderHistoryAdapter);
     }
 }

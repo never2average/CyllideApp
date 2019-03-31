@@ -28,4 +28,5 @@
     <color name="primary_light">#33482cbf</color>
     <color name="background_color">#e0f7fa</color>
     <color name="blue_light">#3db1ff</color>
+    <color name="hourglass_color">#f1fafe</color>
 </resources>

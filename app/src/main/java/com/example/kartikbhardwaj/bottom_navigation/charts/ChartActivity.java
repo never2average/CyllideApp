@@ -2,6 +2,7 @@ package com.example.kartikbhardwaj.bottom_navigation.charts;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import pl.droidsonroids.gif.GifImageView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.kartikbhardwaj.bottom_navigation.CustomWebView;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 
 import org.json.JSONException;
@@ -42,6 +44,7 @@ public class ChartActivity extends AppCompatActivity {
     summaryMarketCap, summaryBeta, summaryDayRange, incomeGrossProfit, incomeOperatingIncome,
     incomeOperationalIncome, balanceAssets, balanceLiabilities,
     balanceNetTangibleAssets;
+    GifImageView webViewLoading;
 
 
     @Override
@@ -55,7 +58,9 @@ public class ChartActivity extends AppCompatActivity {
         oneMonth = findViewById(R.id.chart_button_one_month);
         sixMonth = findViewById(R.id.chart_button_six_months);
         oneYear = findViewById(R.id.chart_button_one_year);
+        webViewLoading = findViewById(R.id.chart_activity_loading);
         webView = (WebView) findViewById(R.id.web_view_chart);
+        webView.setWebViewClient(new CustomWebView(webViewLoading,webView));
         webView.getSettings().setJavaScriptEnabled(true);
 //        webView.loadUrl("http://data.cyllide.com/data/chart/\""+ticker+"\"/\""+"1D\"");
         webView.loadUrl("http://data.cyllide.com/data/chart/\"RELIANCE\"/\"1D\"");
