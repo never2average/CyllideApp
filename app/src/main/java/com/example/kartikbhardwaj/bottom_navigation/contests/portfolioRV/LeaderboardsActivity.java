@@ -116,7 +116,7 @@ public class LeaderboardsActivity extends AppCompatActivity {
         StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("error",response);
+                Log.d("leaderboarddata",response);
                 try {
                     JSONArray arrayData=new JSONObject(response).getJSONArray("contestPortfolios");
                 } catch (JSONException e) {

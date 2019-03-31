@@ -24,7 +24,6 @@ public class ProfileActivity extends AppCompatActivity {
     Button save;
     TextView username;
     CardView faqs;
-    CardView toptraders;
     CircleImageView profilePic;
     Uri defaultProfilePic = Uri.parse("android.resource://com.example.kartikbhardwaj.bottom_navigation/drawable/profile_pic");
     Uri pic_from_net;
@@ -39,7 +38,6 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        toptraders = findViewById(R.id.toptraders);
         faqs = findViewById(R.id.faq);
 
 
@@ -71,19 +69,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
 
-        toptraders.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-                //                popup.setContentView(R.layout.top_traders_popup);
-                //                popup.getWindow();
-                //
-                //                popup.show();
-
-
-            }
-        });
 
 
         faqs.setOnClickListener(new View.OnClickListener() {
