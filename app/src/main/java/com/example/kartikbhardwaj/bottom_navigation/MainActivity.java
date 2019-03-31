@@ -217,17 +217,7 @@ public class MainActivity extends AppCompatActivity{
                     .commit();
          }
     }
-    private void swapstatFragment(){
-        StatsFragment fragment = new StatsFragment();
 
-
-        if (fragment != null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .commit();
-        }
-    }
     private void swapFragment(){
         ReferralFragment fragment = new ReferralFragment();
 

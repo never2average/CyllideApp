@@ -14,7 +14,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="61dp"
         android:background="@color/transparent"
         android:elevation="4dp"
         android:paddingLeft="0dp"
@@ -36,14 +36,17 @@
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="56dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="-4dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:contentDescription="companyLogo"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="8dp"
                 android:src="@drawable/icon_logo" />
 
             <TextView
+                android:layout_marginBottom="2dp"
                 android:id="@+id/heading"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -58,6 +61,7 @@
                 android:textSize="24sp" />
 
             <ImageView
+                android:layout_marginBottom="2dp"
                 android:id="@+id/notificationicon"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

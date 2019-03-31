@@ -37,11 +37,14 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.razerdp.widget.animatedpieview.AnimatedPieView;
 import com.razerdp.widget.animatedpieview.AnimatedPieViewConfig;
+import com.razerdp.widget.animatedpieview.callback.OnPieSelectListener;
+import com.razerdp.widget.animatedpieview.data.IPieInfo;
 import com.razerdp.widget.animatedpieview.data.SimplePieInfo;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -177,11 +180,11 @@ public class ProfileFragment extends Fragment {
             }
         });
         username=view.findViewById(R.id.username);
-        AnimatedPieView mAnimatedPieView = view.findViewById(R.id.win_perc);
-        AnimatedPieViewConfig config =  new  AnimatedPieViewConfig ();
+        AnimatedPieView mAnimatedPieView = view.findViewById(R.id.contest_win_perc);
+        AnimatedPieViewConfig config =  new  AnimatedPieViewConfig ().drawText(true).textSize(40);
         config.startAngle(-90).addData(
-                new SimplePieInfo( 75.0f , R.color.primary_light_max,"Win %")).addData (
-                new SimplePieInfo( 25.0f ,R.color.primary_dark_max, "Loss %" )).duration( 2000 );
+                new SimplePieInfo( 75.0f , ContextCompat.getColor(getContext(), R.color.progressgreen),"Win %")).addData (
+                new SimplePieInfo( 25.0f , ContextCompat.getColor(getContext(), R.color.progressred), "Loss %" )).duration(1500);
         mAnimatedPieView.applyConfig (config);
         mAnimatedPieView.start();
 

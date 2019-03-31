@@ -14,9 +14,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.kartikbhardwaj.bottom_navigation.faq_view.Faq_Activity;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.razerdp.widget.animatedpieview.AnimatedPieView;
+import com.razerdp.widget.animatedpieview.AnimatedPieViewConfig;
+import com.razerdp.widget.animatedpieview.data.SimplePieInfo;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -85,7 +89,13 @@ public class ProfileActivity extends AppCompatActivity {
         Log.e("ProfilePicSet ","profilePicSet");
         Toast.makeText(ProfileActivity.this,"onCreateFunction",Toast.LENGTH_LONG).show();
 
-
+        AnimatedPieView mAnimatedPieView = findViewById(R.id.contest_win_perc);
+        AnimatedPieViewConfig config =  new  AnimatedPieViewConfig ();
+        config.startAngle(-90).addData(
+                new SimplePieInfo( 75.0f , ContextCompat.getColor(this, R.color.red),"Win %")).addData (
+                new SimplePieInfo( 25.0f , ContextCompat.getColor(this, R.color.green), "Loss %" )).duration( 2000 );
+        mAnimatedPieView.applyConfig (config);
+        mAnimatedPieView.start();
 
     }
 
