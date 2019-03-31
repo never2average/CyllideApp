@@ -51,7 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        toptraders=findViewById(R.id.toptraders);
+//        toptraders=findViewById(R.id.toptraders);
         faqs=findViewById(R.id.faq);
 
 

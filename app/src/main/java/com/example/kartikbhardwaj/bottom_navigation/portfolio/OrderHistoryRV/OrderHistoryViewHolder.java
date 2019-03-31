@@ -29,21 +29,21 @@ public class OrderHistoryViewHolder extends RecyclerView.ViewHolder {
         DecimalFormat format = new DecimalFormat("##.00");
         tickerName.setText(orderHistoryModel.getStockTicker());
         positionType.setText(orderHistoryModel.getPositionType());
-        exitPrice.setText(String.valueOf(orderHistoryModel.getExitPrice())+" %");
+        exitPrice.setText(String.valueOf(orderHistoryModel.getExitPrice()));
         exitTime.setText(orderHistoryModel.getExitTime());
-        entryPrice.setText(String.valueOf(orderHistoryModel.getEntryPrice())+" %");
+        entryPrice.setText(String.valueOf(orderHistoryModel.getEntryPrice()));
         orderQuantity.setText(String.valueOf(orderHistoryModel.getQuantity()));
         if (orderHistoryModel.getPositionType().equals("Long")) {
             if (orderHistoryModel.getEntryPrice() <= orderHistoryModel.getExitPrice()) {
                 orderPnl.setTextColor(Color.parseColor("#00ff00"));
                 orderPnl.setText(
                         String.valueOf(format.format(orderHistoryModel.getQuantity() * (orderHistoryModel.getExitPrice() - orderHistoryModel.getEntryPrice())))
-                                + " ▲");
+                                + " %"+" ▲");
             } else {
                 orderPnl.setTextColor(Color.parseColor("#ff0000"));
                 orderPnl.setText(
 
-                        format.format(orderHistoryModel.getQuantity() * (orderHistoryModel.getExitPrice() - orderHistoryModel.getEntryPrice())) + " ▼"
+                        format.format(orderHistoryModel.getQuantity() * (orderHistoryModel.getExitPrice() - orderHistoryModel.getEntryPrice())) + " %"+ " ▼"
                 );
 
             }
@@ -53,11 +53,11 @@ public class OrderHistoryViewHolder extends RecyclerView.ViewHolder {
                 orderPnl.setTextColor(Color.parseColor("#00ff00"));
                 orderPnl.setText(
                         String.valueOf(orderHistoryModel.getQuantity() * (orderHistoryModel.getEntryPrice() - orderHistoryModel.getExitPrice()))
-                                + " ▲");
+                                + " %"+ " ▲");
             } else {
                 orderPnl.setTextColor(Color.parseColor("#ff0000"));
                 orderPnl.setText(
-                        String.valueOf(orderHistoryModel.getQuantity() * (orderHistoryModel.getEntryPrice() - orderHistoryModel.getExitPrice())) + " ▼"
+                        String.valueOf(orderHistoryModel.getQuantity() * (orderHistoryModel.getEntryPrice() - orderHistoryModel.getExitPrice())) + " %"+ " ▼"
                 );
 
             }
