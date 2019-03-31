@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".quiz.QuizRulesActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/hourglass_color">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -96,7 +97,7 @@
                 android:layout_margin="4dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
-                android:text="1. Rule number one"/>
+                android:text="1. Answer all questions correctly to win."/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -106,7 +107,7 @@
                 android:layout_margin="4dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
-                android:text="2. Rule number two"/>
+                android:text="2. A maximum of 2 extra lives can be applied per game"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -116,39 +117,9 @@
                 android:layout_margin="4dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
-                android:text="3. Rule number three"/>
+                android:text="3. If you tap on an incorrect answer or run out of time, you get eliminated."/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:textSize="17sp"
-                android:layout_margin="4dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:text="1. Rule number one"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:textSize="17sp"
-                android:layout_margin="4dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:text="2. Rule number two"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:textSize="17sp"
-                android:layout_margin="4dp"
 
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:text="3. Rule number three"/>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

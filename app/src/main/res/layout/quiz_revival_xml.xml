@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="350dp"
-    android:layout_height="500dp"
+    android:layout_height="300dp"
     android:background="@color/transparent">
 
 
@@ -115,7 +115,19 @@
 
 
 
+
+
       </LinearLayout>
+
+           <ProgressBar
+               android:layout_margin="4dp"
+               android:id="@+id/activity_quiz_revival_progress_bar"
+               style="?android:attr/progressBarStyleHorizontal"
+               android:layout_width="280dp"
+               android:layout_height="30dp"
+               android:progress="100000"
+               android:progressDrawable="@drawable/quiz_revival_progress_bar"
+               android:visibility="visible" />
 
 
 

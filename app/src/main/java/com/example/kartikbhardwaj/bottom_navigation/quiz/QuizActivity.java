@@ -502,14 +502,14 @@ public class QuizActivity extends AppCompatActivity {
 
                     Toast.makeText(QuizActivity.this,"Showing Answers",Toast.LENGTH_SHORT);
                     option1PB.setVisibility(View.VISIBLE);
-                    startAnswerAnimation(option1PB,(numCorrectOptionA*100)/totalResponses);
+                    startAnswerAnimation(option1PB,(numCorrectOptionA*100)/totalResponses,3000);
                     Log.d("percent",Integer.toString((numCorrectOptionA*100)/totalResponses));
                     option2PB.setVisibility(View.VISIBLE);
-                    startAnswerAnimation(option2PB,(numCorrectOptionB*100)/totalResponses);
+                    startAnswerAnimation(option2PB,(numCorrectOptionB*100)/totalResponses,3000);
                     option3PB.setVisibility(View.VISIBLE);
-                    startAnswerAnimation(option3PB,(numCorrectOptionC*100)/totalResponses);
+                    startAnswerAnimation(option3PB,(numCorrectOptionC*100)/totalResponses,3000);
                     option4PB.setVisibility(View.VISIBLE);
-                    startAnswerAnimation(option4PB,(numCorrectOptionD*100)/totalResponses);
+                    startAnswerAnimation(option4PB,(numCorrectOptionD*100)/totalResponses,3000);
 
 
                 } catch (JSONException e) {
@@ -550,6 +550,7 @@ public class QuizActivity extends AppCompatActivity {
             TextView coinsLeft = revivalpopup.findViewById(R.id.quiz_revival_coins_left);
             TextView revivalYes = revivalpopup.findViewById(R.id.text_view_yes);
             TextView revivalNo = revivalpopup.findViewById(R.id.text_view_no);
+            ProgressBar revivalProgressBar = revivalpopup.findViewById(R.id.activity_quiz_revival_progress_bar);
             coinsLeft.setText(Integer.toString(AppConstants.coins));
 
             revivalYes.setOnClickListener(new View.OnClickListener() {
@@ -572,8 +573,10 @@ public class QuizActivity extends AppCompatActivity {
                 }
             });
 
-
             revivalpopup.show();
+
+            startAnswerAnimation(revivalProgressBar,0,3000);
+
 
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -630,10 +633,13 @@ public class QuizActivity extends AppCompatActivity {
     }
 
 
-    private void startAnswerAnimation(ProgressBar mProgressBar, int percent){
+    private void startAnswerAnimation(ProgressBar mProgressBar, int percent, int duration){
+        Log.d("HEAR","PROGRESS BAR");
+        mProgressBar.setVisibility(View.VISIBLE);
+
         mProgressBar.setMax(100000);
         ObjectAnimator progressAnimator = ObjectAnimator.ofInt(mProgressBar,"progress",0,percent*1000);
-        progressAnimator.setDuration(3000);
+        progressAnimator.setDuration(duration);
         progressAnimator.setInterpolator(new LinearInterpolator());
         progressAnimator.start();
 
