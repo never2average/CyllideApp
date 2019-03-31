@@ -19,17 +19,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-<<<<<<< HEAD:app/src/main/java/com/example/kartikbhardwaj/bottom_navigation/ProfileActivity.java
 public class ProfileActivity extends AppCompatActivity {
-=======
-public class Profile_Activity extends AppCompatActivity {
->>>>>>> 64ea53b8ca2f07f0585531baba6a54ac55cddb41:app/src/main/java/com/example/kartikbhardwaj/bottom_navigation/Profile_Activity.java
-
     ImageButton cross;
     Button save;
     TextView username;
     CardView faqs;
-    CardView toptraders;
     CircleImageView profilePic;
     Uri defaultProfilePic = Uri.parse("android.resource://com.example.kartikbhardwaj.bottom_navigation/drawable/profile_pic");
     Uri pic_from_net;
@@ -43,7 +37,7 @@ public class Profile_Activity extends AppCompatActivity {
         Fresco.initialize(this);
 
 
-        toptraders = findViewById(R.id.toptraders);
+
         faqs = findViewById(R.id.faq);
 
 
@@ -56,19 +50,9 @@ public class Profile_Activity extends AppCompatActivity {
 
 
         cross.setOnClickListener(new View.OnClickListener() {
-<<<<<<< HEAD:app/src/main/java/com/example/kartikbhardwaj/bottom_navigation/ProfileActivity.java
-    @Override
-    public void onClick(View v) {
-            Intent exitIntent= new Intent(ProfileActivity.this,MainActivity.class);
-       // ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Profile_Activity.this,profile_pic,ViewCompat.getTransitionName(profile_pic));
-=======
             @Override
             public void onClick(View v) {
-                Intent exitIntent = new Intent(Profile_Activity.this, MainActivity.class);
-                // ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Profile_Activity.this,profile_pic,ViewCompat.getTransitionName(profile_pic));
->>>>>>> 64ea53b8ca2f07f0585531baba6a54ac55cddb41:app/src/main/java/com/example/kartikbhardwaj/bottom_navigation/Profile_Activity.java
-
-                // startActivity(exitIntent,options.toBundle());
+                Intent exitIntent = new Intent(ProfileActivity.this, MainActivity.class);
                 startActivity(exitIntent);
                 finish();
             }
@@ -85,50 +69,22 @@ public class Profile_Activity extends AppCompatActivity {
         });
 
 
-        toptraders.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-                //                popup.setContentView(R.layout.top_traders_popup);
-                //                popup.getWindow();
-                //
-                //                popup.show();
-
-
-            }
-        });
 
 
         faqs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //               // intent to faq activity
-<<<<<<< HEAD:app/src/main/java/com/example/kartikbhardwaj/bottom_navigation/ProfileActivity.java
               Intent faqintent =new Intent(ProfileActivity.this,Faq_Activity.class);
               startActivity(faqintent);
-=======
-                Intent faqintent = new Intent(Profile_Activity.this, Faq_Activity.class);
-                startActivity(faqintent);
->>>>>>> 64ea53b8ca2f07f0585531baba6a54ac55cddb41:app/src/main/java/com/example/kartikbhardwaj/bottom_navigation/Profile_Activity.java
-
-
             }
         });
 
 
-<<<<<<< HEAD:app/src/main/java/com/example/kartikbhardwaj/bottom_navigation/ProfileActivity.java
-
         Log.e("ProfilePicSet ","profilePicSet");
         Toast.makeText(ProfileActivity.this,"onCreateFunction",Toast.LENGTH_LONG).show();
 
-
-
-
-=======
-        Log.e("ProfilePicSet ", "profilePicSet");
-        Toast.makeText(Profile_Activity.this, "onCreateFunction", Toast.LENGTH_LONG).show();
->>>>>>> 64ea53b8ca2f07f0585531baba6a54ac55cddb41:app/src/main/java/com/example/kartikbhardwaj/bottom_navigation/Profile_Activity.java
 
 
     }
