@@ -195,7 +195,7 @@ public class QuizActivity extends AppCompatActivity {
             public void onTick(long leftTimeInMilliseconds) {
                 long seconds = leftTimeInMilliseconds / 1000;
 
-               // barTimer.setProgress();
+                // barTimer.setProgress();
                 textTimer.setText(String.format("%02d", seconds/60) + ":" + String.format("%02d", seconds%60));
                 // format the textview to show the easily readable format
 
@@ -220,7 +220,7 @@ public class QuizActivity extends AppCompatActivity {
                 }
                 else{
                     textTimer.setText("2:00");
-                   // barTimer.setProgress(60*seconds);
+                    // barTimer.setProgress(60*seconds);
                 }
             }
         }.start();
@@ -286,11 +286,11 @@ public class QuizActivity extends AppCompatActivity {
 
                 }
             }){
-              @Override
-              public Map<String,String> getHeaders(){
+                @Override
+                public Map<String,String> getHeaders(){
 
-                  return answerRequestHeader;
-              }
+                    return answerRequestHeader;
+                }
             };
 
             quizAnswersRequestQueue.add(submissionRequest);
