@@ -1,5 +1,11 @@
 package com.example.kartikbhardwaj.bottom_navigation.contests.portfolioRV;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.ArrayMap;
@@ -18,6 +24,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.kartikbhardwaj.bottom_navigation.leaderboardRV.LeaderboardAdapter;
+import com.example.kartikbhardwaj.bottom_navigation.leaderboardRV.LeaderboardModel;
 import com.example.kartikbhardwaj.bottom_navigation.AppConstants;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 
