@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
@@ -15,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
 import com.example.kartikbhardwaj.bottom_navigation.MainApplication;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.example.kartikbhardwaj.bottom_navigation.forum.askquestion.AskQuestion;
@@ -52,6 +54,7 @@ public class ForumActivity extends AppCompatActivity {
     FloatingSearchView searchQuestions;
     MultiSelectToggleGroup tags ;
     SingleSelectToggleGroup singleTogleGrp;
+    ImageView backButton;
 
     private Realm realmInstance;
 
@@ -100,11 +103,17 @@ public class ForumActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forum);
         Log.d("ForumActivity", "Initializing Realm");
         realmInstance = Realm.getDefaultInstance();
+        backButton = findViewById(R.id.activity_forum_back_button);
         askQuestion = findViewById(R.id.ask_question);
         forumRV = findViewById(R.id.topquesrecycler);
         forumRV.setLayoutManager(new LinearLayoutManager(this));
         singleTogleGrp=findViewById(R.id.single);
-
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ForumActivity.this, MainActivity.class));
+            }
+        });
         tags=findViewById(R.id.tags);
 
         singleTogleGrp.setOnCheckedChangeListener(new SingleSelectToggleGroup.OnCheckedChangeListener() {

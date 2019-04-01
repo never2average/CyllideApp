@@ -258,7 +258,7 @@ public class QuizActivity extends AppCompatActivity {
 
 
                                 }
-                            }, 4000);
+                            }, 6000);
 
 
 
@@ -546,11 +546,11 @@ public class QuizActivity extends AppCompatActivity {
         if (restoredText.equals("0")) {
 
         }
-        else{
+        else if(AppConstants.coins>=5){
             TextView coinsLeft = revivalpopup.findViewById(R.id.quiz_revival_coins_left);
             TextView revivalYes = revivalpopup.findViewById(R.id.text_view_yes);
             TextView revivalNo = revivalpopup.findViewById(R.id.text_view_no);
-            ProgressBar revivalProgressBar = revivalpopup.findViewById(R.id.activity_quiz_revival_progress_bar);
+            CircularProgressBar revivalProgressBar = revivalpopup.findViewById(R.id.revival_progress_bar);
             coinsLeft.setText(Integer.toString(AppConstants.coins));
 
             revivalYes.setOnClickListener(new View.OnClickListener() {
@@ -575,7 +575,7 @@ public class QuizActivity extends AppCompatActivity {
 
             revivalpopup.show();
 
-            startAnswerAnimation(revivalProgressBar,0,3000);
+            revivalProgressBar.setProgressWithAnimation(0,6000);
 
 
             Handler handler = new Handler();
@@ -586,6 +586,7 @@ public class QuizActivity extends AppCompatActivity {
                     if(QuizActivity.hasRevive == true){
                         AppConstants.coins -= 5;
                         reviveRequestQueue = Volley.newRequestQueue(QuizActivity.this);
+//                        reviveRequestHeader.put
                         reviveRequestHeader.put("quizID",quizID);
                         reviveRequestHeader.put("token",AppConstants.token);
                         String url = getResources().getString(R.string.apiBaseURL)+"quiz/revive";
