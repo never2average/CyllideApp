@@ -39,8 +39,8 @@
             android:padding="6dp"
             android:id="@+id/newsbackbutton"
             android:src="@drawable/ic_arrow_back_black_24dp"
-            android:tint="#ffffff"
-            android:background="#00000000"/>
+            android:tint="@color/white"
+            android:background="@color/transparent"/>
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"

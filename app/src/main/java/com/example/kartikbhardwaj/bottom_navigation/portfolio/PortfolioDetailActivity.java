@@ -16,7 +16,7 @@ import com.example.kartikbhardwaj.bottom_navigation.R;
 public class PortfolioDetailActivity extends AppCompatActivity {
 
     FrameLayout fl;
-    ImageView stockAnalysisButton, orderHistoryButton, portfolioPositionsButton;
+    ImageView stockAnalysisButton, orderHistoryButton, portfolioPositionsButton, backButton;
 
 
     public void setNewFragment(Fragment fragment){
@@ -38,6 +38,14 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         stockAnalysisButton = findViewById(R.id.stockchooser);
         orderHistoryButton = findViewById(R.id.order_history);
         portfolioPositionsButton = findViewById(R.id.portfolio_positions);
+        backButton = findViewById(R.id.activity_portfolio_detail_back_button);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(PortfolioDetailActivity.this,PortfolioActivity.class));
+            }
+        });
 
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");

@@ -11,6 +11,7 @@ import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
@@ -21,6 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import com.example.kartikbhardwaj.bottom_navigation.AppConstants;
+import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.google.android.material.button.MaterialButton;
 import com.nex3z.togglebuttongroup.button.LabelToggle;
@@ -41,6 +43,7 @@ public class MyPortfolio extends AppCompatActivity {
     String selectedToggle = "None";
     LabelToggle smallCapLabelToggle, midCapLabelToggle, largeCapLabelToggle, niftyCapLabelToggle;
     private RequestQueue createPortfolioRequestQueue;
+    ImageView backbutton;
     Map<String,String> createPortfolioRequestHeader = new ArrayMap<>();
     RecyclerView myPortfolioListRV;
     Map<String,String> myPortfolioRequestHeader = new ArrayMap<>();
@@ -63,6 +66,14 @@ public class MyPortfolio extends AppCompatActivity {
         midCapLabelToggle = findViewById(R.id.my_portfolio_capex_mid_cap_toggle_btn);
         largeCapLabelToggle = findViewById(R.id.my_portfolio_capex_large_cap_toggle_btn);
         niftyCapLabelToggle = findViewById(R.id.my_portfolio_capex_nifty_cap_toggle_btn);
+        backbutton = findViewById(R.id.activity_my_portfolio_back_button);
+
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MyPortfolio.this, MainActivity.class));
+            }
+        });
 
         smallCapLabelToggle.setOnClickListener(new View.OnClickListener() {
             @Override

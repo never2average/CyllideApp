@@ -49,9 +49,6 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         faqs=findViewById(R.id.faq);
-
-
-
         cross=findViewById(R.id.cross_btn);
         username=findViewById(R.id.profile_username);
         profilePic=findViewById(R.id.profile_pic);
