@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
-import android.widget.ToggleButton;
+import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -20,7 +20,10 @@ import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.example.kartikbhardwaj.bottom_navigation.forum.askquestion.AskQuestion;
 import com.example.kartikbhardwaj.bottom_navigation.forum.questionlist.QuestionListAdapter;
 import com.example.kartikbhardwaj.bottom_navigation.forum.questionlist.QuestionListModel;
+import com.nex3z.togglebuttongroup.MultiSelectToggleGroup;
+import com.nex3z.togglebuttongroup.SingleSelectToggleGroup;
 import com.nex3z.togglebuttongroup.button.LabelToggle;
+import com.nex3z.togglebuttongroup.button.ToggleButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +50,8 @@ public class ForumActivity extends AppCompatActivity {
     JSONObject questionObject;
     List<QuestionListModel> questionList, filterList;
     FloatingSearchView searchQuestions;
+    MultiSelectToggleGroup tags ;
+    SingleSelectToggleGroup singleTogleGrp;
 
     private Realm realmInstance;
 
@@ -98,6 +103,60 @@ public class ForumActivity extends AppCompatActivity {
         askQuestion = findViewById(R.id.ask_question);
         forumRV = findViewById(R.id.topquesrecycler);
         forumRV.setLayoutManager(new LinearLayoutManager(this));
+        singleTogleGrp=findViewById(R.id.single);
+
+        tags=findViewById(R.id.tags);
+
+        singleTogleGrp.setOnCheckedChangeListener(new SingleSelectToggleGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SingleSelectToggleGroup group, int checkedId) {
+
+                switch (checkedId)
+                {
+                    case R.id.ask_question:
+                        group.clearCheck();
+                        break;
+                    case R.id.AnswerQ:
+                        sortByNewest();
+
+
+
+                }
+
+            }
+        });
+        tags.setOnCheckedChangeListener(new MultiSelectToggleGroup.OnCheckedStateChangeListener() {
+            @Override
+            public void onCheckedStateChanged(MultiSelectToggleGroup group, int checkedId, boolean isChecked) {
+
+                switch (checkedId){
+
+                    case R.id.tb_finance:
+                        if(isChecked)
+                        {Toast.makeText(ForumActivity.this, "finance", Toast.LENGTH_SHORT).show();}
+
+                        break;
+                    case R.id.tb_capital_markets:
+
+                        if(isChecked)
+                        {Toast.makeText(ForumActivity.this, "Cp markets", Toast.LENGTH_SHORT).show();}
+
+                        //capitalMarkets
+                        break;
+                    case R.id.tb_macro_economics:
+                        if(isChecked)
+                        {Toast.makeText(ForumActivity.this, "econo", Toast.LENGTH_SHORT).show();}
+
+                        break;
+                    case R.id.tb_business:
+                        if(isChecked)
+                        {Toast.makeText(ForumActivity.this, "business", Toast.LENGTH_SHORT).show();}
+
+
+
+                }
+            }
+        });
 
         getQuestions();
         //readCachedQuestions();
@@ -130,59 +189,7 @@ public class ForumActivity extends AppCompatActivity {
         capitalMarkets = findViewById(R.id.tb_capital_markets);
         macroEconimics = findViewById(R.id.tb_macro_economics);
         business = findViewById(R.id.tb_business);
-        finance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finance.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_on_click_background));
-                finance.setTextColor(getResources().getColor(R.color.white,null));
-                capitalMarkets.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
-                capitalMarkets.setTextColor(getResources().getColor(R.color.blue,null));
-                business.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
-                business.setTextColor(getResources().getColor(R.color.blue,null));
-                macroEconimics.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
-                macroEconimics.setTextColor(getResources().getColor(R.color.blue,null));
-            }
-        });
-        capitalMarkets.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                capitalMarkets.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_on_click_background));
-                capitalMarkets.setTextColor(getResources().getColor(R.color.white,null));
-                finance.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
-                finance.setTextColor(getResources().getColor(R.color.blue,null));
-                business.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
-                business.setTextColor(getResources().getColor(R.color.blue,null));
-                macroEconimics.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
-                macroEconimics.setTextColor(getResources().getColor(R.color.blue,null));
-            }
-        });
-        business.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                business.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_on_click_background));
-                business.setTextColor(getResources().getColor(R.color.white,null));
 
-                finance.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
-                finance.setTextColor(getResources().getColor(R.color.blue,null));
-                capitalMarkets.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
-                capitalMarkets.setTextColor(getResources().getColor(R.color.blue,null));
-                macroEconimics.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
-                macroEconimics.setTextColor(getResources().getColor(R.color.blue,null));
-            }
-        });
-        macroEconimics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                macroEconimics.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_on_click_background));
-                macroEconimics.setTextColor(getResources().getColor(R.color.white,null));
-                finance.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
-                finance.setTextColor(getResources().getColor(R.color.blue,null));
-                capitalMarkets.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
-                capitalMarkets.setTextColor(getResources().getColor(R.color.blue,null));
-                business.setBackgroundDrawable(getDrawable(R.drawable.forum_tag_background));
-                business.setTextColor(getResources().getColor(R.color.blue,null));
-            }
-        });
 
 
     }
@@ -258,5 +265,12 @@ public class ForumActivity extends AppCompatActivity {
         super.onDestroy();
         Log.e("ForumActivity", "Closing realm instance");
         realmInstance.close();
+    }
+
+    private void applyfilter(String tag)
+    {
+
+
+
     }
 }

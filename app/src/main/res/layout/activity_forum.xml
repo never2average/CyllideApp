@@ -61,59 +61,66 @@
 
             <HorizontalScrollView
                 android:layout_width="wrap_content"
-                android:layout_height="50dp">
+                android:layout_height="50dp"
+                android:scrollbarAlwaysDrawHorizontalTrack="false"
+                android:scrollbars="none">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent">
 
-                    <ToggleButton
+                    <com.nex3z.togglebuttongroup.MultiSelectToggleGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/tags"
+
+
+                        >
+
+                    <com.nex3z.togglebuttongroup.button.LabelToggle
                         android:id="@+id/tb_finance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/forum_tag_background"
                         android:padding="6dp"
-                        android:textColor="#098AEC"
-                        android:textOff="Finance"
+                        android:text="Finance"
                         android:textOn="Finance"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
 
-                    <ToggleButton
+
+                        />
+
+                    <com.nex3z.togglebuttongroup.button.LabelToggle
                         android:id="@+id/tb_capital_markets"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/forum_tag_background"
                         android:padding="6dp"
-                        android:textColor="#098AEC"
-                        android:textOff="Capital MARKETS"
+                        android:text="Capital MARKETS"
                         android:textOn="Capital MARKETS"
                         android:textSize="12sp" />
 
-                    <ToggleButton
+                    <com.nex3z.togglebuttongroup.button.LabelToggle
                         android:id="@+id/tb_macro_economics"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/forum_tag_background"
                         android:padding="6dp"
-                        android:textColor="#098AEC"
-                        android:textOff="Macro Economics"
+                        android:text="Macro Economics"
                         android:textOn="Macro Economics"
                         android:textSize="12sp" />
 
-                    <ToggleButton
+                    <com.nex3z.togglebuttongroup.button.LabelToggle
                         android:id="@+id/tb_business"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/forum_tag_background"
                         android:padding="6dp"
-                        android:textColor="#098AEC"
-                        android:textOff="Business"
+                        android:text="Business"
                         android:textOn="Business"
                         android:textSize="12sp" />
+
+                    </com.nex3z.togglebuttongroup.MultiSelectToggleGroup>
                 </LinearLayout>
             </HorizontalScrollView>
 
@@ -131,26 +138,28 @@
 
                 <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:id="@+id/single"
+                    >
 
                     <com.nex3z.togglebuttongroup.button.LabelToggle
                         android:id="@+id/ask_question"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="2dp"
                         android:layout_marginTop="2dp"
                         android:layout_marginRight="20dp"
-                        android:background="@drawable/forum_ask_background"
                         android:text="Ask a Question"
-                        android:textColor="#FFFFFF" />
+                        />
 
                     <com.nex3z.togglebuttongroup.button.LabelToggle
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_margin="2dp"
-                        android:background="@drawable/forum_answer_background"
                         android:text="Answer a Question"
-                        android:textColor="#FFFFFF" />
+                        android:id="@+id/AnswerQ"
+
+
+                        />
 
                 </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
             </LinearLayout>
@@ -160,7 +169,8 @@
             android:id="@+id/topquesrecycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:overScrollMode="never"/>
     </LinearLayout>
 
 
