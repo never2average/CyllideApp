@@ -5,13 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,9 +34,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.razerdp.widget.animatedpieview.AnimatedPieView;
 import com.razerdp.widget.animatedpieview.AnimatedPieViewConfig;
-import com.razerdp.widget.animatedpieview.callback.OnPieSelectListener;
-import com.razerdp.widget.animatedpieview.data.IPieInfo;
 import com.razerdp.widget.animatedpieview.data.SimplePieInfo;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,14 +46,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.loader.content.CursorLoader;
 import de.hdodenhof.circleimageview.CircleImageView;
-import me.echodev.resizer.Resizer;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
 import java.util.Map;
 import java.util.UUID;
 
@@ -65,7 +58,7 @@ public class ProfileFragment extends Fragment {
 
     ImageButton cross;
     Button save;
-    TextView username;
+    TextView username, quizzesWon, quizzesParticipated, numReferrals, numPosts, numUpvotes;
     CircleImageView profilePic;
     Uri defaultProfilePic =Uri.parse("android.resource://com.example.kartikbhardwaj.bottom_navigation/drawable/profile_pic");
     StorageReference storageReference;
@@ -74,7 +67,9 @@ public class ProfileFragment extends Fragment {
     RequestQueue uploadPicQueue, getPicQueue;
     Map<String,String> uploadPicUriMap = new ArrayMap<>();
     Map<String,String> downloadPicUriMap = new ArrayMap<>();
-
+    RequestQueue profileDataRequestQueue;
+    Map<String,String> profileMap = new ArrayMap<>();
+    AnimatedPieView contestWinPerc;
 
 
 
@@ -82,21 +77,8 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-
-        View view= inflater.inflate(R.layout.activity_profile_,null);
-
-
-
-
-
-
-
-
-
+        View view= inflater.inflate(R.layout.fragment_profile,null);
         return view;
-
-
     }
 
     @Override
@@ -179,14 +161,13 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-        username=view.findViewById(R.id.username);
-        AnimatedPieView mAnimatedPieView = view.findViewById(R.id.contest_win_perc);
-        AnimatedPieViewConfig config =  new  AnimatedPieViewConfig ().drawText(true).textSize(40);
-        config.startAngle(-90).addData(
-                new SimplePieInfo( 75.0f , ContextCompat.getColor(getContext(), R.color.progressgreen),"Win %")).addData (
-                new SimplePieInfo( 25.0f , ContextCompat.getColor(getContext(), R.color.progressred), "Loss %" )).duration(1500);
-        mAnimatedPieView.applyConfig (config);
-        mAnimatedPieView.start();
+        username = view.findViewById(R.id.profile_username);
+        quizzesWon = view.findViewById(R.id.profile_quiz_wins);
+        quizzesParticipated = view.findViewById(R.id.profile_quizzes);
+        numReferrals = view.findViewById(R.id.profile_referrals);
+        numPosts = view.findViewById(R.id.profile_posts);
+        numUpvotes = view.findViewById(R.id.profile_upvotes);
+        contestWinPerc = view.findViewById(R.id.contest_win_perc);
 
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,11 +177,7 @@ public class ProfileFragment extends Fragment {
                 startActivityForResult(intent, 0);
             }
         });
-
-
-
-
-
+        profileInfo();
     }
 
     private void getProfilePicVolley() {
@@ -236,110 +213,9 @@ public class ProfileFragment extends Fragment {
 
             targetUri = data.getData();
             Glide.with(this).load(targetUri).into(profilePic);
-
-
-            //textTargetUri.setText(targetUri.toString());\
-
-//            AmazonS3Client s3;
-//            BasicAWSCredentials credentials;
-//            String secret="lt1c8ZvncAjXWGwvGRlt73FBTn+woqvSKDk7gOUU";
-//            String key="AKIAYR4VSDM4ASSOVN7U";
-//            credentials=new BasicAWSCredentials(key,secret);
-//            s3=new AmazonS3Client(credentials);
-//            s3.setRegion(Region.getRegion(Regions.AP_SOUTH_1));
-////          TransferUtility  transferUtility=new TransferUtility(s3,getContext());
-//
-//            TransferUtility transferUtility =
-//                    TransferUtility.builder()
-//                            .defaultBucket("cyllideassets")
-//                            .context(getContext())
-//                            .s3Client(new AmazonS3Client(new BasicAWSCredentials(key,secret)))
-//                            .build();
-//
-//
-//            String[] proj={MediaStore.Images.Media.DATA};
-//            CursorLoader loader=new CursorLoader(getContext(),targetUri,proj,null,null,null);
-//            Cursor cursor=loader.loadInBackground();
-//            int Column_index=cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//            cursor.moveToFirst();
-//            String result=cursor.getString(Column_index);
-//            cursor.close();
-//
-//
-//            TransferObserver Observer =
-//                    transferUtility.upload(
-//                            "cyllideassets",result,
-//                            new File(result));
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//            // Attach a listener to the observer to get state update and progress notifications
-//            Observer.setTransferListener(new TransferListener() {
-//
-//                @Override
-//                public void onStateChanged(int id, TransferState state) {
-//                    if (TransferState.COMPLETED == state) {
-//                        // Handle a completed upload.
-//                        //
-//                        Toast.makeText(getContext(),"uploaded",Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//
-//                @Override
-//                public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
-//                    float percentDonef = ((float)bytesCurrent/(float)bytesTotal) * 100;
-//                    int percentDone = (int)percentDonef;
-//
-//                    Log.d("LOG_TAG", "   ID:" + id + "   bytesCurrent: " + bytesCurrent + "   bytesTotal: " + bytesTotal + " " + percentDone + "%");
-//                }
-//
-//                @Override
-//                public void onError(int id, Exception ex) {
-//                    // Handle errors
-//                    Toast.makeText(getContext(),ex.toString(),Toast.LENGTH_LONG).show();
-//
-//                }
-//
-//            });
-//
-//            // If you prefer to poll for the data, instead of attaching a
-//            // listener, check for the state and progress in the observer.
-//            if (TransferState.COMPLETED == Observer.getState()) {
-//                // Handle a completed upload.
-//            }
-//
-//            Log.d("LOG_TAG", "Bytes Transferrred: " + Observer.getBytesTransferred());
-//            Log.d("LOG_TAG", "Bytes Total: " + Observer.getBytesTotal());
-//
-
-
-
-
-
-
-
-
-
-
-
-
             uploadImage(getContext());
-
-
-            //profilePic.setImageURI(targetUri);
             Log.e("ProfilePicSet","inside on activity result");
             Toast.makeText(getContext(),"onActivityResult",Toast.LENGTH_LONG).show();
-
-
         }
 
 
@@ -375,15 +251,9 @@ public class ProfileFragment extends Fragment {
                                     editor.commit();
                                     setProfilePicVolley(downloaduri.toString());
 
-
-
-
-                                    // mdatabase.child("url").setValue(downloaduri.toString());
                                 }
                             });
                             Toast.makeText(context, "Uploaded", Toast.LENGTH_SHORT).show();
-//                            Intent imageActivity = new Intent(addImage.this,com.itparkbynipun.firebaseproject.imageActivity.class);
-//                            startActivity(imageActivity);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -425,6 +295,50 @@ public class ProfileFragment extends Fragment {
           }
         };
         uploadPicQueue.add(stringRequest);
+    }
+
+    private void profileInfo(){
+        profileDataRequestQueue = Volley.newRequestQueue(getContext());
+        profileMap.put("token",AppConstants.token);
+        String url = getResources().getString(R.string.apiBaseURL)+"profileinfo";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response).getJSONObject("data");
+                    username.setText(jsonResponse.getString("userName"));
+                    quizzesWon.setText(jsonResponse.getString("quizzesWon"));
+                    quizzesParticipated.setText(jsonResponse.getString("quizzesWon"));
+                    numReferrals.setText(jsonResponse.getString("numberReferrals"));
+                    numPosts.setText(String.valueOf(jsonResponse.getInt("questionsAsked")+jsonResponse.getInt("questionsAnswered")));
+                    numUpvotes.setText(jsonResponse.getString("numUpvotes"));
+                    AnimatedPieViewConfig config =  new  AnimatedPieViewConfig ().drawText(true).textSize(40);
+                    double contestsPart = jsonResponse.getDouble("contestsParticipated");
+                    double contestsWon = jsonResponse.getDouble("contestsWon");
+                    double winPercent = contestsWon/contestsPart;
+                    double lostPercent = 1 - winPercent;
+                    config.startAngle(-90).addData(
+                            new SimplePieInfo((float) winPercent, ContextCompat.getColor(getContext(), R.color.progressgreen),"Win %")).addData (
+                                    new SimplePieInfo( (float) lostPercent, ContextCompat.getColor(getContext(), R.color.progressred), "Loss %" )).duration(1500);
+                    contestWinPerc.applyConfig (config);
+                    contestWinPerc.start();
+                } catch (JSONException e) {
+                    Log.d("profileinfoerror", e.toString());
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders(){
+                return profileMap;
+            }
+        };
+        profileDataRequestQueue.add(stringRequest);
     }
 
 

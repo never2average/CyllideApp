@@ -250,9 +250,7 @@ public class ForumActivity extends AppCompatActivity {
             }
         };
         questionRequestQueue.add(stringRequest);
-
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -133,7 +133,7 @@
             android:id="@+id/faq"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/faq_icon"
+            android:src="@drawable/ic_faq"
             android:tint="@android:color/white"
 
             fab:fab_colorNormal="@android:color/white"
@@ -149,7 +149,7 @@
             android:id="@+id/referrals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/referral_icon"
+            android:src="@drawable/ic_referral"
             android:tint="@android:color/white"
 
             fab:fab_colorNormal="@android:color/transparent"

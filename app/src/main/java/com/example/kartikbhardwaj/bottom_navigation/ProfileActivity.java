@@ -44,20 +44,16 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_);
+        setContentView(R.layout.fragment_profile);
         Fresco.initialize(this);
 
 
-
-
-
-        toptraders=findViewById(R.id.toptraders);
         faqs=findViewById(R.id.faq);
 
 
 
         cross=findViewById(R.id.cross_btn);
-        username=findViewById(R.id.username);
+        username=findViewById(R.id.profile_username);
         profilePic=findViewById(R.id.profile_pic);
 
 
