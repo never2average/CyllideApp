@@ -3,6 +3,10 @@ package com.example.kartikbhardwaj.bottom_navigation.contests.portfolioRV;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentFactory;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +37,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
@@ -44,6 +52,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class LeaderboardsActivity extends AppCompatActivity {
     RecyclerView leaderboardView;
     RequestQueue leaderBRequestQ;
+    TextView pos1,pos2,pos3;
     Map<String,String> leaderBrequestHdrs=new ArrayMap<>();
 
 
@@ -54,6 +63,10 @@ public class LeaderboardsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_leaderboards);
         leaderboardView = findViewById(R.id.leaderboard_recycler_view);
         RecyclerView.LayoutManager leaderboardLayoutManager = new LinearLayoutManager(this);
+
+        pos1 = findViewById(R.id.pos1_tv);
+        pos2 = findViewById(R.id.pos2_tv);
+        pos3 = findViewById(R.id.pos3_tv);
 
         leaderboardView.setLayoutManager(leaderboardLayoutManager);
 
@@ -126,7 +139,17 @@ public class LeaderboardsActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 Log.d("leaderboarddata",response);
                 try {
-                    JSONArray arrayData=new JSONObject(response).getJSONArray("contestPortfolios");
+                    JSONArray arrayData=new JSONObject(response).getJSONArray("message");
+                    pos1.setText(arrayData.getJSONObject(0).getString("portfolioOwner"));
+                    pos2.setText(arrayData.getJSONObject(1).getString("portfolioOwner"));
+                    pos3.setText(arrayData.getJSONObject(2).getString("portfolioOwner"));
+                    List<LeaderboardModel> leaderboardModelArrayList = new ArrayList<>();
+                    for(int i = 0; i<arrayData.length();i++){
+                        leaderboardModelArrayList.add(new LeaderboardModel(arrayData.getJSONObject(i).getString("portfolioOwner"),i+1,9.0));//arrayData.getJSONObject(i).getDouble("portfolioReturns")));
+                    }
+
+                    LeaderboardAdapter leaderboardAdapter = new LeaderboardAdapter(leaderboardModelArrayList, getSupportFragmentManager());
+                    leaderboardView.setAdapter(leaderboardAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -18,12 +18,26 @@
            >
 
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+        android:layout_width="170dp"
+        android:layout_centerInParent="true"
+        android:layout_height="match_parent"
+        android:id="@+id/revival_progress_bar"
+        app:cpb_progressbar_color="@color/colorPrimaryDark"
+        app:cpb_progress="100"/>
 
-<ImageView
-    android:paddingTop="15dp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/qiuz_money_bag"/>
+    <ImageView
+        android:layout_centerInParent="true"
+        android:paddingTop="15dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:paddingBottom="12dp"
+        android:src="@drawable/qiuz_money_bag"/>
+</RelativeLayout>
+
        <TextView
            android:id="@+id/quiz_revival_coins_left"
            android:layout_width="wrap_content"
@@ -119,15 +133,7 @@
 
       </LinearLayout>
 
-           <ProgressBar
-               android:layout_margin="4dp"
-               android:id="@+id/activity_quiz_revival_progress_bar"
-               style="?android:attr/progressBarStyleHorizontal"
-               android:layout_width="280dp"
-               android:layout_height="30dp"
-               android:progress="100000"
-               android:progressDrawable="@drawable/quiz_revival_progress_bar"
-               android:visibility="visible" />
+
 
 
 
