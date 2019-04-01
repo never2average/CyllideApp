@@ -11,6 +11,7 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -20,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kartikbhardwaj.bottom_navigation.AppConstants;
+import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.example.kartikbhardwaj.bottom_navigation.background.services.GetLatestQuizIDService;
 
@@ -36,6 +38,7 @@ public class QuizRulesActivity extends AppCompatActivity {
     private String quizID;
     private long quizStartTime;
     Dialog revivePopup;
+    ImageView backButton;
     Calendar startTime = Calendar.getInstance();
     private Map<String,String> questionHeaders = new ArrayMap<String, String>();
 
@@ -50,8 +53,17 @@ public class QuizRulesActivity extends AppCompatActivity {
 
 
         startQuizButton=findViewById(R.id.startQuizButton);
+        backButton = findViewById(R.id.activity_quiz_rules_back_button);
         SharedPreferences sharedPreferences = getSharedPreferences("LATESTQUIZ", 0);
         //TODO Remove hardcoded token
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(QuizRulesActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 

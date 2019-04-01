@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kartikbhardwaj.bottom_navigation.CustomWebView;
+import com.example.kartikbhardwaj.bottom_navigation.MainActivity;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.nex3z.togglebuttongroup.button.LabelToggle;
 
@@ -36,7 +37,7 @@ import org.json.JSONObject;
 
 public class PortfolioActivity extends AppCompatActivity {
 
-    ImageView stockAnalysis, orderHistory, portfolioPositions;
+    ImageView stockAnalysis, orderHistory, portfolioPositions, backButton;
     FrameLayout fl;
     LabelToggle oneDay, oneWeek, oneMonth, oneYear, sixMonths;
     RequestQueue requestQueue;
@@ -52,6 +53,14 @@ public class PortfolioActivity extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.web_view_chart_portfolio);
         progressLoader = findViewById(R.id.web_view_loading);
        webView.setWebViewClient(new CustomWebView(progressLoader,webView));
+       backButton = findViewById(R.id.portfolio_activity_back_button);
+       backButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent intent = new Intent(PortfolioActivity.this, MyPortfolio.class);
+               startActivity(intent);
+           }
+       });
 
        // webView.setWebViewClient(new CustomWebView());
         webView.getSettings().setJavaScriptEnabled(true);
