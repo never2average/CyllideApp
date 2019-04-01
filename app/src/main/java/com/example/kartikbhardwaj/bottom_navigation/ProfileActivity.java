@@ -62,10 +62,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     public void onClick(View v) {
             Intent exitIntent= new Intent(ProfileActivity.this,MainActivity.class);
-       // ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Profile_Activity.this,profile_pic,ViewCompat.getTransitionName(profile_pic));
-
-       // startActivity(exitIntent,options.toBundle());
-        startActivity(exitIntent);
+            startActivity(exitIntent);
             finish();
             }
         });

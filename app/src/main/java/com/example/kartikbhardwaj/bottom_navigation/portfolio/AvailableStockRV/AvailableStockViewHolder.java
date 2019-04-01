@@ -6,6 +6,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.kartikbhardwaj.bottom_navigation.AppConstants;
 import com.example.kartikbhardwaj.bottom_navigation.charts.ChartActivity;
 import com.example.kartikbhardwaj.bottom_navigation.portfolio.PortfolioPositionsRV.CurrentPositions;
 import com.example.kartikbhardwaj.bottom_navigation.R;
@@ -48,6 +49,8 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
     Button placeOrder;
     private RequestQueue requestQueue;
     Map<String,String> stringMap = new ArrayMap<>();
+    RequestQueue placePosition;
+    Map<String,String> positionMap = new ArrayMap<>();
 
 
     public AvailableStockViewHolder(@NonNull final View itemView) {
@@ -87,11 +90,11 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View v) {
 
 
-                popup=new Dialog(itemView.getContext());
+                popup = new Dialog(itemView.getContext());
 
                 popup.setContentView(R.layout.add_stock_popup);
-                stockQuantity=popup.findViewById(R.id.stockquantity);
-                stockTickerSelected=popup.findViewById(R.id.stock_ticker_selected);
+                stockQuantity = popup.findViewById(R.id.stockquantity);
+                stockTickerSelected = popup.findViewById(R.id.stock_ticker_selected);
                 stockTickerSelected.setText(stockName.getText().toString());
 
 
@@ -100,19 +103,18 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
 
                 final SingleSelectToggleGroup positionChoice;
 
-                positionChoice=popup.findViewById(R.id.Position_choices);
-
+                positionChoice = popup.findViewById(R.id.long_short_choice);
 
 
                 positionChoice.setOnCheckedChangeListener(new SingleSelectToggleGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(SingleSelectToggleGroup group, int checkedId) {
-                        switch (checkedId){
+                        switch (checkedId) {
                             case R.id.Buy:
-                                positiontype ="LONG";
+                                positiontype = "LONG";
                                 break;
                             case R.id.Sell:
-                                positiontype="SHORT";
+                                positiontype = "SHORT";
                                 break;
                         }
                     }
@@ -123,26 +125,42 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                 placeOrder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        CurrentPositions.tickerName.add(stockName.getText().toString());
                         try {
-                            CurrentPositions.tickerQuantity.add(Integer.parseInt(stockQuantity.getText().toString()));
-                            if(positiontype.equals("LONG")){
-                                CurrentPositions.tickerPositionType.add(true);
-                            }
-                            else{
-                                CurrentPositions.tickerPositionType.add(true);
-                            }
-                            CurrentPositions.tickerEntryTime.add(System.currentTimeMillis()/1000L);
-                            popup.dismiss();
-                        }
-                        catch(NumberFormatException e){
-                            Toast.makeText(itemView.getContext(),"Enter a Valid Number",Toast.LENGTH_LONG).show();
+                            placeOrderVolley(itemView, positiontype, stockQuantity.getText().toString(), stockName.getText().toString(),popup,itemView.getContext());
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(itemView.getContext(), "Enter a Valid Number", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
-
             }
         });
+    }
+
+
+    void placeOrderVolley(final View view, String positionType, String quantity, String ticker, final Dialog dialog, final Context context){
+        positionMap.put("token", AppConstants.token);
+        positionMap.put("portfolioID", AppConstants.portfolioID);
+        positionMap.put("ticker", ticker);
+        positionMap.put("quantity", quantity);
+        positionMap.put("isLong", positionType);
+        String url = view.getResources().getString(R.string.apiBaseURL)+"portfolio/order";
+        placePosition = Volley.newRequestQueue(view.getContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                dialog.dismiss();
+                Toast.makeText(context,"Order Placed Successfully",Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+          @Override
+          public Map<String,String> getHeaders(){ return positionMap; }
+        };
+        placePosition.add(stringRequest);
     }
 
     public void populate(AvailableStockModel stocksModel, Context context){
@@ -162,13 +180,12 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String string = jsonObject.getString("data");
-                    if(jsonObject.getDouble("movement")>=0){
+                    if (jsonObject.getDouble("movement") >= 0) {
                         stockValNet.setTextColor(Color.parseColor("#00ff00"));
-                        stockValNet.setText(string+"(+"+String.valueOf(jsonObject.getDouble("movement")).substring(0,5)+"%)"+"▲");
-                    }
-                    else{
+                        stockValNet.setText(string + "(+" + String.valueOf(jsonObject.getDouble("movement")) + "%)" + "▲");
+                    } else {
                         stockValNet.setTextColor(Color.parseColor("#ff0000"));
-                        stockValNet.setText(string+"("+String.valueOf(jsonObject.getDouble("movement")).substring(0,5)+"%)"+"▼");
+                        stockValNet.setText(string + "(" + String.valueOf(jsonObject.getDouble("movement"))+ "%)" + "▼");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

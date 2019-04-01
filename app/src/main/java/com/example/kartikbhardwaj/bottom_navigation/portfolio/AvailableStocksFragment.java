@@ -30,6 +30,7 @@ import com.example.kartikbhardwaj.bottom_navigation.portfolio.AvailableIndicesRV
 import com.example.kartikbhardwaj.bottom_navigation.portfolio.PortfolioPositionsRV.BalanceClass;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,11 +51,7 @@ public class AvailableStocksFragment extends Fragment {
     private String indexNames[]={"Nifty Auto","Nifty IT","Nifty Pharma","Nifty","Sensex"};
     private String indexValues[]={"1920","5120","2340","11000","35000"};
     private Double indexChanges[]={-6.1,3.23,-1.29,7.9,0.34};
-
-
-    private String stockNames[]={"MRF","RELIANCE","VEDL","HINDALCO","INFY"};
-    private Double stockPrices[]={70000.0,1020.0,240.0,170.0,1000.0};
-    private Double priceChanges[]={-3.1,6.23,-7.29,1.9,2.34};
+    List<AvailableStockModel> stockModelArrayList;
 
     private List<AvailableIndexModel> dummyData() {
         List<AvailableIndexModel> stocksModelList = new ArrayList<>();
@@ -64,13 +61,18 @@ public class AvailableStocksFragment extends Fragment {
         return stocksModelList;
     }
 
-    private List<AvailableStockModel> dummyData2(String filter){
+    List<AvailableStockModel> dummyData2(String filter){
         List<AvailableStockModel> stockModelList=new ArrayList<>();
-        for(int i=0;i<5;i++){
-            if (stockNames[i].contains(filter.toUpperCase())){
-                stockModelList.add(new AvailableStockModel(stockNames[i],stockPrices[i],priceChanges[i]));
+        if(stockModelArrayList != null) {
+            for (int i = 0; i < stockModelArrayList.size(); i++) {
+                String indexName = stockModelArrayList.get(i).getIndexName();
+                if (indexName.contains(filter.toUpperCase())) {
+                    stockModelList.add(new AvailableStockModel(indexName));
+                }
             }
-
+        }
+        else{
+            getStockList();
         }
         return stockModelList;
     }
@@ -86,7 +88,6 @@ public class AvailableStocksFragment extends Fragment {
         RV.setAdapter(stocksAdapter);
         BalanceTXTV = view.findViewById(R.id.balance);
         DecimalFormat formatter = new DecimalFormat("#,###.00");
-        getStockList();
         BalanceTXTV.setText("₹ " + String.valueOf(formatter.format(BalanceClass.balance)));
         searchView=view.findViewById(R.id.searchbarstocks);
         searchView.clearFocus();
@@ -115,7 +116,10 @@ public class AvailableStocksFragment extends Fragment {
             public void onResponse(String response) {
                 try {
                     Log.d("StockList",response);
-                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonResp = new JSONArray(response);
+                    stockModelArrayList = new ArrayList<>();
+                    for(int i=1;i<jsonResp.length();i++){ stockModelArrayList.add(new AvailableStockModel(jsonResp.getString(i))); }
+                    RV.setAdapter(new AvailableStockAdapter(stockModelArrayList,getContext()));
 
                 } catch (JSONException e) {
                     e.printStackTrace();

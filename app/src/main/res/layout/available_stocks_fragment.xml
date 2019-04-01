@@ -77,8 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/showstocks"
-        android:layout_marginVertical="10dp"
-        android:layout_marginHorizontal="17dp"
+        android:layout_margin="@dimen/margin"
         />
 
 </LinearLayout>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="350dp"
-    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:layout_height="300dp"
     >
 
 
@@ -41,7 +42,7 @@
 
                 <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
                     android:layout_marginTop="10dp"
-                    android:id="@+id/Position_choices"
+                    android:id="@+id/long_short_choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:tbgCheckedButton="@+id/Buy"
@@ -62,7 +63,7 @@
                         android:textSize="19sp"
                         android:layout_height="wrap_content"
                         android:text="SELL"
-                        android:layout_marginRight="25dp"/>
+                        android:layout_marginRight="30dp"/>
                 </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
 
 
@@ -84,7 +85,6 @@
                     android:layout_width="0dp"
                     android:textSize="19sp"
                     android:textColor="#AEAEAE"
-                    android:background="@color/transparent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:inputType="number"/>

@@ -5,10 +5,8 @@ public class AvailableStockModel {
     private double indexValue;
     private double indexChanges;
 
-    public AvailableStockModel(String indexName, double indexValue, double indexChanges) {
+    public AvailableStockModel(String indexName) {
         this.indexName = indexName;
-        this.indexValue = indexValue;
-        this.indexChanges = indexChanges;
     }
 
     public String getIndexName() {
