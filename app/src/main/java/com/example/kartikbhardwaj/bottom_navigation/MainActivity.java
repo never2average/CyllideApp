@@ -35,9 +35,7 @@ public class MainActivity extends AppCompatActivity{
     ImageView logo;
     CircleImageView profilepic;
     ImageView notificationButton;
-     com.github.clans.fab.FloatingActionButton referrals;
-    com.github.clans.fab.FloatingActionButton faq;
-
+    com.github.clans.fab.FloatingActionButton referrals, faq, feedback, help;
 
     boolean doubleBackToExitPressedOnce = false;
 
@@ -89,7 +87,8 @@ public class MainActivity extends AppCompatActivity{
          final FloatingActionMenu fabMenu;
         fabMenu = findViewById(R.id.fabMenu);
         referrals=findViewById(R.id.referrals);
-        faq=findViewById(R.id.faq);
+        feedback = findViewById(R.id.feedback);
+        help = findViewById(R.id.help);
 
 
         fabMenu.setClosedOnTouchOutside(true);
@@ -101,30 +100,30 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View v) {
                 swapFragment();
                 fabMenu.close(true);
-
-
             }
         });
 
-       faq .setOnClickListener(new View.OnClickListener()  {
+       help.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
                 fabMenu.close(true);
                 Intent faqIntent=new Intent(MainActivity.this, Faq_Activity.class);
                 startActivity(faqIntent);
-
-
-
             }
         });
 
-
-
+       feedback.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               fabMenu.close(true);
+               Intent feedbackIntent = new Intent(MainActivity.this,FeedbackActivity.class);
+               startActivity(feedbackIntent);
+           }
+       });
 
 
         toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-
         profilepic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,9 +143,6 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-
-        // do not dellete this comment
-        // animation for fab to turn into close arrow after it is clicked
 
         AnimatorSet set = new AnimatorSet();
 

@@ -86,7 +86,7 @@ dependencies {
 //    implementation 'com.amazonaws:aws-android-sdk-s3:2.6.+'
 //    implementation 'com.amazonaws:aws-android-sdk-cognito:2.6.+'
     implementation 'com.github.hkk595:Resizer:v1.5'
-    
+
 
 }
 apply plugin: 'announce'

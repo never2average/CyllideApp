@@ -15,35 +15,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_gravity="center_horizontal">
-
-
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/default_background_stroke_width"
+        android:orientation="horizontal">
         <ImageView
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:layout_gravity="left"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:src="@drawable/cross_icon"
             android:tint="@color/colorPrimary"
             android:id="@+id/crossbtn"
             />
-
-        <ImageView
-            android:layout_weight="9"
-            android:layout_marginEnd="50dp"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:src="@drawable/faq_activity_icon"
-            android:tint="@color/colorPrimary"
-
-            />
-
-
     </LinearLayout>
 
 
@@ -54,6 +35,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contextClickable="true"
+        android:overScrollMode="never"
+        android:layout_margin="@dimen/margin"
         tools:ignore="UnusedAttribute" />
 
 
