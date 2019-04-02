@@ -1,168 +1,117 @@
 package com.example.kartikbhardwaj.bottom_navigation;
 
-
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.kartikbhardwaj.bottom_navigation.faq_view.Faq_Activity;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.kartikbhardwaj.bottom_navigation.forum.ForumActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.razerdp.widget.animatedpieview.AnimatedPieView;
 import com.razerdp.widget.animatedpieview.AnimatedPieViewConfig;
 import com.razerdp.widget.animatedpieview.data.SimplePieInfo;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Map;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
     ImageButton cross;
-    Button save;
-    TextView username;
-    CardView faqs;
-    CardView toptraders;
     CircleImageView profilePic;
-    Uri defaultProfilePic =Uri.parse("android.resource://com.example.kartikbhardwaj.bottom_navigation/drawable/profile_pic");
-
-
-
-
-
-
-
+    TextView username, quizzesWon, quizzesParticipated, numReferrals, numPosts, numUpvotes, numHearts;
+    AnimatedPieView contestWinPerc;
+    RequestQueue requestQueue;
+    Map<String,String> profileMap = new ArrayMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_profile);
+        setContentView(R.layout.activity_profile);
         Fresco.initialize(this);
 
-
-        faqs=findViewById(R.id.faq);
-        cross=findViewById(R.id.cross_btn);
-        username=findViewById(R.id.profile_username);
-        profilePic=findViewById(R.id.profile_pic);
-
-
-
-
-
+        cross=findViewById(R.id.view_only_cross_btn);
+        username=findViewById(R.id.view_only_profile_username);
+        profilePic=findViewById(R.id.view_only_profile_pic);
+        username = findViewById(R.id.view_only_profile_username);
+        quizzesWon = findViewById(R.id.view_only_profile_quiz_wins);
+        quizzesParticipated = findViewById(R.id.view_only_profile_quizzes);
+        numReferrals = findViewById(R.id.view_only_profile_referrals);
+        numPosts = findViewById(R.id.view_only_profile_posts);
+        numUpvotes = findViewById(R.id.view_only_profile_upvotes);
+        contestWinPerc = findViewById(R.id.view_only_contest_win_perc);
+        numHearts = findViewById(R.id.view_only_profile_num_coins);
 
         cross.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-            Intent exitIntent= new Intent(ProfileActivity.this,MainActivity.class);
+            Intent exitIntent= new Intent(ProfileActivity.this, ForumActivity.class);
             startActivity(exitIntent);
             finish();
             }
         });
-
-
-        profilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 0);
-            }
-        });
-
-
-
-
-
-        toptraders.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
- //                popup.setContentView(R.layout.top_traders_popup);
- //                popup.getWindow();
- //
- //                popup.show();
-
-
-            }
-        });
-
-
-
-
-
-        faqs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//               // intent to faq activity
-              Intent faqintent =new Intent(ProfileActivity.this,Faq_Activity.class);
-              startActivity(faqintent);
-
-
-            }
-        });
-
-
-
-        Log.e("ProfilePicSet ","profilePicSet");
-        Toast.makeText(ProfileActivity.this,"onCreateFunction",Toast.LENGTH_LONG).show();
-
-        AnimatedPieView mAnimatedPieView = findViewById(R.id.contest_win_perc);
-        AnimatedPieViewConfig config =  new  AnimatedPieViewConfig ();
-        config.startAngle(-90).addData(
-                new SimplePieInfo( 75.0f , ContextCompat.getColor(this, R.color.red),"Win %")).addData (
-                new SimplePieInfo( 25.0f , ContextCompat.getColor(this, R.color.green), "Loss %" )).duration( 2000 );
-        mAnimatedPieView.applyConfig (config);
-        mAnimatedPieView.start();
-
-
-
-
+        fillAllViewsVolley();
     }
 
+    void fillAllViewsVolley() {
+        requestQueue = Volley.newRequestQueue(ProfileActivity.this);
+        profileMap.put("token",AppConstants.token);
+        profileMap.put("username",AppConstants.viewUsername);
+        String url = getResources().getString(R.string.apiBaseURL) + "profileinfo";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response).getJSONObject("data");
+                    username.setText(jsonResponse.getString("userName"));
+                    quizzesWon.setText(jsonResponse.getString("quizzesWon"));
+                    quizzesParticipated.setText(jsonResponse.getString("quizzesWon"));
+                    numReferrals.setText(jsonResponse.getString("numberReferrals"));
+                    numPosts.setText(String.valueOf(jsonResponse.getInt("questionsAsked")+jsonResponse.getInt("questionsAnswered")));
+                    numUpvotes.setText(jsonResponse.getString("numUpvotes"));
+                    numHearts.setText(jsonResponse.getString("numCoins"));
+                    AnimatedPieViewConfig config =  new  AnimatedPieViewConfig ().drawText(true).textSize(40);
+                    double contestsPart = jsonResponse.getDouble("contestsParticipated");
+                    double contestsWon = jsonResponse.getDouble("contestsWon");
+                    double winPercent = contestsWon/contestsPart;
+                    double lostPercent = 1 - winPercent;
+                    config.startAngle(-90).addData(
+                            new SimplePieInfo((float) winPercent, ContextCompat.getColor(ProfileActivity.this, R.color.progressgreen),"Win %")).addData (
+                            new SimplePieInfo( (float) lostPercent, ContextCompat.getColor(ProfileActivity.this, R.color.progressred), "Loss %" )).duration(1500);
+                    contestWinPerc.applyConfig (config);
+                    contestWinPerc.start();
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK){
-            Uri targetUri = data.getData();
-            //textTargetUri.setText(targetUri.toString());\
-            Glide.with(this).load(targetUri).into(profilePic);
-
-            //profilePic.setImageURI(targetUri);
-            Log.e("ProfilePicSet","inside on activity result");
-            Toast.makeText(ProfileActivity.this,"onActivityResult",Toast.LENGTH_LONG).show();
-
-
-        }
-
-
-
-
-
-
-
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders(){
+                return profileMap;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }

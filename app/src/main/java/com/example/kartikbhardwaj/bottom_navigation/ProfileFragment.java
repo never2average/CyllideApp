@@ -58,7 +58,7 @@ public class ProfileFragment extends Fragment {
 
     ImageButton cross;
     Button save;
-    TextView username, quizzesWon, quizzesParticipated, numReferrals, numPosts, numUpvotes;
+    TextView username, quizzesWon, quizzesParticipated, numReferrals, numPosts, numUpvotes, numHearts;
     CircleImageView profilePic;
     Uri defaultProfilePic =Uri.parse("android.resource://com.example.kartikbhardwaj.bottom_navigation/drawable/profile_pic");
     StorageReference storageReference;
@@ -168,6 +168,7 @@ public class ProfileFragment extends Fragment {
         numPosts = view.findViewById(R.id.profile_posts);
         numUpvotes = view.findViewById(R.id.profile_upvotes);
         contestWinPerc = view.findViewById(R.id.contest_win_perc);
+        numHearts = view.findViewById(R.id.profile_num_coins);
 
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -312,6 +313,7 @@ public class ProfileFragment extends Fragment {
                     numReferrals.setText(jsonResponse.getString("numberReferrals"));
                     numPosts.setText(String.valueOf(jsonResponse.getInt("questionsAsked")+jsonResponse.getInt("questionsAnswered")));
                     numUpvotes.setText(jsonResponse.getString("numUpvotes"));
+                    numHearts.setText(jsonResponse.getString("numCoins"));
                     AnimatedPieViewConfig config =  new  AnimatedPieViewConfig ().drawText(true).textSize(40);
                     double contestsPart = jsonResponse.getDouble("contestsParticipated");
                     double contestsWon = jsonResponse.getDouble("contestsWon");
