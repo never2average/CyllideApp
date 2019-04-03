@@ -5,6 +5,16 @@ public class QuestionAnswerModel {
 	private long dateStamp;
 	private String answeredBy;
 	private String answerID;
+    private String profileURL;
+
+    public String getProfileURL() {
+        return profileURL;
+    }
+
+    public void setProfileURL(String profileURL) {
+        this.profileURL = profileURL;
+    }
+
 
 	public String getAnswerID() {
 		return answerID;
@@ -27,13 +37,14 @@ public class QuestionAnswerModel {
 	//private int answerDownVotes;
 
 
-	public QuestionAnswerModel(String answerID,  String answerDetail, int answerUpVotes,String answeredBy, long dateStamp)
+	public QuestionAnswerModel(String answerID,  String answerDetail, int answerUpVotes,String answeredBy, long dateStamp, String profileURL)
 	{
 		this.answerDetail=answerDetail;
 		this.answeredBy=answeredBy;
 		this.dateStamp=dateStamp;
 		this.answerID = answerID;
 		this.answerUpVotes = answerUpVotes;
+		this.profileURL = profileURL;
 	}
 
 	public String getAnswerDetail() {

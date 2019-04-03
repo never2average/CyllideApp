@@ -1,11 +1,13 @@
 package com.example.kartikbhardwaj.bottom_navigation.forum.questionlist.questionPage;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.view.textclassifier.TextLinks;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +18,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.kartikbhardwaj.bottom_navigation.AppConstants;
+import com.example.kartikbhardwaj.bottom_navigation.ProfileActivity;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 
 import org.json.JSONException;
@@ -35,7 +39,9 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 	ImageButton upVoteButton, downVoteButton;
 	private String answer, answeredBy;
 	long answeredOn;
+	ImageView answerProfilePic;
 	Map<String, String> requestHeader = new ArrayMap<String, String>();
+	View view;
 
 
 	public QuestionAnswerViewHolder(View itemView)
@@ -45,10 +51,12 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 		answerTV = itemView.findViewById(R.id.answer_tv);
 		answeredOnTV = itemView.findViewById(R.id.answered_on_tv);
 		upVoteCount = itemView.findViewById(R.id.answer_up_upvote_count);
+		answerProfilePic = itemView.findViewById(R.id.answer_profile_pic);
 
 		upVoteRequestQueue = Volley.newRequestQueue(itemView.getContext());
 		upVoteButton = itemView.findViewById(R.id.answer_up_vote_button);
 		downVoteButton = itemView.findViewById(R.id.answer_down_vote_button);
+		view = itemView;
 	}
 	public void populate(final QuestionAnswerModel answers)
 	{
@@ -61,6 +69,8 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 		answeredByTV.setText(answeredBy);
 		answerTV.setText(answer);
 		upVoteCount.setText(Integer.toString(answers.getAnswerUpVotes()));
+
+		Glide.with(itemView.getContext()).load(answers.getProfileURL()).into(answerProfilePic);
 
 		upVoteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -78,6 +88,15 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 
 				getUpVoteVolley(answers.getAnswerID(),-1);
 
+			}
+		});
+
+		answerProfilePic.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent profileIntentView = new Intent(view.getContext(), ProfileActivity.class);
+				view.getContext().startActivity(profileIntentView);
+				AppConstants.viewUsername = answers.getAnsweredBy();
 			}
 		});
 
