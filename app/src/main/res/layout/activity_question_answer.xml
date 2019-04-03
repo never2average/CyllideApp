@@ -8,23 +8,30 @@
 
     <ScrollView
         android:layout_width="match_parent"
+        android:scrollbars="none"
         android:layout_height="match_parent"
         android:nestedScrollingEnabled="false">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:nestedScrollingEnabled="false"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_arrow_back_black_24dp"
+                    android:tint="@color/colorPrimary"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/questionTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="20dp"
-
                 android:text="Is this a simple sample question?"
                 android:textSize="20sp" />
 
@@ -32,7 +39,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/default_background_stroke_width"
                 android:orientation="horizontal">
 
 
