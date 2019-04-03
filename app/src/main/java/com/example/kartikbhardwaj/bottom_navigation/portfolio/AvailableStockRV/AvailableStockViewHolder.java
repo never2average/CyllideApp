@@ -35,6 +35,7 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import java.text.DecimalFormat;
 
 public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
     private TextView stockName,stockValNet;
