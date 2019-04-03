@@ -7,7 +7,7 @@
     android:background="@color/colorPrimaryDark"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.example.kartikbhardwaj.bottom_navigation.authentication.OTPVerification">
+    tools:context="com.cyllide.app.v1.authentication.OTPVerification">
 
     <TextView
         android:layout_width="wrap_content"

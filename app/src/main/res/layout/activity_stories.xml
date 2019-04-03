@@ -52,7 +52,7 @@
             app:tabMode="fixed"/>
     </LinearLayout>
 
-        <com.example.kartikbhardwaj.bottom_navigation.stories.customViewPager
+        <com.cyllide.app.v1.stories.customViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
