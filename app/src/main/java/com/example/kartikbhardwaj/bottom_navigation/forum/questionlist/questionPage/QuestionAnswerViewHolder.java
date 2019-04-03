@@ -22,6 +22,7 @@ import com.example.kartikbhardwaj.bottom_navigation.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -54,7 +55,9 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 		answer = answers.getAnswerDetail();
 		answeredOn = answers.getDateStamp();
 		answeredBy = answers.getAnsweredBy();
-		answeredOnTV.setText(new Date(answers.getDateStamp()).toString());
+		SimpleDateFormat format = new SimpleDateFormat("EEE,dd MMM yyyy");
+		Date date = new Date(answers.getDateStamp());
+		answeredOnTV.setText(format.format(date));
 		answeredByTV.setText(answeredBy);
 		answerTV.setText(answer);
 		upVoteCount.setText(Integer.toString(answers.getAnswerUpVotes()));
@@ -62,9 +65,8 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 		upVoteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-
 				getUpVoteVolley(answers.getAnswerID(),1);
-				Log.e("UpVote","Proabaly sent");
+				Log.e("UpVote","Probably sent");
 
 			}
 		});

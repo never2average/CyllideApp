@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.kartikbhardwaj.bottom_navigation.AppConstants;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.example.kartikbhardwaj.bottom_navigation.forum.CustomComparatorAnswerUpVotes;
 import com.github.clans.fab.FloatingActionButton;
@@ -35,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -75,14 +77,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
             }
         });
 		RecyclerView.LayoutManager  tagsLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-    RecyclerView.LayoutManager answerLayoutManager = new LinearLayoutManager(this)
-//    {
-//			@Override
-//            public boolean canScrollVertically(){
-//			    return false;
-//            }
-//		}
-		;
+		RecyclerView.LayoutManager answerLayoutManager = new LinearLayoutManager(this);
 		ansRecyclerView.setLayoutManager(answerLayoutManager);
 		questionTagRecyclerView.setLayoutManager(tagsLayoutManager);
 
@@ -98,8 +93,8 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 
     private void postAnswerVolley(String answerBody) {
 	    postQueue = Volley.newRequestQueue(this);
-        String requestEndpoint = "http://api.cyllide.com/api/client/answer/add";
-        requestHeadersPost.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        String requestEndpoint = getResources().getString(R.string.apiBaseURL)+"answer/add";
+        requestHeadersPost.put("token", AppConstants.token);
         requestHeadersPost.put("qid",questionID);
         requestHeadersPost.put("answerBody",answerBody);
 	    StringRequest postAnswer = new StringRequest(Request.Method.POST, requestEndpoint, new Response.Listener<String>() {
@@ -127,9 +122,9 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 
     private void fillAnswers(String questionID) {
 	    answerQueue = Volley.newRequestQueue(this);
-	    requestHeaders.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+	    requestHeaders.put("token",AppConstants.token);
 	    requestHeaders.put("qid",questionID);
-        String requestEndpoint = "http://api.cyllide.com/api/client/query/display/one";
+        String requestEndpoint = getResources().getString(R.string.apiBaseURL)+"query/display/one";
         StringRequest answers = new StringRequest(Request.Method.GET, requestEndpoint, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -140,7 +135,8 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                     questionAskedByText.setText(responseData.getString("queryUID"));
                     String utcTime = responseData.getJSONObject("queryLastUpdateTime").getString("$date");
                     Date lastUpdated = new Date(Long.parseLong(utcTime));
-                    questionLastModifiedText.setText(lastUpdated.toString());
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    questionLastModifiedText.setText(format.format(lastUpdated));
                     JSONArray tagList = responseData.getJSONArray("queryTags");
                     JSONArray answerList = responseData.getJSONArray("answerList");
                     for(int i=0;i<tagList.length();i++){

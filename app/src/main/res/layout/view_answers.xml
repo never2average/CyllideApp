@@ -3,16 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="5dp"
-        android:layout_marginBottom="5dp"
         app:cardCornerRadius="5dp"
-        app:cardElevation="5dp">
+        app:cardElevation="5dp"
+        android:layout_margin="@dimen/margin">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -105,17 +103,16 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <androidx.appcompat.widget.AppCompatImageButton
                             android:id="@+id/answer_up_vote_button"
-                            android:layout_width="match_parent"
-                            android:layout_height="27dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
                             android:backgroundTint="@color/white"
                             android:clickable="true"
                             android:src="@drawable/ic_thumb_up_black_24dp"
@@ -123,18 +120,19 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:fontFamily="@font/barlow_regular"
                             android:text="Upvote"
+                            android:gravity="center_vertical"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
+                            android:gravity="center_vertical"
                             android:id="@+id/answer_up_upvote_count"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="@dimen/margin"
                             android:inputType="number"
                             android:lines="1"
                             android:text="0"
@@ -144,8 +142,8 @@
 
                         <androidx.appcompat.widget.AppCompatImageButton
                             android:id="@+id/answer_down_vote_button"
-                            android:layout_width="match_parent"
-                            android:layout_height="27dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
                             android:backgroundTint="@color/white"
                             android:clickable="true"
                             android:src="@drawable/ic_thumb_down_black_24dp"
@@ -153,20 +151,14 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:fontFamily="@font/barlow_regular"
                             android:text="Downvote"
+                            android:gravity="center_vertical"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
 
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_margin="1dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@color/white" />
                 </LinearLayout>
 
             </LinearLayout>
