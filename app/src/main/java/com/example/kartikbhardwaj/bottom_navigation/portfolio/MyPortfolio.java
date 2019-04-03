@@ -1,11 +1,14 @@
 package com.example.kartikbhardwaj.bottom_navigation.portfolio;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -21,9 +24,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import com.example.kartikbhardwaj.bottom_navigation.AppConstants;
+import com.example.kartikbhardwaj.bottom_navigation.NetworkConnectionBroadcastReveiver;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.google.android.material.button.MaterialButton;
 import com.nex3z.togglebuttongroup.button.LabelToggle;
+import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker;
+import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,8 +39,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.kartikbhardwaj.bottom_navigation.NetworkConnectionBroadcastReveiver.IS_NETWORK_AVAILABLE;
 
-public class MyPortfolio extends AppCompatActivity {
+
+public class MyPortfolio extends AppCompatActivity implements InternetConnectivityListener {
     EditText newportfolioNameTV;
     MaterialButton createPortfolio;
     private RequestQueue portfolioListRequestQueue;
@@ -45,6 +53,8 @@ public class MyPortfolio extends AppCompatActivity {
     RecyclerView myPortfolioListRV;
     Map<String,String> myPortfolioRequestHeader = new ArrayMap<>();
     List<MyPortfolioModel> myPortfolioModelList;
+    InternetAvailabilityChecker internetAvailabilityChecker;
+    int connectionStatus =0;
 
 
     @Override
@@ -55,9 +65,34 @@ public class MyPortfolio extends AppCompatActivity {
         setContentView(R.layout.activity_my_portfolio);
         myPortfolioListRV = findViewById(R.id.my_portfolio);
         final Context context = MyPortfolio.this;
+        InternetAvailabilityChecker.init(this);
+
+        internetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
+        internetAvailabilityChecker.addInternetConnectivityListener(this);
 
 
-        createPortfolio=findViewById(R.id.my_portfolio_create_new_btn);
+
+
+//        IntentFilter intentFilter = new IntentFilter(NetworkConnectionBroadcastReveiver.NETWORK_AVAILABLE_ACTION);
+//        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                boolean isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
+//                String networkStatus = isNetworkAvailable ? "connected" : "disconnected";
+//                if(!isNetworkAvailable){
+//                    Toast.makeText(MyPortfolio.this,"Internet Connection Lost",Toast.LENGTH_LONG).show();
+//                    Log.d("network","no internet ");
+//
+//                }
+//
+//            }
+//        }, intentFilter);
+//
+
+
+
+
+    createPortfolio=findViewById(R.id.my_portfolio_create_new_btn);
         newportfolioNameTV = findViewById(R.id.portfolio_name);
         smallCapLabelToggle = findViewById(R.id.my_portfolio_capex_small_cap_toggle_btn);
         midCapLabelToggle = findViewById(R.id.my_portfolio_capex_mid_cap_toggle_btn);
@@ -88,6 +123,7 @@ public class MyPortfolio extends AppCompatActivity {
                 selectedToggle = "nifty500";
             }
         });
+
 
 
 
@@ -234,4 +270,50 @@ public class MyPortfolio extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public void onInternetConnectivityChanged(boolean isConnected) {
+
+
+        if(isConnected!=true)
+        {
+            Toast.makeText(MyPortfolio.this,"Internet Connection Lost .Please check your Network ",Toast.LENGTH_LONG).show();
+
+
+        } if(isConnected&&(connectionStatus>=1)){
+
+            Toast.makeText(MyPortfolio.this,"Back Online .",Toast.LENGTH_LONG).show();
+           // finish();
+           // Intent intent=new Intent(this,MyPortfolio.class);
+            //startActivity(intent);
+        }
+        Log.d("library","statechanged");
+
+        connectionStatus++;
+
+
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        internetAvailabilityChecker
+                .removeInternetConnectivityChangeListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        internetAvailabilityChecker
+                .removeInternetConnectivityChangeListener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        internetAvailabilityChecker
+                .removeInternetConnectivityChangeListener(this);
+
+
+    }
 }

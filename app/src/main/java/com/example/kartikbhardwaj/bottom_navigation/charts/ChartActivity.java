@@ -2,6 +2,7 @@ package com.example.kartikbhardwaj.bottom_navigation.charts;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import pl.droidsonroids.gif.GifImageView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -42,6 +44,7 @@ public class ChartActivity extends AppCompatActivity {
     summaryMarketCap, summaryBeta, summaryDayRange, incomeGrossProfit, incomeOperatingIncome,
     incomeOperationalIncome, balanceAssets, balanceLiabilities,
     balanceNetTangibleAssets;
+    GifImageView loading;
 
 
     @Override
@@ -58,9 +61,11 @@ public class ChartActivity extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.web_view_chart);
         webView.getSettings().setJavaScriptEnabled(true);
 //        webView.loadUrl("http://data.cyllide.com/data/chart/\""+ticker+"\"/\""+"1D\"");
-        webView.loadUrl("http://data.cyllide.com/data/chart/\"RELIANCE\"/\"1D\"");
         webView.getSettings().setDomStorageEnabled(true);
+
+        webView.loadUrl("http://data.cyllide.com/data/chart/\"RELIANCE\"/\"1D\"");
         balanceAssets = findViewById(R.id.balance_total_assets);
+
 
 
         summaryAsk = findViewById(R.id.summary_ask);
@@ -218,6 +223,8 @@ public class ChartActivity extends AppCompatActivity {
 }
     public void setJavaScriptInterface(String frequency){
         webView.addJavascriptInterface(new JavaScriptChartInterface(this,ticker,frequency), "Android");
+
+
         webView.loadUrl("http://data.cyllide.com/data/chart/\""+ticker+"\"/\""+frequency+"\"");
 
     }
@@ -232,33 +239,43 @@ public class ChartActivity extends AppCompatActivity {
         oneMonth.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary));
         sixMonth.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary));
         oneYear.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary));
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setDomStorageEnabled(true);
+       // webView.getSettings().setJavaScriptEnabled(true);
+       // webView.getSettings().setDomStorageEnabled(true);
 
         switch (view.getId()) {
             case R.id.chart_button_one_day:
                 oneDay.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
                 oneDay.setTextColor(ContextCompat.getColor(this,R.color.white));
                 setJavaScriptInterface("1D");
+
                 break;
             case R.id.chart_button_five_days:
                 fiveDay.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
                 fiveDay.setTextColor(ContextCompat.getColor(this,R.color.white));
+
+
                 setJavaScriptInterface("5D");
                 break;
             case R.id.chart_button_one_month:
                 oneMonth.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
                 oneMonth.setTextColor(ContextCompat.getColor(this,R.color.white));
+
+
                 setJavaScriptInterface("1M");
                 break;
             case R.id.chart_button_six_months:
                 sixMonth.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
                 sixMonth.setTextColor(ContextCompat.getColor(this,R.color.white));
+
+
                 setJavaScriptInterface("6M");
                 break;
             case R.id.chart_button_one_year:
                 oneYear.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
                 oneYear.setTextColor(ContextCompat.getColor(this,R.color.white));
+
+
+
                 setJavaScriptInterface("1Y");
                 break;
         }

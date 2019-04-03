@@ -2,15 +2,18 @@ package com.example.kartikbhardwaj.bottom_navigation.portfolio;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,35 +23,56 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kartikbhardwaj.bottom_navigation.R;
 import com.nex3z.togglebuttongroup.button.LabelToggle;
+import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker;
+import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
 
-public class PortfolioActivity extends AppCompatActivity {
+public class PortfolioActivity extends AppCompatActivity  implements InternetConnectivityListener {
 
     ImageView stockAnalysis, orderHistory, portfolioPositions;
     FrameLayout fl;
     LabelToggle oneDay, oneWeek, oneMonth, oneYear, sixMonths;
     RequestQueue requestQueue;
     TextView previousCloseTV,openTV,dailyRangeTV,yearlyRangeTV;
+    int connectionStatus1=0;
+    int ConnectionStatus=1;
+    InternetAvailabilityChecker internetAvailabilityChecker;
 
+WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolio);
 
-        final WebView webView = (WebView) findViewById(R.id.web_view_chart_portfolio);
+         webView =  findViewById(R.id.web_view_chart_portfolio);
         webView.getSettings().setJavaScriptEnabled(true);
+
+
+        InternetAvailabilityChecker.init(this);
+
+        internetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
+        internetAvailabilityChecker.addInternetConnectivityListener(this);
+
+
         webView.loadUrl("file:///android_asset/oneday.html");
 
         oneDay = findViewById(R.id.nifty_one_day);
         oneDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webView.loadUrl("file:///android_asset/oneday.html");
+
+                if(ConnectionStatus==1){
+
+                webView.loadUrl("file:///android_asset/oneday.html");}
+                else {
+                    Toast.makeText(PortfolioActivity.this,"Internet Not Connected",Toast.LENGTH_LONG).show();
+
+                }
             }
         });
 
@@ -56,15 +80,34 @@ public class PortfolioActivity extends AppCompatActivity {
         oneWeek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webView.loadUrl("file:///android_asset/oneweek.html");
+
+                if(ConnectionStatus==1){
+
+
+
+                webView.loadUrl("file:///android_asset/oneweek.html");}
+                else {                    Toast.makeText(PortfolioActivity.this,"Internet Not Connected",Toast.LENGTH_LONG).show();
+                }
             }
         });
 
         oneMonth = findViewById(R.id.nifty_one_mon);
         oneMonth.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
-                webView.loadUrl("file:///android_asset/onemonth.html");
+
+                if(ConnectionStatus==1){
+
+
+                webView.loadUrl("file:///android_asset/onemonth.html");}
+                else{
+
+                    Toast.makeText(PortfolioActivity.this,"Internet Connection Lost .Please check your Network ",Toast.LENGTH_LONG).show();
+
+
+                }
             }
         });
 
@@ -72,7 +115,13 @@ public class PortfolioActivity extends AppCompatActivity {
         sixMonths.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webView.loadUrl("file:///android_asset/sixmonths.html");
+
+                if(ConnectionStatus==1){
+
+
+                webView.loadUrl("file:///android_asset/sixmonths.html");}
+                else{                    Toast.makeText(PortfolioActivity.this,"Internet Connection Lost .Please check your Network ",Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -80,7 +129,17 @@ public class PortfolioActivity extends AppCompatActivity {
         oneYear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webView.loadUrl("file:///android_asset/oneyear.html");
+
+                if(ConnectionStatus==1){
+
+
+                webView.loadUrl("file:///android_asset/oneyear.html");}
+
+                else{
+                    Toast.makeText(PortfolioActivity.this,"Internet Connection Lost .Please check your Network ",Toast.LENGTH_LONG).show();
+
+
+                }
             }
         });
 
@@ -97,9 +156,14 @@ public class PortfolioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if(ConnectionStatus==1){
+
                 Intent intent = new Intent(PortfolioActivity.this, PortfolioDetailActivity.class);
                 intent.putExtra("id","stockAnalysis");
-                startActivity(intent);
+                startActivity(intent);}else
+                {
+                    Toast.makeText(PortfolioActivity.this,"Internet Not Connected",Toast.LENGTH_LONG).show();
+                }
 
 
             }
@@ -109,10 +173,15 @@ public class PortfolioActivity extends AppCompatActivity {
         orderHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(ConnectionStatus==1){
                 Intent intent = new Intent(PortfolioActivity.this, PortfolioDetailActivity.class);
                 intent.putExtra("id","orderHistory");
-                startActivity(intent);
+                startActivity(intent);}
+                else
+                {
+                    Toast.makeText(PortfolioActivity.this,"Internet Not Connected",Toast.LENGTH_LONG).show();
+
+                }
 
             }
         });
@@ -122,9 +191,14 @@ public class PortfolioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if(ConnectionStatus==1){
                 Intent intent = new Intent(PortfolioActivity.this, PortfolioDetailActivity.class);
                 intent.putExtra("id","portfolioPositions");
-                startActivity(intent);
+                startActivity(intent);}
+                else {
+                    Toast.makeText(PortfolioActivity.this,"Internet Not Connected",Toast.LENGTH_LONG).show();
+
+                }
 
             }
         });
@@ -169,4 +243,44 @@ public class PortfolioActivity extends AppCompatActivity {
 
         requestQueue.add(stringRequest);
     }
+
+    @Override
+    public void onInternetConnectivityChanged(boolean isConnected) {
+
+        if(isConnected!=true)
+        {
+            Toast.makeText(PortfolioActivity.this,"internet Connection Lost "+String.valueOf(connectionStatus1),Toast.LENGTH_LONG).show();
+            ConnectionStatus=0;
+
+
+        } if(isConnected==true&&(connectionStatus1>=1)){
+
+            Toast.makeText(PortfolioActivity.this,"Back Online .",Toast.LENGTH_LONG).show();
+            ConnectionStatus=1;
+
+        }
+        //Toast.makeText(PortfolioActivity.this,String.valueOf(ConnectionStatus),Toast.LENGTH_LONG).show();
+        Log.d("library","statechanged");
+        connectionStatus1++;
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        InternetAvailabilityChecker.init(this);
+
+        internetAvailabilityChecker
+                .removeInternetConnectivityChangeListener(this);
+
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+        internetAvailabilityChecker
+                .removeInternetConnectivityChangeListener(this);
+    }
+
 }

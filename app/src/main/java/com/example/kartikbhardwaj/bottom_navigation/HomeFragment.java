@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -27,6 +30,8 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.android.material.card.MaterialCardView;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.Calendar;
 
 public class HomeFragment extends Fragment {
@@ -82,15 +87,38 @@ public class HomeFragment extends Fragment {
         contest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(), MonthlyActivity.class);
+
+                ConnectivityManager conMgr =(ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo=conMgr.getActiveNetworkInfo();
+
+                if(netInfo ==null||!netInfo.isConnected()||!netInfo.isAvailable())
+                {
+                    Toast.makeText(getContext(),"Check your Network Connection",Toast.LENGTH_LONG).show();
+
+                } else {
+                    Intent intent=new Intent(getContext(), MonthlyActivity.class);
                 startActivity(intent);
+                }
                 }
         });
         portfolios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(), MyPortfolio.class);
-                startActivity(intent);
+
+                ConnectivityManager conMgr =(ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo=conMgr.getActiveNetworkInfo();
+
+                if(netInfo ==null||!netInfo.isConnected()||!netInfo.isAvailable())
+                {
+                    Toast.makeText(getContext(),"Poor Network Connection",Toast.LENGTH_LONG).show();
+
+                } else {
+                    Intent portfolioIntent =new Intent(getContext(),MyPortfolio.class);
+                    startActivity(portfolioIntent);
+
+
+                }
+
             }
         });
 
@@ -99,7 +127,18 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 SharedPreferences sharedPreferences = getContext().getSharedPreferences("AUTHENTICATION",Context.MODE_PRIVATE);
                 String token = sharedPreferences.getString("token", "Not found!");
-                Intent intent;
+
+                ConnectivityManager conMgr =(ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo=conMgr.getActiveNetworkInfo();
+
+
+                if(netInfo ==null||!netInfo.isConnected()||!netInfo.isAvailable())
+                {
+                    Toast.makeText(getContext(),"Check your Network Connection",Toast.LENGTH_LONG).show();
+
+
+                } else {
+                    Intent intent;
 //                if(token.equals("Not found!")){
 //                    intent = new Intent(getContext(), PhoneAuth.class);
 //                }
@@ -108,14 +147,32 @@ public class HomeFragment extends Fragment {
 //                }
 
                 getContext().startActivity(intent);
+
+
                 }
+
+
+            }
 
         });
         forum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), ForumActivity.class);
-                getContext().startActivity(intent);
+
+
+                ConnectivityManager conMgr =(ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo=conMgr.getActiveNetworkInfo();
+
+                if(netInfo ==null||!netInfo.isConnected()||!netInfo.isAvailable())
+                {
+                    Toast.makeText(getContext()," Check your Network Connection",Toast.LENGTH_LONG).show();
+
+                } else {
+                    Intent intent = new Intent(getContext(), ForumActivity.class);
+                getContext().startActivity(intent);}
+
+
+
             }
         });
         }

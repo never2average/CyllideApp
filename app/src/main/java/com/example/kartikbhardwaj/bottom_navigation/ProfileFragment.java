@@ -9,6 +9,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -47,7 +49,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.loader.content.CursorLoader;
 import de.hdodenhof.circleimageview.CircleImageView;
-import me.echodev.resizer.Resizer;
 
 
 import java.io.File;
@@ -188,9 +189,23 @@ public class ProfileFragment extends Fragment {
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 0);
+
+
+                ConnectivityManager conMgr =(ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo=conMgr.getActiveNetworkInfo();
+
+                if(netInfo ==null||!netInfo.isConnected()||!netInfo.isAvailable())
+                {
+                    Toast.makeText(getContext(),"Poor Network Connection",Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    Intent intent = new Intent(Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, 0);
+                }
+
+
             }
         });
 
@@ -232,7 +247,7 @@ public class ProfileFragment extends Fragment {
         if (resultCode == RESULT_OK){
 
             targetUri = data.getData();
-            Glide.with(this).load(targetUri).into(profilePic);
+            //Glide.with(this).load(targetUri).into(profilePic);
 
 
             //textTargetUri.setText(targetUri.toString());\
@@ -352,7 +367,7 @@ public class ProfileFragment extends Fragment {
         if(targetUri != null)
         {
             final ProgressDialog progressDialog = new ProgressDialog(context);
-            progressDialog.setTitle("Uploading...");
+            progressDialog.setTitle("Sync...");
             progressDialog.setCancelable(false);
             progressDialog.show();
 
@@ -366,6 +381,14 @@ public class ProfileFragment extends Fragment {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     Uri downloaduri = uri;
+
+                                    Glide
+                                            .with(getContext())
+                                            .load(uri)
+                                            .placeholder(R.drawable.loadinganimation)
+                                            .into(profilePic);
+
+
                                     SharedPreferences.Editor editor=sharedPreferences.edit();
 
                                     editor.putString("profileUri",downloaduri.toString());
@@ -395,7 +418,7 @@ public class ProfileFragment extends Fragment {
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                             double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
 
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                            progressDialog.setMessage("Sync "+(int)progress+"%");
                         }
                     });
         }

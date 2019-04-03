@@ -4,10 +4,16 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
@@ -21,14 +27,20 @@ import com.example.kartikbhardwaj.bottom_navigation.notification.NotificationAct
 
 import com.example.kartikbhardwaj.bottom_navigation.portfolio.MyPortfolio;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.firebase.internal.InternalTokenResult;
+import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker;
+import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity{
+import static com.example.kartikbhardwaj.bottom_navigation.NetworkConnectionBroadcastReveiver.IS_NETWORK_AVAILABLE;
+
+public class MainActivity extends AppCompatActivity implements InternetConnectivityListener {
 
 
     Toolbar toolbar;
@@ -37,6 +49,7 @@ public class MainActivity extends AppCompatActivity{
     ImageView notificationButton;
      com.github.clans.fab.FloatingActionButton referrals;
     com.github.clans.fab.FloatingActionButton faq;
+    InternetAvailabilityChecker internetAvailabilityChecker;
 
 
     boolean doubleBackToExitPressedOnce = false;
@@ -81,6 +94,10 @@ public class MainActivity extends AppCompatActivity{
         profilepic=findViewById(R.id.profilePic);
 
         setApplicationConstants();
+        InternetAvailabilityChecker.init(this);
+        internetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
+        internetAvailabilityChecker.addInternetConnectivityListener(this);
+
 
 
         loadfragment(new HomeFragment());
@@ -117,6 +134,20 @@ public class MainActivity extends AppCompatActivity{
 
             }
         });
+//        IntentFilter intentFilter = new IntentFilter(NetworkConnectionBroadcastReveiver.NETWORK_AVAILABLE_ACTION);
+//        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                boolean isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
+//                String networkStatus = isNetworkAvailable ? "connected" : "disconnected";
+//                if(!isNetworkAvailable){
+//                    Toast.makeText(MainActivity.this,"Internet Connection Lost",Toast.LENGTH_LONG).show();
+//
+//                }
+//
+//            }
+//        }, intentFilter);
+//
 
 
 
@@ -202,8 +233,23 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void switchToPortfolioActivity(View view){
-        Intent portfolioIntent =new Intent(MainActivity.this,MyPortfolio.class);
-        startActivity(portfolioIntent);
+
+        ConnectivityManager conMgr =(ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo=conMgr.getActiveNetworkInfo();
+
+        if(netInfo ==null||!netInfo.isConnected()||!netInfo.isAvailable())
+        {
+            Toast.makeText(MainActivity.this,"Poor Network Connection",Toast.LENGTH_LONG).show();
+
+        } else {
+            Intent portfolioIntent =new Intent(MainActivity.this,MyPortfolio.class);
+            startActivity(portfolioIntent);
+
+
+        }
+
+
+
     }
 
     private void swaphiwFragment(){
@@ -265,4 +311,15 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+    @Override
+    public void onInternetConnectivityChanged(boolean isConnected) {
+
+        Log.d("library","changed");
+        if(!isConnected)
+        {
+            Toast.makeText(MainActivity.this,"please check your internet connection",Toast.LENGTH_LONG).show();
+
+        }
+
+    }
 }

@@ -33,10 +33,14 @@
             android:layout_marginBottom="20dp"
             app:cardElevation="4dp">
 
-            <WebView
+
+
+        <WebView
                 android:id="@+id/web_view_chart_portfolio"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+            />
+
 
         </com.google.android.material.card.MaterialCardView>
 
