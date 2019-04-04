@@ -30,6 +30,7 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
@@ -178,13 +179,15 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    String string = jsonObject.getString("data");
+                    Double data = jsonObject.getDouble("data");
+                    Double movement = jsonObject.getDouble("movement");
+                    DecimalFormat df = new DecimalFormat("####0.000");
                     if (jsonObject.getDouble("movement") >= 0) {
                         stockValNet.setTextColor(Color.parseColor("#00ff00"));
-                        stockValNet.setText(string + "(+" + String.valueOf(jsonObject.getDouble("movement")) + "%)" + "▲");
+                        stockValNet.setText(df.format(data) + "(+" + df.format(movement) + "%)" + "▲");
                     } else {
                         stockValNet.setTextColor(Color.parseColor("#ff0000"));
-                        stockValNet.setText(string + "(" + String.valueOf(jsonObject.getDouble("movement"))+ "%)" + "▼");
+                        stockValNet.setText(df.format(data)+ "(" + df.format(movement) + "%)" + "▼");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

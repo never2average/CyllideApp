@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.contests.PortfolioViewerDialogFragment;
 import com.cyllide.app.v1.R;
 
@@ -40,14 +41,6 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
             profilePicView = view.findViewById(R.id.leaderboard_profile_iv);
             cv= view.findViewById(R.id.leaderboard_card_view);
             context= view.getContext();
-            cv.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view){
-                    DialogFragment dialogFragment = new PortfolioViewerDialogFragment();
-                    dialogFragment.show(fragmentManager, "PortfolioViewer");
-            }
-            });
 
         }
 
@@ -77,6 +70,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
                 .apply(RequestOptions.circleCropTransform())
                 .apply(RequestOptions.placeholderOf(R.drawable.bulb))
                 .into(holder.profilePicView);
+
         if(position%2==0){
            holder.itemView.findViewById(R.id.leaderboard_card_view).
                    setBackgroundResource(R.color.lightgray);

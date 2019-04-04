@@ -6,6 +6,8 @@ import android.widget.TextView;
 import com.cyllide.app.v1.R;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,10 +29,12 @@ public class OrderHistoryViewHolder extends RecyclerView.ViewHolder {
 
     public void populate(OrderHistoryModel orderHistoryModel){
         DecimalFormat format = new DecimalFormat("##.00");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(Long.valueOf(orderHistoryModel.getExitTime()));
         tickerName.setText(orderHistoryModel.getStockTicker());
         positionType.setText(orderHistoryModel.getPositionType());
         exitPrice.setText(String.valueOf(orderHistoryModel.getExitPrice()));
-        exitTime.setText(orderHistoryModel.getExitTime());
+        exitTime.setText(dateFormat.format(date));
         entryPrice.setText(String.valueOf(orderHistoryModel.getEntryPrice()));
         orderQuantity.setText(String.valueOf(orderHistoryModel.getQuantity()));
         if (orderHistoryModel.getPositionType().equals("Long")) {

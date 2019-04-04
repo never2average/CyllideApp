@@ -35,12 +35,6 @@ public class QuizRevivePopupFragment extends DialogFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.quiz_revival_xml, container, false);
-
-
-
-
-        // Do all the stuff to initialize your custom view
-
         return v;
     }
 

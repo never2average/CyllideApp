@@ -108,45 +108,18 @@ public class ProfileFragment extends Fragment {
         if(sharedPreferences.getString("profileUri",null)==null)
         {
             Toast.makeText(getContext(),"no uri found for profile pic",Toast.LENGTH_LONG).show();
-
             getProfilePicVolley();
-
-
-
-
         }else{
             String ur=sharedPreferences.getString("profileUri",null);
             Uri uri=Uri.parse(ur);
-
-
-
-
-
-
-
-
-
             Glide.with(getContext()).load(uri).into(profilePic);
             Toast.makeText(getContext(),ur,Toast.LENGTH_LONG).show();
-
-
-
-
         }
 
 
         final Dialog dialog=new Dialog(getContext());
         dialog.setContentView(R.layout.quiz_wining_xml);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-
-
-
-
-
-
-
-
 
         cross=view.findViewById(R.id.cross_btn);
         cross.setOnClickListener(new View.OnClickListener() {
@@ -157,10 +130,9 @@ public class ProfileFragment extends Fragment {
                 FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container,fragment).commit();
 
-
-
             }
         });
+
         username = view.findViewById(R.id.profile_username);
         quizzesWon = view.findViewById(R.id.profile_quiz_wins);
         quizzesParticipated = view.findViewById(R.id.profile_quizzes);

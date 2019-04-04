@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="400dp"
+        android:background="@drawable/quiz_wining_drawable"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cross_icon"
+            android:tint="@color/colorPrimary"
+            android:layout_gravity="right"
+            android:id="@+id/close_loser_popup"
+            />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thanks for Playing"
+            android:textSize="23dp"
+            android:layout_margin="@dimen/margin"
+            android:textColor="#00B9FF"/>
+
+        <ImageView
+             android:layout_width="match_parent"
+             android:layout_height="200dp"
+             android:src="@drawable/betterluck" />
+
+        <TextView
+            android:gravity="center_vertical"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textColor="@android:color/white"
+            android:text="TIP: Reading articles in the content section can boost your odds of winng quizzes"/>
+
+    </LinearLayout>
+
+</LinearLayout>

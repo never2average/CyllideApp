@@ -1,5 +1,7 @@
 package com.cyllide.app.v1.quiz;
 
+
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -14,9 +16,12 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -43,13 +48,10 @@ import androidx.core.content.ContextCompat;
 public class QuizActivity extends AppCompatActivity {
 
     public static boolean hasRevive = false;
-
-    ProgressBar remainingTime;
-    TextView progressText;
     private Handler handler = new Handler();
-    int progressStatus = 0;
     CountDownTimer countDownTimer;
     CircularProgressBar circularProgressBar;
+    ImageView closePrizePopup;
     String selectedOption = "noOption";
     TextView mainQuestion, optionA, optionB, optionC, optionD, textTimer, viewersTV;
     MaterialCardView option1CV,option2CV,option3CV,option4CV;
@@ -68,13 +70,19 @@ public class QuizActivity extends AppCompatActivity {
     private int questionID = -1;
     Dialog revivalpopup;
     Dialog quizWinPopup;
-    ImageView quizActivityAnswerIndicator;
+    Dialog losersPopup;
+    ImageView quizActivityAnswerIndicator, sendUPI;
     private String quizID;
+    ImageView exitQuiz;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences prefs = getSharedPreferences("COINS", MODE_PRIVATE);
+        String restoredText = prefs.getString("coinsRemaining", "10");
+        AppConstants.coins = Integer.parseInt(restoredText);
 
         setContentView(R.layout.activity_quiz);
         revivalpopup=new Dialog(this);
@@ -85,7 +93,25 @@ public class QuizActivity extends AppCompatActivity {
         quizWinPopup.setContentView(R.layout.quiz_wining_xml);
         quizWinPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+        losersPopup=new Dialog(this);
+        losersPopup.setContentView(R.layout.quiz_loser_popup);
+        losersPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView imageView = losersPopup.findViewById(R.id.close_loser_popup);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                losersPopup.dismiss();
+            }
+        });
+
         mainQuestion = findViewById(R.id.questionText);
+        exitQuiz = findViewById(R.id.exit_quiz);
+        exitQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         optionA = findViewById(R.id.activity_quiz_option_1_text_view);
         optionB = findViewById(R.id.activity_quiz_option_2_text_view);
@@ -157,10 +183,6 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
         circularProgressBar = findViewById(R.id.question_time_remaining);
         textTimer = findViewById(R.id.textTimer);
         Intent intent = getIntent();
@@ -182,38 +204,24 @@ public class QuizActivity extends AppCompatActivity {
 
     private void startTimer(final int seconds) {
         countDownTimer = new CountDownTimer(  seconds * 1000, 500) {
-            // 500 means, onTick function will be called at every 500 milliseconds
-
             @Override
             public void onTick(long leftTimeInMilliseconds) {
                 long seconds = leftTimeInMilliseconds / 1000;
-
-                // barTimer.setProgress();
                 textTimer.setText(String.format("%02d", seconds/60) + ":" + String.format("%02d", seconds%60));
-                // format the textview to show the easily readable format
-
             }
             @Override
             public void onFinish() {
                 if(textTimer.getText().equals("00:00")){
-
                     textTimer.setText("STOP");
                     if(questionID == 9){
                         finishQuiz(questionID);
                     }
                     else{
                         checkAnswer(questionID);
-
-
                     }
-
-
-
-
                 }
                 else{
                     textTimer.setText("2:00");
-                    // barTimer.setProgress(60*seconds);
                 }
             }
         }.start();
@@ -222,7 +230,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private boolean checkAnswer(final int questionID){
 //        if(selectedOption)
-        String url = "http://api.cyllide.com/api/client/quiz/submit";
+        String url = getResources().getString(R.string.apiBaseURL)+"quiz/submit";
         try {
             JSONObject quizObject = jsonQuestionArray.getJSONObject(questionID);
             String id = quizObject.getJSONObject("_id").getString("$oid");
@@ -296,21 +304,20 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void changeQuestion(){
-        Log.d("changequestion","inside change question");
         questionID +=1;
         String url = getResources().getString(R.string.apiBaseURL)+"quiz/nextques";
         viewRequestQueue = Volley.newRequestQueue(QuizActivity.this);
         viewRequestHeader.put("token",AppConstants.token);
 
         JSONObject quizObject = null;
-        String id = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8";
+        String id;
         try {
             quizObject = jsonQuestionArray.getJSONObject(questionID);
             id = quizObject.getJSONObject("_id").getString("$oid");
+            viewRequestHeader.put("questionID",id);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        viewRequestHeader.put("questionID",id);
 
         StringRequest submissionRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -358,7 +365,6 @@ public class QuizActivity extends AppCompatActivity {
         option4PB.setVisibility(View.INVISIBLE);
 
 
-        Log.d("Is it changing?",option2CV.getCardBackgroundColor().toString());
 
 
         option1CV.setBackgroundDrawable(ContextCompat.getDrawable(QuizActivity.this,R.drawable.drawable_activity_quiz_unselected_option));
@@ -367,7 +373,6 @@ public class QuizActivity extends AppCompatActivity {
         option4CV.setBackgroundDrawable(ContextCompat.getDrawable(QuizActivity.this,R.drawable.drawable_activity_quiz_unselected_option));
 
 
-        Log.d("Is it changing?",option2CV.getCardBackgroundColor().toString());
 
         optionA.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
         optionB.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.colorPrimary));
@@ -404,42 +409,58 @@ public class QuizActivity extends AppCompatActivity {
             Toast.makeText(this,"You  lol",Toast.LENGTH_LONG).show();
         }
         else{
-            Toast.makeText(this,"You Win lol",Toast.LENGTH_LONG).show();
-//            TextView
-            TextInputEditText phoneNumber = quizWinPopup.findViewById(R.id.paytm_ph_no);
+            TextInputEditText upiID = quizWinPopup.findViewById(R.id.upi_id);
+            final String string = upiID.getText().toString();
             quizWinPopup.show();
-            winPaytmRequestQueue = Volley.newRequestQueue(QuizActivity.this);
-            winPaytmRequestHeader.put("quizID",quizID);
-            winPaytmRequestHeader.put("token",AppConstants.token);
-            String url = getResources().getString(R.string.apiBaseURL)+"quiz/revivie";
-            //TODO CHANGE sTUFF
-            StringRequest sr = new StringRequest(Request.Method.POST,url,  new Response.Listener<String>() {
+            closePrizePopup = quizWinPopup.findViewById(R.id.close_prize_popup);
+            closePrizePopup.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onResponse(String response) {
-                    Log.d("submissionResponse", response);
-
-
+                public void onClick(View v) {
+                    quizWinPopup.dismiss();
                 }
-            }, new Response.ErrorListener() {
+            });
+            sendUPI = quizWinPopup.findViewById(R.id.upi_id);
+            sendUPI.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onErrorResponse(VolleyError error) {
-
+                public void onClick(View v) {
+                    quizWinPopup.dismiss();
+                    Toast.makeText(QuizActivity.this,"Money will be sent",Toast.LENGTH_LONG).show();
+                    winnersMoney(string);
                 }
-            }){
-                @Override
-                public Map<String,String> getHeaders(){
-
-                    return winPaytmRequestHeader;
-                }
-            };
-
-            winPaytmRequestQueue.add(sr);
-
+            });
 
         }
     }
 
+    void winnersMoney(String upiID){
+        winPaytmRequestQueue = Volley.newRequestQueue(QuizActivity.this);
+        winPaytmRequestHeader.put("quizID",quizID);
+        winPaytmRequestHeader.put("token",AppConstants.token);
+        winPaytmRequestHeader.put("upiID",upiID);
+        String url = getResources().getString(R.string.apiBaseURL)+"quiz/reward";
+        StringRequest sr = new StringRequest(Request.Method.POST,url,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("moneyResponse", response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders(){
+
+                return winPaytmRequestHeader;
+            }
+        };
+
+        winPaytmRequestQueue.add(sr);
+    }
+
     private void showAnswer(String response){
+
         quizAnswersPercentRequestQueue = Volley.newRequestQueue(this);
         answerPercentRequestHeader.put("token",AppConstants.token);
         JSONObject quizObject = null;
@@ -533,13 +554,8 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void showRevival(){
-        SharedPreferences prefs = getSharedPreferences("COINS", MODE_PRIVATE);
-        String restoredText = prefs.getString("coinsRemaining", "10");
-        AppConstants.coins = Integer.parseInt(restoredText);
-        if (restoredText.equals("0")) {
 
-        }
-        else if(AppConstants.coins>=5){
+        if(AppConstants.coins>0){
             TextView coinsLeft = revivalpopup.findViewById(R.id.quiz_revival_coins_left);
             TextView revivalYes = revivalpopup.findViewById(R.id.text_view_yes);
             TextView revivalNo = revivalpopup.findViewById(R.id.text_view_no);
@@ -553,6 +569,7 @@ public class QuizActivity extends AppCompatActivity {
 
                     QuizActivity.hasRevive = true;
                     revivalpopup.dismiss();
+                    changeQuestion();
 
                 }
             });
@@ -561,69 +578,56 @@ public class QuizActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     QuizActivity.hasRevive = false;
-                    Toast.makeText(view.getContext(),"No",Toast.LENGTH_SHORT).show();
                     revivalpopup.dismiss();
+                    losersPopup.show();
                 }
             });
-
             revivalpopup.show();
-
             revivalProgressBar.setProgressWithAnimation(0,6000);
-
-
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
 
                     revivalpopup.dismiss();
                     if(QuizActivity.hasRevive == true){
-                        AppConstants.coins -= 5;
+                        AppConstants.coins -= 1;
+                        JSONObject quizObject = null;
+                        try {
+                            quizObject = jsonQuestionArray.getJSONObject(questionID);
+                            String id = quizObject.getJSONObject("_id").getString("$oid");
+                            reviveRequestHeader.put("questionID",id);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         reviveRequestQueue = Volley.newRequestQueue(QuizActivity.this);
-//                        reviveRequestHeader.put
-                        reviveRequestHeader.put("quizID",quizID);
                         reviveRequestHeader.put("token",AppConstants.token);
                         String url = getResources().getString(R.string.apiBaseURL)+"quiz/revive";
                         StringRequest sr = new StringRequest(Request.Method.POST,url,  new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Log.d("submissionResponse", response);
-                                Toast.makeText(QuizActivity.this,"Coins Remaining:"+Integer.toString(AppConstants.coins),Toast.LENGTH_SHORT).show();
                                 changeQuestion();
-
                             }
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-
                             }
                         }){
                             @Override
                             public Map<String,String> getHeaders(){
-
                                 return reviveRequestHeader;
                             }
                         };
-
                         quizAnswersRequestQueue.add(sr);
-
-
-
                     }
                     else{
-                        Toast.makeText(QuizActivity.this,"Quiz it over",Toast.LENGTH_SHORT).show();
+                        losersPopup.show();
                     }
-
                 }
             }, 3000);
-
         }
-        Toast.makeText(QuizActivity.this,"Revival popup",Toast.LENGTH_SHORT).show();
-
-
-
-
-
-
+        else{
+            losersPopup.show();
+        }
     }
 
 

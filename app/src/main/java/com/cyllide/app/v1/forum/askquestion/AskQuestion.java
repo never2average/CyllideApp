@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
@@ -17,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.R;
+import com.cyllide.app.v1.forum.ForumActivity;
 import com.cyllide.app.v1.forum.questionlist.questionPage.QuestionAnswerActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -30,6 +32,7 @@ import java.util.Map;
 public class AskQuestion extends AppCompatActivity {
 
     MaterialButton btn1, btn2, btn3, btn4, askQuestionBtn;
+    ImageView closeButton;
     TextInputEditText questionText;
     private RequestQueue askQuestionQueue;
     private Map<String, String> requestHeaders = new ArrayMap<String, String>();
@@ -45,7 +48,7 @@ public class AskQuestion extends AppCompatActivity {
         btn4=findViewById(R.id.btntag4);
         askQuestionBtn = findViewById(R.id.proceedtoask);
         questionText = findViewById(R.id.question_text);
-
+        closeButton = findViewById(R.id.close_ask_question);
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +133,14 @@ public class AskQuestion extends AppCompatActivity {
                 if(questionText.getText().toString().length()>15){
                     askQuestionVolley();
                 }
+            }
+        });
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AskQuestion.this, ForumActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

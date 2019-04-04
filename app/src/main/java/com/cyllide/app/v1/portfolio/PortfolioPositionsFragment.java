@@ -104,7 +104,7 @@ public class PortfolioPositionsFragment extends Fragment {
     private void getPendingOrders(Context context, final RecyclerView pendingOrdersRV){
         String url = getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
         pendingOrderQueue = Volley.newRequestQueue(context);
-        pendingOrderRequestHeader.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        pendingOrderRequestHeader.put("token",AppConstants.token);
         pendingOrderRequestHeader.put("portfolioID", AppConstants.portfolioID);
         pendingOrderRequestHeader.put("posType","Pending");
         Log.d("resp",AppConstants.portfolioID);

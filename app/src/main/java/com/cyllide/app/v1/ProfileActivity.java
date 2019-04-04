@@ -13,6 +13,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.cyllide.app.v1.forum.ForumActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.razerdp.widget.animatedpieview.AnimatedPieView;
@@ -94,6 +96,8 @@ public class ProfileActivity extends AppCompatActivity {
                             new SimplePieInfo( (float) lostPercent, ContextCompat.getColor(ProfileActivity.this, R.color.progressred), "Loss %" )).duration(1500);
                     contestWinPerc.applyConfig (config);
                     contestWinPerc.start();
+                    RequestOptions cropOptions = new RequestOptions().override(100,100);
+                    Glide.with(ProfileActivity.this).load(jsonResponse.getString("profilePic")).apply(cropOptions).into(profilePic);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

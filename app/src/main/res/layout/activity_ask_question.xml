@@ -14,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="436dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_weight="8"
         android:orientation="vertical"
@@ -22,9 +21,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:layout_marginTop="@dimen/default_background_stroke_width"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/close_ask_question"
+            android:src="@drawable/ic_clear_black_24dp"
+            android:tint="@color/colorPrimary"/>
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="85dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:fontFamily="@font/barlow_regular"
             android:gravity="center"
@@ -149,7 +155,6 @@
             app:backgroundTint="@color/white"
             app:cornerRadius="7dp" />
     </LinearLayout>
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/proceedtoask"
         android:layout_width="250dp"

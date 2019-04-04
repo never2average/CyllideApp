@@ -99,24 +99,19 @@ public class PortfolioActivity extends AppCompatActivity {
             }
         });
 
-
         fl = findViewById(R.id.portfolio_container);
         previousCloseTV = findViewById(R.id.previous_close_value);
         openTV = findViewById(R.id.open_value);
         dailyRangeTV = findViewById(R.id.days_range_value);
         yearlyRangeTV = findViewById(R.id.week_range_value);
-
-
         stockAnalysis = findViewById(R.id.stockchooser);
+
         stockAnalysis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(PortfolioActivity.this, PortfolioDetailActivity.class);
                 intent.putExtra("id","stockAnalysis");
                 startActivity(intent);
-
-
             }
         });
 
@@ -124,11 +119,9 @@ public class PortfolioActivity extends AppCompatActivity {
         orderHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(PortfolioActivity.this, PortfolioDetailActivity.class);
                 intent.putExtra("id","orderHistory");
                 startActivity(intent);
-
             }
         });
 
@@ -136,42 +129,14 @@ public class PortfolioActivity extends AppCompatActivity {
         portfolioPositions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(PortfolioActivity.this, PortfolioDetailActivity.class);
                 intent.putExtra("id","portfolioPositions");
                 startActivity(intent);
-
             }
         });
-
-
         getNiftySummary();
-
-
-
     }
 
-
-//    public class CustomWebView extends WebViewClient {
-//
-//
-//
-//        @Override
-//        public void onPageStarted(WebView webview, String url, Bitmap favicon) {
-//            webview.setVisibility(webview.INVISIBLE);
-//        }
-//
-//        @Override
-//        public void onPageFinished(WebView view, String url) {
-//
-//            spinner.setVisibility(View.GONE);
-//
-//            view.setVisibility(webView.VISIBLE);
-//            super.onPageFinished(view, url);
-//
-//        }
-//
-//    }
 
     private void getNiftySummary() {
 

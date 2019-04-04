@@ -1,14 +1,23 @@
 package com.cyllide.app.v1.contests.positionsRV;
 
 import android.content.Context;
+import android.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.R;
 
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -18,6 +27,8 @@ public class PositionsAdapter extends RecyclerView.Adapter<PositionsAdapter.MyVi
 
     CardView cv;
     Context context;
+    RequestQueue requestQueue;
+    Map<String,String> requestHeaders = new ArrayMap<>();
 
     private List<Positions2> positions2List;
 
@@ -29,11 +40,8 @@ public class PositionsAdapter extends RecyclerView.Adapter<PositionsAdapter.MyVi
             pName = view.findViewById(R.id.position_name);
             pReturns = view.findViewById(R.id.position_returns);
             pValue = view.findViewById(R.id.position_value);
-
             context= view.getContext();
-
         }
-
     }
 
 
@@ -62,4 +70,30 @@ public class PositionsAdapter extends RecyclerView.Adapter<PositionsAdapter.MyVi
     public int getItemCount() {
         return positions2List.size();
     }
+
+    void getPositions(){
+        requestHeaders.put("token", AppConstants.token);
+        requestHeaders.put("portfolioID", AppConstants.portfolioID);
+        requestHeaders.put("posType","Holding");
+        requestQueue = Volley.newRequestQueue(context.getApplicationContext());
+        String url = context.getApplicationContext().getResources().getString(R.string.apiBaseURL) +"portfolios/positionlist";;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders(){
+                return requestHeaders;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
 }
