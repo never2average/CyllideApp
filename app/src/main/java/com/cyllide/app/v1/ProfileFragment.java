@@ -262,7 +262,7 @@ public class ProfileFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("response",error.toString());
+
             }
         }){
           @Override

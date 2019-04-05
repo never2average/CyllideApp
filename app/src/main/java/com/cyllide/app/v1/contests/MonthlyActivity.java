@@ -35,7 +35,7 @@ import androidx.fragment.app.DialogFragment;
 
 public class MonthlyActivity extends AppCompatActivity implements PortfolioPickerDialogFragment.PortfolioPickerClickListener {
 
-    private String curr_selection = "smallcap";
+    private String curr_selection = "nifty500";
     private int curr_selection_index = 0;
     //TODO: Shift string to res
     private String[] descs = {"Small cap is a term used to classify companies with a relatively small market capitalization. A company’s market capitalization is the market value of its outstanding shares. In India, normally a company below market capitalization of Rs.5000 crores is classified as small cap company.",
@@ -69,6 +69,8 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
         linearLayout = findViewById(R.id.if_portfolio_already_exists);
 
         descTV = findViewById(R.id.desc_tv);
+        // added to remove the bug
+        curr_selection_index=3;
         updateDisplay();
 
 //        smallCapButton.setOnClickListener(new View.OnClickListener() {

@@ -40,6 +40,8 @@ public class FeedbackActivity extends AppCompatActivity {
     }
 
     void sendEmailVolley() {
+        findViewById(R.id.linearlayout).setVisibility(View.GONE);
+        findViewById(R.id.loading).setVisibility(View.VISIBLE);
         requestQueue = Volley.newRequestQueue(FeedbackActivity.this);
         String url = getResources().getString(R.string.apiBaseURL)+"sendfeedback";
         feedbackMaps.put("token",AppConstants.token);
@@ -47,6 +49,8 @@ public class FeedbackActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                findViewById(R.id.loading).setVisibility(View.GONE);
+                findViewById(R.id.linearlayout).setVisibility(View.VISIBLE);
                 feedBackBtn.setClickable(false);
                 Toast.makeText(FeedbackActivity.this,"Feedback Submitted Successfully",Toast.LENGTH_LONG).show();
                 feedbackEdittext.setText("");
@@ -54,6 +58,10 @@ public class FeedbackActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
+                findViewById(R.id.loading).setVisibility(View.GONE);
+                findViewById(R.id.linearlayout).setVisibility(View.VISIBLE);
+                Toast.makeText(FeedbackActivity.this,"Error Failed try again",Toast.LENGTH_LONG).show();
 
             }
         }){
