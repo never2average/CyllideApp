@@ -8,10 +8,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -37,7 +39,6 @@ public class QuizRulesActivity extends AppCompatActivity {
     Button startQuizButton;
     private String quizID;
     private long quizStartTime;
-    Dialog revivePopup;
     ImageView backButton;
     Calendar startTime = Calendar.getInstance();
     private Map<String,String> questionHeaders = new ArrayMap<String, String>();
@@ -55,6 +56,12 @@ public class QuizRulesActivity extends AppCompatActivity {
         startQuizButton=findViewById(R.id.startQuizButton);
         backButton = findViewById(R.id.activity_quiz_rules_back_button);
         SharedPreferences sharedPreferences = getSharedPreferences("LATESTQUIZ", 0);
+        quizStartTime = Long.parseLong(sharedPreferences.getString("time","0"));
+        if (quizStartTime != 0 && quizStartTime-System.currentTimeMillis() < 0){
+            Toast.makeText(QuizRulesActivity.this,"The Quiz has Already Started!", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(QuizRulesActivity.this,MainActivity.class));
+        }
+
         //TODO Remove hardcoded token
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +90,10 @@ public class QuizRulesActivity extends AppCompatActivity {
                     try {
                         quizID = new JSONObject(response).getJSONObject("data").getJSONObject("_id").getString("$oid");
                         quizStartTime = new JSONObject(response).getJSONObject("data").getJSONObject("quizStartTime").getLong("$date");
+                         SharedPreferences.Editor edit = getSharedPreferences("LATESTQUIZ",0).edit();
+                        edit.putString("time",Long.toString(quizStartTime));
+                        edit.putString("id",quizID);
+                        edit.apply();
                         Log.d("Response", quizID);
                         Log.d("Response", Long.toString(quizStartTime));
                         Log.d("Timer",Long.toString(quizStartTime-System.currentTimeMillis()));
@@ -104,7 +115,7 @@ public class QuizRulesActivity extends AppCompatActivity {
 
                                 String time=df.format(millisUntilFinished);
                                 if(Integer.parseInt(days)>0){
-                                startQuizButton.setText("Quiz Starts in "+days+" days "+hours+" hours.");
+                                startQuizButton.setText("Quiz Starts in "+days+" days "+hours+" hours ");
                                 }
                                 else if(Integer.parseInt(days)<=0 && Integer.parseInt(hours)>0){
                                     startQuizButton.setText("Quiz Starts in "+hours+" hours "+minute+" minutes ");
@@ -115,6 +126,7 @@ public class QuizRulesActivity extends AppCompatActivity {
                                 else{
                                     startQuizButton.setText("Quiz Starts in "+second+" seconds ");
                                 }
+                                startQuizButton.setClickable(false);
 
                             }
 
@@ -122,14 +134,7 @@ public class QuizRulesActivity extends AppCompatActivity {
                             public void onFinish() {
                                 Intent quizSwitcher = new Intent(QuizRulesActivity.this,QuizActivity.class);
                                 startActivity(quizSwitcher);
-                                startQuizButton.setOnClickListener(new View.OnClickListener() {
 
-
-                                    @Override
-                                    public void onClick(View view) {
-
-                                    }
-                                });
                             }
                         }.start();
                     } catch (JSONException e) {

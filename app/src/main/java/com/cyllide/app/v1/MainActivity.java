@@ -14,6 +14,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.cyllide.app.v1.background.services.GetLatestQuizIDService;
 import com.cyllide.app.v1.faq_view.Faq_Activity;
 import com.cyllide.app.v1.howitworks.HowItWorksFragment;
 import com.cyllide.app.v1.notification.NotificationActivity;
@@ -79,6 +80,8 @@ public class MainActivity extends AppCompatActivity{
         profilepic=findViewById(R.id.profilePic);
 
         setApplicationConstants();
+        Intent serviceIntent = new Intent(this, GetLatestQuizIDService.class);
+        startService(serviceIntent);
 
 
         loadfragment(new HomeFragment());

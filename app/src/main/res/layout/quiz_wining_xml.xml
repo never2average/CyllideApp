@@ -85,6 +85,7 @@
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:id="@+id/upi_id_button"
             android:src="@drawable/ic_upi_logo_vector"/>
 
     </LinearLayout>

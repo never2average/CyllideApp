@@ -9,6 +9,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
+import com.cyllide.app.v1.MainActivity;
 import com.cyllide.app.v1.R;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
@@ -18,11 +19,13 @@ import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -101,6 +104,14 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 losersPopup.dismiss();
+                startActivity(new Intent(QuizActivity.this,MainActivity.class));
+            }
+        });
+
+        losersPopup.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                startActivity(new Intent(QuizActivity.this,MainActivity.class));
             }
         });
 
@@ -109,7 +120,7 @@ public class QuizActivity extends AppCompatActivity {
         exitQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                startActivity(new Intent(QuizActivity.this, MainActivity.class));
             }
         });
 
@@ -214,6 +225,7 @@ public class QuizActivity extends AppCompatActivity {
                 if(textTimer.getText().equals("00:00")){
                     textTimer.setText("STOP");
                     if(questionID == 9){
+                        checkAnswer(questionID);
                         finishQuiz(questionID);
                     }
                     else{
@@ -249,6 +261,9 @@ public class QuizActivity extends AppCompatActivity {
                         Log.d("changequestion","inside response question");
                         showAnswer("");
                         if(jsonResponse.getString("data").equals("Correct")){
+                            if(questionID == 9){
+                                finishQuiz(questionID);
+                            }
                             quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
                             Log.d("changequestion","calling change change question");
 
@@ -266,13 +281,18 @@ public class QuizActivity extends AppCompatActivity {
                         }
                         else{
                             quizActivityAnswerIndicator.setImageResource(R.drawable.ic_cancel);
-                            Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                public void run() {
-                                    showRevival();
+                            if(questionID == 9){
+                                losersPopup.show();
+                            }
+                            else {
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    public void run() {
+                                        showRevival();
 
-                                }
-                            }, 2000);
+                                    }
+                                }, 2000);
+                            }
 
                         }
 
@@ -407,6 +427,7 @@ public class QuizActivity extends AppCompatActivity {
     private void finishQuiz(int questionID){
         if(questionID != 9){
             Toast.makeText(this,"You  lol",Toast.LENGTH_LONG).show();
+            losersPopup.show();
         }
         else{
             TextInputEditText upiID = quizWinPopup.findViewById(R.id.upi_id);
@@ -419,7 +440,7 @@ public class QuizActivity extends AppCompatActivity {
                     quizWinPopup.dismiss();
                 }
             });
-            sendUPI = quizWinPopup.findViewById(R.id.upi_id);
+            sendUPI = quizWinPopup.findViewById(R.id.upi_id_button);
             sendUPI.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -555,6 +576,8 @@ public class QuizActivity extends AppCompatActivity {
 
     private void showRevival(){
 
+
+
         if(AppConstants.coins>0){
             TextView coinsLeft = revivalpopup.findViewById(R.id.quiz_revival_coins_left);
             TextView revivalYes = revivalpopup.findViewById(R.id.text_view_yes);
@@ -569,7 +592,6 @@ public class QuizActivity extends AppCompatActivity {
 
                     QuizActivity.hasRevive = true;
                     revivalpopup.dismiss();
-                    changeQuestion();
 
                 }
             });
@@ -583,6 +605,7 @@ public class QuizActivity extends AppCompatActivity {
                 }
             });
             revivalpopup.show();
+            revivalProgressBar.setProgress(100);
             revivalProgressBar.setProgressWithAnimation(0,6000);
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -620,7 +643,9 @@ public class QuizActivity extends AppCompatActivity {
                         quizAnswersRequestQueue.add(sr);
                     }
                     else{
+
                         losersPopup.show();
+
                     }
                 }
             }, 3000);
