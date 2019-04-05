@@ -22,6 +22,8 @@ import com.cyllide.app.v1.notification.NotificationActivity;
 
 import com.cyllide.app.v1.portfolio.MyPortfolio;
 import com.github.clans.fab.FloatingActionMenu;
+import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker;
+import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +31,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements InternetConnectivityListener {
 
 
     Toolbar toolbar;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity{
     CircleImageView profilepic;
     ImageView notificationButton;
     com.github.clans.fab.FloatingActionButton referrals, faq, feedback, help;
+    InternetAvailabilityChecker internetAvailabilityChecker;
 
     boolean doubleBackToExitPressedOnce = false;
 
@@ -85,9 +88,13 @@ public class MainActivity extends AppCompatActivity{
 
 
         loadfragment(new HomeFragment());
+        InternetAvailabilityChecker.init(this);
+        internetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
+        internetAvailabilityChecker.addInternetConnectivityListener(this);
 
 
-         final FloatingActionMenu fabMenu;
+
+        final FloatingActionMenu fabMenu;
         fabMenu = findViewById(R.id.fabMenu);
         referrals=findViewById(R.id.referrals);
         feedback = findViewById(R.id.feedback);
@@ -254,4 +261,11 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+    @Override
+    public void onInternetConnectivityChanged(boolean isConnected) {
+        ConnectionStatus.connectionstatus=isConnected;
+
+
+
+    }
 }

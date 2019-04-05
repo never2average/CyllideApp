@@ -22,6 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import com.cyllide.app.v1.AppConstants;
+import com.cyllide.app.v1.ConnectionStatus;
 import com.cyllide.app.v1.MainActivity;
 import com.cyllide.app.v1.R;
 import com.google.android.material.button.MaterialButton;
@@ -113,6 +114,8 @@ public class MyPortfolio extends AppCompatActivity {
         createPortfolio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(ConnectionStatus.connectionstatus){
                 Log.d("capex",selectedToggle);
                 String newPortfolioName = newportfolioNameTV.getText().toString();
                 if(newPortfolioName == null){
@@ -123,7 +126,10 @@ public class MyPortfolio extends AppCompatActivity {
                     Toast.makeText(MyPortfolio.this,"Portfolio name must be atleast 8 characters long!",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                createNewPortfolio(newPortfolioName,selectedToggle);
+                createNewPortfolio(newPortfolioName,selectedToggle);}
+                else{
+                    Toast.makeText(MyPortfolio.this,"Internet Connection Lost ",Toast.LENGTH_LONG).show();
+                }
 
 
 

@@ -27,6 +27,8 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.android.material.card.MaterialCardView;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.Calendar;
 
 public class HomeFragment extends Fragment {
@@ -82,21 +84,34 @@ public class HomeFragment extends Fragment {
         contest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ConnectionStatus.connectionstatus){
                 Intent intent=new Intent(getContext(), MonthlyActivity.class);
-                startActivity(intent);
+                startActivity(intent);}
+                else{
+                    Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
+                }
                 }
         });
         portfolios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ConnectionStatus.connectionstatus){
                 Intent intent=new Intent(getContext(), MyPortfolio.class);
-                startActivity(intent);
+                startActivity(intent);}
+                else{
+                    Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
+
+
+
+
+                }
             }
         });
 
         quiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ConnectionStatus.connectionstatus){
                 SharedPreferences sharedPreferences = getContext().getSharedPreferences("AUTHENTICATION",Context.MODE_PRIVATE);
                 String token = sharedPreferences.getString("token", "Not found!");
                 Intent intent;
@@ -107,15 +122,24 @@ public class HomeFragment extends Fragment {
                     intent = new Intent(getContext(), QuizRulesActivity.class);
 //                }
 
-                getContext().startActivity(intent);
+                getContext().startActivity(intent);}
+                else {
+                    Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
+
+                }
                 }
 
         });
         forum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ConnectionStatus.connectionstatus){
                 Intent intent = new Intent(getContext(), ForumActivity.class);
-                getContext().startActivity(intent);
+                getContext().startActivity(intent);}
+                else{
+                    Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
+
+                }
             }
         });
         }

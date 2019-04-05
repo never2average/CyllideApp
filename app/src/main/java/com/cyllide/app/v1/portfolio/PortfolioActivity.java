@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cyllide.app.v1.ConnectionStatus;
 import com.cyllide.app.v1.CustomWebView;
 import com.cyllide.app.v1.R;
 import com.nex3z.togglebuttongroup.button.LabelToggle;
@@ -63,7 +65,12 @@ public class PortfolioActivity extends AppCompatActivity {
         oneDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webView.loadUrl("file:///android_asset/oneday.html");
+                if(ConnectionStatus.connectionstatus){
+                webView.loadUrl("file:///android_asset/oneday.html");}
+                else{
+                    Toast.makeText(PortfolioActivity.this,"Internet Connecion Lost",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
@@ -71,7 +78,13 @@ public class PortfolioActivity extends AppCompatActivity {
         oneWeek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webView.loadUrl("file:///android_asset/oneweek.html");
+                if(ConnectionStatus.connectionstatus){
+                webView.loadUrl("file:///android_asset/oneweek.html");}
+                else {
+                    Toast.makeText(PortfolioActivity.this,"Internet Connecion Lost",Toast.LENGTH_LONG).show();
+
+
+                }
             }
         });
 
@@ -79,7 +92,12 @@ public class PortfolioActivity extends AppCompatActivity {
         oneMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webView.loadUrl("file:///android_asset/onemonth.html");
+                if(ConnectionStatus.connectionstatus){
+                webView.loadUrl("file:///android_asset/onemonth.html");}
+                else {
+                    Toast.makeText(PortfolioActivity.this,"Internet Connecion Lost",Toast.LENGTH_LONG).show();
+
+                }
             }
         });
 
@@ -87,7 +105,12 @@ public class PortfolioActivity extends AppCompatActivity {
         sixMonths.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webView.loadUrl("file:///android_asset/sixmonths.html");
+                if(ConnectionStatus.connectionstatus){
+                webView.loadUrl("file:///android_asset/sixmonths.html");}
+                else{
+                    Toast.makeText(PortfolioActivity.this,"Internet Connecion Lost",Toast.LENGTH_LONG).show();
+
+                }
             }
         });
 
@@ -95,7 +118,12 @@ public class PortfolioActivity extends AppCompatActivity {
         oneYear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webView.loadUrl("file:///android_asset/oneyear.html");
+                if(ConnectionStatus.connectionstatus){
+                webView.loadUrl("file:///android_asset/oneyear.html");}
+                else{
+                    Toast.makeText(PortfolioActivity.this,"Internet Connecion Lost",Toast.LENGTH_LONG).show();
+
+                }
             }
         });
 

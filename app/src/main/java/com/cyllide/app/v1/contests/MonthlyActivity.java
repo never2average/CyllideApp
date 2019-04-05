@@ -69,6 +69,8 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
         linearLayout = findViewById(R.id.if_portfolio_already_exists);
 
         descTV = findViewById(R.id.desc_tv);
+        // added to remove the bug
+        curr_selection_index=3;
         updateDisplay();
 
 //        smallCapButton.setOnClickListener(new View.OnClickListener() {
