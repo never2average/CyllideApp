@@ -168,13 +168,14 @@
                         android:layout_height="wrap_content"
                         android:text="Join Contest"
                         android:id="@+id/contest_join_button"/>
+
                         <Button
-                            android:layout_marginStart="5dp"
-                            android:layout_marginEnd="5dp"
+                            android:id="@+id/contest_view_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="View Leaderboard"
-                            android:id="@+id/contest_view_button"/>
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:text="Leaderboard" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -184,7 +185,4 @@
 
 
     </RelativeLayout>
-
-
-
 </LinearLayout>
