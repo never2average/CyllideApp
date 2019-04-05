@@ -8,6 +8,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="85dp"
+        android:id="@+id/position_cv"
         android:layout_gravity="center"
         android:layout_marginStart="12dp"
         android:layout_marginTop="6dp"

@@ -45,7 +45,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersViewHolder> {
         LayoutInflater inflater=LayoutInflater.from(parent.getContext());
         View view=inflater.inflate(R.layout.pending_orders_rv_view,parent,false);
         OrdersViewHolder holder = new OrdersViewHolder(view);
-        cardView=view.findViewById(R.id.card);
+        cardView=view.findViewById(R.id.orders_card);
         return holder;
         }
 
