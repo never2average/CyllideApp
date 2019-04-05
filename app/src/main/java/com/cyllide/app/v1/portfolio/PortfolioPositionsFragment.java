@@ -46,6 +46,10 @@ public class PortfolioPositionsFragment extends Fragment {
     List ordersModel;
     RequestQueue pendingOrderQueue;
     RequestQueue holdingPositionsQueue;
+    RequestQueue deleteHoldingPositionsQueue;
+    RequestQueue deletePendingOrderQueue;
+    Map<String, String> deleteHoldingPositionRequestHeader;
+    Map<String, String> deletePendingOrderRequestHeader = new ArrayMap<>();
     Map<String, String> pendingOrderRequestHeader = new ArrayMap<>();
     Map<String, String> holdingPositionRequestHeader = new ArrayMap<>();
 
@@ -142,6 +146,47 @@ public class PortfolioPositionsFragment extends Fragment {
 
     }
 
+    private void deletePendingOrders(Context context, final RecyclerView pendingOrdersRV){
+        String url = getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
+        deletePendingOrderQueue = Volley.newRequestQueue(context);
+        deletePendingOrderRequestHeader.put("token",AppConstants.token);
+        deletePendingOrderRequestHeader.put("portfolioID", AppConstants.portfolioID);
+        deletePendingOrderRequestHeader.put("posType","Pending");
+        Log.d("resp",AppConstants.portfolioID);
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.d("resp",response);
+                    JSONArray responseData = new JSONObject(response).getJSONArray("data");
+                    populatePendingOrdersRV(responseData,pendingOrdersRV );
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Question Error", error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                return deletePendingOrderRequestHeader;
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                int mStatusCode = response.statusCode;
+                Log.d("whats failing", String.valueOf(mStatusCode));
+                return super.parseNetworkResponse(response);
+            }
+        };
+        deletePendingOrderQueue.add(stringRequest);
+
+    }
+
 
     private void getHoldingPositions(Context context, final RecyclerView recyclerView){
         String url = getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
@@ -183,6 +228,49 @@ public class PortfolioPositionsFragment extends Fragment {
         holdingPositionsQueue.add(stringRequest);
 
     }
+
+    private void deleteHoldingPositions(Context context, final RecyclerView recyclerView){
+        String url = getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
+        deleteHoldingPositionsQueue = Volley.newRequestQueue(context);
+        deleteHoldingPositionRequestHeader.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        deleteHoldingPositionRequestHeader.put("portfolioID", AppConstants.portfolioID);
+        deleteHoldingPositionRequestHeader.put("posType","Holding");
+        Log.d("resp",AppConstants.portfolioID);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.d("resp",response);
+                    JSONArray responseData = new JSONObject(response).getJSONArray("data");
+                    populateHoldingPositionsRV(responseData, recyclerView);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Question Error", error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                return deleteHoldingPositionRequestHeader;
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                int mStatusCode = response.statusCode;
+                Log.d("whats failing", String.valueOf(mStatusCode));
+                return super.parseNetworkResponse(response);
+            }
+        };
+        deleteHoldingPositionsQueue.add(stringRequest);
+
+    }
+
+
 
     private void populateHoldingPositionsRV(JSONArray jsonArray, RecyclerView recyclerView) {
         positionsModel = new ArrayList<>();

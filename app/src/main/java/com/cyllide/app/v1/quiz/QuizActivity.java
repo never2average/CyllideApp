@@ -21,7 +21,6 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -83,9 +82,7 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences prefs = getSharedPreferences("COINS", MODE_PRIVATE);
-        String restoredText = prefs.getString("coinsRemaining", "10");
-        AppConstants.coins = Integer.parseInt(restoredText);
+
 
         setContentView(R.layout.activity_quiz);
         revivalpopup=new Dialog(this);

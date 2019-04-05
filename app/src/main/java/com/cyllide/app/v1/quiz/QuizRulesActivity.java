@@ -58,7 +58,7 @@ public class QuizRulesActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("LATESTQUIZ", 0);
         quizStartTime = Long.parseLong(sharedPreferences.getString("time","0"));
         if (quizStartTime != 0 && quizStartTime-System.currentTimeMillis() < 0){
-            Toast.makeText(QuizRulesActivity.this,"The Quiz has Already Started!", Toast.LENGTH_LONG).show();
+            Toast.makeText(QuizRulesActivity.this,"No Quizes Available", Toast.LENGTH_LONG).show();
             startActivity(new Intent(QuizRulesActivity.this,MainActivity.class));
         }
 

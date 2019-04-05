@@ -247,19 +247,22 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    private void setProfilePicVolley(String toString) {
+    private void setProfilePicVolley(final String toString) {
         uploadPicQueue = Volley.newRequestQueue(getContext());
         uploadPicUriMap.put("token", AppConstants.token);
+        uploadPicUriMap.put("profileURL",toString);
+        Log.d("respNow",toString);
         String url = getResources().getString(R.string.apiBaseURL)+"profilepic";
         StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.d("resp",toString);
                 Log.d("setURL", response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.d("response",error.toString());
             }
         }){
           @Override
