@@ -3,6 +3,7 @@ package com.cyllide.app.v1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -73,6 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(ProfileActivity.this);
         profileMap.put("token",AppConstants.token);
         profileMap.put("username",AppConstants.viewUsername);
+        Log.d("useranem",AppConstants.viewUsername);
         String url = getResources().getString(R.string.apiBaseURL) + "profileinfo";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override

@@ -235,7 +235,7 @@ public class ForumActivity extends AppCompatActivity {
         requestHeaders.put("token", AppConstants.token);
         //TODO remove the token key
 
-        String requestEndpoint = "http://api.cyllide.com/api/client/query/display";
+        String requestEndpoint = getResources().getString(R.string.apiBaseURL)+"query/display";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, requestEndpoint, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
