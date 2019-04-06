@@ -49,6 +49,13 @@
                 android:layout_gravity="center"
                 android:clickable="true"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="0.5"
+                android:layout_height="0dp"
+                android:textSize="12sp"
+                android:id="@+id/story_author"/>
+
             <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
@@ -68,12 +75,7 @@
                 android:id="@+id/story_summary"/>
 
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_weight="0.5"
-                    android:layout_height="0dp"
-                    android:textSize="12sp"
-                    android:id="@+id/story_author"/>
+
 
         </LinearLayout>
 

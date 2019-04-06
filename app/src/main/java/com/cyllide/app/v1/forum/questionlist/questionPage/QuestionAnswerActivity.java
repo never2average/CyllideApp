@@ -13,13 +13,16 @@ import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.R;
 import com.cyllide.app.v1.forum.CustomComparatorAnswerUpVotes;
+import com.cyllide.app.v1.forum.ForumActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +43,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
     ArrayList<QuestionAnswerModel> questionAnswerModels = new ArrayList<>();
 	TextView questionTitle, questionAskedByText, questionLastModifiedText;
 	String questionID;
+	ImageView backButton;
 	TextInputEditText answerBody;
 	private RequestQueue answerQueue, postQueue;
 	private Map<String, String> requestHeaders = new ArrayMap<String, String>();
@@ -59,10 +63,19 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 		ansRecyclerView.setHasFixedSize(true);
 		questionTagRecyclerView = findViewById(R.id.question_tags_reyclerview);
 		postAnswer = findViewById(R.id.post_answer);
+		backButton = findViewById(R.id.activity_question_answer_back_button);
 		postAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 postAnswerVolley(answerBody.getText().toString());
+            }
+        });
+
+		backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                startActivity(new Intent(QuestionAnswerActivity.this, ForumActivity.class));
             }
         });
 		RecyclerView.LayoutManager  tagsLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);

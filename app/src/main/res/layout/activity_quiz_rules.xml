@@ -59,6 +59,10 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <pl.droidsonroids.gif.GifImageView
         android:layout_margin="4dp"
         android:layout_gravity="center_horizontal"
@@ -90,13 +94,24 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_margin="8dp">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="RULES"
+                android:text="PRIZE MONEY"
                 android:textAlignment="center"
                 android:textSize="26sp"
                 android:layout_margin="2dp"/>
+
+            <TextView
+                android:id="@+id/quiz_rules_qrize_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="₹ 10"
+                android:textAlignment="center"
+                android:textSize="26sp"
+                android:layout_margin="2dp"/>
+
 
 
         </LinearLayout>
@@ -117,21 +132,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_margin="8dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="PRIZE MONEY"
-                android:textAlignment="center"
-                android:textSize="26sp"
-                android:layout_margin="2dp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="₹ 10"
+                android:text="RULES"
                 android:textAlignment="center"
                 android:textSize="26sp"
                 android:layout_margin="2dp"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -167,6 +176,8 @@
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
+
+    </ScrollView>
 
 
 

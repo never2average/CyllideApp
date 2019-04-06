@@ -34,7 +34,7 @@ public class StoriesViewHolder extends RecyclerView.ViewHolder {
     {
         storyTag.setText(stories.getContentType());
         titleTV.setText(stories.getStoryName());
-        authorTV.setText("Author: "+stories.getContentAuthor());
+        authorTV.setText("By: "+stories.getContentAuthor());
         summaryTV.setText(stories.getStoryDescription());
         Glide.with(itemView.getContext()).load(stories.getStoryImageURL()).into(image);
         storiesLL.setOnClickListener(new View.OnClickListener() {
