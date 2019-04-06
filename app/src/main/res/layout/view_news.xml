@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:paddingTop="12dp"
     android:paddingBottom="12dp"
-    android:id="@+id/newsll"
+    android:id="@+id/storiesll"
     android:paddingHorizontal="18sp">
 
     <androidx.cardview.widget.CardView
@@ -25,7 +25,7 @@
 
 
             <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/news_image_view"
+                android:id="@+id/stories_image_view"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="5"
@@ -36,7 +36,7 @@
                 android:clickable="true"/>
 
             <TextView
-                android:id="@+id/news_name"
+                android:id="@+id/story_title"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
@@ -54,17 +54,18 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:layout_margin="@dimen/default_background_stroke_width"
-                fresco:cornerRadius="@dimen/margin"/>
+                fresco:cornerRadius="@dimen/margin"
+                android:id="@+id/story_tag"
+                android:clickable="false"/>
 
             <TextView
                 android:paddingStart="5dp"
-                android:id="@+id/news_desc"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
                 android:fontFamily="@font/ralewaylight"
                 android:textColor="#232323"
-                android:clickable="true"/>
+                android:id="@+id/story_summary"/>
 
 
                 <TextView
@@ -73,13 +74,6 @@
                     android:layout_height="0dp"
                     android:textSize="12sp"
                     android:id="@+id/story_author"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_weight="0.5"
-                    android:layout_height="0dp"
-                    android:textSize="12sp"
-                    android:id="@+id/news_date"/>
 
         </LinearLayout>
 

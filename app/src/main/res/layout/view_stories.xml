@@ -16,6 +16,11 @@
         android:layout_margin="8dp"
         android:elevation="5dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
 
 
 
@@ -31,6 +36,7 @@
             android:clickable="true"/>
 
         <TextView
+            android:layout_marginVertical="@dimen/default_background_stroke_width"
             android:id="@+id/stories_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,6 +46,25 @@
             android:textColor="#000000"
             android:textStyle="bold"
             android:clickable="true"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/default_background_stroke_width"
+                    android:text="Author: "/>
+                <TextView
+                    android:layout_marginHorizontal="@dimen/default_background_stroke_width"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lool"
+                    android:id="@+id/stories_author_text_view"
+                    android:layout_marginVertical="@dimen/default_background_stroke_width"/>
+            </LinearLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

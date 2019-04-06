@@ -8,8 +8,10 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
 
@@ -35,6 +37,7 @@ public class NewsUpdateWorker extends Worker {
     public static final String NEWS_WORKER_TAG = "NewsUpdateWorker";
     private Realm realmInstance;
     private static final int NUM_NEWS_ARTICLES_CACHED = 15;
+    RequestQueue storiesQueue;
 
     public NewsUpdateWorker(Context context, WorkerParameters workerParameters) {
         super(context, workerParameters);
@@ -47,28 +50,9 @@ public class NewsUpdateWorker extends Worker {
         Log.e(NEWS_WORKER_TAG,"Worker was called!");
         initRealm();
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        //TODO: Remove hard coded token
-        String token = AppConstants.token;
-        final Map<String, String> mHeaders = new ArrayMap<String, String>();
-        mHeaders.put("token", token);
-        final String newsURL = "http://api.cyllide.com/api/client/stories/view";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, newsURL, null, future, future){
-            @Override
-            public Map<String, String> getHeaders() {
-                return mHeaders;
-            }
 
-            @Override
-            protected Response<JSONObject> parseNetworkResponse(NetworkResponse nr) {
-                int n = nr.statusCode;
-                Log.e("Res Code",""+n);
-                return super.parseNetworkResponse(nr);
-            }
-        };
-        request.setRetryPolicy(new DefaultRetryPolicy( 60000, 5,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        requestQueue.add(request);
+
+
         try {
             try {
                 JSONObject obj = future.get(1L,TimeUnit.MINUTES);

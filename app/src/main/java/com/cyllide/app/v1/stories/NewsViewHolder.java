@@ -21,12 +21,12 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
     public NewsViewHolder(View itemView)
     {
         super(itemView);
-        newsLL=itemView.findViewById(R.id.newsll);
-        nameTv=itemView.findViewById(R.id.news_name);
-        image=itemView.findViewById(R.id.news_image_view);
-        dateTv=itemView.findViewById(R.id.news_date);
+        newsLL=itemView.findViewById(R.id.storiesll);
+        nameTv=itemView.findViewById(R.id.story_title);
+        image=itemView.findViewById(R.id.stories_image_view);
+        dateTv=itemView.findViewById(R.id.story_title);
         sourceTv=itemView.findViewById(R.id.story_author);
-        descTv=itemView.findViewById(R.id.news_desc);
+        descTv=itemView.findViewById(R.id.story_tag);
     }
 
     public void populate(NewsModel news)

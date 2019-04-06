@@ -24,7 +24,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesViewHolder> {
     public StoriesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         // view_g => name of the layout file
-        View view = inflater.inflate(R.layout.view_stories, parent, false);
+        View view = inflater.inflate(R.layout.view_news, parent, false);
         StoriesViewHolder holder = new StoriesViewHolder(view);
         return holder;
     }//link xml to recycler view
