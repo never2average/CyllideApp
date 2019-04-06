@@ -58,9 +58,6 @@
             android:name=".forum.questionlist.questionPage.QuestionAnswerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".stories.NewsData"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".stories.StoriesActivity"
             android:screenOrientation="portrait" />
         <activity
