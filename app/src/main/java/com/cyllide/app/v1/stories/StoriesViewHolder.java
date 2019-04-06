@@ -1,5 +1,6 @@
 package com.cyllide.app.v1.stories;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,12 +30,20 @@ public class StoriesViewHolder extends RecyclerView.ViewHolder {
         summaryTV=itemView.findViewById(R.id.story_summary);
     }
 
-    public void populate(StoriesModel stories)
+    public void populate(final StoriesModel stories)
     {
         storyTag.setText(stories.getContentType());
         titleTV.setText(stories.getStoryName());
         authorTV.setText("Author: "+stories.getContentAuthor());
         summaryTV.setText(stories.getStoryDescription());
         Glide.with(itemView.getContext()).load(stories.getStoryImageURL()).into(image);
+        storiesLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(itemView.getContext(),NewsPageActivity.class);
+                intent.putExtra("url",stories.getContentMarkdownLink());
+                itemView.getContext().startActivity(intent);
+            }
+        });
     }
 }

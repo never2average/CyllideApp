@@ -18,7 +18,7 @@ public class NewsPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview_screen);
         mWebview = findViewById(R.id.fullpage_webview);
-        url=getIntent().getStringExtra("newsurl");
+        url=getIntent().getStringExtra("url");
         mWebview.loadUrl(url);
     }
 }

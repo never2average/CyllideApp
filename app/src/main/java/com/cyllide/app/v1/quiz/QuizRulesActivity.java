@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
@@ -38,6 +39,7 @@ public class QuizRulesActivity extends AppCompatActivity {
 
     Button startQuizButton;
     private String quizID;
+    private TextView quizPrize;
     private long quizStartTime;
     ImageView backButton;
     Calendar startTime = Calendar.getInstance();
@@ -54,6 +56,7 @@ public class QuizRulesActivity extends AppCompatActivity {
 
 
         startQuizButton=findViewById(R.id.startQuizButton);
+        quizPrize = findViewById(R.id.quiz_rules_prize_money_text_view);
         backButton = findViewById(R.id.activity_quiz_rules_back_button);
         SharedPreferences sharedPreferences = getSharedPreferences("LATESTQUIZ", 0);
         quizStartTime = Long.parseLong(sharedPreferences.getString("time","0"));
