@@ -56,7 +56,7 @@ public class QuizRulesActivity extends AppCompatActivity {
 
 
         startQuizButton=findViewById(R.id.startQuizButton);
-        quizPrize = findViewById(R.id.quiz_rules_prize_money_text_view);
+        //quizPrize = findViewById(R.id.quiz_rules_prize_money_text_view);
         backButton = findViewById(R.id.activity_quiz_rules_back_button);
         SharedPreferences sharedPreferences = getSharedPreferences("LATESTQUIZ", 0);
         quizStartTime = Long.parseLong(sharedPreferences.getString("time","0"));

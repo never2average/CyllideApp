@@ -97,7 +97,7 @@ public class QuizAlarmManager extends BroadcastReceiver {
         getQuizIDService(context);
 
         // Put here YOUR code.
-        Toast.makeText(context, "Fetching Latest Quiz Time", Toast.LENGTH_LONG).show(); // For example
+       // Toast.makeText(context, "Fetching Latest Quiz Time", Toast.LENGTH_LONG).show(); // For example
 
         wl.release();
     }

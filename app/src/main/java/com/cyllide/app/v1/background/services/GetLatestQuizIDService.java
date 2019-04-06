@@ -35,7 +35,7 @@ public class GetLatestQuizIDService extends Service {
         final Long[] quizStartTime = new Long[1];
         final Map<String,String> mHeaders = new ArrayMap<>();
         mHeaders.put("token", AppConstants.token);
-        Toast.makeText(this,"In getQuizIdService",Toast.LENGTH_SHORT);
+        //Toast.makeText(this,"In getQuizIdService",Toast.LENGTH_SHORT);
 
         try {
             RequestQueue requestQueue;
@@ -105,7 +105,7 @@ public class GetLatestQuizIDService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("RealityCkeck","OnStart");
-        Toast.makeText(this,"In ONStart",Toast.LENGTH_SHORT);
+       // Toast.makeText(this,"In ONStart",Toast.LENGTH_SHORT);
         getQuizIDService();
         alarmManager.setAlarm(this);
         return START_STICKY;
