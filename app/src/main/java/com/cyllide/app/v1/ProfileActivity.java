@@ -3,6 +3,7 @@ package com.cyllide.app.v1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -61,7 +62,7 @@ public class ProfileActivity extends AppCompatActivity {
         cross.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-            Intent exitIntent= new Intent(ProfileActivity.this, ForumActivity.class);
+            Intent exitIntent= new Intent(ProfileActivity.this, MainActivity.class);
             startActivity(exitIntent);
             finish();
             }

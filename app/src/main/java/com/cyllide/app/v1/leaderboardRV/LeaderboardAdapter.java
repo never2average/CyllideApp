@@ -1,6 +1,8 @@
 package com.cyllide.app.v1.leaderboardRV;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.cyllide.app.v1.AppConstants;
+import com.cyllide.app.v1.ProfileActivity;
+import com.cyllide.app.v1.contests.PortfolioPickerDialogFragment;
 import com.cyllide.app.v1.contests.PortfolioViewerDialogFragment;
 import com.cyllide.app.v1.R;
 
@@ -17,6 +21,7 @@ import java.util.List;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,8 +66,8 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        LeaderboardModel portfolio = leaderboardModelList.get(position);
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
+        final LeaderboardModel portfolio = leaderboardModelList.get(position);
         holder.nameTextView.setText(portfolio.getName());
         holder.returnTextView.setText(Double.toString(portfolio.getReturns()));
         Glide.with(context)
@@ -70,13 +75,23 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.profilePicView);
         cv = holder.itemView.findViewById(R.id.leaderboard_card_view);
-//        cv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        holder.profilePicView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(holder.itemView.getContext(), ProfileActivity.class);
+                AppConstants.viewUsername = portfolio.getPortfolioOwner();
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
+        cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment dialog = new PortfolioViewerDialogFragment();
+                dialog.show(((FragmentActivity) holder.itemView.getContext()).getSupportFragmentManager(), "PortfolioPicker");
 
+
+            }
+        });
         if(position%2==1){
            holder.itemView.findViewById(R.id.leaderboard_card_view).
                    setBackgroundResource(R.color.lightgray);

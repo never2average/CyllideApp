@@ -4,17 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="12dp"
-    android:paddingBottom="12dp"
+    android:paddingVertical="@dimen/margin"
     android:id="@+id/storiesll"
-    android:paddingHorizontal="18sp">
+    android:paddingHorizontal="@dimen/margin">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"
-        android:layout_margin="8dp"
-        fresco:cardCornerRadius="5dp"
         android:elevation="5dp">
 
         <LinearLayout

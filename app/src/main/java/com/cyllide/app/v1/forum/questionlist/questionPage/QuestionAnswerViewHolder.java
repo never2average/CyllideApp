@@ -92,8 +92,8 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 			@Override
 			public void onClick(View v) {
 				Intent profileIntentView = new Intent(view.getContext(), ProfileActivity.class);
-				view.getContext().startActivity(profileIntentView);
 				AppConstants.viewUsername = answers.getAnsweredBy();
+				view.getContext().startActivity(profileIntentView);
 			}
 		});
 
