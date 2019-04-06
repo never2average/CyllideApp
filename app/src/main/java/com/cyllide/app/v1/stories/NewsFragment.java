@@ -36,7 +36,6 @@ public class NewsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Log.e("NewsFragment", "Realm instance initialized");
         realmInstance = Realm.getDefaultInstance();
 
@@ -46,7 +45,6 @@ public class NewsFragment extends Fragment {
     public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news, container, false);
-        final Activity activity = getActivity();
         final Context context = getContext();
         SnapHelper snapHelper = new PagerSnapHelper();
         newsRV = view.findViewById(R.id.fragment_news_rv);

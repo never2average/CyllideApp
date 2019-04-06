@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cyllide.app.v1.AppConstants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,7 +47,7 @@ public class QuestionListUpdateWorker extends Worker {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         final Map<String, String> requestHeaders = new ArrayMap<String, String>();
-        requestHeaders.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        requestHeaders.put("token", AppConstants.token);
         String requestEndpoint = "http://api.cyllide.com/api/client/query/display";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, requestEndpoint, future, future) {
             @Override

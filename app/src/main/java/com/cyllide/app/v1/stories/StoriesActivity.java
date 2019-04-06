@@ -16,8 +16,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class StoriesActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
-    CircleImageView imageButton;
     ImageView back;
 
     @Override

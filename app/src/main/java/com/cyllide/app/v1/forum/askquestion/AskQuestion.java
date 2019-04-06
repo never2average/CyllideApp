@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.R;
 import com.cyllide.app.v1.forum.ForumActivity;
 import com.cyllide.app.v1.forum.questionlist.questionPage.QuestionAnswerActivity;
@@ -147,7 +148,7 @@ public class AskQuestion extends AppCompatActivity {
 
     private void askQuestionVolley() {
         askQuestionQueue = Volley.newRequestQueue(this);
-        requestHeaders.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        requestHeaders.put("token", AppConstants.token);
         requestHeaders.put("body",questionText.getText().toString());
         JsonArray tags = new JsonArray();
         if(btn1.getTag().toString()=="pressed"){

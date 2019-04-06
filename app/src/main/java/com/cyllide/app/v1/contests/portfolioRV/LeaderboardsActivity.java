@@ -42,6 +42,7 @@ public class LeaderboardsActivity extends AppCompatActivity {
     RequestQueue leaderBRequestQ;
     TextView pos1,pos2,pos3;
     Map<String,String> leaderBrequestHdrs=new ArrayMap<>();
+    TextView numPortfolios;
 
 
 
@@ -57,6 +58,7 @@ public class LeaderboardsActivity extends AppCompatActivity {
         pos3 = findViewById(R.id.pos3_tv);
 
         leaderboardView.setLayoutManager(leaderboardLayoutManager);
+        numPortfolios = findViewById(R.id.num_portfolios_tv);
 
         ImageView backButton = findViewById(R.id.leaderboard_back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +120,7 @@ public class LeaderboardsActivity extends AppCompatActivity {
     private void getLeaderBoard()
     {
         leaderBRequestQ= Volley.newRequestQueue(LeaderboardsActivity.this);
-        leaderBrequestHdrs.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        leaderBrequestHdrs.put("token",AppConstants.token);
         leaderBrequestHdrs.put("contestUID", AppConstants.contestID);
         Log.d("Id",AppConstants.contestID);
         String url = "http://api.cyllide.com/api/client/contest/leaderboard";
@@ -128,20 +130,24 @@ public class LeaderboardsActivity extends AppCompatActivity {
                 Log.d("leaderboarddata",response);
                 try {
                     JSONArray arrayData=new JSONObject(response).getJSONArray("message");
+                    numPortfolios.setText(arrayData.length()+"  Portfolios");
                     pos1.setText(arrayData.getJSONObject(0).getString("portfolioOwner"));
                     pos2.setText(arrayData.getJSONObject(1).getString("portfolioOwner"));
                     pos3.setText(arrayData.getJSONObject(2).getString("portfolioOwner"));
-                    List<LeaderboardModel> leaderboardModelArrayList = new ArrayList<>();
-                    for(int i = 0; i<arrayData.length();i++){
-                        leaderboardModelArrayList.add(new LeaderboardModel(arrayData.getJSONObject(i).getString("portfolioOwner"),i+1,9.0));//arrayData.getJSONObject(i).getDouble("portfolioReturns")));
-                    }
-
-                    LeaderboardAdapter leaderboardAdapter = new LeaderboardAdapter(leaderboardModelArrayList, getSupportFragmentManager());
-                    leaderboardView.setAdapter(leaderboardAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
+                try {
+                JSONArray arrayData=new JSONObject(response).getJSONArray("message");
+                List<LeaderboardModel> leaderboardModelArrayList = new ArrayList<>();
+                for(int i = 0; i<arrayData.length();i++){
+                        leaderboardModelArrayList.add(new LeaderboardModel(arrayData.getJSONObject(i).getString("portfolioOwner"),i+1,9.0));//arrayData.getJSONObject(i).getDouble("portfolioReturns")));
+                }
+                LeaderboardAdapter leaderboardAdapter = new LeaderboardAdapter(leaderboardModelArrayList, getSupportFragmentManager());
+                leaderboardView.setAdapter(leaderboardAdapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override

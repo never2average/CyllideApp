@@ -162,14 +162,14 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
     private void getVolleyData(String curr_selection){
         String url = "http://api.cyllide.com/api/client/contest/list";
         requestQueue = Volley.newRequestQueue(MonthlyActivity.this);
-        Log.d("lol",AppConstants.token);
         requestHeader.put("token",AppConstants.token);
         requestHeader.put("capex",curr_selection);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
-                try { Log.d("error1",response);
+                try {
+                    Log.d("error1",response);
                     JSONObject responseObject = new JSONObject(response).getJSONArray("message").getJSONObject(0);
                     contestSignUpsTV.setText("No. of Participants : "+responseObject.getString("signUps"));
                     if(responseObject.getBoolean("isAlreadyIn") == true) {
@@ -211,8 +211,6 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
 
     @Override
     public void onItemClick(PortfolioModel portfolio) {
-
         Log.e("MonthlyActivity", "portfolio "+ portfolio.getPortfolioName()+" was chosen");
-
     }
 }

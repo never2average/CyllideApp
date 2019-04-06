@@ -206,7 +206,7 @@ public class MyPortfolio extends AppCompatActivity {
 
     private void createNewPortfolio(String portfolioName, String capex){
         createPortfolioRequestQueue = Volley.newRequestQueue(MyPortfolio.this);
-        createPortfolioRequestHeader.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        createPortfolioRequestHeader.put("token",AppConstants.token);
         createPortfolioRequestHeader.put("name",portfolioName);
         createPortfolioRequestHeader.put("capex",capex);
         String url = getResources().getString(R.string.apiBaseURL)+"portfolio/create";

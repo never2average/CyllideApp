@@ -85,7 +85,7 @@ public class PortfolioPickerDialogFragment extends DialogFragment {
         String url = "http://api.cyllide.com/api/client/contest/list/portfolios/rel";
         portfoliolist = Volley.newRequestQueue(getContext());
 
-        headers.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        headers.put("token",AppConstants.token);
         headers.put("capex", AppConstants.capex);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override

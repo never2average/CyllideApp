@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cyllide.app.v1.AppConstants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +31,7 @@ public class QuizAlarmManager extends BroadcastReceiver {
         final String[] quizID = new String[1];
         final Long[] quizStartTime = new Long[1];
         final Map<String,String> mHeaders = new ArrayMap<>();
-        mHeaders.put("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        mHeaders.put("token", AppConstants.token);
 
         try {
             RequestQueue requestQueue;

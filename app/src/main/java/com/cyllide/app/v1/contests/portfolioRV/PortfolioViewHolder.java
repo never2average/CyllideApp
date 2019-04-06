@@ -50,7 +50,7 @@ public class PortfolioViewHolder extends RecyclerView.ViewHolder {
 
     void registerPortfolio(String id, final Context context) {
         requestQueue = Volley.newRequestQueue(context);
-        registrationHeaders.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        registrationHeaders.put("token",AppConstants.token);
         registrationHeaders.put("contestUID", AppConstants.contestID);
         registrationHeaders.put("portfolioUID",id);
         String url = "http://api.cyllide.com/api/client/contest/enroll/portfolio";

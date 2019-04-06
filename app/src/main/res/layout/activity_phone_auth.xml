@@ -22,7 +22,8 @@
         android:layout_height="match_parent"
         >
 
-    <ImageView android:src="@drawable/logo"
+    <ImageView
+        android:src="@drawable/icon_logo"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:layout_marginBottom="20dp"
@@ -38,7 +39,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
-            android:textColorHint="@android:color/white"
+            android:textColorHint="@color/colorPrimaryDark"
+            android:backgroundTint="@android:color/white"
             android:inputType="phone"
             android:hint="Phone Number" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -53,7 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
-                android:textColorHint="@android:color/white"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:backgroundTint="@android:color/white"
                 android:inputType="text"
                 android:hint="Username" />
         </com.google.android.material.textfield.TextInputLayout>

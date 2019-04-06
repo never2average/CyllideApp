@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.Volley;
+import com.cyllide.app.v1.AppConstants;
 
 
 import org.json.JSONArray;
@@ -48,7 +49,7 @@ public class NewsUpdateWorker extends Worker {
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         //TODO: Remove hard coded token
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8";
+        String token = AppConstants.token;
         final Map<String, String> mHeaders = new ArrayMap<String, String>();
         mHeaders.put("token", token);
         final String newsURL = "http://api.cyllide.com/api/client/stories/view";

@@ -81,7 +81,7 @@ public class PositionsViewHolder extends RecyclerView.ViewHolder {
     private void deleteHoldingPositions(Context context, final RecyclerView recyclerView){
         String url = context.getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
         deleteHoldingPositionsQueue = Volley.newRequestQueue(context);
-        deleteHoldingPositionRequestHeader.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        deleteHoldingPositionRequestHeader.put("token",AppConstants.token);
         deleteHoldingPositionRequestHeader.put("portfolioID", AppConstants.portfolioID);
         deleteHoldingPositionRequestHeader.put("posType","Holding");
         Log.d("resp",AppConstants.portfolioID);

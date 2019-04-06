@@ -104,7 +104,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="12,123,653 Portfolios"
+                        android:text=""
                         android:id="@+id/num_portfolios_tv"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"

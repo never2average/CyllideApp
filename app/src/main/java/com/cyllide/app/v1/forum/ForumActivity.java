@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.MainActivity;
 import com.cyllide.app.v1.MainApplication;
 import com.cyllide.app.v1.R;
@@ -231,7 +232,7 @@ public class ForumActivity extends AppCompatActivity {
 
     private void getQuestions() {
         questionRequestQueue = Volley.newRequestQueue(this);
-        requestHeaders.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        requestHeaders.put("token", AppConstants.token);
         //TODO remove the token key
 
         String requestEndpoint = "http://api.cyllide.com/api/client/query/display";

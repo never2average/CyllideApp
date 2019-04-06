@@ -191,7 +191,7 @@ public class PortfolioPositionsFragment extends Fragment {
     private void getHoldingPositions(Context context, final RecyclerView recyclerView){
         String url = getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
         holdingPositionsQueue = Volley.newRequestQueue(context);
-        holdingPositionRequestHeader.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        holdingPositionRequestHeader.put("token",AppConstants.token);
         holdingPositionRequestHeader.put("portfolioID", AppConstants.portfolioID);
         holdingPositionRequestHeader.put("posType","Holding");
         Log.d("resp",AppConstants.portfolioID);

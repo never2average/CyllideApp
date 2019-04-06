@@ -14,6 +14,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.cyllide.app.v1.authentication.PhoneAuth;
 import com.cyllide.app.v1.background.services.GetLatestQuizIDService;
 import com.cyllide.app.v1.faq_view.Faq_Activity;
 import com.cyllide.app.v1.howitworks.HowItWorksFragment;
@@ -65,10 +66,12 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
     private void setApplicationConstants(){
         SharedPreferences sharedPreferences = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE);
-        AppConstants.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8";
-//TODO remove hardcoded string using SharedPrefrences
-
-
+        AppConstants.token = sharedPreferences.getString("token", null);
+        if(AppConstants.token==null){
+            Intent authIntent = new Intent(MainActivity.this, PhoneAuth.class);
+            startActivity(authIntent);
+            finish();
+        }
     }
 
 
@@ -79,11 +82,10 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setApplicationConstants();
         logo=findViewById(R.id.logo);
         notificationButton=findViewById(R.id.notificationicon);
         profilepic=findViewById(R.id.profilePic);
-
-        setApplicationConstants();
         Intent serviceIntent = new Intent(this, GetLatestQuizIDService.class);
         startService(serviceIntent);
 

@@ -37,9 +37,6 @@ public class HomeFragment extends Fragment {
     TextView timer;
 
 
-
-
-
     @Override
     public void onResume() {
         super.onResume();

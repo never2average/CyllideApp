@@ -25,7 +25,7 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         nameTv=itemView.findViewById(R.id.news_name);
         image=itemView.findViewById(R.id.news_image_view);
         dateTv=itemView.findViewById(R.id.news_date);
-        sourceTv=itemView.findViewById(R.id.news_source);
+        sourceTv=itemView.findViewById(R.id.story_author);
         descTv=itemView.findViewById(R.id.news_desc);
     }
 

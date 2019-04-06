@@ -57,7 +57,7 @@ public class OrderHistoryFragment extends Fragment {
     private void getFinishedOrders(Context context, final RecyclerView orderHistoryRV){
         String url = getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
         orderHistoryQueue = Volley.newRequestQueue(context);
-        orderHistoryMap.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU4NDQ4NjY0OX0.jyjFESTNyiY6ZqN6FNHrHAEbOibdg95idugQjjNhsk8");
+        orderHistoryMap.put("token",AppConstants.token);
         orderHistoryMap.put("portfolioID", AppConstants.portfolioID);
         orderHistoryMap.put("posType","Closed");
         Log.d("resp",AppConstants.portfolioID);
