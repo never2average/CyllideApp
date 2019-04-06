@@ -57,7 +57,6 @@ public class PortfolioActivity extends AppCompatActivity {
            }
        });
 
-       // webView.setWebViewClient(new CustomWebView());
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("file:///android_asset/oneday.html");
 

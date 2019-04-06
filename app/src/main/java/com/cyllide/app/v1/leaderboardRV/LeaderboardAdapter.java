@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.MyViewHolder> {
 
-    private static final int width = 50, height = 50;//width and height params for profile pic
+    private static final int width = 50, height = 50;
     CardView cv;
     Context context;
     FragmentManager fragmentManager;
@@ -62,16 +62,22 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        LeaderboardModel pflio = leaderboardModelList.get(position);
-        holder.nameTextView.setText(pflio.getName());
-        holder.returnTextView.setText(Double.toString(pflio.getReturns()));
+        LeaderboardModel portfolio = leaderboardModelList.get(position);
+        holder.nameTextView.setText(portfolio.getName());
+        holder.returnTextView.setText(Double.toString(portfolio.getReturns()));
         Glide.with(context)
-                .load(R.drawable.stock_img_man)
+                .load(portfolio.getProfileURL())
                 .apply(RequestOptions.circleCropTransform())
-                .apply(RequestOptions.placeholderOf(R.drawable.bulb))
                 .into(holder.profilePicView);
+        cv = holder.itemView.findViewById(R.id.leaderboard_card_view);
+//        cv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
-        if(position%2==0){
+        if(position%2==1){
            holder.itemView.findViewById(R.id.leaderboard_card_view).
                    setBackgroundResource(R.color.lightgray);
             //changes the alternate element colour

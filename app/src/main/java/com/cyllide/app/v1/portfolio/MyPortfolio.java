@@ -41,8 +41,7 @@ public class MyPortfolio extends AppCompatActivity {
     EditText newportfolioNameTV;
     MaterialButton createPortfolio;
     private RequestQueue portfolioListRequestQueue;
-    String selectedToggle = "None";
-    LabelToggle smallCapLabelToggle, midCapLabelToggle, largeCapLabelToggle, niftyCapLabelToggle;
+    String selectedToggle = "nifty500";
     private RequestQueue createPortfolioRequestQueue;
     ImageView backbutton;
     Map<String,String> createPortfolioRequestHeader = new ArrayMap<>();
@@ -63,10 +62,6 @@ public class MyPortfolio extends AppCompatActivity {
 
         createPortfolio=findViewById(R.id.my_portfolio_create_new_btn);
         newportfolioNameTV = findViewById(R.id.portfolio_name);
-        smallCapLabelToggle = findViewById(R.id.my_portfolio_capex_small_cap_toggle_btn);
-        midCapLabelToggle = findViewById(R.id.my_portfolio_capex_mid_cap_toggle_btn);
-        largeCapLabelToggle = findViewById(R.id.my_portfolio_capex_large_cap_toggle_btn);
-        niftyCapLabelToggle = findViewById(R.id.my_portfolio_capex_nifty_cap_toggle_btn);
         backbutton = findViewById(R.id.activity_my_portfolio_back_button);
 
         backbutton.setOnClickListener(new View.OnClickListener() {
@@ -76,30 +71,7 @@ public class MyPortfolio extends AppCompatActivity {
             }
         });
 
-        smallCapLabelToggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectedToggle = "smallcap";
-            }
-        });
-        midCapLabelToggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectedToggle = "midcap";
-            }
-        });
-        largeCapLabelToggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectedToggle = "largecap";
-            }
-        });
-        niftyCapLabelToggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectedToggle = "nifty500";
-            }
-        });
+
 
 
 
