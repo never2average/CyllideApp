@@ -76,43 +76,8 @@
                 android:layout_marginStart="7dp"
                 android:layout_marginEnd="7dp"
                 />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginBottom="40dp"
-                android:background="@android:color/darker_gray"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textColor="@color/blue_light"
-                    android:text="Total Portfolio Value: "
-                    android:layout_weight="1"
-                    android:gravity="start"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="20sp"
-                    android:textColor="@color/blue_light"
-                    android:text="12121"
-                    android:gravity="end"
-                    android:layout_weight="1"/>
 
             </LinearLayout>
-
-        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
 

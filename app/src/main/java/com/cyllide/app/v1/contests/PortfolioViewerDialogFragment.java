@@ -32,7 +32,6 @@ public class PortfolioViewerDialogFragment extends DialogFragment {
         builder.setView(dialogLayout);
         final RecyclerView itemList = dialogLayout.findViewById(R.id.positions);
         itemList.setLayoutManager(new LinearLayoutManager(getContext()));
-        itemList.setAdapter(new PositionsAdapter(dummyData()));
         dialogLayout.findViewById(R.id.close_btn_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,10 +41,4 @@ public class PortfolioViewerDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    private List<Positions2> dummyData() {
-        ArrayList<Positions2> data = new ArrayList<>();
-        for(int i=0; i<5; i++)
-            data.add(new Positions2("Position "+ (i+1), i*1000, (i*8)%100));
-        return data;
-    }
 }

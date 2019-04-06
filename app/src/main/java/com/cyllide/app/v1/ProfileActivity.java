@@ -62,7 +62,7 @@ public class ProfileActivity extends AppCompatActivity {
         cross.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-            Intent exitIntent= new Intent(ProfileActivity.this, ForumActivity.class);
+            Intent exitIntent= new Intent(ProfileActivity.this, MainActivity.class);
             startActivity(exitIntent);
             finish();
             }
@@ -74,7 +74,6 @@ public class ProfileActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(ProfileActivity.this);
         profileMap.put("token",AppConstants.token);
         profileMap.put("username",AppConstants.viewUsername);
-        Log.d("useranem",AppConstants.viewUsername);
         String url = getResources().getString(R.string.apiBaseURL) + "profileinfo";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
