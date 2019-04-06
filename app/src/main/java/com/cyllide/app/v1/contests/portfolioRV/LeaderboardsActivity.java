@@ -141,7 +141,7 @@ public class LeaderboardsActivity extends AppCompatActivity {
                 JSONArray arrayData=new JSONObject(response).getJSONArray("message");
                 List<LeaderboardModel> leaderboardModelArrayList = new ArrayList<>();
                 for(int i = 0; i<arrayData.length();i++){
-                        leaderboardModelArrayList.add(new LeaderboardModel(arrayData.getJSONObject(i).getString("portfolioName"),i+1,9.0,arrayData.getJSONObject(i).getString("portfolioProfilePic"),arrayData.getJSONObject(i).getString("portfolioOwner")));//arrayData.getJSONObject(i).getDouble("portfolioReturns")));
+                        leaderboardModelArrayList.add(new LeaderboardModel(arrayData.getJSONObject(i).getString("portfolioName"),i+1,9.0,arrayData.getJSONObject(i).getString("portfolioProfilePic"),arrayData.getJSONObject(i).getJSONObject("_id").getString("$oid"),arrayData.getJSONObject(i).getString("portfolioOwner")));
                 }
                 LeaderboardAdapter leaderboardAdapter = new LeaderboardAdapter(leaderboardModelArrayList, getSupportFragmentManager());
                 leaderboardView.setAdapter(leaderboardAdapter);

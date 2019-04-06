@@ -53,14 +53,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Value"
+                    android:text="Quantity"
                     android:layout_centerInParent="true"
                     android:textSize="18sp"
                     android:textColor="@color/blue_light"/>/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Returns"
+                    android:text="Entry Price"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:textSize="18sp"
