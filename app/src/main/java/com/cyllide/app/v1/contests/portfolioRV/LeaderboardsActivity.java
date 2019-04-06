@@ -123,11 +123,11 @@ public class LeaderboardsActivity extends AppCompatActivity {
         leaderBrequestHdrs.put("token",AppConstants.token);
         leaderBrequestHdrs.put("contestUID", AppConstants.contestID);
         Log.d("Id",AppConstants.contestID);
-        String url = "http://api.cyllide.com/api/client/contest/leaderboard";
+        String url = getResources().getString(R.string.apiBaseURL)+"contest/leaderboard";
         StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("leaderboarddata",response);
+                Log.d("leaderBoardData",response);
                 try {
                     JSONArray arrayData=new JSONObject(response).getJSONArray("message");
                     numPortfolios.setText(arrayData.length()+"  Portfolios");
@@ -141,7 +141,7 @@ public class LeaderboardsActivity extends AppCompatActivity {
                 JSONArray arrayData=new JSONObject(response).getJSONArray("message");
                 List<LeaderboardModel> leaderboardModelArrayList = new ArrayList<>();
                 for(int i = 0; i<arrayData.length();i++){
-                        leaderboardModelArrayList.add(new LeaderboardModel(arrayData.getJSONObject(i).getString("portfolioOwner"),i+1,9.0));//arrayData.getJSONObject(i).getDouble("portfolioReturns")));
+                        leaderboardModelArrayList.add(new LeaderboardModel(arrayData.getJSONObject(i).getString("portfolioName"),i+1,9.0,arrayData.getJSONObject(i).getString("portfolioProfilePic")));//arrayData.getJSONObject(i).getDouble("portfolioReturns")));
                 }
                 LeaderboardAdapter leaderboardAdapter = new LeaderboardAdapter(leaderboardModelArrayList, getSupportFragmentManager());
                 leaderboardView.setAdapter(leaderboardAdapter);
@@ -152,8 +152,7 @@ public class LeaderboardsActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
-
+                Log.d("leaderboard error",error.toString());
             }
         }){
             @Override

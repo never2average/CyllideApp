@@ -40,9 +40,6 @@
             android:name=".quiz.QuizRulesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".contests.ContestLeaderboard"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>

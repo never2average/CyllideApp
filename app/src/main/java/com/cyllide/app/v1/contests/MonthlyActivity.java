@@ -60,51 +60,14 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         ImageView imgView=findViewById(R.id.contestbackbutton);
-//        smallCapButton = findViewById(R.id.smallcap_button);
-//        midCapButton = findViewById(R.id.midcap_button);
-//        largeCapButton = findViewById(R.id.largecap_button);
         niftyButton = findViewById(R.id.nifty_button);
         contestSignUpsTV = findViewById(R.id.contest_sign_ups);
 
         linearLayout = findViewById(R.id.if_portfolio_already_exists);
 
         descTV = findViewById(R.id.desc_tv);
-        // added to remove the bug
         curr_selection_index=3;
         updateDisplay();
-
-//        smallCapButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                curr_selection = "smallcap";
-//                AppConstants.capex = "smallcap";
-//                curr_selection_index = 0;
-//                getVolleyData(curr_selection);
-//                updateDisplay();
-//            }
-//        });
-//
-//        midCapButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                curr_selection="midcap";
-//                curr_selection_index = 1;
-//                AppConstants.capex = "midcap";
-//                getVolleyData(curr_selection);
-//                updateDisplay();
-//            }
-//        });
-//
-//        largeCapButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                curr_selection="largecap";
-//                curr_selection_index = 2;
-//                AppConstants.capex = "largecap";
-//                getVolleyData(curr_selection);
-//                updateDisplay();
-//            }
-//        });
 
         niftyButton.setOnClickListener(new View.OnClickListener() {
             @Override
