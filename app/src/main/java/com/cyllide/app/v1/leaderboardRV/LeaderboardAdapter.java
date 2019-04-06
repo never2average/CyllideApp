@@ -86,10 +86,9 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AppConstants.portfolioID = portfolio.getPortfolioID();
                 DialogFragment dialog = new PortfolioViewerDialogFragment();
-                dialog.show(((FragmentActivity) holder.itemView.getContext()).getSupportFragmentManager(), "PortfolioPicker");
-
-
+                dialog.show(((FragmentActivity) holder.itemView.getContext()).getSupportFragmentManager(), "PortfolioViewer");
             }
         });
         if(position%2==1){

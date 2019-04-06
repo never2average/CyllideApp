@@ -7,6 +7,25 @@ public class LeaderboardModel {
     private double returns;
     private String profileURL;
 
+    public String getPortfolioID() {
+        return portfolioID;
+    }
+
+    public void setPortfolioID(String portfolioID) {
+        this.portfolioID = portfolioID;
+    }
+
+    public LeaderboardModel(String name, int rank, double returns, String profileURL, String portfolioID, String portfolioOwner) {
+        this.name = name;
+        this.rank = rank;
+        this.returns = returns;
+        this.profileURL = profileURL;
+        this.portfolioID = portfolioID;
+        this.portfolioOwner = portfolioOwner;
+    }
+
+    private String portfolioID;
+
     public String getPortfolioOwner() {
         return portfolioOwner;
     }
@@ -15,13 +34,6 @@ public class LeaderboardModel {
         this.portfolioOwner = portfolioOwner;
     }
 
-    public LeaderboardModel(String name, int rank, double returns, String profileURL, String portfolioOwner) {
-        this.name = name;
-        this.rank = rank;
-        this.returns = returns;
-        this.profileURL = profileURL;
-        this.portfolioOwner = portfolioOwner;
-    }
 
     private String portfolioOwner;
 
