@@ -69,6 +69,8 @@ public class OTPVerification extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     SharedPreferences.Editor editor = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE).edit();
                     editor.putString("token", jsonObject.getString("token"));
+                    editor.putInt("coins",jsonObject.getInt("coins"));
+                    editor.putString("referralCode",jsonObject.getString("referralCode"));
                     editor.apply();
                     Intent intent = new Intent(OTPVerification.this, MainActivity.class);
                     startActivity(intent);

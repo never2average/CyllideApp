@@ -7,6 +7,7 @@ import android.util.ArrayMap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -38,7 +39,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class PortfolioViewerDialogFragment extends DialogFragment {
 
     RequestQueue holdingPositionsQueue;
+    TextView nothingToShowTV;
     Map<String, String> holdingPositionRequestHeader = new ArrayMap<>();
+    RecyclerView itemList;
+
 
     @NonNull
     @Override
@@ -47,7 +51,8 @@ public class PortfolioViewerDialogFragment extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.dialog_portfolio_viewer, null);
         builder.setView(dialogLayout);
-        final RecyclerView itemList = dialogLayout.findViewById(R.id.positions);
+        itemList = dialogLayout.findViewById(R.id.positions);
+        nothingToShowTV = dialogLayout.findViewById(R.id.dialog_portfolio_viewer_nothing_to_show);
         itemList.setLayoutManager(new LinearLayoutManager(getContext()));
         dialogLayout.findViewById(R.id.close_btn_image).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +75,16 @@ public class PortfolioViewerDialogFragment extends DialogFragment {
             public void onResponse(String response) {
                 try {
                     JSONArray responseData = new JSONObject(response).getJSONArray("data");
+                    if(responseData.length() == 0){
+                        itemList.setVisibility(View.INVISIBLE);
+                        nothingToShowTV.setVisibility(View.VISIBLE);
+
+                    }
+                    else{
+                        itemList.setVisibility(View.VISIBLE);
+                        nothingToShowTV.setVisibility(View.INVISIBLE);
+
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();

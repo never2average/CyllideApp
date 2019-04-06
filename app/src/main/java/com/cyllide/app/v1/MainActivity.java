@@ -72,6 +72,10 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             startActivity(authIntent);
             finish();
         }
+        else{
+            AppConstants.coins = sharedPreferences.getInt("coins", 0);
+            AppConstants.referral = sharedPreferences.getString("referralCode","ERROR");
+        }
     }
 
 

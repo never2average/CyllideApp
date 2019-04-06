@@ -8,5 +8,6 @@ public class AppConstants {
     public static String token;
     public static int coins;
     public static String viewUsername;
+    public static String referral;
 
 }

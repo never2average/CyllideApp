@@ -67,15 +67,29 @@
                     android:layout_marginEnd="10dp"
                     android:textColor="@color/blue_light"/>
             </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/dialog_portfolio_viewer_nothing_to_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textSize="19sp"
+                    android:text="Nothing to Show"
+                    android:visibility="invisible"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/positions"
                 android:layout_width="match_parent"
                 android:layout_height="330dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:visibility="visible"
                 android:layout_marginStart="7dp"
                 android:layout_marginEnd="7dp"
                 />
+
+            </RelativeLayout>
 
             </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

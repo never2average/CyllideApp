@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 
@@ -24,6 +25,7 @@ public class ReferralFragment extends Fragment {
 
     Button referralButton;
     ImageView crossbtn;
+    TextView referralText;
 
     @Nullable
     @Override
@@ -36,6 +38,8 @@ public class ReferralFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         referralButton = view.findViewById(R.id.invitebutton);
         crossbtn=view.findViewById(R.id.crossbtn);
+        referralText = view.findViewById(R.id.referral_text_view);
+        referralText.setText(AppConstants.referral);
         final Context context = getContext();
         crossbtn.setOnClickListener(new View.OnClickListener() {
             @Override
