@@ -61,39 +61,14 @@ public class PositionsAdapter extends RecyclerView.Adapter<PositionsAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.pName.setText(positions2List.get(position).getName());
-        holder.pValue.setText(positions2List.get(position).getValue()+"");
-        holder.pReturns.setText(positions2List.get(position).getReturns()+"");
+        holder.pName.setText(positions2List.get(position).getTicker());
+        holder.pValue.setText(positions2List.get(position).getQuantity()+"");
+        holder.pReturns.setText(positions2List.get(position).getEntryPrice()+"");
     }
 
     @Override
     public int getItemCount() {
         return positions2List.size();
-    }
-
-    void getPositions(){
-        requestHeaders.put("token", AppConstants.token);
-        requestHeaders.put("portfolioID", AppConstants.portfolioID);
-        requestHeaders.put("posType","Holding");
-        requestQueue = Volley.newRequestQueue(context.getApplicationContext());
-        String url = context.getApplicationContext().getResources().getString(R.string.apiBaseURL) +"portfolios/positionlist";;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
-            @Override
-            public Map<String,String> getHeaders(){
-                return requestHeaders;
-            }
-        };
-        requestQueue.add(stringRequest);
     }
 
 }

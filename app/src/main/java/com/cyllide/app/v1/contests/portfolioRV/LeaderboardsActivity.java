@@ -72,51 +72,6 @@ public class LeaderboardsActivity extends AppCompatActivity {
     }
 
 
-    private void loadDummyData() {
-
-        int width  = 250;
-        int height = 250;
-
-        final TextView pos1 = findViewById(R.id.pos1_tv);
-        final TextView pos2 = findViewById(R.id.pos2_tv);
-        final TextView pos3 = findViewById(R.id.pos3_tv);
-
-        //TODO: Change SimpleTarget to Target
-        Glide.with(this)
-                .load(R.drawable.stock_img_man)
-                .apply(RequestOptions.circleCropTransform())
-                .apply(RequestOptions.placeholderOf(R.drawable.bulb))
-                .into(new SimpleTarget<Drawable>(width,height) {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource,
-                                                @Nullable Transition<? super Drawable> transition) {
-                        pos1.setCompoundDrawablesWithIntrinsicBounds(null, resource, null, null);
-                    }
-                });
-        Glide.with(this)
-                .load(R.drawable.stock_img_man)
-                .apply(RequestOptions.circleCropTransform())
-                .apply(RequestOptions.placeholderOf(R.drawable.bulb))
-                .into(new SimpleTarget<Drawable>(width,height) {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource,
-                                                @Nullable Transition<? super Drawable> transition) {
-                        pos2.setCompoundDrawablesWithIntrinsicBounds(null, resource, null, null);
-                    }
-                });
-        Glide.with(this)
-                .load(R.drawable.stock_img_man)
-                .apply(RequestOptions.circleCropTransform())
-                .apply(RequestOptions.placeholderOf(R.drawable.bulb))
-                .into(new SimpleTarget<Drawable>(width,height) {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource,
-                                                @Nullable Transition<? super Drawable> transition) {
-                        pos3.setCompoundDrawablesWithIntrinsicBounds(null, resource, null, null);
-                    }
-                });
-    }
-
     private void getLeaderBoard()
     {
         leaderBRequestQ= Volley.newRequestQueue(LeaderboardsActivity.this);
@@ -128,17 +83,38 @@ public class LeaderboardsActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.d("leaderBoardData",response);
+                JSONArray arrayData=null;
                 try {
-                    JSONArray arrayData=new JSONObject(response).getJSONArray("message");
+                    arrayData = new JSONObject(response).getJSONArray("message");
                     numPortfolios.setText(arrayData.length()+"  Portfolios");
-                    pos1.setText(arrayData.getJSONObject(0).getString("portfolioOwner"));
-                    pos2.setText(arrayData.getJSONObject(1).getString("portfolioOwner"));
-                    pos3.setText(arrayData.getJSONObject(2).getString("portfolioOwner"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                try{
+                    ImageView imageView = findViewById(R.id.image1_leader_board);
+                    pos1.setText(arrayData.getJSONObject(0).getString("portfolioOwner"));
+                    Glide.with(LeaderboardsActivity.this).load(arrayData.getJSONObject(0).getString("portfolioProfilePic")).apply(RequestOptions.centerCropTransform()).into(imageView);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+                try{
+                    ImageView imageView = findViewById(R.id.image2_leader_board);
+                    pos2.setText(arrayData.getJSONObject(1).getString("portfolioOwner"));
+                    Glide.with(LeaderboardsActivity.this).load(arrayData.getJSONObject(0).getString("portfolioProfilePic")).apply(RequestOptions.centerCropTransform()).into(imageView);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+                try{
+                    ImageView imageView = findViewById(R.id.image3_leader_board);
+                    pos3.setText(arrayData.getJSONObject(2).getString("portfolioOwner"));
+                    Glide.with(LeaderboardsActivity.this).load(arrayData.getJSONObject(0).getString("portfolioProfilePic")).apply(RequestOptions.centerCropTransform()).into(imageView);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
                 try {
-                JSONArray arrayData=new JSONObject(response).getJSONArray("message");
                 List<LeaderboardModel> leaderboardModelArrayList = new ArrayList<>();
                 for(int i = 0; i<arrayData.length();i++){
                         leaderboardModelArrayList.add(new LeaderboardModel(arrayData.getJSONObject(i).getString("portfolioName"),i+1,9.0,arrayData.getJSONObject(i).getString("portfolioProfilePic"),arrayData.getJSONObject(i).getJSONObject("_id").getString("$oid"),arrayData.getJSONObject(i).getString("portfolioOwner")));

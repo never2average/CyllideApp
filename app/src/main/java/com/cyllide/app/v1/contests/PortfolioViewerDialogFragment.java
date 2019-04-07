@@ -74,15 +74,21 @@ public class PortfolioViewerDialogFragment extends DialogFragment {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.d("viewonlyresp",response);
                     JSONArray responseData = new JSONObject(response).getJSONArray("data");
                     if(responseData.length() == 0){
                         itemList.setVisibility(View.INVISIBLE);
                         nothingToShowTV.setVisibility(View.VISIBLE);
-
                     }
                     else{
                         itemList.setVisibility(View.VISIBLE);
                         nothingToShowTV.setVisibility(View.INVISIBLE);
+                        List<Positions2> toshowpos = new ArrayList<>();
+                        for(int i=0;i<responseData.length();i++){
+                            JSONObject jsonObject = responseData.getJSONObject(i);
+                            toshowpos.add(new Positions2(jsonObject.getString("ticker"),jsonObject.getInt("quantity"),jsonObject.getDouble("entryPrice")));
+                        }
+                        itemList.setAdapter(new PositionsAdapter(toshowpos));
 
                     }
 

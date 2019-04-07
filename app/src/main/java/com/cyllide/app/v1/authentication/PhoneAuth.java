@@ -72,6 +72,7 @@ public class PhoneAuth extends AppCompatActivity {
                                 intent.putExtra("phone",input_phoneNo);
                                 intent.putExtra("firstuser",firstuser);
                                 startActivity(intent);
+                                finish();
 
                             }
                         }, new Response.ErrorListener() {
