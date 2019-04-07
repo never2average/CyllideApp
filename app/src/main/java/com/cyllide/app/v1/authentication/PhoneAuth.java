@@ -59,14 +59,18 @@ public class PhoneAuth extends AppCompatActivity {
                             @Override
                             public void onResponse(String response) {
                                 // TODO Verify the response first.
+                                boolean firstuser = false;
+                                Log.d("PhoneAuth",response);
                                 try {
                                     JSONObject jsonObject = new JSONObject(response);
+                                    firstuser = jsonObject.getBoolean("firstTimeUser");
                                 }
                                 catch (JSONException e) {
                                     Log.e("RealityCheck","Error",e);
                                 }
                                 Intent intent = new Intent(getBaseContext(),OTPVerification.class);
                                 intent.putExtra("phone",input_phoneNo);
+                                intent.putExtra("firstuser",firstuser);
                                 startActivity(intent);
 
                             }
