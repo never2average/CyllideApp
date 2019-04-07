@@ -68,6 +68,7 @@ public class PhoneAuth extends AppCompatActivity {
                                 Intent intent = new Intent(getBaseContext(),OTPVerification.class);
                                 intent.putExtra("phone",input_phoneNo);
                                 startActivity(intent);
+                                finish();
 
                             }
                         }, new Response.ErrorListener() {

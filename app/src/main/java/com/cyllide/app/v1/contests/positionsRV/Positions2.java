@@ -2,38 +2,37 @@ package com.cyllide.app.v1.contests.positionsRV;
 
 public class Positions2 {
 
-    String name;
-    double value;
-    double returns;
+    String ticker;
+    int quantity;
+    double entryPrice;
 
-
-    public Positions2(String name, double value, double returns) {
-        this.name = name;
-        this.value = value;
-        this.returns = returns;
+    public String getTicker() {
+        return ticker;
     }
 
-    public String getName() {
-        return name;
+    public void setTicker(String ticker) {
+        this.ticker = ticker;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public double getValue() {
-        return value;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public void setValue(double value) {
-        this.value = value;
+    public double getEntryPrice() {
+        return entryPrice;
     }
 
-    public double getReturns() {
-        return returns;
+    public void setEntryPrice(double entryPrice) {
+        this.entryPrice = entryPrice;
     }
 
-    public void setReturns(double returns) {
-        this.returns = returns;
+    public Positions2(String ticker, int quantity, double entryPrice) {
+        this.ticker = ticker;
+        this.quantity = quantity;
+        this.entryPrice = entryPrice;
     }
 }
