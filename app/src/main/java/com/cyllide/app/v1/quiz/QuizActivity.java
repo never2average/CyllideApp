@@ -19,15 +19,18 @@ import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.VibrationEffect;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
@@ -45,6 +48,7 @@ import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import android.os.Vibrator;
 
 
 public class QuizActivity extends AppCompatActivity {
@@ -278,6 +282,13 @@ public class QuizActivity extends AppCompatActivity {
                         }
                         else{
                             quizActivityAnswerIndicator.setImageResource(R.drawable.ic_cancel);
+                            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                            } else {
+
+                                v.vibrate(500);
+                            }
                             if(questionID == 9){
                                 losersPopup.show();
                             }

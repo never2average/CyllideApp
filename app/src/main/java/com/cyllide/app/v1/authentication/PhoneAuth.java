@@ -70,6 +70,7 @@ public class PhoneAuth extends AppCompatActivity {
                                 }
                                 Intent intent = new Intent(getBaseContext(),OTPVerification.class);
                                 intent.putExtra("phone",input_phoneNo);
+                                //bool first yser
                                 intent.putExtra("firstuser",firstuser);
                                 startActivity(intent);
                                 finish();
