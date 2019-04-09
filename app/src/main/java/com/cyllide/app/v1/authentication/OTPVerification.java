@@ -9,6 +9,8 @@ import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,19 +32,29 @@ import java.util.Map;
 
 public class OTPVerification extends AppCompatActivity {
     OtpView otpView;
+    boolean firstuser;
     MaterialButton verifyBtn;
     RequestQueue requestQueue;
+    LinearLayout referralLayout;
     String phoneNo,enteredOTP;
+    EditText referralCode;
     Map<String,String> verificationMap = new ArrayMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         phoneNo = getIntent().getStringExtra("phone");
+        firstuser = getIntent().getBooleanExtra("firstuser",false);
         setContentView(R.layout.activity_otpverification);
         verifyBtn = findViewById(R.id.validate_otp_button);
+        referralLayout = findViewById(R.id.referral_layout);
+        referralCode = findViewById(R.id.activity_otpverification_referral_input);
+        if(!firstuser){
+            referralLayout.setVisibility(View.GONE);
+        }
         otpView = findViewById(R.id.otp_view);
         otpView.requestFocus();
+
         otpView.setOtpCompletionListener(new OnOtpCompletionListener() {
             @Override
             public void onOtpCompleted(String otp) {
@@ -60,6 +72,11 @@ public class OTPVerification extends AppCompatActivity {
     void verifyMyOTP() {
         verificationMap.put("phone",phoneNo);
         verificationMap.put("otp",enteredOTP);
+        if(firstuser){
+            String referralCodeString = referralCode.getText().toString();
+            verificationMap.put("referral",referralCodeString);
+        }
+
         requestQueue = Volley.newRequestQueue(OTPVerification.this);
         String url = getResources().getString(R.string.apiBaseURL)+"auth/otp/verify";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
