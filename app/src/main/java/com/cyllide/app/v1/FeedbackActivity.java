@@ -2,9 +2,11 @@ package com.cyllide.app.v1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -24,6 +26,7 @@ public class FeedbackActivity extends AppCompatActivity {
     TextInputEditText feedbackEdittext;
     RequestQueue requestQueue;
     Map<String,String> feedbackMaps = new ArrayMap<>();
+    ImageView closeFeedBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,15 @@ public class FeedbackActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendEmailVolley();
+            }
+        });
+        closeFeedBack = findViewById(R.id.close_feedback);
+        closeFeedBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FeedbackActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -52,7 +64,7 @@ public class FeedbackActivity extends AppCompatActivity {
                 findViewById(R.id.loading).setVisibility(View.GONE);
                 findViewById(R.id.linearlayout).setVisibility(View.VISIBLE);
                 feedBackBtn.setClickable(false);
-                Toast.makeText(FeedbackActivity.this,"Feedback Submitted Successfully",Toast.LENGTH_LONG).show();
+                Toast.makeText(FeedbackActivity.this,"Thanks a lot for your support",Toast.LENGTH_LONG).show();
                 feedbackEdittext.setText("");
             }
         }, new Response.ErrorListener() {
@@ -61,7 +73,7 @@ public class FeedbackActivity extends AppCompatActivity {
 
                 findViewById(R.id.loading).setVisibility(View.GONE);
                 findViewById(R.id.linearlayout).setVisibility(View.VISIBLE);
-                Toast.makeText(FeedbackActivity.this,"Error Failed try again",Toast.LENGTH_LONG).show();
+                Toast.makeText(FeedbackActivity.this,"Shame on us. The feedback could not be submitted successfully",Toast.LENGTH_LONG).show();
 
             }
         }){

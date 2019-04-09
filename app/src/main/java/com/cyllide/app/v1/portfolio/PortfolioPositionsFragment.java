@@ -68,7 +68,7 @@ public class PortfolioPositionsFragment extends Fragment {
         List<OrdersModel> data = new ArrayList<>(12);
         for (int i = 0; i < CurrentPositions.tickerName.size(); i++) {
             if(System.currentTimeMillis()/1000L - CurrentPositions.tickerEntryTime.get(i) < 300){
-                data.add(new OrdersModel(CurrentPositions.tickerPositionType.get(i),CurrentPositions.tickerQuantity.get(i),CurrentPositions.tickerName.get(i),String.valueOf(1234.23)));
+                data.add(new OrdersModel(CurrentPositions.tickerPositionType.get(i),CurrentPositions.tickerQuantity.get(i),CurrentPositions.tickerName.get(i)));
             }
         }
         return data;
@@ -261,8 +261,7 @@ public class PortfolioPositionsFragment extends Fragment {
                         new OrdersModel(
                                 jsonArray.getJSONObject(i).getBoolean("longPosition"),
                                 jsonArray.getJSONObject(i).getInt("quantity"),
-                                jsonArray.getJSONObject(i).getString("ticker"),
-                                "Placeholder"
+                                jsonArray.getJSONObject(i).getString("ticker")
                                 )
                 );
                 Log.d("portfolioHistory",jsonArray.toString());

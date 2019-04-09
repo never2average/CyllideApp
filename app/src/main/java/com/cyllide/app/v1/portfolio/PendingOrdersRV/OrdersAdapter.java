@@ -47,7 +47,10 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersViewHolder> {
         OrdersViewHolder holder = new OrdersViewHolder(view);
         cardView=view.findViewById(R.id.orders_card);
         return holder;
-        }
+    }
+
+
+
 
 
 

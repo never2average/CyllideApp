@@ -24,7 +24,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".FeedbackActivity"></activity>
+        <activity android:name=".SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".FeedbackActivity" />
         <activity
             android:name=".contests.portfolioRV.LeaderboardsActivity"
             android:screenOrientation="portrait" />
@@ -42,11 +48,6 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".forum.ForumActivity"
@@ -94,7 +95,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".authentication.PhoneAuth" />
 
-        <receiver android:name=".background.services.QuizAlarmManager"></receiver>
+        <receiver android:name=".background.services.QuizAlarmManager" />
         <receiver
             android:name=".MySMSBroadcastReceiver"
             android:exported="true">
@@ -108,7 +109,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".background.services.GetLatestQuizIDService"></service>
+        <service android:name=".background.services.GetLatestQuizIDService" />
     </application>
 
 </manifest>

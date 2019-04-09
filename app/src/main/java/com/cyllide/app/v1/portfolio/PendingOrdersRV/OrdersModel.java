@@ -2,39 +2,30 @@ package com.cyllide.app.v1.portfolio.PendingOrdersRV;
 
 public class OrdersModel {
 
-  private String PositionType;
-  private String Quantity;
-  private String StockTicker;
-  private String CurrentStockPrice;
+    private String PositionType;
+    private String Quantity;
+    private String StockTicker;
 
-    public OrdersModel(Boolean positionType, Integer quantity, String stockTicker, String currentStockPrice) {
+
+    public OrdersModel(Boolean positionType, Integer quantity, String stockTicker) {
         if(positionType){
-            PositionType = "LONG";
+            this.PositionType = "LONG";
         }
         else{
-            PositionType = "SHORT";
+            this.PositionType = "SHORT";
         }
-        Quantity = String.valueOf(quantity);
+        this.Quantity = String.valueOf(quantity);
+        this.StockTicker = stockTicker;
+    }
+
+    public void setStockTicker(String stockTicker) {
         StockTicker = stockTicker;
-        CurrentStockPrice = currentStockPrice;
-    }
-
-    public String getCurrentStockPrice() {
-
-        return CurrentStockPrice;
-    }
-
-    public void setCurrentStockPrice(String currentStockPrice) {
-        CurrentStockPrice = currentStockPrice;
     }
 
     public String getStockTicker() {
         return StockTicker;
     }
 
-    public void setStockTicker(String stockTicker) {
-        StockTicker = stockTicker;
-    }
 
     public String getPositionType() {
         return PositionType;

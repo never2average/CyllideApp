@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -102,18 +103,16 @@ public class ProfileFragment extends Fragment {
 
         storageReference= FirebaseStorage.getInstance().getReference();
         sharedPreferences=view.getContext().getSharedPreferences("profileUrl",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=sharedPreferences.edit();
 
 
         if(sharedPreferences.getString("profileUri",null)==null)
         {
-            Toast.makeText(getContext(),"no uri found for profile pic",Toast.LENGTH_LONG).show();
             getProfilePicVolley();
         }else{
             String ur=sharedPreferences.getString("profileUri",null);
             Uri uri=Uri.parse(ur);
+            Log.d("imageuri",ur);
             Glide.with(getContext()).load(uri).into(profilePic);
-            Toast.makeText(getContext(),ur,Toast.LENGTH_LONG).show();
         }
 
 
@@ -160,7 +159,17 @@ public class ProfileFragment extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("error",response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String uri = jsonObject.getJSONArray("data").getJSONObject(0).getString("profilePic");
+                    SharedPreferences.Editor editor=sharedPreferences.edit();
+                    editor.putString("profileUri",uri);
+                    editor.commit();
+                    Glide.with(getContext()).load(uri).apply(new RequestOptions().centerCrop()).into(profilePic);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -217,13 +226,10 @@ public class ProfileFragment extends Fragment {
                             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    Uri downloaduri = uri;
                                     SharedPreferences.Editor editor=sharedPreferences.edit();
-
-                                    editor.putString("profileUri",downloaduri.toString());
+                                    editor.putString("profileUri",uri.toString());
                                     editor.commit();
-                                    setProfilePicVolley(downloaduri.toString());
-
+                                    setProfilePicVolley(uri.toString());
                                 }
                             });
                             Toast.makeText(context, "Uploaded", Toast.LENGTH_SHORT).show();
@@ -256,8 +262,7 @@ public class ProfileFragment extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("resp",toString);
-                Log.d("setURL", response);
+
             }
         }, new Response.ErrorListener() {
             @Override

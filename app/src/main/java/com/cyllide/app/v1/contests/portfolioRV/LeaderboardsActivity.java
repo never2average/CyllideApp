@@ -41,25 +41,22 @@ public class LeaderboardsActivity extends AppCompatActivity {
     RecyclerView leaderboardView;
     RequestQueue leaderBRequestQ;
     TextView pos1,pos2,pos3;
-    Map<String,String> leaderBrequestHdrs=new ArrayMap<>();
+    Map<String,String> leaderBrequestHdrs = new ArrayMap<>();
     TextView numPortfolios;
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboards);
+
         leaderboardView = findViewById(R.id.leaderboard_recycler_view);
         RecyclerView.LayoutManager leaderboardLayoutManager = new LinearLayoutManager(this);
-
         pos1 = findViewById(R.id.pos1_tv);
         pos2 = findViewById(R.id.pos2_tv);
         pos3 = findViewById(R.id.pos3_tv);
-
         leaderboardView.setLayoutManager(leaderboardLayoutManager);
         numPortfolios = findViewById(R.id.num_portfolios_tv);
-
         ImageView backButton = findViewById(R.id.leaderboard_back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +64,6 @@ public class LeaderboardsActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         getLeaderBoard();
     }
 
@@ -135,8 +131,6 @@ public class LeaderboardsActivity extends AppCompatActivity {
             public Map<String,String> getHeaders(){return leaderBrequestHdrs;}
         };
         leaderBRequestQ.add(stringRequest);
-
-
     }
 
 }
