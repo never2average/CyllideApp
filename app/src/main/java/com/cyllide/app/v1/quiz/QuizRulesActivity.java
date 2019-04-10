@@ -131,14 +131,15 @@ public class QuizRulesActivity extends AppCompatActivity {
                                 else{
                                     startQuizButton.setText("Quiz Starts in "+second+" seconds ");
                                 }
-                                startQuizButton.setClickable(false);
+                                startQuizButton.setClickable(true);
 
                             }
 
                             @Override
                             public void onFinish() {
-                                Intent quizSwitcher = new Intent(QuizRulesActivity.this,QuizActivity.class);
-                                startActivity(quizSwitcher);
+                                  fetchQuestions(quizID);
+//                                Intent quizSwitcher = new Intent(QuizRulesActivity.this,QuizActivity.class);
+//                                startActivity(quizSwitcher);
 
                             }
                         }.start();

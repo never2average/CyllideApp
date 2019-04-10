@@ -20,12 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".SplashScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+
         <activity android:name=".FeedbackActivity" />
         <activity
             android:name=".contests.portfolioRV.LeaderboardsActivity"
@@ -34,7 +29,9 @@
         <activity
             android:name=".contests.MonthlyActivity"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+
+        </activity>
         <activity
             android:name=".authentication.OTPVerification"
             android:screenOrientation="portrait" />
@@ -42,8 +39,14 @@
             android:name=".quiz.QuizRulesActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:theme="@style/SplashTheme"
             android:name=".MainActivity"
             android:screenOrientation="portrait">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".forum.ForumActivity"

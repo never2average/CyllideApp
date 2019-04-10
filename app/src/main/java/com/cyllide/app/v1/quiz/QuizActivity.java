@@ -1,7 +1,6 @@
 package com.cyllide.app.v1.quiz;
 
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -17,15 +16,12 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -80,12 +76,22 @@ public class QuizActivity extends AppCompatActivity {
     ImageView quizActivityAnswerIndicator, sendUPI;
     private String quizID;
     ImageView exitQuiz;
+    MediaPlayer quizMusicPlayer;
+    MediaPlayer quizCorrectAnswerMusicPlayer;
+    MediaPlayer quizWrongAnswerMusicPlayer;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        quizMusicPlayer= MediaPlayer.create(getApplicationContext(), R.raw.quiz_backgorund_sound);
+        quizMusicPlayer.start();
+        quizMusicPlayer.setLooping(true);
+
+        quizCorrectAnswerMusicPlayer = MediaPlayer.create(getApplicationContext(),R.raw.correct_answer_sound);
+
+        quizWrongAnswerMusicPlayer = MediaPlayer.create(getApplicationContext(),R.raw.wrong_answer_sound);
 
 
         setContentView(R.layout.activity_quiz);
@@ -256,13 +262,18 @@ public class QuizActivity extends AppCompatActivity {
                 public void onResponse(String response) {
                     Log.d("submissionResponse", response);
                     try {
+                        quizMusicPlayer.pause();
+                        quizMusicPlayer.seekTo(0);
                         quizActivityAnswerIndicator.setVisibility(View.VISIBLE);
                         textTimer.setVisibility(View.INVISIBLE);
                         JSONObject jsonResponse = new JSONObject(response);
                         Log.d("changequestion","inside response question");
                         showAnswer("");
                         if(jsonResponse.getString("data").equals("Correct")){
+
+                            quizCorrectAnswerMusicPlayer.start();
                             if(questionID == 9){
+
                                 finishQuiz(questionID);
                             }
                             quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
@@ -271,6 +282,8 @@ public class QuizActivity extends AppCompatActivity {
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 public void run() {
+                                    quizCorrectAnswerMusicPlayer.pause();
+                                    quizCorrectAnswerMusicPlayer.seekTo(0);
                                     changeQuestion();
 
 
@@ -282,7 +295,9 @@ public class QuizActivity extends AppCompatActivity {
                         }
                         else{
                             quizActivityAnswerIndicator.setImageResource(R.drawable.ic_cancel);
+                            quizWrongAnswerMusicPlayer.start();
                             Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                 v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
                             } else {
@@ -331,12 +346,21 @@ public class QuizActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        quizMusicPlayer.stop();
+        quizCorrectAnswerMusicPlayer.stop();
+        quizWrongAnswerMusicPlayer.stop();
+    }
+
     private void changeQuestion(){
         questionID +=1;
         String url = getResources().getString(R.string.apiBaseURL)+"quiz/nextques";
         viewRequestQueue = Volley.newRequestQueue(QuizActivity.this);
         viewRequestHeader.put("token",AppConstants.token);
 
+        quizMusicPlayer.start();
         JSONObject quizObject = null;
         String id;
         try {
@@ -636,6 +660,9 @@ public class QuizActivity extends AppCompatActivity {
                         StringRequest sr = new StringRequest(Request.Method.POST,url,  new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
+                                quizWrongAnswerMusicPlayer.pause();
+                                quizWrongAnswerMusicPlayer.seekTo(0);
+
                                 changeQuestion();
                             }
                         }, new Response.ErrorListener() {

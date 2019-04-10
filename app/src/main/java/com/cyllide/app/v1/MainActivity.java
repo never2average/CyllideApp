@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppTheme_NoActionBar);
         setContentView(R.layout.activity_main);
         setApplicationConstants();
         logo=findViewById(R.id.logo);

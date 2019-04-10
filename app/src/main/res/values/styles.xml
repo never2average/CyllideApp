@@ -1,6 +1,10 @@
 <resources>
 
     <!-- Base application theme. -->
+
+        <style name="SplashTheme" parent="AppTheme">
+            <item name="android:windowBackground">@drawable/splash_screen</item>
+        </style>
     <style name="AppTheme" parent="Theme.MaterialComponents.Light">
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/open_sans</item>
