@@ -138,9 +138,6 @@ public class QuizRulesActivity extends AppCompatActivity {
                             @Override
                             public void onFinish() {
                                   fetchQuestions(quizID);
-//                                Intent quizSwitcher = new Intent(QuizRulesActivity.this,QuizActivity.class);
-//                                startActivity(quizSwitcher);
-
                             }
                         }.start();
                     } catch (JSONException e) {
@@ -175,12 +172,12 @@ public class QuizRulesActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        startQuizButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fetchQuestions(quizID);
-            }
-        });
+//        startQuizButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                fetchQuestions(quizID);
+//            }
+//        });
 
     }
 

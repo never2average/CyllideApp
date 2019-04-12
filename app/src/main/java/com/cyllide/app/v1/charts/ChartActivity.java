@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import pl.droidsonroids.gif.GifImageView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -26,6 +28,7 @@ import com.cyllide.app.v1.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.Map;
 
 
@@ -45,7 +48,9 @@ public class ChartActivity extends AppCompatActivity {
     incomeOperationalIncome, balanceAssets, balanceLiabilities,
     balanceNetTangibleAssets;
     GifImageView webViewLoading;
-
+    TextView currentPriceTV;
+    private RequestQueue requestQueue;
+    Map<String,String> stringMap = new ArrayMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +67,11 @@ public class ChartActivity extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.web_view_chart);
         webView.setWebViewClient(new CustomWebView(webViewLoading,webView));
         webView.getSettings().setJavaScriptEnabled(true);
-//        webView.loadUrl("http://data.cyllide.com/data/chart/\""+ticker+"\"/\""+"1D\"");
-        webView.loadUrl("http://data.cyllide.com/data/chart/\"RELIANCE\"/\"1D\"");
+        webView.loadUrl("http://data.cyllide.com/data/chart/\""+ticker+"\"/\"1D\"");
         webView.getSettings().setDomStorageEnabled(true);
         balanceAssets = findViewById(R.id.balance_total_assets);
-
+        currentPriceTV = findViewById(R.id.current_price_chart_tv);
+        getSingleValue(ticker,ChartActivity.this);
 
         summaryAsk = findViewById(R.id.summary_ask);
         summaryBeta = findViewById(R.id.summary_beta);
@@ -269,4 +274,45 @@ public class ChartActivity extends AppCompatActivity {
         }
 
     }
+
+    void getSingleValue(String ticker, Context context){
+        requestQueue = Volley.newRequestQueue(context);
+        String url = "http://data.cyllide.com/data/stock/close";
+        stringMap.put("value","1231D123");
+        stringMap.put("ticker","123"+ticker+"123");
+        stringMap.put("singleVal","True");
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    Double data = jsonObject.getDouble("data");
+                    Double movement = jsonObject.getDouble("movement");
+                    DecimalFormat df = new DecimalFormat("####0.000");
+                    if (jsonObject.getDouble("movement") >= 0) {
+                        currentPriceTV.setTextColor(Color.parseColor("#00ff00"));
+                        currentPriceTV.setText(df.format(data) + "(+" + df.format(movement) + "%)" + "▲");
+                    } else {
+                        currentPriceTV.setTextColor(Color.parseColor("#ff0000"));
+                        currentPriceTV.setText(df.format(data)+ "(" + df.format(movement) + "%)" + "▼");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("resp", error.toString());
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders(){
+                return stringMap;
+            }
+        };
+        stringRequest.setShouldCache(false);
+        requestQueue.add(stringRequest);
+    }
+
 }
