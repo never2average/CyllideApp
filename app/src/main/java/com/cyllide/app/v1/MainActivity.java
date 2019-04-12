@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
@@ -18,6 +19,7 @@ import com.cyllide.app.v1.authentication.PhoneAuth;
 import com.cyllide.app.v1.background.services.GetLatestQuizIDService;
 import com.cyllide.app.v1.faq_view.Faq_Activity;
 import com.cyllide.app.v1.howitworks.HowItWorksFragment;
+import com.cyllide.app.v1.intro.IntroActivity;
 import com.cyllide.app.v1.notification.NotificationActivity;
 
 
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     ImageView notificationButton;
     com.github.clans.fab.FloatingActionButton referrals, faq, feedback, help;
     InternetAvailabilityChecker internetAvailabilityChecker;
+    public static String COMPLETED_TUTORIAL_PREF_NAME = "tutorialcompleted";
 
     boolean doubleBackToExitPressedOnce = false;
 
@@ -189,6 +192,13 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         set.setInterpolator(new OvershootInterpolator(2));
 
         fabMenu.setIconToggleAnimatorSet(set);
+
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        if (!sharedPreferences.getBoolean(
+                COMPLETED_TUTORIAL_PREF_NAME, false)) {
+            startActivity(new Intent(this, IntroActivity.class));
+        }
 
     }
 
