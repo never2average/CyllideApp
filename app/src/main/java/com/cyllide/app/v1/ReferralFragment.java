@@ -71,7 +71,7 @@ public class ReferralFragment extends Fragment {
 
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Join me on TradeRoyale ,a financial services app by PrasannAndCo.Enter my code ###### and get 10 GoldCoins. https://www.youtube.com/watch?v=34Na4j8AVgA&list=RD34Na4j8AVgA&start_radio=1");
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Join me on Cyllide ,a financial services app.Enter my code "+ AppConstants.referral+ " and get 4 hearts. https://play.google.com/store/apps/details?id=com.cyllide.app.v1");
                 sendIntent.setType("text/plain");
                 startActivityForResult(sendIntent, 1);
 

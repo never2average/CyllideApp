@@ -75,7 +75,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".faq_view.Faq_Activity"
+            android:name=".faq_view.FAQActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".PasswordChangeActivity"
