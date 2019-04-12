@@ -20,7 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-
+        <activity android:name=".intro.IntroActivity"/>
         <activity android:name=".FeedbackActivity" />
         <activity
             android:name=".contests.portfolioRV.LeaderboardsActivity"
