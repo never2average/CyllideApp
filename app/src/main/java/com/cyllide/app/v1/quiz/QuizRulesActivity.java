@@ -2,10 +2,15 @@ package com.cyllide.app.v1.quiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.collection.ArrayMap;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
@@ -13,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,15 +50,34 @@ public class QuizRulesActivity extends AppCompatActivity {
     ImageView backButton;
     Calendar startTime = Calendar.getInstance();
     private Map<String,String> questionHeaders = new ArrayMap<String, String>();
+    RemoteViews contentView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_rules);
+        createNotificationChannel();
 
         Intent serviceIntent = new Intent(this, GetLatestQuizIDService.class);
         startService(serviceIntent);
+
+//        contentView = new RemoteViews(getPackageName(), R.layout.push_notification_layout);
+//        contentView.setImageViewResource(R.id.image, R.mipmap.ic_launcher);
+//        contentView.setTextViewText(R.id.title, "Polish your Finance-Whiz");
+//        contentView.setTextViewText(R.id.text, "Quiz starts in 5 minutes");
+
+        String CHANNEL_ID = "LOL";
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.icon_logo)
+                .setContentTitle("Polish your finance-whiz")
+                .setContentText("Quiz starts in 5 minutes")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+// notificationId is a unique int for each notification that you must define
+        notificationManager.notify(1000, builder.build());
 
 
         startQuizButton=findViewById(R.id.startQuizButton);
@@ -180,6 +205,24 @@ public class QuizRulesActivity extends AppCompatActivity {
 //        });
 
     }
+
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "CGANNEL NAME";
+            String description = "CHANNEL DESC";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("LOL", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
 
     private void fetchQuestions(final String quizID){
         RequestQueue requestQueue;

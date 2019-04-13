@@ -56,6 +56,7 @@ public class ForumActivity extends AppCompatActivity {
     MultiSelectToggleGroup tags ;
     SingleSelectToggleGroup singleTogleGrp;
     ImageView backButton;
+    ArrayList<String> selectedTags;
 
     private Realm realmInstance;
 
@@ -63,8 +64,24 @@ public class ForumActivity extends AppCompatActivity {
         questionList = new ArrayList<>();
         for (int i = 0; i < responseData.length(); i++) {
             try {
+
                 questionObject = responseData.getJSONObject(i);
-                questionList.add(new QuestionListModel(questionObject.getString("queryBody"), questionObject.getJSONObject("_id"), questionObject.getInt("queryNumViews"), questionObject.getJSONObject("queryLastUpdateTime").getLong("$date"), questionObject.getJSONArray("queryTags")));
+                JSONArray queryTags = questionObject.getJSONArray("queryTags");
+                int f = 0;
+                if(selectedTags.size() == 0){
+                    f=1;
+                }
+                else {
+                    for (int j = 0; j < queryTags.length(); j++) {
+                        if (selectedTags.contains(queryTags.getString(j))){
+                            f=1;
+                            break;
+                        }
+                    }
+                }
+                if(f==1) {
+                    questionList.add(new QuestionListModel(questionObject.getString("queryBody"), questionObject.getJSONObject("_id"), questionObject.getInt("queryNumViews"), questionObject.getJSONObject("queryLastUpdateTime").getLong("$date"), questionObject.getJSONArray("queryTags")));
+                }
             } catch (JSONException e) {
                 Log.d("JSON Error", e.toString());
             }
@@ -109,6 +126,7 @@ public class ForumActivity extends AppCompatActivity {
         forumRV = findViewById(R.id.topquesrecycler);
         forumRV.setLayoutManager(new LinearLayoutManager(this));
         singleTogleGrp=findViewById(R.id.single);
+        selectedTags = new ArrayList<String>();
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,29 +160,55 @@ public class ForumActivity extends AppCompatActivity {
                 switch (checkedId){
 
                     case R.id.tb_finance:
-                        if(isChecked)
-                        {Toast.makeText(ForumActivity.this, "finance", Toast.LENGTH_SHORT).show();}
+
+
+                            Toast.makeText(ForumActivity.this, "finance", Toast.LENGTH_SHORT).show();
+                            if(!selectedTags.contains("Finance")){
+                                selectedTags.add("Finance");
+                            }
+                            else{
+                                selectedTags.remove("Finance");
+                            }
+
 
                         break;
                     case R.id.tb_capital_markets:
-
-                        if(isChecked)
-                        {Toast.makeText(ForumActivity.this, "Cp markets", Toast.LENGTH_SHORT).show();}
+                            Toast.makeText(ForumActivity.this, "Cp markets", Toast.LENGTH_SHORT).show();
+                            if(!selectedTags.contains("Cp markets")){
+                                selectedTags.add("Cp markets");
+                            }
+                            else{
+                                selectedTags.remove("Cp markets");
+                            }
 
                         //capitalMarkets
                         break;
                     case R.id.tb_macro_economics:
-                        if(isChecked)
-                        {Toast.makeText(ForumActivity.this, "econo", Toast.LENGTH_SHORT).show();}
+                            Toast.makeText(ForumActivity.this, "econo", Toast.LENGTH_SHORT).show();
+                            if(!selectedTags.contains("econo")){
+                                selectedTags.add("econo");
+                            }
+                            else{
+                                selectedTags.remove("econo");
+                            }
 
                         break;
                     case R.id.tb_business:
-                        if(isChecked)
-                        {Toast.makeText(ForumActivity.this, "business", Toast.LENGTH_SHORT).show();}
+                            Toast.makeText(ForumActivity.this, "Business", Toast.LENGTH_SHORT).show();
+                            if(!selectedTags.contains("Business")){
+                                selectedTags.add("Business");
+                            }
+                            else {
+                                selectedTags.remove("Business");
+
+                            }
+                            break;
 
 
 
                 }
+                Log.d("ForumActivity",Integer.toString(selectedTags.size()));
+                getQuestions();
             }
         });
 
@@ -275,10 +319,5 @@ public class ForumActivity extends AppCompatActivity {
         realmInstance.close();
     }
 
-    private void applyfilter(String tag)
-    {
 
-
-
-    }
 }
