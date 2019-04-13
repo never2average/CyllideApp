@@ -37,6 +37,11 @@ public class FeedbackActivity extends AppCompatActivity {
         feedBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(feedbackEdittext.getText().toString().equals("")){
+                    return;
+                }
+
                 sendEmailVolley();
             }
         });

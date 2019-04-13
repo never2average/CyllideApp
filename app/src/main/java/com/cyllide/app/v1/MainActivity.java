@@ -4,8 +4,12 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -13,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.cyllide.app.v1.authentication.PhoneAuth;
@@ -31,6 +36,8 @@ import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -44,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     com.github.clans.fab.FloatingActionButton referrals, faq, feedback, help;
     InternetAvailabilityChecker internetAvailabilityChecker;
     public static String COMPLETED_TUTORIAL_PREF_NAME = "tutorialcompleted";
+
+    NotificationManager notificationManager;
+    RemoteViews contentView;
 
     boolean doubleBackToExitPressedOnce = false;
 
@@ -78,6 +88,12 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         else{
             AppConstants.coins = sharedPreferences.getInt("coins", 0);
             AppConstants.referral = sharedPreferences.getString("referralCode","ERROR");
+            SharedPreferences sharedPreferences2 =
+                    PreferenceManager.getDefaultSharedPreferences(this);
+            if (!sharedPreferences2.getBoolean(
+                    COMPLETED_TUTORIAL_PREF_NAME, false)) {
+                startActivity(new Intent(this, IntroActivity.class));
+            }
         }
     }
 
@@ -91,6 +107,10 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         setTheme(R.style.AppTheme_NoActionBar);
         setContentView(R.layout.activity_main);
         setApplicationConstants();
+
+        notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+
+
         logo=findViewById(R.id.logo);
         notificationButton=findViewById(R.id.notificationicon);
         profilepic=findViewById(R.id.profilePic);
@@ -102,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         InternetAvailabilityChecker.init(this);
         internetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
         internetAvailabilityChecker.addInternetConnectivityListener(this);
+
+
 
 
 
@@ -127,6 +149,29 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
        help.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
+                contentView = new RemoteViews(getPackageName(), R.layout.push_notification_layout);
+                contentView.setImageViewResource(R.id.image, R.mipmap.ic_launcher);
+                contentView.setTextViewText(R.id.title, "Hello!");
+                contentView.setTextViewText(R.id.text, "This is cyllide's first notification");
+
+                Notification.Builder mBuilder = new Notification.Builder(v.getContext())
+                        .setSmallIcon(R.drawable.arrow)
+                        .setContent(contentView);
+
+                Notification notification = mBuilder.build();
+                notification.flags |= Notification.FLAG_AUTO_CANCEL;
+                notification.defaults |= Notification.DEFAULT_SOUND;
+                notification.defaults |= Notification.DEFAULT_VIBRATE;
+
+//        if (Build.VERSION.SDK_INT >= Android.OS.BuildVersionCodes.O)
+//        {
+//            String channelId = "Your_channel_id";
+//            NotificationChannel channel = new NotificationChannel(channelId,
+//                    "Channel human readable title", Android.App.NotificationImportance.Default);
+//            notificationManager.CreateNotificationChannel(channel);
+//            notificationBuilder.SetChannelId(channelId);
+//        }
+                notificationManager.notify(1, notification);
                 fabMenu.close(true);
                 Intent faqIntent=new Intent(MainActivity.this, FAQActivity.class);
                 startActivity(faqIntent);
@@ -193,12 +238,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
         fabMenu.setIconToggleAnimatorSet(set);
 
-        SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
-        if (!sharedPreferences.getBoolean(
-                COMPLETED_TUTORIAL_PREF_NAME, false)) {
-            startActivity(new Intent(this, IntroActivity.class));
-        }
+
 
     }
 
