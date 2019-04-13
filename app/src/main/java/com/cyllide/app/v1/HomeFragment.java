@@ -76,6 +76,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent=new Intent(getContext(),StoriesActivity.class);
                 getContext().startActivity(intent);
+                getActivity().finish();
             }
         });
         contest.setOnClickListener(new View.OnClickListener() {
@@ -83,11 +84,13 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 if(ConnectionStatus.connectionstatus){
                 Intent intent=new Intent(getContext(), MonthlyActivity.class);
-                startActivity(intent);}
+                startActivity(intent);
+                getActivity().finish();
+                }
                 else{
                     Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
                 }
-                }
+            }
         });
         portfolios.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +122,9 @@ public class HomeFragment extends Fragment {
                     intent = new Intent(getContext(), QuizRulesActivity.class);
 //                }
 
-                getContext().startActivity(intent);}
+                getContext().startActivity(intent);
+                getActivity().finish();
+            }
                 else {
                     Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
 
@@ -132,7 +137,9 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 if(ConnectionStatus.connectionstatus){
                 Intent intent = new Intent(getContext(), ForumActivity.class);
-                getContext().startActivity(intent);}
+                getContext().startActivity(intent);
+                getActivity().finish();
+            }
                 else{
                     Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
 

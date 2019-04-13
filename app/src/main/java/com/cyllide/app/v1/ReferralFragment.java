@@ -74,7 +74,6 @@ public class ReferralFragment extends Fragment {
                 sendIntent.putExtra(Intent.EXTRA_TEXT, "Join me on Cyllide ,a financial services app.Enter my code "+ AppConstants.referral+ " and get 4 hearts. https://play.google.com/store/apps/details?id=com.cyllide.app.v1");
                 sendIntent.setType("text/plain");
                 startActivityForResult(sendIntent, 1);
-
             }
         });
     }

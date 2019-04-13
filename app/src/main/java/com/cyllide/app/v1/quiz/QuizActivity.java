@@ -112,6 +112,7 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View v) {
                 losersPopup.dismiss();
                 startActivity(new Intent(QuizActivity.this,MainActivity.class));
+                finish();
             }
         });
 
@@ -119,6 +120,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
                 startActivity(new Intent(QuizActivity.this,MainActivity.class));
+                finish();
             }
         });
 
@@ -128,6 +130,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(QuizActivity.this, MainActivity.class));
+                finish();
             }
         });
 

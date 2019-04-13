@@ -18,14 +18,13 @@ import com.android.volley.toolbox.Volley;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.MainActivity;
-import com.cyllide.app.v1.MainApplication;
 import com.cyllide.app.v1.R;
 import com.cyllide.app.v1.forum.askquestion.AskQuestion;
 import com.cyllide.app.v1.forum.questionlist.QuestionListAdapter;
 import com.cyllide.app.v1.forum.questionlist.QuestionListModel;
+import com.google.android.material.button.MaterialButton;
 import com.nex3z.togglebuttongroup.MultiSelectToggleGroup;
 import com.nex3z.togglebuttongroup.SingleSelectToggleGroup;
-import com.nex3z.togglebuttongroup.button.LabelToggle;
 import com.nex3z.togglebuttongroup.button.ToggleButton;
 
 import org.json.JSONArray;
@@ -40,24 +39,19 @@ import java.util.Map;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class ForumActivity extends AppCompatActivity {
 
     QuestionListAdapter questionListAdapter;
     RecyclerView forumRV;
-    LabelToggle askQuestion;
+    MaterialButton askQuestion;
     private RequestQueue questionRequestQueue;
     private Map<String, String> requestHeaders = new ArrayMap<String, String>();
     JSONObject questionObject;
     List<QuestionListModel> questionList, filterList;
     FloatingSearchView searchQuestions;
     MultiSelectToggleGroup tags ;
-    SingleSelectToggleGroup singleTogleGrp;
     ImageView backButton;
-
-    private Realm realmInstance;
 
     private void displayQuestions(JSONArray responseData) {
         questionList = new ArrayList<>();
@@ -102,39 +96,20 @@ public class ForumActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forum);
-        Log.d("ForumActivity", "Initializing Realm");
-        realmInstance = Realm.getDefaultInstance();
         backButton = findViewById(R.id.activity_forum_back_button);
         askQuestion = findViewById(R.id.ask_question);
         forumRV = findViewById(R.id.topquesrecycler);
         forumRV.setLayoutManager(new LinearLayoutManager(this));
-        singleTogleGrp=findViewById(R.id.single);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ForumActivity.this, MainActivity.class));
+                finish();
             }
         });
         tags=findViewById(R.id.tags);
 
-        singleTogleGrp.setOnCheckedChangeListener(new SingleSelectToggleGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(SingleSelectToggleGroup group, int checkedId) {
 
-                switch (checkedId)
-                {
-                    case R.id.ask_question:
-                        group.clearCheck();
-                        break;
-                    case R.id.AnswerQ:
-                        sortByNewest();
-
-
-
-                }
-
-            }
-        });
         tags.setOnCheckedChangeListener(new MultiSelectToggleGroup.OnCheckedStateChangeListener() {
             @Override
             public void onCheckedStateChanged(MultiSelectToggleGroup group, int checkedId, boolean isChecked) {
@@ -169,7 +144,6 @@ public class ForumActivity extends AppCompatActivity {
         });
 
         getQuestions();
-        //readCachedQuestions();
 
 
         askQuestion.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +151,7 @@ public class ForumActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent questioningIntent = new Intent(ForumActivity.this, AskQuestion.class);
                 startActivity(questioningIntent);
+                finish();
             }
         });
         searchQuestions = findViewById(R.id.search_questions);
@@ -216,25 +191,10 @@ public class ForumActivity extends AppCompatActivity {
         forumRV.setAdapter(questionListAdapter);
     }
 
-    private void readCachedQuestions() {
-        RealmResults<QuestionListModel> questionListRealm = realmInstance.where(QuestionListModel.class)
-                .findAll();
-        //update questions in background thread
-        MainApplication.setUpQuestionUpdateWorker();
-        //set list
-        //TODO: Change Adapter to implement RealmBaseAdapter
-        questionList = realmInstance.copyFromRealm(questionListRealm);
-        ;
-        questionListAdapter = new QuestionListAdapter(questionList);
-        filterList = questionList;
-        forumRV.setAdapter(questionListAdapter);
-    }
 
     private void getQuestions() {
         questionRequestQueue = Volley.newRequestQueue(this);
         requestHeaders.put("token", AppConstants.token);
-        //TODO remove the token key
-
         String requestEndpoint = getResources().getString(R.string.apiBaseURL)+"query/display";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, requestEndpoint, new Response.Listener<String>() {
             @Override
@@ -272,13 +232,5 @@ public class ForumActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.e("ForumActivity", "Closing realm instance");
-        realmInstance.close();
-    }
-
-    private void applyfilter(String tag)
-    {
-
-
-
     }
 }

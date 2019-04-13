@@ -63,15 +63,14 @@ public class QuizRulesActivity extends AppCompatActivity {
         if (quizStartTime != 0 && quizStartTime-System.currentTimeMillis() < 0){
             Toast.makeText(QuizRulesActivity.this,"No Quizes Available", Toast.LENGTH_LONG).show();
             startActivity(new Intent(QuizRulesActivity.this,MainActivity.class));
+            finish();
         }
-
-        //TODO Remove hardcoded token
-
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(QuizRulesActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -194,6 +193,7 @@ public class QuizRulesActivity extends AppCompatActivity {
                 quizSwitcher.putExtra("questions",response);
                 quizSwitcher.putExtra("quizID",quizID);
                 startActivity(quizSwitcher);
+                finish();
             }
         }, new Response.ErrorListener() {
             @Override

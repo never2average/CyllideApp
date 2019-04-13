@@ -37,7 +37,6 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
 
     private String curr_selection = "nifty500";
     private int curr_selection_index = 0;
-    //TODO: Shift string to res
     private String[] descs = {"Small cap is a term used to classify companies with a relatively small market capitalization. A company’s market capitalization is the market value of its outstanding shares. In India, normally a company below market capitalization of Rs.5000 crores is classified as small cap company.",
     "A company’s market capitalization is the market value of its outstanding shares. In India, normally a company with market capitalization above Rs.5000 crores and less than Rs.20000 crores is considered as mid cap company.",
     "Large cap is a term used to classify companies with a relatively large market capitalization. A company's market capitalization is the market value of its outstanding shares. In India, normally companies with the market capitalization higher than Rs.20,000 crores is considered as Large cap companies.",
@@ -114,6 +113,7 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
             public void onClick(View v) {
                 Intent leaderboardIntent = new Intent(MonthlyActivity.this, LeaderboardsActivity.class);
                 startActivity(leaderboardIntent);
+                finish();
             }
         });
 

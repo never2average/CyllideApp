@@ -38,15 +38,6 @@ public class MainApplication extends Application {
         Constraints networkConstraint = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build();
-//        PeriodicWorkRequest newsUpdater = new PeriodicWorkRequest.Builder(NewsUpdateWorker.class,
-//                NEWS_UPDATE_FREQUENCY_MINUTES, TimeUnit.MINUTES)
-//                .setConstraints(networkConstraint)
-//                .addTag(NEWS_UPDATE_TAG)
-//                .build();
-//        WorkManager.getInstance().enqueueUniquePeriodicWork(NEWS_UPDATE_TAG,
-//                ExistingPeriodicWorkPolicy.REPLACE, newsUpdater);
-//        Log.e("MainApplication", "Scheduled New News Worker!");
-        //TODO delete once done
     }
 
     public static void setUpQuestionUpdateWorker(){

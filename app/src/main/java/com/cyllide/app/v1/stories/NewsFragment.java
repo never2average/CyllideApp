@@ -106,12 +106,8 @@ public class NewsFragment extends Fragment {
 
     public void fetchStories()
     {
-
-
-        //TODO: Remove hard coded token
-        String token = AppConstants.token;
         final Map<String, String> mHeaders = new ArrayMap<String, String>();
-        mHeaders.put("token", token);
+        mHeaders.put("token", AppConstants.token);
         final String newsURL = "http://api.cyllide.com/api/client/stories/view";
         storiesQueue = Volley.newRequestQueue(getContext());
         StringRequest request = new StringRequest(Request.Method.POST, newsURL, new Response.Listener<String>() {

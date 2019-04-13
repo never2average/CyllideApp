@@ -43,6 +43,7 @@ public class StoriesViewHolder extends RecyclerView.ViewHolder {
                 Intent intent = new Intent(itemView.getContext(),NewsPageActivity.class);
                 intent.putExtra("url",stories.getContentMarkdownLink());
                 itemView.getContext().startActivity(intent);
+
             }
         });
     }

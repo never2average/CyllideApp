@@ -69,8 +69,6 @@ public class OrderHistoryFragment extends Fragment {
                     JSONArray responseData = new JSONObject(response).getJSONArray("data");
                     populateOrderHistoryRV(responseData,orderHistoryRV);
 
-                    //TODO SET STUFF
-
                 } catch (JSONException e) {
                     Log.d("ERROR",e.toString());
                 }
