@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
+import com.cyllide.app.v1.MainActivity;
 import com.cyllide.app.v1.contests.portfolioRV.LeaderboardsActivity;
 import com.cyllide.app.v1.contests.portfolioRV.PortfolioModel;
 import com.cyllide.app.v1.R;
@@ -91,6 +92,7 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
         imgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(MonthlyActivity.this,MainActivity.class);
                 finish();
             }
         });

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.ArrayMap;
@@ -24,6 +25,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.cyllide.app.v1.MainActivity;
+import com.cyllide.app.v1.contests.MonthlyActivity;
 import com.cyllide.app.v1.leaderboardRV.LeaderboardAdapter;
 import com.cyllide.app.v1.leaderboardRV.LeaderboardModel;
 import com.cyllide.app.v1.AppConstants;
@@ -61,6 +64,8 @@ public class LeaderboardsActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(LeaderboardsActivity.this, MonthlyActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -113,7 +118,7 @@ public class LeaderboardsActivity extends AppCompatActivity {
                 try {
                 List<LeaderboardModel> leaderboardModelArrayList = new ArrayList<>();
                 for(int i = 0; i<arrayData.length();i++){
-                        leaderboardModelArrayList.add(new LeaderboardModel(arrayData.getJSONObject(i).getString("portfolioName"),i+1,9.0,arrayData.getJSONObject(i).getString("portfolioProfilePic"),arrayData.getJSONObject(i).getJSONObject("_id").getString("$oid"),arrayData.getJSONObject(i).getString("portfolioOwner")));
+                        leaderboardModelArrayList.add(new LeaderboardModel(arrayData.getJSONObject(i).getString("portfolioName"),arrayData.getJSONObject(i).getInt("rank"),arrayData.getJSONObject(i).getDouble("returns"),arrayData.getJSONObject(i).getString("portfolioProfilePic"),arrayData.getJSONObject(i).getJSONObject("_id").getString("$oid"),arrayData.getJSONObject(i).getString("portfolioOwner")));
                 }
                 LeaderboardAdapter leaderboardAdapter = new LeaderboardAdapter(leaderboardModelArrayList, getSupportFragmentManager());
                 leaderboardView.setAdapter(leaderboardAdapter);

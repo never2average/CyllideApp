@@ -117,7 +117,6 @@ public class ForumActivity extends AppCompatActivity {
         askQuestion = findViewById(R.id.ask_question);
         forumRV = findViewById(R.id.topquesrecycler);
         forumRV.setLayoutManager(new LinearLayoutManager(this));
-        singleTogleGrp=findViewById(R.id.single);
         selectedTags = new ArrayList<String>();
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
