@@ -19,6 +19,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/leaderboard_rv_rank"
+                android:text="1"
+                android:textSize="19sp"
+                android:layout_marginHorizontal="@dimen/search_bar_right_icon_right_margin"/>
+
             <ImageView
                 android:id="@+id/leaderboard_profile_iv"
                 android:gravity="center"

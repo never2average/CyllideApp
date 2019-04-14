@@ -1,5 +1,6 @@
 package com.cyllide.app.v1.forum.questionlist;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class QuestionListViewHolder extends RecyclerView.ViewHolder {
@@ -35,7 +37,7 @@ public class QuestionListViewHolder extends RecyclerView.ViewHolder {
 			public void onClick(View v) {
 				Intent intent=new Intent(itemView.getContext(), QuestionAnswerActivity.class);
 				intent.putExtra("questionID",stocksModel.getQuestionID().toString());
-				itemView.getContext().startActivity(intent);
+                itemView.getContext().startActivity(intent);
 			}
 		});
 

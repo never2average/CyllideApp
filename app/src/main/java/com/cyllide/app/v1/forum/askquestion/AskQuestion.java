@@ -176,6 +176,7 @@ public class AskQuestion extends AppCompatActivity {
                     Intent intent = new Intent(getBaseContext(), QuestionAnswerActivity.class);
                     intent.putExtra("questionID",qid);
                     startActivity(intent);
+                    finish();
 
 
                 } catch (JSONException e) {

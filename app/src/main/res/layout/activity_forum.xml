@@ -97,8 +97,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:padding="6dp"
-                        android:text="Capital MARKETS"
-                        android:textOn="Capital MARKETS"
+                        android:text="Capital Markets"
+                        android:textOn="Capital Markets"
                         android:textSize="12sp" />
 
                     <com.nex3z.togglebuttongroup.button.LabelToggle
@@ -134,35 +134,33 @@
             android:layout_marginLeft="8dp">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/single"
-                    >
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/ask_question"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="20dp"
+                    android:text="Ask a Question"
+                    app:cornerRadius="@dimen/margin"
+                    />
 
-                    <com.nex3z.togglebuttongroup.button.LabelToggle
-                        android:id="@+id/ask_question"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginRight="20dp"
-                        android:text="Ask a Question"
-                        />
+                 <com.google.android.material.card.MaterialCardView
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent"
+                     android:id="@+id/answer_question"
+                     app:cardCornerRadius="@dimen/margin"
+                     >
+                     <TextView
+                         android:textColor="@color/colorPrimary"
+                         android:padding="@dimen/default_background_stroke_width"
+                         android:gravity="center"
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:text="Answer a Question"/>
+                 </com.google.android.material.card.MaterialCardView>
 
-                    <com.nex3z.togglebuttongroup.button.LabelToggle
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_margin="2dp"
-                        android:text="Answer a Question"
-                        android:id="@+id/AnswerQ"
-
-
-                        />
-
-                </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
             </LinearLayout>
         </LinearLayout>
 

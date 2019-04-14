@@ -112,7 +112,8 @@ public class ProfileFragment extends Fragment {
             String ur=sharedPreferences.getString("profileUri",null);
             Uri uri=Uri.parse(ur);
             Log.d("imageuri",ur);
-            Glide.with(getContext()).load(uri).into(profilePic);
+            RequestOptions requestOptions = new RequestOptions().override(100);
+            Glide.with(getContext()).load(uri).apply(requestOptions).into(profilePic);
         }
 
 
@@ -165,7 +166,8 @@ public class ProfileFragment extends Fragment {
                     SharedPreferences.Editor editor=sharedPreferences.edit();
                     editor.putString("profileUri",uri);
                     editor.commit();
-                    Glide.with(getContext()).load(uri).apply(new RequestOptions().centerCrop()).into(profilePic);
+                    RequestOptions requestOptions = new RequestOptions().override(100);
+                    Glide.with(getContext()).load(uri).apply(requestOptions).into(profilePic);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -194,7 +196,8 @@ public class ProfileFragment extends Fragment {
         if (resultCode == RESULT_OK){
 
             targetUri = data.getData();
-            Glide.with(this).load(targetUri).into(profilePic);
+            RequestOptions requestOptions = new RequestOptions().override(100);
+            Glide.with(getContext()).load(targetUri).apply(requestOptions).into(profilePic);
             uploadImage(getContext());
             Log.e("ProfilePicSet","inside on activity result");
             Toast.makeText(getContext(),"onActivityResult",Toast.LENGTH_LONG).show();
@@ -297,13 +300,21 @@ public class ProfileFragment extends Fragment {
                     AnimatedPieViewConfig config =  new  AnimatedPieViewConfig ().drawText(true).textSize(40);
                     double contestsPart = jsonResponse.getDouble("contestsParticipated");
                     double contestsWon = jsonResponse.getDouble("contestsWon");
-                    double winPercent = contestsWon/contestsPart;
-                    double lostPercent = 1 - winPercent;
-                    config.startAngle(-90).addData(
-                            new SimplePieInfo((float) winPercent, ContextCompat.getColor(getContext(), R.color.progressgreen),"Win %")).addData (
-                                    new SimplePieInfo( (float) lostPercent, ContextCompat.getColor(getContext(), R.color.progressred), "Loss %" )).duration(1500);
-                    contestWinPerc.applyConfig (config);
-                    contestWinPerc.start();
+                    if(contestsPart==0.0){
+                        config.startAngle(-90).addData(
+                                new SimplePieInfo(1, ContextCompat.getColor(getContext(), R.color.contest_grey),"")).duration(1500);
+                        contestWinPerc.applyConfig(config);
+                        contestWinPerc.start();
+                    }
+                    else {
+                        double winPercent = contestsWon / contestsPart;
+                        double lostPercent = 1 - winPercent;
+                        config.startAngle(-90).addData(
+                                new SimplePieInfo((float) winPercent, ContextCompat.getColor(getContext(), R.color.progressgreen), "Win %")).addData(
+                                new SimplePieInfo((float) lostPercent, ContextCompat.getColor(getContext(), R.color.progressred), "Loss %")).duration(1500);
+                        contestWinPerc.applyConfig(config);
+                        contestWinPerc.start();
+                    }
                 } catch (JSONException e) {
                     Log.d("profileinfoerror", e.toString());
                 }

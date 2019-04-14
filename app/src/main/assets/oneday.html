@@ -4,20 +4,31 @@
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']})
+      google.charts.setOnLoadCallback(drawChart);
 
-      var settings = {
-          "url": "http://data.cyllide.com/data/nifty50",
-          "method": "GET",
-          "headers": {
-             "value": "1D"
-           }
+      function fillTimePlot(){
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type:"GET",
+                "url": "http://data.cyllide.com/data/nifty50",
+                "headers": {
+                    "value": "1D"
+                },
+                success: function(res){
+                    var array = res.data;
+                    console.log(array);
+                    resolve( array );
+                },
+                error: function(){
+                    return false;
+                }
+            });
+        })
       }
 
-      $.ajax(settings).done(function (response) {
-            drawChart(response.data);
-      });
 
-      function drawChart(array) {
+      async function drawChart() {
+        var array = await fillTimePlot();
         var data = google.visualization.arrayToDataTable(array);
 
         var options = {
@@ -41,7 +52,6 @@
         };
 
         var chart = new google.visualization.AreaChart(document.getElementById('curve_chart'));
-
         chart.draw(data, options);
       }
     </script>

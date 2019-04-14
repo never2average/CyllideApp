@@ -50,6 +50,7 @@ public class PhoneAuth extends AppCompatActivity {
                     mHeaders.put("username", input_scName);
                     Intent intent = new Intent(getBaseContext(),OTPVerification.class);
                     startActivity(intent);
+                    finish();
                     try {
                         RequestQueue requestQueue;
                         requestQueue = Volley.newRequestQueue(getBaseContext());
@@ -58,7 +59,6 @@ public class PhoneAuth extends AppCompatActivity {
 
                             @Override
                             public void onResponse(String response) {
-                                // TODO Verify the response first.
                                 boolean firstuser = false;
                                 Log.d("PhoneAuth",response);
                                 try {

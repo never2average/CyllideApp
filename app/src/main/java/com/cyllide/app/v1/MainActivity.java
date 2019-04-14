@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import com.cyllide.app.v1.authentication.PhoneAuth;
 import com.cyllide.app.v1.background.services.GetLatestQuizIDService;
-import com.cyllide.app.v1.faq_view.Faq_Activity;
+import com.cyllide.app.v1.faq_view.FAQActivity;
 import com.cyllide.app.v1.howitworks.HowItWorksFragment;
 import com.cyllide.app.v1.intro.IntroActivity;
 import com.cyllide.app.v1.notification.NotificationActivity;
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 //        }
                 notificationManager.notify(1, notification);
                 fabMenu.close(true);
-                Intent faqIntent=new Intent(MainActivity.this, Faq_Activity.class);
+                Intent faqIntent=new Intent(MainActivity.this, FAQActivity.class);
                 startActivity(faqIntent);
             }
         });

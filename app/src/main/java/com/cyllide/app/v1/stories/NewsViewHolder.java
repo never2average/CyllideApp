@@ -44,14 +44,7 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         dateTv.setText(date);
         sourceTv.setText(source);
         descTv.setText(description);
-//        intent.putExtra("newsname",name);
-//        intent.putExtra("newsimageurl",imageURL);
-//        intent.putExtra("newsdesc",description);
-//        intent.putExtra("newsdate",date);
-//        intent.putExtra("newssource",source);
         intent.putExtra("newsurl",url);
-//        intent.putExtra("newsauthor",author);
-//        intent.putExtra("mongoid", news.getMongoID());
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,12 +55,14 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 itemView.getContext().startActivity(intent);
+                //TODO Finish
             }
         });
         newsLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 itemView.getContext().startActivity(intent);
+                //TODO Finish
             }
         });
     }

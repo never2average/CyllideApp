@@ -38,6 +38,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView nameTextView,returnTextView;
         public ImageView profilePicView;
+        public TextView rankTextView;
 
 
         public MyViewHolder(View view) {
@@ -45,6 +46,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
             nameTextView = (TextView) view.findViewById(R.id.portfolioname);
             returnTextView = view.findViewById(R.id.portfolioreturns);
             profilePicView = view.findViewById(R.id.leaderboard_profile_iv);
+            rankTextView = view.findViewById(R.id.leaderboard_rv_rank);
             cv= view.findViewById(R.id.leaderboard_card_view);
             context= view.getContext();
 
@@ -71,6 +73,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         final LeaderboardModel portfolio = leaderboardModelList.get(position);
         holder.nameTextView.setText(portfolio.getName());
         holder.returnTextView.setText(Double.toString(portfolio.getReturns()));
+        holder.rankTextView.setText(Integer.toString(portfolio.getRank()));
 
         Glide.with(context)
                 .load(portfolio.getProfileURL())
@@ -94,11 +97,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
                 dialog.show(((FragmentActivity) holder.itemView.getContext()).getSupportFragmentManager(), "PortfolioViewer");
             }
         });
-        if(position%2==1){
-           holder.itemView.findViewById(R.id.leaderboard_card_view).
-                   setBackgroundResource(R.color.lightgray);
-            //changes the alternate element colour
-        }
+
 
         if(portfolio.isMine()){
             holder.itemView.findViewById(R.id.leaderboard_card_view).
