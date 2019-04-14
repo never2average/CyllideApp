@@ -6,6 +6,7 @@ public class LeaderboardModel {
     private int rank;
     private double returns;
     private String profileURL;
+    private boolean isMine;
 
     public String getPortfolioID() {
         return portfolioID;
@@ -15,13 +16,22 @@ public class LeaderboardModel {
         this.portfolioID = portfolioID;
     }
 
-    public LeaderboardModel(String name, int rank, double returns, String profileURL, String portfolioID, String portfolioOwner) {
+    public boolean isMine() {
+        return isMine;
+    }
+
+    public void setMine(boolean mine) {
+        isMine = mine;
+    }
+
+    public LeaderboardModel(String name, int rank, double returns, String profileURL, String portfolioID, String portfolioOwner, boolean isMine) {
         this.name = name;
         this.rank = rank;
         this.returns = returns;
         this.profileURL = profileURL;
         this.portfolioID = portfolioID;
         this.portfolioOwner = portfolioOwner;
+        this.isMine = isMine;
     }
 
     private String portfolioID;

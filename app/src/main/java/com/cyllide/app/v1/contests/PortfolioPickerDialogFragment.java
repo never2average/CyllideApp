@@ -96,6 +96,7 @@ public class PortfolioPickerDialogFragment extends DialogFragment {
                     for(int i=0;i<jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         portfolioModels.add(new PortfolioModel(jsonObject.getString("portfolioName"),0.0,jsonObject.getJSONObject("_id").getString("$oid")));
+                        AppConstants.myPortfolioList.add(jsonObject.getJSONObject("_id").getString("$oid"));
                     }
                     PortfolioAdapter portfolioAdapter = new PortfolioAdapter(getContext(),portfolioModels);
                     itemList.setAdapter(portfolioAdapter);

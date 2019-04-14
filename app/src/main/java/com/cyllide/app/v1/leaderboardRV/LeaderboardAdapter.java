@@ -20,6 +20,7 @@ import com.cyllide.app.v1.R;
 import java.util.List;
 
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -70,11 +71,13 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         final LeaderboardModel portfolio = leaderboardModelList.get(position);
         holder.nameTextView.setText(portfolio.getName());
         holder.returnTextView.setText(Double.toString(portfolio.getReturns()));
+
         Glide.with(context)
                 .load(portfolio.getProfileURL())
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.profilePicView);
         cv = holder.itemView.findViewById(R.id.leaderboard_card_view);
+
         holder.profilePicView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +98,11 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
            holder.itemView.findViewById(R.id.leaderboard_card_view).
                    setBackgroundResource(R.color.lightgray);
             //changes the alternate element colour
+        }
+
+        if(portfolio.isMine()){
+            holder.itemView.findViewById(R.id.leaderboard_card_view).
+                    setBackgroundResource(R.color.colorPrimary);
         }
     }
 

@@ -57,6 +57,7 @@ public class ForumActivity extends AppCompatActivity {
     SingleSelectToggleGroup singleTogleGrp;
     ImageView backButton;
     ArrayList<String> selectedTags;
+    JSONArray responseData;
 
     private Realm realmInstance;
 
@@ -173,23 +174,23 @@ public class ForumActivity extends AppCompatActivity {
 
                         break;
                     case R.id.tb_capital_markets:
-                            Toast.makeText(ForumActivity.this, "Cp markets", Toast.LENGTH_SHORT).show();
-                            if(!selectedTags.contains("Cp markets")){
-                                selectedTags.add("Cp markets");
+                            Toast.makeText(ForumActivity.this, "Stock Markets", Toast.LENGTH_SHORT).show();
+                            if(!selectedTags.contains("Stock Markets")){
+                                selectedTags.add("Stock Markets");
                             }
                             else{
-                                selectedTags.remove("Cp markets");
+                                selectedTags.remove("Stock Markets");
                             }
 
                         //capitalMarkets
                         break;
                     case R.id.tb_macro_economics:
-                            Toast.makeText(ForumActivity.this, "econo", Toast.LENGTH_SHORT).show();
-                            if(!selectedTags.contains("econo")){
-                                selectedTags.add("econo");
+                            Toast.makeText(ForumActivity.this, "Macro-Economics", Toast.LENGTH_SHORT).show();
+                            if(!selectedTags.contains("Macro-Economics")){
+                                selectedTags.add("Macro-Economics");
                             }
                             else{
-                                selectedTags.remove("econo");
+                                selectedTags.remove("Macro-Economics");
                             }
 
                         break;
@@ -208,7 +209,11 @@ public class ForumActivity extends AppCompatActivity {
 
                 }
                 Log.d("ForumActivity",Integer.toString(selectedTags.size()));
-                getQuestions();
+                if(responseData==null){
+                    getQuestions();
+                }
+                displayQuestions(responseData);
+
             }
         });
 
@@ -285,7 +290,7 @@ public class ForumActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     Log.d("resp",response);
-                    JSONArray responseData = new JSONObject(response).getJSONArray("message");
+                    responseData = new JSONObject(response).getJSONArray("message");
                     displayQuestions(responseData);
 
                 } catch (JSONException e) {

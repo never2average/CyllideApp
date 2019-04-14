@@ -67,6 +67,10 @@ public class LeaderboardsActivity extends AppCompatActivity {
         getLeaderBoard();
     }
 
+    private void getMyPortfolios(){
+
+    }
+
 
     private void getLeaderBoard()
     {
@@ -113,7 +117,12 @@ public class LeaderboardsActivity extends AppCompatActivity {
                 try {
                 List<LeaderboardModel> leaderboardModelArrayList = new ArrayList<>();
                 for(int i = 0; i<arrayData.length();i++){
-                        leaderboardModelArrayList.add(new LeaderboardModel(arrayData.getJSONObject(i).getString("portfolioName"),i+1,9.0,arrayData.getJSONObject(i).getString("portfolioProfilePic"),arrayData.getJSONObject(i).getJSONObject("_id").getString("$oid"),arrayData.getJSONObject(i).getString("portfolioOwner")));
+                    if(AppConstants.myPortfolioList.contains(arrayData.getJSONObject(i).getJSONObject("_id").getString("$oid"))){
+                        leaderboardModelArrayList.add(new LeaderboardModel(arrayData.getJSONObject(i).getString("portfolioName"),i+1,9.0,arrayData.getJSONObject(i).getString("portfolioProfilePic"),arrayData.getJSONObject(i).getJSONObject("_id").getString("$oid"),arrayData.getJSONObject(i).getString("portfolioOwner"),true));
+                    }
+                    else{
+                        leaderboardModelArrayList.add(new LeaderboardModel(arrayData.getJSONObject(i).getString("portfolioName"),i+1,9.0,arrayData.getJSONObject(i).getString("portfolioProfilePic"),arrayData.getJSONObject(i).getJSONObject("_id").getString("$oid"),arrayData.getJSONObject(i).getString("portfolioOwner"),false));
+                    }
                 }
                 LeaderboardAdapter leaderboardAdapter = new LeaderboardAdapter(leaderboardModelArrayList, getSupportFragmentManager());
                 leaderboardView.setAdapter(leaderboardAdapter);
