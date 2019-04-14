@@ -104,7 +104,7 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 	void getUpVoteVolley(String id, int vote){
 
 
-		String requestURL = "http://api.cyllide.com/api/client/answer/upvote";
+		String requestURL = itemView.getContext().getResources().getString(R.string.apiBaseURL)+"answer/upvote";
 		requestHeader.put("aid",id);
 		requestHeader.put("votes",Integer.toString(vote));
 		requestHeader.put("token", AppConstants.token);

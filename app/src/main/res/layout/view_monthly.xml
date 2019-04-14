@@ -11,7 +11,6 @@
         android:layout_marginEnd="18dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:id="@+id/contest_card_monthly"
         app:cardElevation="3dp"
         >
         <LinearLayout
@@ -32,7 +31,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:id="@+id/paid_card_contents"
                 android:orientation="vertical">
 
 

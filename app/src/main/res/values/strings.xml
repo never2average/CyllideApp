@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">Cyllide</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Pending_Orders_title">PENDING ORDERS</string>
     <string name="Portfolio_Position_title">POSITIONS</string>
-    <string name="title_activity_random_shit">RandomShit</string>
-    <string name="apiBaseURL">http://api.cyllide.com/api/client/</string>
-    <string name="dataApiBaseURL">http://data.cyllide.com/data/</string>
+    <string name="apiBaseURL">https://api.cyllide.com/api/client/</string>
+    <string name="dataApiBaseURL">https://data.cyllide.com/data/</string>
 </resources>

@@ -108,7 +108,7 @@ public class NewsFragment extends Fragment {
     {
         final Map<String, String> mHeaders = new ArrayMap<String, String>();
         mHeaders.put("token", AppConstants.token);
-        final String newsURL = "http://api.cyllide.com/api/client/stories/view";
+        final String newsURL = getResources().getString(R.string.apiBaseURL)+"stories/view";
         storiesQueue = Volley.newRequestQueue(getContext());
         StringRequest request = new StringRequest(Request.Method.POST, newsURL, new Response.Listener<String>() {
             @Override

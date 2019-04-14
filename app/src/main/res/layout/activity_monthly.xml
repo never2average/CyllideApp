@@ -51,7 +51,6 @@
             android:layout_height="0dp"
             android:layout_weight="5"
             android:layout_width="match_parent"
-            android:id="@+id/monthly_center_image"
             android:src="@drawable/bull"
             android:layout_margin="6dp"
             android:scaleType="centerCrop"
@@ -61,7 +60,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="7"
-                android:id="@+id/main_ll"
                 android:orientation="vertical"
                 android:gravity="start"
                 >
@@ -76,7 +74,6 @@
                     android:layout_weight="1.4">
 
                     <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
-                        android:id="@+id/cap_descriptions"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:tbgCheckedButton="@id/nifty_button"

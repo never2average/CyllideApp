@@ -53,7 +53,7 @@ public class PortfolioViewHolder extends RecyclerView.ViewHolder {
         registrationHeaders.put("token",AppConstants.token);
         registrationHeaders.put("contestUID", AppConstants.contestID);
         registrationHeaders.put("portfolioUID",id);
-        String url = "http://api.cyllide.com/api/client/contest/enroll/portfolio";
+        String url = context.getResources().getString(R.string.apiBaseURL)+"contest/enroll/portfolio";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

@@ -125,7 +125,7 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
     }
 
     private void getVolleyData(String curr_selection){
-        String url = "http://api.cyllide.com/api/client/contest/list";
+        String url = getResources().getString(R.string.apiBaseURL)+"contest/list";
         requestQueue = Volley.newRequestQueue(MonthlyActivity.this);
         requestHeader.put("token",AppConstants.token);
         requestHeader.put("capex",curr_selection);

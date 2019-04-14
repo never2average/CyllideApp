@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
+import com.cyllide.app.v1.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,7 +37,7 @@ public class QuizAlarmManager extends BroadcastReceiver {
         try {
             RequestQueue requestQueue;
             requestQueue = Volley.newRequestQueue(context);
-            String URL = "http://api.cyllide.com/api/client/quiz/get/latest";
+            String URL = context.getResources().getString(R.string.apiBaseURL)+"quiz/get/latest";
 
             final StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
 

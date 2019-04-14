@@ -162,21 +162,13 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                 notification.flags |= Notification.FLAG_AUTO_CANCEL;
                 notification.defaults |= Notification.DEFAULT_SOUND;
                 notification.defaults |= Notification.DEFAULT_VIBRATE;
-
-//        if (Build.VERSION.SDK_INT >= Android.OS.BuildVersionCodes.O)
-//        {
-//            String channelId = "Your_channel_id";
-//            NotificationChannel channel = new NotificationChannel(channelId,
-//                    "Channel human readable title", Android.App.NotificationImportance.Default);
-//            notificationManager.CreateNotificationChannel(channel);
-//            notificationBuilder.SetChannelId(channelId);
-//        }
                 notificationManager.notify(1, notification);
                 fabMenu.close(true);
                 Intent faqIntent=new Intent(MainActivity.this, FAQActivity.class);
                 startActivity(faqIntent);
             }
-        });
+       });
+
 
        feedback.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -255,20 +247,15 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
         }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.pic:
-                Intent profileIntent=new Intent(this, ProfileActivity.class);
-                startActivity(profileIntent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void switchToPortfolioActivity(View view){
-        Intent portfolioIntent =new Intent(MainActivity.this,MyPortfolio.class);
-        startActivity(portfolioIntent);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.pic:
+//                Intent profileIntent=new Intent(this, ProfileActivity.class);
+//                startActivity(profileIntent);
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     private void swaphiwFragment(){
         HowItWorksFragment fragment = new HowItWorksFragment();
@@ -294,7 +281,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     }
 
     private void swaphomeFragment(){
-
         HomeFragment fragment = new HomeFragment();
 
         if (fragment != null) {
@@ -303,7 +289,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                     .replace(R.id.fragment_container, fragment)
                     .commit();
         }
-}
+    }
 
 
     private void swapProfileFragment(){
@@ -322,8 +308,5 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     @Override
     public void onInternetConnectivityChanged(boolean isConnected) {
         ConnectionStatus.connectionstatus=isConnected;
-
-
-
     }
 }

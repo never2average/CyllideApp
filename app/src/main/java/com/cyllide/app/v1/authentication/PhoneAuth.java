@@ -5,6 +5,8 @@ import androidx.collection.ArrayMap;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -29,6 +31,8 @@ public class PhoneAuth extends AppCompatActivity {
     MaterialButton materialButton;
     TextInputEditText phone, sc_name;
     String input_scName, input_phoneNo;
+    RequestQueue validityQueue;
+    Map<String,String> validityMap = new ArrayMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,24 @@ public class PhoneAuth extends AppCompatActivity {
         materialButton = findViewById(R.id.btn_send_otp);
         phone = findViewById(R.id.input_phoneNo);
         sc_name = findViewById(R.id.input_scName);
+
+        sc_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkUsernameValidity(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         materialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,32 +70,40 @@ public class PhoneAuth extends AppCompatActivity {
                     final Map<String, String> mHeaders = new ArrayMap<String, String>();
                     mHeaders.put("phone", input_phoneNo);
                     mHeaders.put("username", input_scName);
-                    Intent intent = new Intent(getBaseContext(),OTPVerification.class);
-                    startActivity(intent);
-                    finish();
                     try {
                         RequestQueue requestQueue;
                         requestQueue = Volley.newRequestQueue(getBaseContext());
-                        String URL = "http://api.cyllide.com/api/client/auth/otp/send";
+                        String URL = getResources().getString(R.string.apiBaseURL)+"auth/otp/send";
                         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
 
                             @Override
                             public void onResponse(String response) {
-                                boolean firstuser = false;
+                                boolean firstUser = false;
                                 Log.d("PhoneAuth",response);
                                 try {
                                     JSONObject jsonObject = new JSONObject(response);
-                                    firstuser = jsonObject.getBoolean("firstTimeUser");
+                                    String success = jsonObject.getString("message");
+                                    if(success.equals("MessageSendingSuccessful")){
+                                        firstUser = jsonObject.getBoolean("firstTimeUser");
+                                        Toast.makeText(PhoneAuth.this,"Message Sending Successful",Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(PhoneAuth.this,OTPVerification.class);
+                                        intent.putExtra("phone",input_phoneNo);
+                                        intent.putExtra("firstuser",firstUser);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                    else{
+                                        if(jsonObject.getString("message").equals("InvalidUsername")){
+                                            Toast.makeText(PhoneAuth.this,"The username entered does not match the one registered with the phone number",Toast.LENGTH_LONG).show();
+                                        }
+                                        else{
+                                            Toast.makeText(PhoneAuth.this,"Message Sending Failed",Toast.LENGTH_LONG).show();
+                                        }
+                                    }
                                 }
                                 catch (JSONException e) {
-                                    Log.e("RealityCheck","Error",e);
+
                                 }
-                                Intent intent = new Intent(getBaseContext(),OTPVerification.class);
-                                intent.putExtra("phone",input_phoneNo);
-                                //bool first yser
-                                intent.putExtra("firstuser",firstuser);
-                                startActivity(intent);
-                                finish();
 
                             }
                         }, new Response.ErrorListener() {
@@ -99,6 +129,37 @@ public class PhoneAuth extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    void checkUsernameValidity(String username) {
+        validityMap.put("phone",phone.getText().toString());
+        validityMap.put("username",username);
+        validityQueue = Volley.newRequestQueue(PhoneAuth.this);
+        String url = getResources().getString(R.string.apiBaseURL)+"username/validity";
+        StringRequest validityRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    String status = new JSONObject(response).getString("status");
+                    if(status.equals("taken")){
+                        sc_name.setError("username already taken");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders(){
+                return validityMap;
+            }
+        };
+        validityQueue.add(validityRequest);
     }
 
     public boolean checkValid(String s)

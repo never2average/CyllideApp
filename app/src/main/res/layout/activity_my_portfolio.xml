@@ -62,7 +62,7 @@
                 android:layout_height="0dp"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:backgroundTint="#31D5FF"
+                android:backgroundTint="@color/colorPrimary"
                 android:text="Create New" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

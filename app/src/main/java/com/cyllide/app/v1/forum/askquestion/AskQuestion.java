@@ -166,7 +166,7 @@ public class AskQuestion extends AppCompatActivity {
 
         requestHeaders.put("tags",tags.toString());
 
-        String requestEndpoint = "http://api.cyllide.com/api/client/query/add";
+        String requestEndpoint = getResources().getString(R.string.apiBaseURL)+"query/add";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, requestEndpoint, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
