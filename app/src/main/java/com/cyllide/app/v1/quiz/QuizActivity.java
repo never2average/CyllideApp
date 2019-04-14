@@ -31,6 +31,7 @@ import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import android.os.Vibrator;
@@ -73,12 +75,51 @@ public class QuizActivity extends AppCompatActivity {
     Dialog revivalpopup;
     Dialog quizWinPopup;
     Dialog losersPopup;
+    Dialog confirmExitPopup;
     ImageView quizActivityAnswerIndicator, sendUPI;
     private String quizID;
     ImageView exitQuiz;
     MediaPlayer quizMusicPlayer;
     MediaPlayer quizCorrectAnswerMusicPlayer;
     MediaPlayer quizWrongAnswerMusicPlayer;
+
+
+    @Override
+    public void onBackPressed() {
+        exitConfirmDialog();
+    }
+
+
+
+    private void exitConfirmDialog(){
+        ImageView cross = confirmExitPopup.findViewById(R.id.quiz_exit_confirm_cross);
+        Button yes = confirmExitPopup.findViewById(R.id.quiz_exit_confirm_yes);
+        Button no = confirmExitPopup.findViewById(R.id.quiz_exit_confirm_no);
+        confirmExitPopup.show();
+        cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmExitPopup.dismiss();
+            }
+        });
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmExitPopup.dismiss();
+                startActivity(new Intent(QuizActivity.this, MainActivity.class));
+                finish();
+
+            }
+        });
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmExitPopup.dismiss();
+            }
+        });
+
+    }
 
 
     @Override
@@ -98,6 +139,10 @@ public class QuizActivity extends AppCompatActivity {
         revivalpopup=new Dialog(this);
         revivalpopup.setContentView(R.layout.quiz_revival_xml);
         revivalpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        confirmExitPopup = new Dialog(this);
+        confirmExitPopup.setContentView(R.layout.quiz_exit_confirm_dialog);
+        confirmExitPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         quizWinPopup = new Dialog(this);
         quizWinPopup.setContentView(R.layout.quiz_wining_xml);
@@ -129,8 +174,8 @@ public class QuizActivity extends AppCompatActivity {
         exitQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(QuizActivity.this, MainActivity.class));
-                finish();
+                exitConfirmDialog();
+
             }
         });
 
@@ -370,6 +415,8 @@ public class QuizActivity extends AppCompatActivity {
             quizObject = jsonQuestionArray.getJSONObject(questionID);
             id = quizObject.getJSONObject("_id").getString("$oid");
             viewRequestHeader.put("questionID",id);
+            viewRequestHeader.put("quizID",quizID);
+            viewRequestHeader.put("orderAppearing",Integer.toString(questionID));
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -6,6 +6,7 @@ import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
@@ -23,6 +24,7 @@ import com.cyllide.app.v1.forum.askquestion.AskQuestion;
 import com.cyllide.app.v1.forum.questionlist.QuestionListAdapter;
 import com.cyllide.app.v1.forum.questionlist.QuestionListModel;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.nex3z.togglebuttongroup.MultiSelectToggleGroup;
 import com.nex3z.togglebuttongroup.SingleSelectToggleGroup;
 import com.nex3z.togglebuttongroup.button.ToggleButton;
@@ -37,6 +39,8 @@ import java.util.List;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,6 +58,9 @@ public class ForumActivity extends AppCompatActivity {
     ImageView backButton;
     ArrayList<String> selectedTags;
     JSONArray responseData;
+    MaterialCardView askAQuestionCV;
+    TextView askAQuestionTV;
+    boolean flag;
 
     private void displayQuestions(JSONArray responseData) {
         questionList = new ArrayList<>();
@@ -119,6 +126,25 @@ public class ForumActivity extends AppCompatActivity {
         forumRV = findViewById(R.id.topquesrecycler);
         forumRV.setLayoutManager(new LinearLayoutManager(this));
         selectedTags = new ArrayList<String>();
+        askAQuestionTV = findViewById(R.id.answer_question_tv);
+        askAQuestionCV = findViewById(R.id.answer_question);
+        askAQuestionCV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(flag){
+                    askAQuestionTV.setTextColor(ContextCompat.getColor(view.getContext(),R.color.colorPrimary));
+                    askAQuestionCV.setCardBackgroundColor(ContextCompat.getColor(view.getContext(),R.color.white));
+                    flag = false;
+                    displayQuestions(responseData);
+                }
+                else{
+                    askAQuestionTV.setTextColor(ContextCompat.getColor(view.getContext(),R.color.white));
+                askAQuestionCV.setCardBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimary));
+                flag = true;
+                sortByNewest();
+            }
+            }
+        });
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

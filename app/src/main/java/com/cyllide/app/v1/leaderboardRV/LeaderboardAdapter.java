@@ -103,6 +103,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
             holder.itemView.findViewById(R.id.leaderboard_card_view).
                     setBackgroundResource(R.color.colorPrimary);
         }
+
     }
 
     @Override

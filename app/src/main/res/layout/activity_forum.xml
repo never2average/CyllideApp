@@ -153,6 +153,7 @@
                      app:cardCornerRadius="@dimen/margin"
                      >
                      <TextView
+                         android:id="@+id/answer_question_tv"
                          android:textColor="@color/colorPrimary"
                          android:padding="@dimen/default_background_stroke_width"
                          android:gravity="center"

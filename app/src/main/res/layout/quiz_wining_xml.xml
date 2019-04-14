@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="326dp"
-        android:layout_height="499dp"
+        android:layout_height="547dp"
         android:background="@drawable/quiz_wining_drawable"
         android:gravity="center_horizontal"
         android:orientation="vertical">
@@ -46,6 +46,13 @@
             android:text="Hurray! You Won"
             android:textSize="23dp"
             android:textColor="#00B9FF"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/quiz_winning_prize"
+            android:textAlignment="center"
+            android:textSize="29sp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
