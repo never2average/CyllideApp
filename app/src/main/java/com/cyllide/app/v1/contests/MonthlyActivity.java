@@ -52,6 +52,7 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
     private Button joinButton, viewButton;
     private LinearLayout linearLayout;
     LinearLayout.LayoutParams param, invisibleParam;
+    ImageView imgView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +60,7 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
 
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
-        ImageView imgView=findViewById(R.id.contestbackbutton);
+        imgView=findViewById(R.id.contestbackbutton);
         niftyButton = findViewById(R.id.nifty_button);
         contestSignUpsTV = findViewById(R.id.contest_sign_ups);
 
@@ -93,6 +94,7 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MonthlyActivity.this,MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
