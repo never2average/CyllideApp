@@ -72,7 +72,14 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         final LeaderboardModel portfolio = leaderboardModelList.get(position);
         holder.nameTextView.setText(portfolio.getName());
-        holder.returnTextView.setText(Double.toString(portfolio.getReturns()));
+
+        if(portfolio.getReturns()<0){
+            holder.returnTextView.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.progressred));
+        }
+        else{
+            holder.returnTextView.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.progressgreen));
+        }
+        holder.returnTextView.setText(Double.toString(portfolio.getReturns())+"%");
         holder.rankTextView.setText(Integer.toString(portfolio.getRank()));
 
         Glide.with(context)
@@ -80,6 +87,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.profilePicView);
         cv = holder.itemView.findViewById(R.id.leaderboard_card_view);
+
 
         holder.profilePicView.setOnClickListener(new View.OnClickListener() {
             @Override
