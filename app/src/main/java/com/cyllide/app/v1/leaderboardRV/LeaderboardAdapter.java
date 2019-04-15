@@ -82,9 +82,9 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         holder.returnTextView.setText(Double.toString(portfolio.getReturns())+"%");
         holder.rankTextView.setText(Integer.toString(portfolio.getRank()));
 
-        Glide.with(context)
+        Glide.with(holder.itemView.getContext())
                 .load(portfolio.getProfileURL())
-                .apply(RequestOptions.circleCropTransform())
+                .apply(RequestOptions.overrideOf(100))
                 .into(holder.profilePicView);
         cv = holder.itemView.findViewById(R.id.leaderboard_card_view);
 
