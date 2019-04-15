@@ -82,7 +82,7 @@ public class PortfolioPickerDialogFragment extends DialogFragment {
 
     private void fetchRelevantPortfolios()
     {
-        String url = "http://api.cyllide.com/api/client/contest/list/portfolios/rel";
+        String url = getResources().getString(R.string.apiBaseURL)+"contest/list/portfolios/rel";
         portfoliolist = Volley.newRequestQueue(getContext());
 
         headers.put("token",AppConstants.token);

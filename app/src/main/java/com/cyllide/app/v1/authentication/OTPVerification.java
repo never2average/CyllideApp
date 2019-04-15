@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -84,16 +85,23 @@ public class OTPVerification extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    SharedPreferences.Editor editor = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE).edit();
-                    editor.putString("token", jsonObject.getString("token"));
-                    editor.putInt("coins",jsonObject.getInt("coins"));
-                    editor.putString("referralCode",jsonObject.getString("referralCode"));
-                    editor.apply();
-                    Intent intent = new Intent(OTPVerification.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    if(jsonObject.getString("message").equals("InvalidOTPEntered")){
+                        Toast.makeText(OTPVerification.this,"Invalid OTP Entered",Toast.LENGTH_LONG).show();
+                    }
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        SharedPreferences.Editor editor = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE).edit();
+                        editor.putString("token", jsonObject.getString("token"));
+                        editor.putInt("coins", jsonObject.getInt("coins"));
+                        editor.putString("referralCode", jsonObject.getString("referralCode"));
+                        editor.apply();
+                        Intent intent = new Intent(OTPVerification.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
                 }
             }
         }, new Response.ErrorListener() {

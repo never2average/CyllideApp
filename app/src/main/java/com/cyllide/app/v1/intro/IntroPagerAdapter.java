@@ -17,8 +17,7 @@ import static java.security.AccessController.getContext;
 
 public class IntroPagerAdapter extends FragmentPagerAdapter {
 
-    int[] imageResources = {R.drawable.intro_placeholder1,R.drawable.intro_placeholder1,
-            R.drawable.intro_placeholder1, R.drawable.intro_placeholder1, R.drawable.intro_placeholder1};
+    int[] imageResources = {R.drawable.stories_intro,R.drawable.contest_intro,R.drawable.quiz_correct_intro,R.drawable.quiz_wins_intro};
 
 
     public IntroPagerAdapter(@NonNull FragmentManager fm) {

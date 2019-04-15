@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
+import com.cyllide.app.v1.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,12 +36,11 @@ public class GetLatestQuizIDService extends Service {
         final Long[] quizStartTime = new Long[1];
         final Map<String,String> mHeaders = new ArrayMap<>();
         mHeaders.put("token", AppConstants.token);
-        //Toast.makeText(this,"In getQuizIdService",Toast.LENGTH_SHORT);
 
         try {
             RequestQueue requestQueue;
             requestQueue = Volley.newRequestQueue(this);
-            String URL = "http://api.cyllide.com/api/client/quiz/get/latest";
+            String URL = getResources().getString(R.string.apiBaseURL)+"quiz/get/latest";
 
             final StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
 

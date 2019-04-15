@@ -134,7 +134,7 @@ public class QuizRulesActivity extends AppCompatActivity {
         try {
             RequestQueue requestQueue;
             requestQueue = Volley.newRequestQueue(this);
-            String URL = "http://api.cyllide.com/api/client/quiz/get/latest";
+            String URL = getResources().getString(R.string.apiBaseURL)+"quiz/get/latest";
 
             final StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
 
@@ -255,7 +255,7 @@ public class QuizRulesActivity extends AppCompatActivity {
     private void fetchQuestions(final String quizID){
         RequestQueue requestQueue;
         requestQueue = Volley.newRequestQueue(this);
-        String URL = "http://api.cyllide.com/api/client/quiz/get";
+        String URL = getResources().getString(R.string.apiBaseURL)+"quiz/get";
         questionHeaders.put("token", AppConstants.token);
         questionHeaders.put("quizID",quizID);
         StringRequest questionRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {

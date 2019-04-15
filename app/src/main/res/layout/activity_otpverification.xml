@@ -8,7 +8,6 @@
     tools:context="com.cyllide.app.v1.authentication.OTPVerification">
 
     <ImageView
-        android:layout_marginVertical="@dimen/default_background_stroke_width"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/phone_auth_drawable"
@@ -85,10 +84,9 @@
         android:id="@+id/otp_view"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_marginStart="@dimen/margin"
+        android:layout_marginHorizontal="@dimen/margin"
         android:inputType="number"
         android:textColor="@android:color/white"
-        app:hideLineWhenFilled="true"
         app:itemCount="6"
         app:itemSpacing="6dp"
         app:state_filled="true"

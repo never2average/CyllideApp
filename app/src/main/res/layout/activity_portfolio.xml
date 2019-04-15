@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".portfolio.PortfolioActivity"
-    android:id="@+id/portfolio_layout"
     android:orientation="vertical"
     >
     <LinearLayout
@@ -89,7 +88,6 @@
                 android:layout_marginEnd="10dp">
 
                 <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
-                    android:id="@+id/Position_choices"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:tbgCheckedButton="@+id/nifty_one_day"
