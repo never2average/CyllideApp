@@ -9,13 +9,14 @@
         android:id="@+id/intro_screen_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/intro_skip_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Skip"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="1dp"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"
         />
 </RelativeLayout>

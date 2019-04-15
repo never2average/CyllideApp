@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.cyllide.app.v1.MainActivity;
 import com.cyllide.app.v1.R;
+import com.google.android.material.button.MaterialButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +24,7 @@ public class IntroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
 
-        final Button skipButton = findViewById(R.id.intro_skip_button);
+        final MaterialButton skipButton = findViewById(R.id.intro_skip_button);
         skipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
