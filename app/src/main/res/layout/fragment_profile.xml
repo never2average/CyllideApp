@@ -50,6 +50,7 @@
                             android:layout_height="100dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="20"
+                            android:src="@drawable/ic_heart_flat"
                             android:transitionName="activity_transition"
                             />
 

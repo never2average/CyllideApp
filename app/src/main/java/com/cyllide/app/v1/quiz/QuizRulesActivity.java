@@ -51,6 +51,34 @@ public class QuizRulesActivity extends AppCompatActivity {
     Calendar startTime = Calendar.getInstance();
     private Map<String,String> questionHeaders = new ArrayMap<String, String>();
     RemoteViews contentView;
+    CountDownTimer quizCountDownTimer;
+
+    @Override
+    protected void onPause(){
+        if(quizCountDownTimer!=null) {
+            quizCountDownTimer.cancel();
+            quizCountDownTimer=null;
+        }
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop(){
+        if(quizCountDownTimer!=null) {
+            quizCountDownTimer.cancel();
+            quizCountDownTimer=null;
+        }
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy(){
+        if(quizCountDownTimer!=null) {
+            quizCountDownTimer.cancel();
+            quizCountDownTimer=null;
+        }
+        super.onDestroy();
+    }
 
 
     @Override
@@ -126,6 +154,7 @@ public class QuizRulesActivity extends AppCompatActivity {
                         Log.d("Response", quizID);
                         Log.d("Response", Long.toString(quizStartTime));
                         Log.d("Timer",Long.toString(quizStartTime-System.currentTimeMillis()));
+                        quizCountDownTimer =
                         new CountDownTimer(quizStartTime-System.currentTimeMillis(),1000){
                             @Override
                             public void onTick(long millisUntilFinished) {

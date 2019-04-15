@@ -19,6 +19,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
@@ -695,7 +696,11 @@ public class QuizActivity extends AppCompatActivity {
 
                     revivalpopup.dismiss();
                     if(QuizActivity.hasRevive == true){
+                        QuizActivity.hasRevive = false;
                         AppConstants.coins -= 1;
+                        SharedPreferences.Editor editor = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE).edit();
+                        editor.putInt("coins", AppConstants.coins);
+                        editor.apply();
                         JSONObject quizObject = null;
                         try {
                             quizObject = jsonQuestionArray.getJSONObject(questionID);

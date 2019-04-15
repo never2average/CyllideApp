@@ -84,7 +84,8 @@ public class LeaderboardsActivity extends AppCompatActivity {
         leaderBrequestHdrs.put("contestUID", AppConstants.contestID);
         Log.d("Id",AppConstants.contestID);
         String url = getResources().getString(R.string.apiBaseURL)+"contest/leaderboard";
-        StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        Log.d("LeaderboardsActivity",url);
+        StringRequest stringRequest =new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("leaderBoardData",response);
@@ -121,10 +122,16 @@ public class LeaderboardsActivity extends AppCompatActivity {
                 }
                 try {
                 List<LeaderboardModel> leaderboardModelArrayList = new ArrayList<>();
+                List<LeaderboardModel> myLeaderboardModelArrayList = new ArrayList<>();
                 for(int i = 0; i<arrayData.length();i++){
-                        leaderboardModelArrayList.add(new LeaderboardModel(arrayData.getJSONObject(i).getString("portfolioName"),arrayData.getJSONObject(i).getInt("rank"),arrayData.getJSONObject(i).getDouble("returns"),arrayData.getJSONObject(i).getString("portfolioProfilePic"),arrayData.getJSONObject(i).getJSONObject("_id").getString("$oid"),arrayData.getJSONObject(i).getString("portfolioOwner"),arrayData.getJSONObject(i).getBoolean("myPortfolio")));
+                    if(arrayData.getJSONObject(i).getBoolean("myPortfolio")){
+                        myLeaderboardModelArrayList.add(new LeaderboardModel(arrayData.getJSONObject(i).getString("portfolioName"),i+1,arrayData.getJSONObject(i).getDouble("returns"),arrayData.getJSONObject(i).getString("portfolioProfilePic"),arrayData.getJSONObject(i).getJSONObject("_id").getString("$oid"),arrayData.getJSONObject(i).getString("portfolioOwner"),arrayData.getJSONObject(i).getBoolean("myPortfolio")));
+                    }
+                        leaderboardModelArrayList.add(new LeaderboardModel(arrayData.getJSONObject(i).getString("portfolioName"),i+1,arrayData.getJSONObject(i).getDouble("returns"),arrayData.getJSONObject(i).getString("portfolioProfilePic"),arrayData.getJSONObject(i).getJSONObject("_id").getString("$oid"),arrayData.getJSONObject(i).getString("portfolioOwner"),false));
                 }
-                LeaderboardAdapter leaderboardAdapter = new LeaderboardAdapter(leaderboardModelArrayList, getSupportFragmentManager());
+                myLeaderboardModelArrayList.addAll(leaderboardModelArrayList);
+                LeaderboardAdapter leaderboardAdapter = new LeaderboardAdapter(myLeaderboardModelArrayList, getSupportFragmentManager());
+
                 leaderboardView.setAdapter(leaderboardAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
