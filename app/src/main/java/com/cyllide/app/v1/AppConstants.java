@@ -13,4 +13,6 @@ public class AppConstants {
     public static String referral;
     public static ArrayList<String> myPortfolioList = new ArrayList<String>();
 
+    public static boolean cameraAccepted;
+    public static boolean readExternalStorage;
 }

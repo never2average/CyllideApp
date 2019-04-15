@@ -1,5 +1,6 @@
 package com.cyllide.app.v1;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
@@ -9,10 +10,12 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
@@ -36,8 +39,10 @@ import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -51,11 +56,13 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     com.github.clans.fab.FloatingActionButton referrals, faq, feedback, help;
     InternetAvailabilityChecker internetAvailabilityChecker;
     public static String COMPLETED_TUTORIAL_PREF_NAME = "tutorialcompleted";
+    public final static int MY_PERMISSION_REQUEST_CODE = 200;
 
     NotificationManager notificationManager;
     RemoteViews contentView;
 
     boolean doubleBackToExitPressedOnce = false;
+
 
     @Override
     public void onBackPressed() {
@@ -100,6 +107,29 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
 
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0) {
+                     AppConstants.cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                     AppConstants.readExternalStorage = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+
+
+
+
+
+                }
+
+
+                break;
+        }
+    }
+
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +137,34 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         setTheme(R.style.AppTheme_NoActionBar);
         setContentView(R.layout.activity_main);
         setApplicationConstants();
+
+
+
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            Log.d("Permissions","NOt granted");
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
+                    Manifest.permission.CAMERA)) {
+
+            } else {
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{Manifest.permission.CAMERA,
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                },
+                        MY_PERMISSION_REQUEST_CODE);
+
+                Log.d("Permissions","NOt granted");
+
+            }
+        }
+
+
 
         notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
 

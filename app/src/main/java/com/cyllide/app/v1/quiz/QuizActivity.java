@@ -10,6 +10,9 @@ import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.MainActivity;
 import com.cyllide.app.v1.R;
+import com.facebook.network.connectionclass.ConnectionClassManager;
+import com.facebook.network.connectionclass.ConnectionQuality;
+import com.facebook.network.connectionclass.DeviceBandwidthSampler;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
@@ -84,6 +87,11 @@ public class QuizActivity extends AppCompatActivity {
     MediaPlayer quizCorrectAnswerMusicPlayer;
     MediaPlayer quizWrongAnswerMusicPlayer;
 
+    private ConnectionQuality mConnectionClass = ConnectionQuality.UNKNOWN;
+    private ConnectionClassManager mConnectionClassManager;
+    private DeviceBandwidthSampler mDeviceBandwidthSampler;
+    private ConnectionChangedListener mListener;
+
 
     @Override
     public void onBackPressed() {
@@ -123,6 +131,25 @@ public class QuizActivity extends AppCompatActivity {
     }
 
 
+    private class ConnectionChangedListener
+            implements ConnectionClassManager.ConnectionClassStateChangeListener {
+
+        @Override
+        public void onBandwidthStateChange(final ConnectionQuality bandwidthState) {
+            mConnectionClass = bandwidthState;
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d("QuizActivity",mConnectionClass.name());
+                    if(mConnectionClass==ConnectionQuality.POOR){
+                        Toast.makeText(getBaseContext(),"Poor connection Detected",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,6 +161,16 @@ public class QuizActivity extends AppCompatActivity {
         quizCorrectAnswerMusicPlayer = MediaPlayer.create(getApplicationContext(),R.raw.correct_answer_sound);
 
         quizWrongAnswerMusicPlayer = MediaPlayer.create(getApplicationContext(),R.raw.wrong_answer_sound);
+
+
+
+        mConnectionClassManager = ConnectionClassManager.getInstance();
+        mDeviceBandwidthSampler = DeviceBandwidthSampler.getInstance();
+        mConnectionClassManager.register(mListener);
+
+
+
+
 
 
         setContentView(R.layout.activity_quiz);
@@ -297,6 +334,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private boolean checkAnswer(final int questionID){
+        mDeviceBandwidthSampler.startSampling();
 //        if(selectedOption)
         String url = getResources().getString(R.string.apiBaseURL)+"quiz/submit";
         try {
@@ -311,6 +349,8 @@ public class QuizActivity extends AppCompatActivity {
                 public void onResponse(String response) {
                     Log.d("submissionResponse", response);
                     try {
+                        mDeviceBandwidthSampler.stopSampling();
+                        Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
                         quizMusicPlayer.pause();
                         quizMusicPlayer.seekTo(0);
                         quizActivityAnswerIndicator.setVisibility(View.VISIBLE);
@@ -319,13 +359,12 @@ public class QuizActivity extends AppCompatActivity {
                         Log.d("changequestion","inside response question");
                         showAnswer("");
                         if(jsonResponse.getString("data").equals("Correct")){
-
+                            quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
                             quizCorrectAnswerMusicPlayer.start();
                             if(questionID == 9){
-
                                 finishQuiz(questionID);
                             }
-                            quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
+
                             Log.d("changequestion","calling change change question");
 
                             Handler handler = new Handler();
@@ -376,6 +415,13 @@ public class QuizActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    mDeviceBandwidthSampler.stopSampling();
+                    Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
+                    Toast.makeText(QuizActivity.this,"Poor Internet Connection, please try again later",Toast.LENGTH_LONG).show();
+                    finish();
+                    startActivity(new Intent(QuizActivity.this, MainActivity.class));
+
+
 
                 }
             }){
@@ -399,13 +445,17 @@ public class QuizActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         quizMusicPlayer.stop();
+        if(countDownTimer != null) {
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
         quizCorrectAnswerMusicPlayer.stop();
         quizWrongAnswerMusicPlayer.stop();
     }
 
     private void changeQuestion(){
         questionID +=1;
-        String url = getResources().getString(R.string.apiBaseURL)+"quiz/nextques";
+        String url = getResources().getString(R.string.apiBaseURL)+"quiz/getcount";
         viewRequestQueue = Volley.newRequestQueue(QuizActivity.this);
         viewRequestHeader.put("token",AppConstants.token);
 
@@ -417,9 +467,9 @@ public class QuizActivity extends AppCompatActivity {
             id = quizObject.getJSONObject("_id").getString("$oid");
             viewRequestHeader.put("questionID",id);
             viewRequestHeader.put("quizID",quizID);
-            viewRequestHeader.put("orderAppearing",Integer.toString(questionID));
+            viewRequestHeader.put("orderin",Integer.toString(questionID));
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.d("ViewersResponse",e.toString());
         }
 
         StringRequest submissionRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -427,20 +477,24 @@ public class QuizActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 Log.d("submissionResponse", response);
                 try {
-                    int jsonResponse = new JSONObject(response).getJSONArray("data").getJSONObject(0).getInt("numSuccessfulResponses");
+                    int jsonResponse = new JSONObject(response).getInt("data");
                     Log.d("ViewersResponse",response);
                     viewersTV.setText(Integer.toString(jsonResponse));
 
 
 
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.d("ViewersResponse",e.toString());
                 }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
+                Toast.makeText(QuizActivity.this,"Poor Internet Connection, please try again later",Toast.LENGTH_LONG).show();
+                finish();
+                startActivity(new Intent(QuizActivity.this, MainActivity.class));
 
             }
         }){
@@ -551,6 +605,11 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
+                Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
+                Toast.makeText(QuizActivity.this,"Poor Internet Connection, please try again later",Toast.LENGTH_LONG).show();
+                finish();
+                startActivity(new Intent(QuizActivity.this, MainActivity.class));
+
             }
         }){
             @Override
@@ -597,6 +656,7 @@ public class QuizActivity extends AppCompatActivity {
                     int isOptionDCorrect = jsonAnswerResponseList.getJSONObject(3).getInt("isCorrect");
 
                     int totalResponses = numCorrectOptionA + numCorrectOptionB + numCorrectOptionC + numCorrectOptionD;
+//                    viewersTV.setText(Integer.toString(totalResponses));
 
                     option1PB.setProgressDrawable(ContextCompat.getDrawable(QuizActivity.this,R.drawable.answer_progress_bar_wrong));
                     option2PB.setProgressDrawable(ContextCompat.getDrawable(QuizActivity.this,R.drawable.answer_progress_bar_wrong));
@@ -638,6 +698,10 @@ public class QuizActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
+                Toast.makeText(QuizActivity.this,"Poor Internet Connection, please try again later",Toast.LENGTH_LONG).show();
+                finish();
+                startActivity(new Intent(QuizActivity.this, MainActivity.class));
 
             }
         }){
@@ -723,6 +787,10 @@ public class QuizActivity extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
+                                Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
+                                Toast.makeText(QuizActivity.this,"Poor Internet Connection, please try again later",Toast.LENGTH_LONG).show();
+                                finish();
+                                startActivity(new Intent(QuizActivity.this, MainActivity.class));
                             }
                         }){
                             @Override

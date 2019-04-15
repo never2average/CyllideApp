@@ -80,7 +80,7 @@
         android:layout_gravity="center"
         android:layout_margin="16dp"
         android:padding="15dp"
-        android:text="QUIZ STARTS IN 1H 29M"
+        android:text="QUIZ STARTS IN LOADING.."
         app:cornerRadius="7dp" />
 
     <com.google.android.material.card.MaterialCardView
@@ -109,7 +109,6 @@
                 android:id="@+id/quiz_rules_qrize_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="₹ 10"
                 android:textAlignment="center"
                 android:textSize="26sp"
                 android:layout_margin="2dp"/>

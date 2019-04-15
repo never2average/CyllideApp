@@ -1,10 +1,12 @@
 package com.cyllide.app.v1;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -43,6 +45,7 @@ import org.json.JSONObject;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -54,6 +57,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
+import static com.cyllide.app.v1.MainActivity.MY_PERMISSION_REQUEST_CODE;
 
 public class ProfileFragment extends Fragment {
 
@@ -79,6 +83,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_profile,null);
+
         return view;
     }
 
@@ -96,10 +101,26 @@ public class ProfileFragment extends Fragment {
 
     }
 
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0) {
+                    AppConstants.cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+
+                }
+                break;
+        }
+    }
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         profilePic=view.findViewById(R.id.profile_pic);
+
 
         storageReference= FirebaseStorage.getInstance().getReference();
         sharedPreferences=view.getContext().getSharedPreferences("profileUrl",Context.MODE_PRIVATE);
@@ -145,9 +166,23 @@ public class ProfileFragment extends Fragment {
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 0);
+
+                if(!AppConstants.cameraAccepted){
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[]{Manifest.permission.CAMERA,
+                                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            },
+                            MY_PERMISSION_REQUEST_CODE);
+                }
+                else {
+
+
+                    Intent intent = new Intent(Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, 0);
+
+                }
             }
         });
         profileInfo();
