@@ -123,7 +123,7 @@ public class OrdersViewHolder extends RecyclerView.ViewHolder {
 
     void getSingleValue(String ticker){
         stockPriceRequestQueue = Volley.newRequestQueue(itemView.getContext());
-        String url = "http://data.cyllide.com/data/stock/close";
+        String url = itemView.getResources().getString(R.string.dataApiBaseURL) + "stock/close";
         stringMap.put("value","1231D123");
         stringMap.put("ticker","123"+ticker+"123");
         stringMap.put("singleVal","True");

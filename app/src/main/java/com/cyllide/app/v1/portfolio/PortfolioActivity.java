@@ -168,7 +168,7 @@ public class PortfolioActivity extends AppCompatActivity {
     private void getNiftySummary() {
 
         requestQueue = Volley.newRequestQueue(this);
-        String url = "http://data.cyllide.com/data/nifty50/summary";
+        String url = getResources().getString(R.string.dataApiBaseURL)+"nifty50/summary";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

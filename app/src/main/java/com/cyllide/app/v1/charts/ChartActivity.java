@@ -67,7 +67,7 @@ public class ChartActivity extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.web_view_chart);
         webView.setWebViewClient(new CustomWebView(webViewLoading,webView));
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("http://data.cyllide.com/data/chart/\""+ticker+"\"/\"1D\"");
+        webView.loadUrl(getResources().getString(R.string.dataApiBaseURL)+"chart/\""+ticker+"\"/\"1D\"");
         webView.getSettings().setDomStorageEnabled(true);
         balanceAssets = findViewById(R.id.balance_total_assets);
         currentPriceTV = findViewById(R.id.current_price_chart_tv);
@@ -90,9 +90,9 @@ public class ChartActivity extends AppCompatActivity {
         balanceLiabilities = findViewById(R.id.balance_total_liabilities);
         balanceNetTangibleAssets = findViewById(R.id.balance_net_tangible_assets);
 
-        String summaryRequestEndPoint = "http://data.cyllide.com/data/stock/summary";
-        String incomeSheetRequestEndPoint = "http://data.cyllide.com/data/stock/income";
-        String balanceSheetRequestEndPoint = "http://data.cyllide.com/data/stock/balance";
+        String summaryRequestEndPoint = getResources().getString(R.string.dataApiBaseURL)+"stock/summary";
+        String incomeSheetRequestEndPoint = getResources().getString(R.string.dataApiBaseURL)+"stock/income";
+        String balanceSheetRequestEndPoint = getResources().getString(R.string.dataApiBaseURL)+"stock/balance";
 
 
         summaryRequestHeaders.put("ticker",ticker.toUpperCase());
@@ -221,15 +221,11 @@ public class ChartActivity extends AppCompatActivity {
         summaryRequestQueue.add(summaryRequest);
         incomeSheetRequestQueue.add(incomeSheetRequest);
         balanceSheetRequestQueue.add(balanceSheetRequest);
-
-
-
-
 }
+
     public void setJavaScriptInterface(String frequency){
         webView.addJavascriptInterface(new JavaScriptChartInterface(this,ticker,frequency), "Android");
-        webView.loadUrl("http://data.cyllide.com/data/chart/\""+ticker+"\"/\""+frequency+"\"");
-
+        webView.loadUrl(getResources().getString(R.string.dataApiBaseURL)+"chart/\""+ticker+"\"/\""+frequency+"\"");
     }
     public void onFrequencyClick(View view){
         oneDay.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
@@ -277,7 +273,7 @@ public class ChartActivity extends AppCompatActivity {
 
     void getSingleValue(String ticker, Context context){
         requestQueue = Volley.newRequestQueue(context);
-        String url = "http://data.cyllide.com/data/stock/close";
+        String url = getResources().getString(R.string.dataApiBaseURL)+"stock/close";
         stringMap.put("value","1231D123");
         stringMap.put("ticker","123"+ticker+"123");
         stringMap.put("singleVal","True");
