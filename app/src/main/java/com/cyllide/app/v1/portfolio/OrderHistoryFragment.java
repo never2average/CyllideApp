@@ -41,8 +41,6 @@ public class OrderHistoryFragment extends Fragment {
     List orderHistoryList;
 
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

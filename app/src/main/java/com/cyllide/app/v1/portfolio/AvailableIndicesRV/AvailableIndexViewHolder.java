@@ -22,7 +22,7 @@ public class AvailableIndexViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         indexName=itemView.findViewById(R.id.indexName);
         indexValNet=itemView.findViewById(R.id.indexValue);
-        expandableLayout = itemView.findViewById(R.id.expandableindexoptions);
+        expandableLayout = itemView.findViewById(R.id.indexExtraOptions);
         findexCard = itemView.findViewById(R.id.findexcard);
     }
 

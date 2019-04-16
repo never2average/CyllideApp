@@ -77,10 +77,7 @@
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        >
-
+        android:layout_height="match_parent">
     </FrameLayout>
 
     <com.github.clans.fab.FloatingActionMenu
@@ -91,7 +88,6 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|right"
         android:layout_marginLeft="0dp"
-        android:layout_marginEnd="11dp"
         android:layout_marginRight="0dp"
         android:src="@drawable/ic_plus"
         fab:menu_animationDelayPerItem="50"
@@ -160,15 +156,12 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_referral"
             android:tint="@android:color/white"
-
             fab:fab_colorNormal="@android:color/transparent"
             fab:fab_colorPressed="@color/primary_light_max"
             fab:fab_colorRipple="@color/primary_light_max"
             fab:fab_label="Referrals"
             fab:fab_size="mini"
-
             />
-
 
     </com.github.clans.fab.FloatingActionMenu>
 

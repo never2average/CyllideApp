@@ -13,22 +13,20 @@
         android:layout_weight="1"
         android:orientation="vertical">
         <TextView
-            android:padding="10dp"
+            android:paddingVertical="@dimen/default_stroke_width"
             android:text="@string/Portfolio_Position_title"
-            android:textSize="22sp"
-            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:layout_marginBottom="@dimen/default_stroke_width"
             android:gravity="center"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.1"/>
+            android:layout_height="wrap_content"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:overScrollMode="never"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
+            android:layout_height="wrap_content"
             android:id="@+id/positions_rv"
             />
     </LinearLayout>
@@ -39,21 +37,19 @@
         android:orientation="vertical">
 
         <TextView
-            android:padding="10dp"
+            android:paddingVertical="@dimen/default_stroke_width"
             android:text="@string/Pending_Orders_title"
-            android:textSize="22sp"
-            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:layout_marginBottom="@dimen/default_stroke_width"
             android:gravity="center"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.1"/>
+            android:layout_height="wrap_content"/>
         <androidx.recyclerview.widget.RecyclerView
             android:overScrollMode="never"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
+            android:layout_height="wrap_content"
             android:id="@+id/pending_Orders_RV"
             />
 
