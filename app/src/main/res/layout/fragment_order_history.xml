@@ -18,11 +18,27 @@
         android:layout_marginBottom="10dp"
         android:gravity="center"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:overScrollMode="never"
-        android:layout_width="match_parent"
-        android:id="@+id/order_history_rv"
+    <RelativeLayout
         android:layout_height="0dp"
-        android:layout_weight="9"/>
+        android:layout_weight="9"
+        android:layout_width="match_parent">
+
+        <TextView
+            android:id="@+id/order_history_status_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Loading..."/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:overScrollMode="never"
+            android:layout_width="match_parent"
+            android:id="@+id/order_history_rv"
+            android:layout_height="match_parent"
+            />
+
+    </RelativeLayout>
+
+
 
 </LinearLayout>

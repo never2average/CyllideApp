@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +40,7 @@ public class OrderHistoryFragment extends Fragment {
     private RequestQueue orderHistoryQueue;
     private Map<String,String> orderHistoryMap = new ArrayMap<>();
     List orderHistoryList;
+    TextView orderHistoryStatus;
 
 
 
@@ -50,6 +52,7 @@ public class OrderHistoryFragment extends Fragment {
         orderHistoryRV = view.findViewById(R.id.order_history_rv);
         orderHistoryRV.setLayoutManager(new LinearLayoutManager(view.getContext()));
         orderHistoryRV.setHasFixedSize(true);
+        orderHistoryStatus = view.findViewById(R.id.order_history_status_tv);
         getFinishedOrders(view.getContext(),orderHistoryRV);
         return view;
     }
@@ -116,7 +119,13 @@ public class OrderHistoryFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-         OrderHistoryAdapter myOrderHistoryAdapter = new OrderHistoryAdapter(orderHistoryList);
-        recyclerView.setAdapter(myOrderHistoryAdapter);
+        if(orderHistoryList.size() == 0){
+            orderHistoryStatus.setText("Nothing to show.");
+        }
+        else {
+            OrderHistoryAdapter myOrderHistoryAdapter = new OrderHistoryAdapter(orderHistoryList);
+            recyclerView.setAdapter(myOrderHistoryAdapter);
+            orderHistoryStatus.setVisibility(View.INVISIBLE);
+        }
     }
 }

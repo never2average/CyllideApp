@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,6 +43,7 @@ import java.util.Map;
 public class PortfolioPositionsFragment extends Fragment {
 
     private RecyclerView positionsRV, pendingOrdersRV;
+    TextView positionsStatus, pendingOrdersStatus;
     List positionsModel;
     List ordersModel;
     RequestQueue pendingOrderQueue;
@@ -89,16 +91,23 @@ public class PortfolioPositionsFragment extends Fragment {
         positionsRV = rootView.findViewById(R.id.positions_rv);
         positionsRV.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        pendingOrdersRV = rootView.findViewById(R.id.pending_Orders_RV);
+        pendingOrdersRV = rootView.findViewById(R.id.pending_orders_RV);
         pendingOrdersRV.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        positionsStatus = rootView.findViewById(R.id.available_stocks_positions_status_tv);
+        pendingOrdersStatus = rootView.findViewById(R.id.available_stocks_pending_order_status_tv);
+
         List<PositionsModel> data1 = portfolioPositionsData();
-        PositionsAdapter positionsAdapter= new PositionsAdapter(data1);
-        positionsRV.setAdapter(positionsAdapter);
+
+
+            PositionsAdapter positionsAdapter= new PositionsAdapter(data1);
+            positionsRV.setAdapter(positionsAdapter);
+
 
         List<OrdersModel> ordersModels = pendingOrdersData();
-        OrdersAdapter ordersAdapter = new OrdersAdapter(ordersModels);
-        pendingOrdersRV.setAdapter(ordersAdapter);
+            OrdersAdapter ordersAdapter = new OrdersAdapter(ordersModels);
+            pendingOrdersRV.setAdapter(ordersAdapter);
+
         getPendingOrders(getContext(),pendingOrdersRV);
         getHoldingPositions(getContext(),positionsRV);
 
@@ -249,6 +258,17 @@ public class PortfolioPositionsFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+
+        if(positionsModel.size() == 0){
+            positionsStatus.setVisibility(View.VISIBLE);
+            positionsStatus.setText("Nothing to show.");
+        }
+        else {
+            OrdersAdapter myOrdersAdapter = new OrdersAdapter(positionsModel);
+            recyclerView.setAdapter(myOrdersAdapter);
+            positionsStatus.setVisibility(View.INVISIBLE);
+        }
+
         PositionsAdapter myPositionAdapter = new PositionsAdapter(positionsModel);
         recyclerView.setAdapter(myPositionAdapter);
     }
@@ -269,8 +289,16 @@ public class PortfolioPositionsFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-        OrdersAdapter myOrdersAdapter = new OrdersAdapter(ordersModel);
-        recyclerView.setAdapter(myOrdersAdapter);
+        if(ordersModel.size() == 0){
+            pendingOrdersStatus.setVisibility(View.VISIBLE);
+            pendingOrdersStatus.setText("Nothing to show.");
+        }
+        else {
+            OrdersAdapter myOrdersAdapter = new OrdersAdapter(ordersModel);
+            recyclerView.setAdapter(myOrdersAdapter);
+            pendingOrdersStatus.setVisibility(View.INVISIBLE);
+        }
+
     }
 
 

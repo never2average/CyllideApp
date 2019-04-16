@@ -24,13 +24,30 @@
             android:layout_height="0dp"
             android:layout_weight="1.1"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:overScrollMode="never"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5"
-            android:id="@+id/positions_rv"
-            />
+            android:layout_weight="5">
+
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:overScrollMode="never"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/positions_rv"
+                />
+
+            <TextView
+                android:id="@+id/available_stocks_positions_status_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Loading..."/>
+
+        </RelativeLayout>
+
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,13 +66,29 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.1"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:overScrollMode="never"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5"
-            android:id="@+id/pending_Orders_RV"
-            />
+            android:layout_weight="5">
+
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:overScrollMode="never"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/pending_orders_RV"
+                />
+
+            <TextView
+                android:id="@+id/available_stocks_pending_order_status_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Loading..."/>
+
+        </RelativeLayout>
+
 
 
     </LinearLayout>
