@@ -138,9 +138,10 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:hint="Answer:"
-                        android:textCursorDrawable="none"
+                        android:textCursorDrawable="@null"
                         android:cursorVisible="true"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        />
                 </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton

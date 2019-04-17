@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -148,8 +149,20 @@ public class ForumActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                searchQuestions.clearQuery();
+                if(getCurrentFocus()!=null)
+                {
+                    InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+
+
+                }
+
                 startActivity(new Intent(ForumActivity.this, MainActivity.class));
                 finish();
+
             }
         });
         tags=findViewById(R.id.tags);

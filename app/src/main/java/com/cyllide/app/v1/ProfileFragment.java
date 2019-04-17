@@ -7,10 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,6 +55,9 @@ import androidx.fragment.app.FragmentTransaction;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 
@@ -75,6 +80,8 @@ public class ProfileFragment extends Fragment {
     RequestQueue profileDataRequestQueue;
     Map<String,String> profileMap = new ArrayMap<>();
     AnimatedPieView contestWinPerc;
+    byte[] data;
+    Uri bitmapUri;
 
 
 
@@ -231,7 +238,9 @@ public class ProfileFragment extends Fragment {
         if (resultCode == RESULT_OK){
 
             targetUri = data.getData();
+
             RequestOptions requestOptions = new RequestOptions().override(100);
+
             Glide.with(getContext()).load(targetUri).apply(requestOptions).into(profilePic);
             uploadImage(getContext());
             Log.e("ProfilePicSet","inside on activity result");
@@ -256,7 +265,23 @@ public class ProfileFragment extends Fragment {
             progressDialog.show();
 
             final StorageReference ref = storageReference.child(UUID.randomUUID().toString());
-            ref.putFile(targetUri)
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), targetUri);
+                ByteArrayOutputStream baos =new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG,25,baos);
+                String path =MediaStore.Images.Media.insertImage(getContext().getContentResolver(),bitmap,"profile_pic",null);
+                bitmapUri =Uri.parse(path);
+
+                //data =baos.toByteArray();
+
+                // profilePic.setImageBitmap(bitmap);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+            ref.putFile(bitmapUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
