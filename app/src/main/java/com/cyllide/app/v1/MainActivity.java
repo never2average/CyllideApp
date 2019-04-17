@@ -26,7 +26,6 @@ import android.widget.Toast;
 import com.cyllide.app.v1.authentication.PhoneAuth;
 import com.cyllide.app.v1.background.services.GetLatestQuizIDService;
 import com.cyllide.app.v1.faq_view.FAQActivity;
-import com.cyllide.app.v1.howitworks.HowItWorksFragment;
 import com.cyllide.app.v1.intro.IntroActivity;
 import com.cyllide.app.v1.notification.NotificationActivity;
 
@@ -304,28 +303,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
 
         }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.pic:
-//                Intent profileIntent=new Intent(this, ProfileActivity.class);
-//                startActivity(profileIntent);
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
-    private void swaphiwFragment(){
-        HowItWorksFragment fragment = new HowItWorksFragment();
-
-
-        if (fragment != null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .commit();
-         }
-    }
 
     private void swapFragment(){
         ReferralFragment fragment = new ReferralFragment();
