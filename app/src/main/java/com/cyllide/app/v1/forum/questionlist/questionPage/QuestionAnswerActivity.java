@@ -93,24 +93,23 @@ public class QuestionAnswerActivity extends AppCompatActivity {
         }
     }
 
-    private void postAnswerVolley(String answerBody) {
+    private void postAnswerVolley(final String answer) {
 	    postQueue = Volley.newRequestQueue(this);
         String requestEndpoint = getResources().getString(R.string.apiBaseURL)+"answer/add";
         requestHeadersPost.put("token", AppConstants.token);
         requestHeadersPost.put("qid",questionID);
-        requestHeadersPost.put("answerBody",answerBody);
+        requestHeadersPost.put("answerBody",answer);
 	    StringRequest postAnswer = new StringRequest(Request.Method.POST, requestEndpoint, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(QuestionAnswerActivity.this,response,Toast.LENGTH_LONG).show();
+                Toast.makeText(QuestionAnswerActivity.this,"Answer posted successfully",Toast.LENGTH_LONG).show();
+                answerBody.setText("");
                 fillAnswers(questionID);
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(QuestionAnswerActivity.this,error.toString(),Toast.LENGTH_LONG).show();
-
+                Toast.makeText(QuestionAnswerActivity.this,"Error posting answer",Toast.LENGTH_LONG).show();
             }
         }){
             @Override
