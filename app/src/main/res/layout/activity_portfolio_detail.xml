@@ -17,7 +17,8 @@
         android:id="@+id/activity_portfolio_detail_back_button"
         android:src="@drawable/ic_arrow_back_black_24dp"
         android:tint="@color/colorPrimary"
-        android:background="@color/transparent"/>></LinearLayout>
+        android:background="@color/transparent"/>>
+    </LinearLayout>
 
     <FrameLayout
         android:layout_marginTop="0dp"

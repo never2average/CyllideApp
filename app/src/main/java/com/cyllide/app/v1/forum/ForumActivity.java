@@ -155,8 +155,20 @@ public class ForumActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                searchQuestions.clearQuery();
+                if(getCurrentFocus()!=null)
+                {
+                    InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+
+
+                }
+
                 startActivity(new Intent(ForumActivity.this, MainActivity.class));
                 finish();
+
             }
         });
         tags=findViewById(R.id.tags);

@@ -304,17 +304,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
         }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.pic:
-//                Intent profileIntent=new Intent(this, ProfileActivity.class);
-//                startActivity(profileIntent);
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
-
 
     private void swapFragment(){
         ReferralFragment fragment = new ReferralFragment();

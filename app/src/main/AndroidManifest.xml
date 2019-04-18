@@ -53,7 +53,8 @@
         <activity
             android:parentActivityName=".MainActivity"
             android:name=".forum.ForumActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:parentActivityName=".forum.ForumActivity"
             android:name=".forum.askquestion.AskQuestion"
