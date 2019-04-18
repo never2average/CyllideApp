@@ -38,6 +38,8 @@
             <com.arlib.floatingsearchview.FloatingSearchView
                 android:id="@+id/search_questions"
                 android:layout_width="0dp"
+                android:clickable="true"
+                android:focusableInTouchMode="true"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
                 app:floatingSearch_close_search_on_keyboard_dismiss="true"

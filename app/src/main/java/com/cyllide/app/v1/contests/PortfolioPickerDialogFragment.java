@@ -7,6 +7,7 @@ import android.util.ArrayMap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 
 import com.android.volley.Request;
@@ -36,6 +37,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class PortfolioPickerDialogFragment extends DialogFragment {
 
     PortfolioPickerClickListener listener;
+    TextView portfolioStatus;
     private RequestQueue portfoliolist;
     Map<String,String> headers=new ArrayMap<>();
     ArrayList<PortfolioModel> portfolioModels;
@@ -67,6 +69,7 @@ public class PortfolioPickerDialogFragment extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.dialog_portfolio_picker, null);
         builder.setView(dialogLayout);
+        portfolioStatus = dialogLayout.findViewById(R.id.no_portfolios_to_show);
         itemList = dialogLayout.findViewById(R.id.portfolios);
         itemList.setLayoutManager(new LinearLayoutManager(getContext()));
         fetchRelevantPortfolios();
@@ -98,8 +101,14 @@ public class PortfolioPickerDialogFragment extends DialogFragment {
                         portfolioModels.add(new PortfolioModel(jsonObject.getString("portfolioName"),0.0,jsonObject.getJSONObject("_id").getString("$oid")));
                         AppConstants.myPortfolioList.add(jsonObject.getJSONObject("_id").getString("$oid"));
                     }
-                    PortfolioAdapter portfolioAdapter = new PortfolioAdapter(getContext(),portfolioModels);
-                    itemList.setAdapter(portfolioAdapter);
+                    if(portfolioModels.size() == 0){
+                        portfolioStatus.setText("No portfolios to show.");
+                    }
+                    else {
+                        PortfolioAdapter portfolioAdapter = new PortfolioAdapter(getContext(), portfolioModels);
+                        itemList.setAdapter(portfolioAdapter);
+                        portfolioStatus.setVisibility(View.INVISIBLE);
+                    }
                 } catch (Exception e) {
                     Log.e("JSONERROR",e.toString());
                 }

@@ -1,10 +1,12 @@
 package com.cyllide.app.v1.forum;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -116,6 +118,11 @@ public class ForumActivity extends AppCompatActivity {
 
     ToggleButton finance, capitalMarkets, macroEconimics, business;
 
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +160,7 @@ public class ForumActivity extends AppCompatActivity {
             }
         });
         tags=findViewById(R.id.tags);
+
 
 
         tags.setOnCheckedChangeListener(new MultiSelectToggleGroup.OnCheckedStateChangeListener() {
@@ -241,6 +249,15 @@ public class ForumActivity extends AppCompatActivity {
                     } else {
                         applyFilter(newQuery, questionList);
                     }
+                }
+            }
+        });
+
+        searchQuestions.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    hideKeyboard(view);
                 }
             }
         });

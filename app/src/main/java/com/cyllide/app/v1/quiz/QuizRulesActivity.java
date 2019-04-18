@@ -16,8 +16,11 @@ import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,6 +83,12 @@ public class QuizRulesActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    CountDownTimer countDownTimer;
+    ProgressBar barTimer;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +98,8 @@ public class QuizRulesActivity extends AppCompatActivity {
 
         Intent serviceIntent = new Intent(this, GetLatestQuizIDService.class);
         startService(serviceIntent);
+
+
 
 //        contentView = new RemoteViews(getPackageName(), R.layout.push_notification_layout);
 //        contentView.setImageViewResource(R.id.image, R.mipmap.ic_launcher);
@@ -109,6 +120,15 @@ public class QuizRulesActivity extends AppCompatActivity {
 
 
         startQuizButton=findViewById(R.id.startQuizButton);
+
+        startQuizButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fetchQuestions(quizID);
+
+            }
+        });
+
         quizPrize = findViewById(R.id.quiz_rules_qrize_text_view);
         backButton = findViewById(R.id.activity_quiz_rules_back_button);
         SharedPreferences sharedPreferences = getSharedPreferences("LATESTQUIZ", 0);

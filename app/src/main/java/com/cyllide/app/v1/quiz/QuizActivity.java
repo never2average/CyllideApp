@@ -60,6 +60,7 @@ public class QuizActivity extends AppCompatActivity {
     CountDownTimer countDownTimer;
     CircularProgressBar circularProgressBar;
     ImageView closePrizePopup;
+    ProgressBar pb;
     String selectedOption = "noOption";
     TextView mainQuestion, optionA, optionB, optionC, optionD, textTimer, viewersTV;
     MaterialCardView option1CV,option2CV,option3CV,option4CV;
@@ -286,7 +287,7 @@ public class QuizActivity extends AppCompatActivity {
                 option4CV.setPressed(true);
             }
         });
-
+        pb = findViewById(R.id.progressBarToday);
         circularProgressBar = findViewById(R.id.question_time_remaining);
         textTimer = findViewById(R.id.textTimer);
         Intent intent = getIntent();
@@ -307,10 +308,11 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void startTimer(final int seconds) {
-        countDownTimer = new CountDownTimer(  seconds * 1000, 500) {
+        countDownTimer = new CountDownTimer(  seconds * 1000, 10) {
             @Override
             public void onTick(long leftTimeInMilliseconds) {
                 long seconds = leftTimeInMilliseconds / 1000;
+                pb.setProgress((int)leftTimeInMilliseconds/100);
                 textTimer.setText(String.format("%02d", seconds/60) + ":" + String.format("%02d", seconds%60));
             }
             @Override
@@ -515,6 +517,7 @@ public class QuizActivity extends AppCompatActivity {
         option4CV.setClickable(true);
         quizActivityAnswerIndicator.setVisibility(View.INVISIBLE);
         textTimer.setVisibility(View.VISIBLE);
+        selectedOption = "noOption";
 
         option1PB.setVisibility(View.INVISIBLE);
         option2PB.setVisibility(View.INVISIBLE);
@@ -736,7 +739,6 @@ public class QuizActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(view.getContext(),"Yes",Toast.LENGTH_SHORT).show();
-
                     QuizActivity.hasRevive = true;
                     revivalpopup.dismiss();
 
@@ -751,6 +753,7 @@ public class QuizActivity extends AppCompatActivity {
                     losersPopup.show();
                 }
             });
+
             revivalpopup.show();
             revivalProgressBar.setProgress(100);
             revivalProgressBar.setProgressWithAnimation(0,6000);

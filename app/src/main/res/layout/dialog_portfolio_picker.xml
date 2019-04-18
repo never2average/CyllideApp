@@ -49,20 +49,29 @@
                     />
             </RelativeLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/portfolios"
+            <RelativeLayout
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_stroke_width"
-                />
-            <TextView
-                android:id="@+id/no_portfolios_to_show"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="No Portfolios to show"
-                android:gravity="center"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20dp"/>
+                android:layout_margin="@dimen/default_stroke_width">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/portfolios"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    />
+                <TextView
+                    android:id="@+id/no_portfolios_to_show"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Loading..."
+                    android:gravity="center"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20dp"/>
+
+            </RelativeLayout>
+
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
