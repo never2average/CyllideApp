@@ -7,22 +7,11 @@
             android:thicknessRatio="18.0"
             android:useLevel="true">
             <solid
-                android:color="@color/colorPrimary">
+                android:color="@color/light_gray">
 
             </solid>
 
         </shape>
     </item>
-    <item>
-        <shape
-            android:innerRadiusRatio="3"
-            android:shape="ring"
-            android:thicknessRatio="18.0">
-        <solid
-            android:color="@color/primary_light_max">
 
-        </solid>
-        </shape>
-
-    </item>
 </layer-list>

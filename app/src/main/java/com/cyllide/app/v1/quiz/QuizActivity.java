@@ -308,11 +308,11 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void startTimer(final int seconds) {
-        countDownTimer = new CountDownTimer(  seconds * 1000, 10) {
+        countDownTimer = new CountDownTimer(  seconds * 1000, 1) {
             @Override
             public void onTick(long leftTimeInMilliseconds) {
                 long seconds = leftTimeInMilliseconds / 1000;
-                pb.setProgress((int)leftTimeInMilliseconds/100);
+                pb.setProgress((int)leftTimeInMilliseconds);
                 textTimer.setText(String.format("%02d", seconds/60) + ":" + String.format("%02d", seconds%60));
             }
             @Override
@@ -733,6 +733,7 @@ public class QuizActivity extends AppCompatActivity {
             TextView revivalYes = revivalpopup.findViewById(R.id.text_view_yes);
             TextView revivalNo = revivalpopup.findViewById(R.id.text_view_no);
             CircularProgressBar revivalProgressBar = revivalpopup.findViewById(R.id.revival_progress_bar);
+            ProgressBar pb = revivalpopup.findViewById(R.id.progressBarTodayRevival);
             coinsLeft.setText(Integer.toString(AppConstants.coins));
 
             revivalYes.setOnClickListener(new View.OnClickListener() {
@@ -755,6 +756,7 @@ public class QuizActivity extends AppCompatActivity {
             });
 
             revivalpopup.show();
+            startRevivalTimer(3,pb);
             revivalProgressBar.setProgress(100);
             revivalProgressBar.setProgressWithAnimation(0,6000);
             Handler handler = new Handler();
@@ -815,6 +817,24 @@ public class QuizActivity extends AppCompatActivity {
             losersPopup.show();
         }
     }
+
+
+    private void startRevivalTimer(final int seconds, final ProgressBar pb) {
+        countDownTimer = new CountDownTimer(  seconds * 1000, 1) {
+            @Override
+            public void onTick(long leftTimeInMilliseconds) {
+                long seconds = leftTimeInMilliseconds / 1000;
+                pb.setProgress((int)leftTimeInMilliseconds);
+//                textTimer.setText(String.format("%02d", seconds/60) + ":" + String.format("%02d", seconds%60));
+            }
+            @Override
+            public void onFinish() {
+//
+            }
+        }.start();
+
+    }
+
 
 
     private void startAnswerAnimation(ProgressBar mProgressBar, int percent, int duration){

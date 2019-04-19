@@ -45,6 +45,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+
 public class MainActivity extends AppCompatActivity implements InternetConnectivityListener {
 
 
@@ -136,6 +137,10 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         setTheme(R.style.AppTheme_NoActionBar);
         setContentView(R.layout.activity_main);
         setApplicationConstants();
+
+        InternetAvailabilityChecker.init(this);
+        internetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
+        internetAvailabilityChecker.addInternetConnectivityListener(this);
 
 
 

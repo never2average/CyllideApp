@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -83,36 +85,65 @@ public class HomeFragment extends Fragment {
         contest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ConnectionStatus.connectionstatus){
-                Intent intent=new Intent(getContext(), MonthlyActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-                }
-                else{
-                    Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
+//                if(ConnectionStatus.connectionstatus){
+//                Intent intent=new Intent(getContext(), MonthlyActivity.class);
+//                startActivity(intent);
+//                getActivity().finish();
+//                }
+//                else{
+//                    Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
+//                }
+                ConnectivityManager conMgr =(ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo=conMgr.getActiveNetworkInfo();
+
+                if(netInfo ==null||!netInfo.isConnected()||!netInfo.isAvailable())
+                {
+                    Toast.makeText(getContext(),"Check your Network Connection",Toast.LENGTH_LONG).show();
+
+                } else {
+                    Intent intent=new Intent(getContext(), MonthlyActivity.class);
+                    startActivity(intent);
                 }
             }
         });
         portfolios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ConnectionStatus.connectionstatus){
-                Intent intent=new Intent(getContext(), MyPortfolio.class);
-                startActivity(intent);}
-                else{
-                    Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
+//                if(ConnectionStatus.connectionstatus){
+//                Intent intent=new Intent(getContext(), MyPortfolio.class);
+//                startActivity(intent);}
+//                else{
+//                    Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
+//
+//
+//                }
 
+                ConnectivityManager conMgr =(ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo=conMgr.getActiveNetworkInfo();
 
+                if(netInfo ==null||!netInfo.isConnected()||!netInfo.isAvailable())
+                {
+                    Toast.makeText(getContext(),"Poor Network Connection",Toast.LENGTH_LONG).show();
+
+                } else {
+                    Intent portfolioIntent =new Intent(getContext(),MyPortfolio.class);
+                    startActivity(portfolioIntent);
 
 
                 }
             }
+
         });
 
         quiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ConnectionStatus.connectionstatus){
+
+                ConnectivityManager conMgr =(ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo=conMgr.getActiveNetworkInfo();
+//                if(ConnectionStatus.connectionstatus)
+                if(netInfo !=null||netInfo.isConnected()||netInfo.isAvailable())
+                {
                 SharedPreferences sharedPreferences = getContext().getSharedPreferences("AUTHENTICATION",Context.MODE_PRIVATE);
                 String token = sharedPreferences.getString("token", "Not found!");
                 Intent intent;
@@ -136,15 +167,26 @@ public class HomeFragment extends Fragment {
         forum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ConnectionStatus.connectionstatus){
-                Intent intent = new Intent(getContext(), ForumActivity.class);
-                getContext().startActivity(intent);
-                getActivity().finish();
-            }
-                else{
-                    Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
+//                if(ConnectionStatus.connectionstatus){
+//                Intent intent = new Intent(getContext(), ForumActivity.class);
+//                getContext().startActivity(intent);
+//                getActivity().finish();
+//            }
+//                else{
+//                    Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
+//
+//                }
 
-                }
+                ConnectivityManager conMgr =(ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo=conMgr.getActiveNetworkInfo();
+
+                if(netInfo ==null||!netInfo.isConnected()||!netInfo.isAvailable())
+                {
+                    Toast.makeText(getContext()," Check your Network Connection",Toast.LENGTH_LONG).show();
+
+                } else {
+                    Intent intent = new Intent(getContext(), ForumActivity.class);
+                    getContext().startActivity(intent);}
             }
         });
         }

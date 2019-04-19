@@ -70,7 +70,8 @@ public class ProfileFragment extends Fragment {
     Button save;
     TextView username, quizzesWon, quizzesParticipated, numReferrals, numPosts, numUpvotes, numHearts;
     CircleImageView profilePic;
-    Uri defaultProfilePic =Uri.parse("android.resource://com.example.kartikbhardwaj.bottom_navigation/drawable/profile_pic");
+    Uri defaultProfilePic =Uri.parse(
+            "android.resource://com.example.kartikbhardwaj.bottom_navigation/drawable/profile_pic");
     StorageReference storageReference;
     Uri targetUri;
     SharedPreferences sharedPreferences;

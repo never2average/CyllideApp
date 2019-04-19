@@ -1,13 +1,29 @@
 package com.cyllide.app.v1.portfolio.AvailableIndicesRV;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.R;
 
 import android.graphics.Color;
+import android.util.ArrayMap;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +43,9 @@ public class AvailableIndexViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void populate(AvailableIndexModel stocksModel){
+
         indexName.setText(stocksModel.getIndexName());
+        setIndexValue(indexValNet);
         if(stocksModel.getIndexChanges()>=0){
             indexValNet.setTextColor(Color.parseColor("#00ff00"));
             indexValNet.setText(stocksModel.getIndexValue()+"(+"+String.valueOf(stocksModel.getIndexChanges())+"%)"+"▲");
@@ -49,5 +67,43 @@ public class AvailableIndexViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
+    }
+    RequestQueue indexRequestQueue;
+    Map<String,String> requestHeaders = new ArrayMap<String,String>();
+    private void setIndexValue(TextView indexValNet) {
+        indexRequestQueue = Volley.newRequestQueue(indexValNet.getContext());
+        String requestEndpoint = indexValNet.getContext().getResources().getString(R.string.dataApiBaseURL)+ "stock/close";
+        requestHeaders.put("value","1231D123");
+        requestHeaders.put("ticker","123"+indexName.getText()+"123");
+        requestHeaders.put("singleVal","True");
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, requestEndpoint, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.d("",response);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Question Error", error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                return requestHeaders;
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                int mStatusCode = response.statusCode;
+                Log.d("whats failing", String.valueOf(mStatusCode));
+                return super.parseNetworkResponse(response);
+            }
+        };
+        indexRequestQueue.add(stringRequest);
     }
 }
