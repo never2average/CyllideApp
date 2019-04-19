@@ -91,7 +91,6 @@ dependencies {
     implementation 'com.treebo:internetavailabilitychecker:1.0.4'
 
 
-
 }
 apply plugin: 'announce'
 apply plugin: 'com.google.gms.google-services'

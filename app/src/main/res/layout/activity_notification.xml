@@ -24,11 +24,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your Notifications"
-            android:textColor="@android:color/white"
+            android:text="NOTIFICATIONS"
+            android:textColor="@color/colorPrimary"
             android:textSize="25sp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/buttonstyle"/>
+            />
 
     </LinearLayout>
 

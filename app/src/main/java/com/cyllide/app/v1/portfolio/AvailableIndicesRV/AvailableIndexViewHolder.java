@@ -46,15 +46,7 @@ public class AvailableIndexViewHolder extends RecyclerView.ViewHolder {
 
         indexName.setText(stocksModel.getIndexName());
         setIndexValue(indexValNet);
-        if(stocksModel.getIndexChanges()>=0){
-            indexValNet.setTextColor(Color.parseColor("#00ff00"));
-            indexValNet.setText(stocksModel.getIndexValue()+"(+"+String.valueOf(stocksModel.getIndexChanges())+"%)"+"▲");
-        }
-        else{
-            indexValNet.setTextColor(Color.parseColor("#ff0000"));
-            indexValNet.setText(stocksModel.getIndexValue()+"("+String.valueOf(stocksModel.getIndexChanges())+"%)"+"▼");
 
-        }
         findexCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +62,7 @@ public class AvailableIndexViewHolder extends RecyclerView.ViewHolder {
     }
     RequestQueue indexRequestQueue;
     Map<String,String> requestHeaders = new ArrayMap<String,String>();
-    private void setIndexValue(TextView indexValNet) {
+    private void setIndexValue(final TextView indexValNet) {
         indexRequestQueue = Volley.newRequestQueue(indexValNet.getContext());
         String requestEndpoint = indexValNet.getContext().getResources().getString(R.string.dataApiBaseURL)+ "stock/close";
         requestHeaders.put("value","1231D123");
@@ -80,7 +72,19 @@ public class AvailableIndexViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.d("",response);
+                    Log.d("IndexViewHolder",response);
+                    JSONObject responseObject = new JSONObject(response);
+                    double indexChanges = responseObject.getDouble("movement");
+                    String indexValue = Double.toString(responseObject.getDouble("data"));
+                    if(indexChanges>=0){
+                        indexValNet.setTextColor(Color.parseColor("#00ff00"));
+                        indexValNet.setText(indexValue+"(+"+String.valueOf(indexChanges)+"%)"+"▲");
+                    }
+                    else{
+                        indexValNet.setTextColor(Color.parseColor("#ff0000"));
+                        indexValNet.setText(indexValue+"("+String.valueOf(indexChanges)+"%)"+"▼");
+
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();

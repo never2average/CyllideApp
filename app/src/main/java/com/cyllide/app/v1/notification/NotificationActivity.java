@@ -12,8 +12,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.MainActivity;
 import com.cyllide.app.v1.R;
+import com.google.gson.JsonObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +24,9 @@ import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,14 +42,14 @@ public class NotificationActivity extends AppCompatActivity {
     String notifname[]={"Notification1","Notification2","Notification3"};
     String notiftime[]={"22:02","11:02","09:02"};
 
-    private List<NotificationModel> dummyData() {
-        List<NotificationModel> data = new ArrayList<>(5);
-        for (int i = 0; i < 3; i++) {
-            data.add(new NotificationModel(notifname[i], notiftime[i]));
-        }//data is the list of objects to be set in the list item
-        return data;
-    }
-
+//    private List<NotificationModel> dummyData() {
+//        List<NotificationModel> data = new ArrayList<>(5);
+//        for (int i = 0; i < 3; i++) {
+//            data.add(new NotificationModel(notifname[i], notiftime[i]));
+//        }//data is the list of objects to be set in the list item
+//        return data;
+//    }
+//
     static List<NotificationModel> notifs= new ArrayList<>();
 
 
@@ -56,20 +61,20 @@ public class NotificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notification);
         crossBtn=findViewById(R.id.cross_btn);
 
-        if(notifs.isEmpty())
-        {
-            notifs=dummyData();
-        }
+//        if(notifs.isEmpty())
+//        {
+//            notifs=dummyData();
+//        }
 
 
         recyclerView = findViewById(R.id.notifrv);
         setNotification(recyclerView,getApplicationContext());
 
-        NotificationAdapter adapter = new NotificationAdapter(notifs, getApplicationContext());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+//        NotificationAdapter adapter = new NotificationAdapter(notifs, getApplicationContext());
+//        recyclerView.setAdapter(adapter);
+//        recyclerView.setHasFixedSize(true);
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+//        recyclerView.setLayoutManager(layoutManager);
         crossBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,19 +85,36 @@ public class NotificationActivity extends AppCompatActivity {
         });
     }
 
-    private void setNotification(RecyclerView recyclerView, Context context) {
+    private void setNotification(final RecyclerView recyclerView, final Context context) {
 
         notificationRequestQueue = Volley.newRequestQueue(context);
-        String requestEndPoint = "";
-//        notificationRequestHeader.put();
+        String requestEndPoint = context.getResources().getString(R.string.apiBaseURL)+"notifications/list";
+        notificationRequestHeader.put("token", AppConstants.token);
         StringRequest notificationStringRequest = new StringRequest(Request.Method.GET,requestEndPoint, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.d("",response);
+                    Log.d("NotificationActivity",response);
+                    JSONArray responseObject = new JSONObject(response).getJSONArray("data");
+                    List<NotificationModel> data = new ArrayList<>();
+                    for (int i = 0; i < responseObject.length(); i++) {
+                        data.add(new NotificationModel(responseObject.getJSONObject(i).getString("message"),Long.toString(responseObject.getJSONObject(i).getJSONObject("notificationTime").getLong("$date")),responseObject.getJSONObject(i).getJSONObject("_id").getString("$oid")));
+                    }//data is the list of objects to be set in the list item
+                    notifs = data;
+
+
+
+                    NotificationAdapter adapter = new NotificationAdapter(notifs, getApplicationContext());
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.setHasFixedSize(true);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+                    recyclerView.setLayoutManager(layoutManager);
+
+
+
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Log.d("NotificationActivity",e.toString());
                 }
             }
         }, new Response.ErrorListener() {
