@@ -9,11 +9,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.R;
+import com.cyllide.app.v1.charts.ChartActivityIndex;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,6 +36,7 @@ public class AvailableIndexViewHolder extends RecyclerView.ViewHolder {
     TextView indexName,indexValNet;
     ExpandableLayout expandableLayout;
     LinearLayout findexCard;
+    ImageView analyzeIndices;
 
     public AvailableIndexViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -40,6 +44,7 @@ public class AvailableIndexViewHolder extends RecyclerView.ViewHolder {
         indexValNet=itemView.findViewById(R.id.indexValue);
         expandableLayout = itemView.findViewById(R.id.indexExtraOptions);
         findexCard = itemView.findViewById(R.id.findexcard);
+        analyzeIndices = itemView.findViewById(R.id.analyzeIndices);
     }
 
     public void populate(AvailableIndexModel stocksModel){
@@ -56,6 +61,13 @@ public class AvailableIndexViewHolder extends RecyclerView.ViewHolder {
                 else{
                     expandableLayout.setExpanded(true);
                 }
+            }
+        });
+
+        analyzeIndices.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.getContext().startActivity(new Intent(view.getContext(), ChartActivityIndex.class));
             }
         });
 
