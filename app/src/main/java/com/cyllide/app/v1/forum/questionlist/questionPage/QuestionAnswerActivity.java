@@ -140,6 +140,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                     questionLastModifiedText.setText(format.format(lastUpdated));
                     JSONArray tagList = responseData.getJSONArray("queryTags");
                     JSONArray answerList = responseData.getJSONArray("answerList");
+                    questionTagModels = new ArrayList<>();
                     for(int i=0;i<tagList.length();i++){
                         questionTagModels.add(new QuestionTagModel(tagList.getString(i)));
                     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -48,6 +49,7 @@
             android:textColor="#00B9FF"/>
 
         <TextView
+            android:id="@+id/quiz_winning_prize_money"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="₹ 250"
@@ -84,6 +86,7 @@
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/quiz_winning_text"
             android:text="Please enter your UPI id above in order to claim your prize"
             android:textColor="#00B9FF"/>
         <ImageView

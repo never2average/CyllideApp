@@ -45,6 +45,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.text.Format;
 import java.util.Map;
 
 import androidx.activity.OnBackPressedCallback;
@@ -56,6 +58,7 @@ import android.os.Vibrator;
 public class QuizActivity extends AppCompatActivity {
 
     public static boolean hasRevive = false;
+    public static int numberOfRevivals=0;
     private Handler handler = new Handler();
     CountDownTimer countDownTimer;
     CircularProgressBar circularProgressBar;
@@ -118,6 +121,15 @@ public class QuizActivity extends AppCompatActivity {
                 confirmExitPopup.dismiss();
                 startActivity(new Intent(QuizActivity.this, MainActivity.class));
                 finish();
+                questionID = -1;
+                quizMusicPlayer.stop();
+                if(countDownTimer != null) {
+                    countDownTimer.cancel();
+                    countDownTimer = null;
+                }
+                quizCorrectAnswerMusicPlayer.stop();
+                quizWrongAnswerMusicPlayer.stop();
+
 
             }
         });
@@ -363,23 +375,25 @@ public class QuizActivity extends AppCompatActivity {
                         if(jsonResponse.getString("data").equals("Correct")){
                             quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
                             quizCorrectAnswerMusicPlayer.start();
+                            Log.d("questionID",Integer.toString(questionID));
+                            Log.d("changequestion","calling change change question");
                             if(questionID == 9){
                                 finishQuiz(questionID);
                             }
 
-                            Log.d("changequestion","calling change change question");
+                            else{
 
-                            Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                public void run() {
-                                    quizCorrectAnswerMusicPlayer.pause();
-                                    quizCorrectAnswerMusicPlayer.seekTo(0);
-                                    changeQuestion();
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    public void run() {
+                                        quizCorrectAnswerMusicPlayer.pause();
+                                        quizCorrectAnswerMusicPlayer.seekTo(0);
+                                        changeQuestion();
 
 
-                                }
-                            }, 6000);
-
+                                    }
+                                }, 6000);
+                            }
 
 
                         }
@@ -444,8 +458,9 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
+        questionID = -1;
         quizMusicPlayer.stop();
         if(countDownTimer != null) {
             countDownTimer.cancel();
@@ -564,31 +579,77 @@ public class QuizActivity extends AppCompatActivity {
 
     }
 
+    RequestQueue quizMoneyRequestQueue;
+    Map<String,String> quizMoneyRequestHeader = new ArrayMap<>();
+
     private void finishQuiz(int questionID){
         if(questionID != 9){
             Toast.makeText(this,"You  lol",Toast.LENGTH_LONG).show();
             losersPopup.show();
         }
         else{
-            TextInputEditText upiID = quizWinPopup.findViewById(R.id.upi_id);
-            final String string = upiID.getText().toString();
-            quizWinPopup.show();
-            closePrizePopup = quizWinPopup.findViewById(R.id.close_prize_popup);
-            closePrizePopup.setOnClickListener(new View.OnClickListener() {
+            quizMoneyRequestQueue = Volley.newRequestQueue(this);
+            quizMoneyRequestHeader.put("token",AppConstants.token);
+            quizMoneyRequestHeader.put("quizID",quizID);
+            String url = getResources().getString(R.string.apiBaseURL)+"quiz/reward/display";
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
-                public void onClick(View v) {
-                    quizWinPopup.dismiss();
+                public void onResponse(String response) {
+
+                    Log.d("QuizActivityWinning",response);
+                    Double prize = 0.0;
+                    DecimalFormat format = new DecimalFormat("####0.0");
+                    try {
+                        prize = new JSONObject(response).getDouble("data");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    TextView quizMoney = quizWinPopup.findViewById(R.id.quiz_winning_prize_money);
+                    TextInputEditText upiID = quizWinPopup.findViewById(R.id.upi_id);
+                    final String string = upiID.getText().toString();
+
+                    quizWinPopup.show();
+                    quizMoney.setText("₹ "+format.format(prize));
+                    closePrizePopup = quizWinPopup.findViewById(R.id.close_prize_popup);
+                    closePrizePopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            quizWinPopup.dismiss();
+                        }
+                    });
+                    sendUPI = quizWinPopup.findViewById(R.id.upi_id_button);
+                    sendUPI.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            quizWinPopup.dismiss();
+                            Toast.makeText(QuizActivity.this,"Money will be sent",Toast.LENGTH_LONG).show();
+                            winnersMoney(string);
+                        }
+                    });
+
+                    if(prize==0){
+                        quizMoney.setVisibility(View.GONE);
+                        sendUPI.setVisibility(View.GONE);
+                        upiID.setVisibility(View.GONE);
+                        quizWinPopup.findViewById(R.id.quiz_winning_text).setVisibility(View.GONE);
+
+                    }
+
                 }
-            });
-            sendUPI = quizWinPopup.findViewById(R.id.upi_id_button);
-            sendUPI.setOnClickListener(new View.OnClickListener() {
+            }, new Response.ErrorListener() {
                 @Override
-                public void onClick(View v) {
-                    quizWinPopup.dismiss();
-                    Toast.makeText(QuizActivity.this,"Money will be sent",Toast.LENGTH_LONG).show();
-                    winnersMoney(string);
+                public void onErrorResponse(VolleyError error) {
+
                 }
-            });
+            }){
+                @Override
+                public Map<String,String> getHeaders(){
+
+                    return quizMoneyRequestHeader;
+                }
+            };
+            quizMoneyRequestQueue.add(stringRequest);
+
 
         }
     }
@@ -603,6 +664,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.d("moneyResponse", response);
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -728,7 +790,7 @@ public class QuizActivity extends AppCompatActivity {
 
 
 
-        if(AppConstants.coins>0){
+        if(AppConstants.coins>0 && QuizActivity.numberOfRevivals<2){
             TextView coinsLeft = revivalpopup.findViewById(R.id.quiz_revival_coins_left);
             TextView revivalYes = revivalpopup.findViewById(R.id.text_view_yes);
             TextView revivalNo = revivalpopup.findViewById(R.id.text_view_no);
@@ -767,6 +829,7 @@ public class QuizActivity extends AppCompatActivity {
                     if(QuizActivity.hasRevive == true){
                         QuizActivity.hasRevive = false;
                         AppConstants.coins -= 1;
+                        QuizActivity.numberOfRevivals +=1;
                         SharedPreferences.Editor editor = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE).edit();
                         editor.putInt("coins", AppConstants.coins);
                         editor.apply();

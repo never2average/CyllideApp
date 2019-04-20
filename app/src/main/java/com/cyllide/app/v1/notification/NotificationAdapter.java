@@ -25,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -92,7 +93,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         //holder.populate(notif);
 
         holder.notifNameTv.setText(notif.getNotifName());
-        holder.notifTimeTv.setText(notif.getNotifTime());
+        long notifTime = Long.parseLong(notif.getNotifTime());
+        Date date = new Date(notifTime);
+        holder.notifTimeTv.setText(date.toString());
         holder.tick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

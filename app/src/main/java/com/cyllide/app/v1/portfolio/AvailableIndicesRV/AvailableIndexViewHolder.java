@@ -26,9 +26,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class AvailableIndexViewHolder extends RecyclerView.ViewHolder {
@@ -47,7 +53,7 @@ public class AvailableIndexViewHolder extends RecyclerView.ViewHolder {
         analyzeIndices = itemView.findViewById(R.id.analyzeIndices);
     }
 
-    public void populate(AvailableIndexModel stocksModel){
+    public void populate(final AvailableIndexModel stocksModel){
 
         indexName.setText(stocksModel.getIndexName());
         setIndexValue(indexValNet);
@@ -67,7 +73,9 @@ public class AvailableIndexViewHolder extends RecyclerView.ViewHolder {
         analyzeIndices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                view.getContext().startActivity(new Intent(view.getContext(), ChartActivityIndex.class));
+                Intent intent = new Intent(view.getContext(), ChartActivityIndex.class);
+                intent.putExtra("ticker",stocksModel.getIndexName());
+                view.getContext().startActivity(intent);
             }
         });
 
@@ -84,17 +92,27 @@ public class AvailableIndexViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onResponse(String response) {
                 try {
+                    DecimalFormat df = new DecimalFormat("####0.00");
                     Log.d("IndexViewHolder",response);
                     JSONObject responseObject = new JSONObject(response);
                     double indexChanges = responseObject.getDouble("movement");
-                    String indexValue = Double.toString(responseObject.getDouble("data"));
-                    if(indexChanges>=0){
-                        indexValNet.setTextColor(Color.parseColor("#00ff00"));
-                        indexValNet.setText(indexValue+"(+"+String.valueOf(indexChanges)+"%)"+"▲");
+                    double indexValue = responseObject.getDouble("data");
+                    Date date = new Date(responseObject.getLong("timestamp"));
+                    DateFormat dateformatter = new SimpleDateFormat("HH");
+                    int hour = Integer.parseInt(dateformatter.format(date));
+                    if(hour<16 && hour>=9) {
+                        if (indexChanges >= 0) {
+                            indexValNet.setTextColor(Color.parseColor("#00ff00"));
+                            indexValNet.setText(df.format(indexValue) + "(+" + String.valueOf(df.format(indexChanges)) + "%)" + "▲");
+                        } else {
+                            indexValNet.setTextColor(Color.parseColor("#ff0000"));
+                            indexValNet.setText(df.format(indexValue) + "(" + String.valueOf(df.format(indexChanges)) + "%)" + "▼");
+
+                        }
                     }
                     else{
-                        indexValNet.setTextColor(Color.parseColor("#ff0000"));
-                        indexValNet.setText(indexValue+"("+String.valueOf(indexChanges)+"%)"+"▼");
+                        indexValNet.setTextColor(ContextCompat.getColor(indexValNet.getContext(), R.color.dark_gray));
+                        indexValNet.setText(df.format(indexValue) + "(+" + String.valueOf(df.format(indexChanges)) + "%)" + "▲");
 
                     }
 

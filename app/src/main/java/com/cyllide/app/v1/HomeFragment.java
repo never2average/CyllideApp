@@ -35,7 +35,7 @@ import java.util.Calendar;
 import android.widget.Toast;
 
 public class HomeFragment extends Fragment {
-    Calendar startTime =Calendar.getInstance();
+    Calendar startTime = Calendar.getInstance();
     Dialog quizPopup;
     TextView timer;
 
@@ -47,16 +47,17 @@ public class HomeFragment extends Fragment {
     }
 
     MaterialCardView stories, contest, portfolios, quiz, forum;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Fresco.initialize(getContext());
-        return inflater.inflate(R.layout.home_fragment,null);
+        return inflater.inflate(R.layout.home_fragment, null);
     }
+
     @Override
     public void onViewCreated(@NonNull final View view, final Bundle savedInstanceState) {
-        startTime.set(Calendar.HOUR_OF_DAY,startTime.get(Calendar.HOUR_OF_DAY)+2);
-
+        startTime.set(Calendar.HOUR_OF_DAY, startTime.get(Calendar.HOUR_OF_DAY) + 2);
 
 
         super.onViewCreated(view, savedInstanceState);
@@ -66,10 +67,11 @@ public class HomeFragment extends Fragment {
         quiz = view.findViewById(R.id.quizcard);
         forum = view.findViewById(R.id.forumcard);
         final Context context = getContext();
-        quizPopup=new Dialog(view.getContext());
+        quizPopup = new Dialog(view.getContext());
 
 
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -77,7 +79,7 @@ public class HomeFragment extends Fragment {
         stories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),StoriesActivity.class);
+                Intent intent = new Intent(getContext(), StoriesActivity.class);
                 getContext().startActivity(intent);
                 getActivity().finish();
             }
@@ -93,15 +95,14 @@ public class HomeFragment extends Fragment {
 //                else{
 //                    Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
 //                }
-                ConnectivityManager conMgr =(ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo netInfo=conMgr.getActiveNetworkInfo();
+                ConnectivityManager conMgr = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
-                if(netInfo ==null||!netInfo.isConnected()||!netInfo.isAvailable())
-                {
-                    Toast.makeText(getContext(),"Check your Network Connection",Toast.LENGTH_LONG).show();
+                if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
+                    Toast.makeText(getContext(), "Check your Network Connection", Toast.LENGTH_LONG).show();
 
                 } else {
-                    Intent intent=new Intent(getContext(), MonthlyActivity.class);
+                    Intent intent = new Intent(getContext(), MonthlyActivity.class);
                     startActivity(intent);
                 }
             }
@@ -118,15 +119,14 @@ public class HomeFragment extends Fragment {
 //
 //                }
 
-                ConnectivityManager conMgr =(ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo netInfo=conMgr.getActiveNetworkInfo();
+                ConnectivityManager conMgr = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
-                if(netInfo ==null||!netInfo.isConnected()||!netInfo.isAvailable())
-                {
-                    Toast.makeText(getContext(),"Poor Network Connection",Toast.LENGTH_LONG).show();
+                if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
+                    Toast.makeText(getContext(), "Poor Network Connection", Toast.LENGTH_LONG).show();
 
                 } else {
-                    Intent portfolioIntent =new Intent(getContext(),MyPortfolio.class);
+                    Intent portfolioIntent = new Intent(getContext(), MyPortfolio.class);
                     startActivity(portfolioIntent);
 
 
@@ -139,14 +139,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                ConnectivityManager conMgr =(ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo netInfo=conMgr.getActiveNetworkInfo();
-//                if(ConnectionStatus.connectionstatus)
-                if(netInfo !=null||netInfo.isConnected()||netInfo.isAvailable())
-                {
-                SharedPreferences sharedPreferences = getContext().getSharedPreferences("AUTHENTICATION",Context.MODE_PRIVATE);
-                String token = sharedPreferences.getString("token", "Not found!");
-                Intent intent;
+                ConnectivityManager conMgr = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+                if (ConnectionStatus.connectionstatus) {
+                    SharedPreferences sharedPreferences = getContext().getSharedPreferences("AUTHENTICATION", Context.MODE_PRIVATE);
+                    String token = sharedPreferences.getString("token", "Not found!");
+                    Intent intent;
 //                if(token.equals("Not found!")){
 //                    intent = new Intent(getContext(), PhoneAuth.class);
 //                }
@@ -154,41 +152,41 @@ public class HomeFragment extends Fragment {
                     intent = new Intent(getContext(), QuizRulesActivity.class);
 //                }
 
-                getContext().startActivity(intent);
-                getActivity().finish();
-            }
-                else {
-                    Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
+                    getContext().startActivity(intent);
+                    getActivity().finish();
+                } else {
+                    Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
 
                 }
-                }
+            }
 
         });
         forum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(ConnectionStatus.connectionstatus){
-//                Intent intent = new Intent(getContext(), ForumActivity.class);
-//                getContext().startActivity(intent);
-//                getActivity().finish();
-//            }
-//                else{
-//                    Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
-//
-//                }
-
-                ConnectivityManager conMgr =(ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo netInfo=conMgr.getActiveNetworkInfo();
-
-                if(netInfo ==null||!netInfo.isConnected()||!netInfo.isAvailable())
-                {
-                    Toast.makeText(getContext()," Check your Network Connection",Toast.LENGTH_LONG).show();
-
-                } else {
+                if (ConnectionStatus.connectionstatus) {
                     Intent intent = new Intent(getContext(), ForumActivity.class);
-                    getContext().startActivity(intent);}
-            }
-        });
-        }
+                    getContext().startActivity(intent);
+                    getActivity().finish();
+                } else {
+                    Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
 
+                }
+
+//                ConnectivityManager conMgr = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+//                NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+//
+//                if(netInfo ==null||!netInfo.isConnected()||!netInfo.isAvailable())
+//                {
+//                    Toast.makeText(getContext()," Check your Network Connection",Toast.LENGTH_LONG).show();
+//
+//                } else {
+//                    Intent intent = new Intent(getContext(), ForumActivity.class);
+//                    getContext().startActivity(intent);}
+//            }
+            }
+
+
+        });
+    }
 }

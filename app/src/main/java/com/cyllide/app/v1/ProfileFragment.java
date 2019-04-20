@@ -62,6 +62,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
 import static com.cyllide.app.v1.MainActivity.MY_PERMISSION_REQUEST_CODE;
 
 public class ProfileFragment extends Fragment {
@@ -131,7 +132,7 @@ public class ProfileFragment extends Fragment {
 
 
         storageReference= FirebaseStorage.getInstance().getReference();
-        sharedPreferences=view.getContext().getSharedPreferences("profileUrl",Context.MODE_PRIVATE);
+        sharedPreferences=view.getContext().getSharedPreferences("profileUrl", MODE_PRIVATE);
 
 
         if(sharedPreferences.getString("profileUri",null)==null)
@@ -358,6 +359,8 @@ public class ProfileFragment extends Fragment {
                     numPosts.setText(String.valueOf(jsonResponse.getInt("questionsAsked")+jsonResponse.getInt("questionsAnswered")));
                     numUpvotes.setText(jsonResponse.getString("numUpvotes"));
                     numHearts.setText(jsonResponse.getString("numCoins"));
+                    SharedPreferences sharedPreferences = getContext().getSharedPreferences("AUTHENTICATION", MODE_PRIVATE);
+                    sharedPreferences.edit().putInt("coins",Integer.parseInt(jsonResponse.getString("numCoins")));
                     AnimatedPieViewConfig config =  new  AnimatedPieViewConfig ().drawText(true).textSize(40);
                     double contestsPart = jsonResponse.getDouble("contestsParticipated");
                     double contestsWon = jsonResponse.getDouble("contestsWon");

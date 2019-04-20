@@ -102,6 +102,8 @@ public class LeaderboardsActivity extends AppCompatActivity {
                     Glide.with(LeaderboardsActivity.this).load(arrayData.getJSONObject(0).getString("portfolioProfilePic")).apply(RequestOptions.centerCropTransform()).into(imageView);
                 }
                 catch(Exception e){
+                    findViewById(R.id.image1_leader_board).setVisibility(View.GONE);
+                    pos1.setVisibility(View.GONE);
                     e.printStackTrace();
                 }
                 try{
@@ -110,6 +112,9 @@ public class LeaderboardsActivity extends AppCompatActivity {
                     Glide.with(LeaderboardsActivity.this).load(arrayData.getJSONObject(0).getString("portfolioProfilePic")).apply(RequestOptions.centerCropTransform()).into(imageView);
                 }
                 catch(Exception e){
+                    findViewById(R.id.second_position_ll).setVisibility(View.GONE);
+                    findViewById(R.id.image2_leader_board).setVisibility(View.GONE);
+                    pos2.setVisibility(View.GONE);
                     e.printStackTrace();
                 }
                 try{
@@ -118,7 +123,9 @@ public class LeaderboardsActivity extends AppCompatActivity {
                     Glide.with(LeaderboardsActivity.this).load(arrayData.getJSONObject(0).getString("portfolioProfilePic")).apply(RequestOptions.centerCropTransform()).into(imageView);
                 }
                 catch(Exception e){
-                    e.printStackTrace();
+                    findViewById(R.id.third_position_ll).setVisibility(View.GONE);
+                    findViewById(R.id.image3_leader_board).setVisibility(View.GONE);
+                    pos3.setVisibility(View.GONE);
                 }
                 try {
                 List<LeaderboardModel> leaderboardModelArrayList = new ArrayList<>();

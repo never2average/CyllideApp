@@ -215,7 +215,7 @@
                         <TableRow>
                             <TextView
                                 android:gravity="end|center_vertical"
-                                android:text="Bid: "
+                                android:text="52 week range: "
                                 android:textStyle="bold"
                                 android:layout_margin="3dp"
                                 android:layout_height="50dp"
@@ -225,87 +225,20 @@
                                 android:layout_margin="3dp"
                                 android:gravity="start|center_vertical"
                                 android:text="1,2345.67"
-                                android:id="@+id/summary_bid"
+                                android:id="@+id/week_range_value"
                                 android:layout_height="50dp"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"/>
                         </TableRow>
 
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Ask: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:layout_margin="3dp"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:id="@+id/summary_ask"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
 
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Volume: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:layout_margin="3dp"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:id="@+id/summary_volume"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
 
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Market Cap: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:layout_margin="3dp"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:id="@+id/summary_market_cap"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
 
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Beta: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:layout_margin="3dp"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:id="@+id/summary_beta"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
+
+
+
+
+
 
                         <TableRow>
                             <TextView

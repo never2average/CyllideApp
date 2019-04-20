@@ -106,28 +106,28 @@ public class QuizRulesActivity extends AppCompatActivity {
 //        contentView.setTextViewText(R.id.title, "Polish your Finance-Whiz");
 //        contentView.setTextViewText(R.id.text, "Quiz starts in 5 minutes");
 
-        String CHANNEL_ID = "LOL";
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.icon_logo)
-                .setContentTitle("Polish your finance-whiz")
-                .setContentText("Quiz starts in 5 minutes")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+//        String CHANNEL_ID = "LOL";
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+//                .setSmallIcon(R.drawable.icon_logo)
+//                .setContentTitle("Polish your finance-whiz")
+//                .setContentText("Quiz starts in 5 minutes")
+//                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//
+//        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
 // notificationId is a unique int for each notification that you must define
-        notificationManager.notify(1000, builder.build());
+//        notificationManager.notify(1000, builder.build());
 
 
         startQuizButton=findViewById(R.id.startQuizButton);
 
-        startQuizButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fetchQuestions(quizID);
-
-            }
-        });
+//        startQuizButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                fetchQuestions(quizID);
+//
+//            }
+//        });
 
         quizPrize = findViewById(R.id.quiz_rules_qrize_text_view);
         backButton = findViewById(R.id.activity_quiz_rules_back_button);
