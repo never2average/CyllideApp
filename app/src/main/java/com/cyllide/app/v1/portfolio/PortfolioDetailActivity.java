@@ -52,11 +52,10 @@ public class PortfolioDetailActivity extends AppCompatActivity {
 
 
                 }
+                finish();
             }
         });
-
-        Intent intent = getIntent();
-        String id = intent.getStringExtra("id");
+        String id = getIntent().getStringExtra("id");
         if(id.equals("stockAnalysis")){
 
             AvailableStocksFragment fragment1=new AvailableStocksFragment();
@@ -107,5 +106,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         });
 
         }
+
+
     }
 

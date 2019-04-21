@@ -434,8 +434,8 @@ public class QuizActivity extends AppCompatActivity {
                     mDeviceBandwidthSampler.stopSampling();
                     Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
                     Toast.makeText(QuizActivity.this,"Poor Internet Connection, please try again later",Toast.LENGTH_LONG).show();
-                    finish();
                     startActivity(new Intent(QuizActivity.this, MainActivity.class));
+                    finish();
 
 
 
@@ -672,8 +672,9 @@ public class QuizActivity extends AppCompatActivity {
 
                 Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
                 Toast.makeText(QuizActivity.this,"Poor Internet Connection, please try again later",Toast.LENGTH_LONG).show();
-                finish();
                 startActivity(new Intent(QuizActivity.this, MainActivity.class));
+                finish();
+
 
             }
         }){
@@ -857,8 +858,9 @@ public class QuizActivity extends AppCompatActivity {
                             public void onErrorResponse(VolleyError error) {
                                 Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
                                 Toast.makeText(QuizActivity.this,"Poor Internet Connection, please try again later",Toast.LENGTH_LONG).show();
-                                finish();
                                 startActivity(new Intent(QuizActivity.this, MainActivity.class));
+                                finish();
+
                             }
                         }){
                             @Override

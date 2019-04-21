@@ -54,6 +54,7 @@ public class PortfolioActivity extends AppCompatActivity {
            public void onClick(View view) {
                Intent intent = new Intent(PortfolioActivity.this, MyPortfolio.class);
                startActivity(intent);
+               finish();
            }
        });
 
@@ -139,6 +140,7 @@ public class PortfolioActivity extends AppCompatActivity {
                 Intent intent = new Intent(PortfolioActivity.this, PortfolioDetailActivity.class);
                 intent.putExtra("id","stockAnalysis");
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -149,6 +151,7 @@ public class PortfolioActivity extends AppCompatActivity {
                 Intent intent = new Intent(PortfolioActivity.this, PortfolioDetailActivity.class);
                 intent.putExtra("id","orderHistory");
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -159,6 +162,7 @@ public class PortfolioActivity extends AppCompatActivity {
                 Intent intent = new Intent(PortfolioActivity.this, PortfolioDetailActivity.class);
                 intent.putExtra("id","portfolioPositions");
                 startActivity(intent);
+                finish();
             }
         });
         getNiftySummary();

@@ -16,7 +16,6 @@
                 },
                 success: function(res){
                     var array = res.data;
-                    console.log(array);
                     resolve( array );
                 },
                 error: function(){
@@ -29,8 +28,15 @@
 
       async function drawChart() {
         var array = await fillTimePlot();
-        var data = google.visualization.arrayToDataTable(array);
-
+        n = array.length;
+        var i;
+        var array2 = [];
+        for(var i = 0;i<n;i++){
+            if(array[i][1] !== null){
+                array2.push(array[i])
+            }
+        }
+        var data = google.visualization.arrayToDataTable(array2);
         var options = {
         	lineWidth: 5,
           pointSize: 0,

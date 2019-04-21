@@ -184,7 +184,6 @@ public class ForumActivity extends AppCompatActivity {
                     case R.id.tb_finance:
 
 
-                            Toast.makeText(ForumActivity.this, "finance", Toast.LENGTH_SHORT).show();
                             if(!selectedTags.contains("Finance")){
                                 selectedTags.add("Finance");
                             }
@@ -195,28 +194,22 @@ public class ForumActivity extends AppCompatActivity {
 
                         break;
                     case R.id.tb_capital_markets:
-                            Toast.makeText(ForumActivity.this, "Stock Markets", Toast.LENGTH_SHORT).show();
                             if(!selectedTags.contains("Stock Markets")){
                                 selectedTags.add("Stock Markets");
                             }
                             else{
                                 selectedTags.remove("Stock Markets");
                             }
-
-                        //capitalMarkets
                         break;
                     case R.id.tb_macro_economics:
-                            Toast.makeText(ForumActivity.this, "Macro-Economics", Toast.LENGTH_SHORT).show();
                             if(!selectedTags.contains("Macro-Economics")){
                                 selectedTags.add("Macro-Economics");
                             }
                             else{
                                 selectedTags.remove("Macro-Economics");
                             }
-
                         break;
                     case R.id.tb_business:
-                            Toast.makeText(ForumActivity.this, "Business", Toast.LENGTH_SHORT).show();
                             if(!selectedTags.contains("Business")){
                                 selectedTags.add("Business");
                             }

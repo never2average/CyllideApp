@@ -74,8 +74,8 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 		backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
                 startActivity(new Intent(QuestionAnswerActivity.this, ForumActivity.class));
+                finish();
             }
         });
 		RecyclerView.LayoutManager  tagsLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);

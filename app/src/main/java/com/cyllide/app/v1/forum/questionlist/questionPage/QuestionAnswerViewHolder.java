@@ -1,5 +1,6 @@
 package com.cyllide.app.v1.forum.questionlist.questionPage;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.util.ArrayMap;
 import android.util.Log;

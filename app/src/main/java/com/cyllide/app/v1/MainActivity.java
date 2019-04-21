@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Please click back again to exit", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
 
@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             if (!sharedPreferences2.getBoolean(
                     COMPLETED_TUTORIAL_PREF_NAME, false)) {
                 startActivity(new Intent(this, IntroActivity.class));
+                finish();
             }
         }
     }
@@ -114,14 +115,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                 if (grantResults.length > 0) {
                      AppConstants.cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                      AppConstants.readExternalStorage = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-
-
-
-
-
                 }
-
-
                 break;
         }
     }
@@ -142,15 +136,12 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         internetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
         internetAvailabilityChecker.addInternetConnectivityListener(this);
 
-
-
-
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            Log.d("Permissions","NOt granted");
+            Log.d("Permissions","Not granted");
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
                     Manifest.permission.CAMERA)) {
@@ -186,10 +177,9 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         internetAvailabilityChecker.addInternetConnectivityListener(this);
 
 
-
-
-
         final FloatingActionMenu fabMenu;
+
+
         fabMenu = findViewById(R.id.fabMenu);
         referrals=findViewById(R.id.referrals);
         feedback = findViewById(R.id.feedback);
@@ -197,7 +187,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
 
         fabMenu.setClosedOnTouchOutside(true);
-
 
 
         referrals.setOnClickListener(new View.OnClickListener()  {
@@ -228,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                 fabMenu.close(true);
                 Intent faqIntent=new Intent(MainActivity.this, FAQActivity.class);
                 startActivity(faqIntent);
+                finish();
             }
        });
 
@@ -238,6 +228,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                fabMenu.close(true);
                Intent feedbackIntent = new Intent(MainActivity.this,FeedbackActivity.class);
                startActivity(feedbackIntent);
+               finish();
            }
        });
 
@@ -257,8 +248,8 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this, NotificationActivity.class);
-
                 startActivity(intent);
+                fnish();
 
             }
         });
@@ -305,8 +296,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                 return true;
             }
             return false;
-
-
         }
 
 

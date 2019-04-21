@@ -128,8 +128,7 @@ public class HomeFragment extends Fragment {
                 } else {
                     Intent portfolioIntent = new Intent(getContext(), MyPortfolio.class);
                     startActivity(portfolioIntent);
-
-
+                    getActivity().finish();
                 }
             }
 
@@ -182,7 +181,8 @@ public class HomeFragment extends Fragment {
 //
 //                } else {
 //                    Intent intent = new Intent(getContext(), ForumActivity.class);
-//                    getContext().startActivity(intent);}
+//                    getContext().startActivity(intent);
+//              }
 //            }
             }
 

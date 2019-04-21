@@ -43,9 +43,7 @@
 
             <TextView
                 android:textSize="16dp"
-                android:text="156.82(+3.8%)"
                 android:gravity="center_vertical|right"
-                android:textColor="@color/stockupgreen"
                 android:id="@+id/stockValue"
                 android:layout_width="0dp"
                 android:layout_weight="1.5"
