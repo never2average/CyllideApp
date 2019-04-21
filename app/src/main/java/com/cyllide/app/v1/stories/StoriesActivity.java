@@ -70,6 +70,13 @@ public class StoriesActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed(){
+        Intent returnHome = new Intent(this,MainActivity.class);
+        startActivity(returnHome);
+        finish();
+    }
+
 
 }
 

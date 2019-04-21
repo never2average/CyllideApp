@@ -276,6 +276,13 @@ public class ForumActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed(){
+        Intent returnHome = new Intent(this,MainActivity.class);
+        startActivity(returnHome);
+        finish();
+    }
+
     private void applyFilter(String newQuery, List<QuestionListModel> questionList) {
         filterList = new ArrayList<>();
         for (QuestionListModel questionListModel : questionList) {

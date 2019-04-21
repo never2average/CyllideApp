@@ -308,6 +308,13 @@ public class QuizRulesActivity extends AppCompatActivity {
         requestQueue.add(questionRequest);
     }
 
+    @Override
+    public void onBackPressed(){
+        Intent returnHome = new Intent(this,MainActivity.class);
+        startActivity(returnHome);
+        finish();
+    }
+
 }
 
 

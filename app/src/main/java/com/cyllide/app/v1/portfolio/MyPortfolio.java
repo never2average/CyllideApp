@@ -72,13 +72,6 @@ public class MyPortfolio extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
         myPortfolioListRV.setHasFixedSize(true);
         myPortfolioListRV.setLayoutManager(new LinearLayoutManager(context));
         getPortfolioListVolley(myPortfolioListRV);
@@ -220,8 +213,13 @@ public class MyPortfolio extends AppCompatActivity {
             }
         };
         createPortfolioRequestQueue.add(createPortfolioStringRequest);
+    }
 
-
+    @Override
+    public void onBackPressed(){
+        Intent returnHome = new Intent(this,MainActivity.class);
+        startActivity(returnHome);
+        finish();
     }
 
 }

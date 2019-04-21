@@ -91,5 +91,11 @@ public class FeedbackActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    @Override
+    public void onBackPressed(){
+        Intent returnHome = new Intent(this,MainActivity.class);
+        startActivity(returnHome);
+        finish();
+    }
 
 }

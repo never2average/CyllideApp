@@ -180,4 +180,11 @@ public class MonthlyActivity extends AppCompatActivity implements PortfolioPicke
     public void onItemClick(PortfolioModel portfolio) {
         Log.e("MonthlyActivity", "portfolio "+ portfolio.getPortfolioName()+" was chosen");
     }
+
+    @Override
+    public void onBackPressed(){
+        Intent returnHome = new Intent(this,MainActivity.class);
+        startActivity(returnHome);
+        finish();
+    }
 }

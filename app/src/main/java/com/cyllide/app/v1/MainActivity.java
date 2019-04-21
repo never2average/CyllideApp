@@ -99,8 +99,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                     PreferenceManager.getDefaultSharedPreferences(this);
             if (!sharedPreferences2.getBoolean(
                     COMPLETED_TUTORIAL_PREF_NAME, false)) {
-                startActivity(new Intent(this, IntroActivity.class));
-                finish();
+                startActivity(new Intent(MainActivity.this, IntroActivity.class));
             }
         }
     }
@@ -249,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this, NotificationActivity.class);
                 startActivity(intent);
-                fnish();
+                finish();
 
             }
         });
