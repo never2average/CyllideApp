@@ -51,6 +51,7 @@
                     android:layout_below="@id/tv_notif_name"
                     />
             </LinearLayout>
+
             <ImageView
                 android:id="@+id/tick"
                 android:layout_width="0dp"

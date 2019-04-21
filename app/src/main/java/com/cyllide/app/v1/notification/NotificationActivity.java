@@ -119,4 +119,10 @@ public class NotificationActivity extends AppCompatActivity {
         notificationRequestQueue.add(notificationStringRequest);
 
     }
+    @Override
+    public void onBackPressed(){
+        Intent returnHome = new Intent(this,MainActivity.class);
+        startActivity(returnHome);
+        finish();
+    }
 }
