@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                     COMPLETED_TUTORIAL_PREF_NAME, false)) {
                 startActivity(new Intent(MainActivity.this, IntroActivity.class));
             }
+
         }
     }
 
@@ -199,20 +200,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
        help.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-                contentView = new RemoteViews(getPackageName(), R.layout.push_notification_layout);
-                contentView.setImageViewResource(R.id.image, R.mipmap.ic_launcher);
-                contentView.setTextViewText(R.id.title, "Hello!");
-                contentView.setTextViewText(R.id.text, "This is cyllide's first notification");
 
-                Notification.Builder mBuilder = new Notification.Builder(v.getContext())
-                        .setSmallIcon(R.drawable.arrow)
-                        .setContent(contentView);
-
-                Notification notification = mBuilder.build();
-                notification.flags |= Notification.FLAG_AUTO_CANCEL;
-                notification.defaults |= Notification.DEFAULT_SOUND;
-                notification.defaults |= Notification.DEFAULT_VIBRATE;
-                notificationManager.notify(1, notification);
                 fabMenu.close(true);
                 Intent faqIntent=new Intent(MainActivity.this, FAQActivity.class);
                 startActivity(faqIntent);
