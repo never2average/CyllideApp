@@ -65,7 +65,7 @@ public class PhoneAuth extends AppCompatActivity {
                 input_phoneNo = String.valueOf(phone.getText());
                 input_scName = String.valueOf(sc_name.getText());
 
-                boolean isPhoneValid = checkValid(input_phoneNo);
+                boolean isPhoneValid = checkPhoneNumberValidity(input_phoneNo);
                 if(isPhoneValid){
                     final Map<String, String> mHeaders = new ArrayMap<String, String>();
                     mHeaders.put("phone", input_phoneNo);
@@ -132,6 +132,16 @@ public class PhoneAuth extends AppCompatActivity {
     }
 
     void checkUsernameValidity(String username) {
+        int l = username.length();
+        for(int i = 0; i<l;i++){
+            char c = username.charAt(i);
+            if( c>='A' && c<='Z' || c>='a' && c<='z' || c>='0' && c<='9'){
+                continue;
+            }
+            sc_name.setError("Username must be alpha numeric");
+            return;
+        }
+
         validityMap.put("phone",phone.getText().toString());
         validityMap.put("username",username);
         validityQueue = Volley.newRequestQueue(PhoneAuth.this);
@@ -162,7 +172,7 @@ public class PhoneAuth extends AppCompatActivity {
         validityQueue.add(validityRequest);
     }
 
-    public boolean checkValid(String s)
+    public boolean checkPhoneNumberValidity(String s)
     {
         if(s.length()!=10 && s.length() != 13)
         {
