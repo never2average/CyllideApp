@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    tools:context="com.cyllide.app.v1.authentication.OTPVerification">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/phone_auth_drawable"
+        android:scaleType = "centerCrop"/>
+
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+
+        <ImageView
+            android:layout_margin="@dimen/margin"
+            android:src="@drawable/icon_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center_horizontal" />
+
+        <LinearLayout
+            android:id="@+id/referral_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fab_size_mini"
+            android:orientation="vertical">
+            <TextView
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:padding="16dp"
+                android:text="Referral Code"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/activity_otpverification_referral_input"
+                android:minWidth="110dp"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:hint="(Optional)"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:padding="16dp"
+            android:text="OTP Verification"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please enter the verification code sent to your phone number"
+        android:textAlignment="center"
+        android:textColor="@android:color/white" />
+
+    <com.mukesh.OtpView
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:id="@+id/otp_view"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="@dimen/margin"
+        android:inputType="number"
+        android:textColor="@android:color/white"
+        app:itemCount="6"
+        app:itemSpacing="6dp"
+        app:state_filled="true"
+        app:viewType="line" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/validate_otp_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:text="VERIFY"
+        android:textSize="15sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:backgroundTint="@android:color/white"
+        android:layout_marginHorizontal="@dimen/margin"
+        app:cornerRadius="25dp"
+        />
+
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

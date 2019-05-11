@@ -22,7 +22,11 @@
         android:roundIcon="@drawable/app_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".charts.ChartActivityIndex"></activity>
+        <activity android:name=".authentication.UsernameActivity">
+
+
+        </activity>
+        <activity android:name=".charts.ChartActivityIndex" />
         <activity android:name=".intro.IntroActivity" />
         <activity android:name=".FeedbackActivity" />
         <activity
@@ -32,7 +36,7 @@
         <activity
             android:name=".contests.MonthlyActivity"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".authentication.OTPVerification"
             android:screenOrientation="portrait" />
@@ -44,11 +48,13 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".forum.ForumActivity"

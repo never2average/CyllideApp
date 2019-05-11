@@ -4,5 +4,6 @@
     <string name="Portfolio_Position_title">POSITIONS</string>
     <string name="apiBaseURL">https://api.cyllide.com/api/client/</string>
     <string name="dataApiBaseURL">https://data.cyllide.com/data/</string>
+    <string name="currentTimeApiURL">https://worldtimeapi.org/api/timezone/Asia/Kolkata</string>
     <!--<string name="defaultNoProfilePic">https://firebasestorage.googleapis.com/v0/b/cyllide.appspot.com/o/defaultuser.png?alt=media&token=0453d4ba-82e8-4b6c-8415-2c3761d8b345</string>-->
 </resources>
