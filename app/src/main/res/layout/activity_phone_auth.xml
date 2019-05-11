@@ -72,7 +72,7 @@
         android:textSize="15sp"
         android:textColor="@color/colorPrimaryDark"
         android:backgroundTint="@android:color/white"
-        android:text="SEND OTP"/>
+        android:text="VERIFY"/>
     </LinearLayout>
 
 </RelativeLayout>

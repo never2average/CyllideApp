@@ -15,33 +15,34 @@
     <LinearLayout
         android:orientation="vertical"
         android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="90dp"
+        android:layout_marginHorizontal="@dimen/margin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
         <TextView
+            android:layout_marginBottom="@dimen/suggestion_body_text_size"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textAlignment="center"
-            android:textSize="@dimen/otp_view_item_size"
+            android:textSize="@dimen/fab_size_mini"
             android:text="Welcome to Cyllide"/>
 
-        <ImageView
-            android:src="@drawable/icon_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_marginBottom="20dp"
-            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_marginVertical="@dimen/suggestion_body_text_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="@dimen/suggestion_body_text_size"
+            android:text="What should we call you?"/>
 
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginVertical="@dimen/margin">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_scName"
                 android:layout_width="match_parent"
@@ -50,7 +51,8 @@
                 android:textColorHint="@color/colorPrimaryDark"
                 android:backgroundTint="@android:color/white"
                 android:inputType="text"
-                android:hint="Username" />
+                android:hint="My Name"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -64,7 +66,7 @@
             android:textSize="15sp"
             android:textColor="@color/colorPrimaryDark"
             android:backgroundTint="@android:color/white"
-            android:text="SEND OTP"/>
+            android:text="PROCEED"/>
     </LinearLayout>
 
 </RelativeLayout>
