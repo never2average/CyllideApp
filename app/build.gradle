@@ -36,7 +36,13 @@ android {
 }
 
 repositories {
-    maven { url 'https://jitpack.io' }
+    maven { url 'https://jitpack.io'
+
+    }
+
+    maven {
+        url 'http://dl.bintray.com/amulyakhare/maven'
+    }
 }
 
 dependencies {
@@ -62,6 +68,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.firebase:firebase-core:16.0.8'
     implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     implementation 'com.google.android.gms:play-services-base:16.1.0'
     implementation 'com.facebook.network.connectionclass:connectionclass:1.0.1'
     implementation 'com.google.android.gms:play-services-identity:16.0.0'
