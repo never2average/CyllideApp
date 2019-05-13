@@ -72,7 +72,7 @@
             android:name=".forum.questionlist.questionPage.QuestionAnswerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".stories.StoriesActivity"
+            android:name=".stories.StoriesMainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".quiz.QuizActivity"
@@ -97,12 +97,9 @@
         <activity
             android:name=".PasswordChangeActivity"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".stories.StoryPageActivity"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".stories.NewsPageActivity"
+            android:name=".stories.StoriesPageActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity

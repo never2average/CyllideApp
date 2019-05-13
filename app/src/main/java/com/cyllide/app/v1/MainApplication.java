@@ -4,7 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.cyllide.app.v1.forum.questionlist.QuestionListUpdateWorker;
-import com.cyllide.app.v1.stories.NewsUpdateWorker;
+
 
 import java.util.concurrent.TimeUnit;
 

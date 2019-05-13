@@ -5,5 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:contextClickable="true"
-    tools:context="stories.NewsFragment"
+    tools:context=".stories.StoriesFragment"
     tools:ignore="UnusedAttribute" />

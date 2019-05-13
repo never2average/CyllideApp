@@ -23,7 +23,7 @@ import com.cyllide.app.v1.contests.MonthlyActivity;
 import com.cyllide.app.v1.portfolio.MyPortfolio;
 import com.cyllide.app.v1.forum.ForumActivity;
 import com.cyllide.app.v1.quiz.QuizRulesActivity;
-import com.cyllide.app.v1.stories.StoriesActivity;
+import com.cyllide.app.v1.stories.StoriesMainActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
 import com.google.android.material.card.MaterialCardView;
@@ -32,7 +32,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
-import android.widget.Toast;
 
 public class HomeFragment extends Fragment {
     Calendar startTime = Calendar.getInstance();
@@ -79,7 +78,7 @@ public class HomeFragment extends Fragment {
         stories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), StoriesActivity.class);
+                Intent intent = new Intent(getContext(), StoriesMainActivity.class);
                 getContext().startActivity(intent);
                 getActivity().finish();
             }

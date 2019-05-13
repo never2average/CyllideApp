@@ -7,70 +7,123 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.cyllide.app.v1.AppConstants;
+import com.cyllide.app.v1.MainApplication;
 import com.cyllide.app.v1.R;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.collection.ArrayMap;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
-import static android.content.ContentValues.TAG;
 
 
 public class StoriesFragment extends Fragment {
-    private RecyclerView storiesRV;
 
-    String storiesTitle[]={"News1","News2","News3"};
-    String storiesThumbnailSource[]={"https://www.desktopbackground.org/download/1366x768/2014/08/21/812557_civil-engineering-wallpapers_1600x1200_h.jpg","https://www.desktopbackground.org/download/1366x768/2014/08/21/812557_civil-engineering-wallpapers_1600x1200_h.jpg","https://www.desktopbackground.org/download/1366x768/2014/08/21/812557_civil-engineering-wallpapers_1600x1200_h.jpg"};
-    String storiesDescription[]={"General Description shown in the other activity","General Description shown in the other activity","General Description shown in the other activity"};
-    private List<StoriesModel> dummyData() {
-        List<StoriesModel> data = new ArrayList<>(12);
-        for (int i = 0; i < 3; i++) {
-//            data.add(new StoriesModel(storiesTitle[i],storiesThumbnailSource[i],storiesDescription[i],"","",""));
-        }//data is the list of objects to be set in the list item
-        return data;
+    private RecyclerView newsRV;
+    RequestQueue storiesQueue;
+
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_stories, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        storiesRV = view.findViewById(R.id.fragment_stories_rv);
+        View view = inflater.inflate(R.layout.fragment_news, container, false);
         final Context context = getContext();
-        SnapHelper snapHelper = new PagerSnapHelper();
+        newsRV = view.findViewById(R.id.fragment_news_rv);
+        newsRV.setHasFixedSize(true);
+        newsRV.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        fetchStories();
+        return view;
 
-
-
-        storiesRV.setHasFixedSize(true);
-        storiesRV.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-        snapHelper.attachToRecyclerView(storiesRV);
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        final Activity activity = getActivity();
-            final Context context = getContext();
-            Fresco.initialize(context);
-            List<StoriesModel> storiesPart = dummyData();
-        if (activity != null) {
-            final StoriesAdapter mAdapter = new StoriesAdapter(storiesPart);
-            storiesRV.setAdapter(mAdapter);
-        } else {
-            Log.e(TAG, "getActivity() returned null in onStart()");
-        }
+
+    public void fetchStories()
+    {
+        final Map<String, String> mHeaders = new ArrayMap<String, String>();
+        mHeaders.put("token", AppConstants.token);
+        final String newsURL = getResources().getString(R.string.apiBaseURL)+"stories/view";
+        storiesQueue = Volley.newRequestQueue(getContext());
+        StringRequest request = new StringRequest(Request.Method.POST, newsURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Stories", response);
+                try {
+                List<StoriesModel> storiesModelArrayList = new ArrayList<>();
+                JSONArray storiesJSONArray = new JSONObject(response).getJSONArray("data");
+                for(int i =0; i<storiesJSONArray.length();i++) {
+
+                        storiesModelArrayList.add(new StoriesModel(
+                                storiesJSONArray.getJSONObject(i).getJSONObject("_id").getString("$oid"),
+                                storiesJSONArray.getJSONObject(i).getString("contentTitle"),
+                                storiesJSONArray.getJSONObject(i).getString("contentPic"),
+                                storiesJSONArray.getJSONObject(i).getString("contentSummary"),
+                                storiesJSONArray.getJSONObject(i).getString("contentAuthor"),
+                                storiesJSONArray.getJSONObject(i).getString("contentType"),
+                                storiesJSONArray.getJSONObject(i).getString("contentMarkdownLink")
+                        ));
+
+                    }
+                    StoriesAdapter storiesAdapter = new StoriesAdapter(storiesModelArrayList);
+                    newsRV.setAdapter(storiesAdapter);
+
+                }
+                catch (JSONException e) {
+                    Log.d("NewsFragment",e.toString());
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Stories Error", error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                return mHeaders;
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                int mStatusCode = response.statusCode;
+                Log.d("whats failing", String.valueOf(mStatusCode));
+                return super.parseNetworkResponse(response);
+            }
+        };
+        storiesQueue.add(request);
+
     }
 }

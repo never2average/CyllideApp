@@ -21,7 +21,7 @@ import com.cyllide.app.v1.R;
 
 import java.util.Map;
 
-public class NewsPageActivity extends AppCompatActivity {
+public class StoriesPageActivity extends AppCompatActivity {
     private String url;
     private WebView mWebview;
     ImageView imageView;
@@ -50,7 +50,7 @@ public class NewsPageActivity extends AppCompatActivity {
                 endTime=0l;
                 startTime=0l;
                 Log.d("StoriesPageActivity",AppConstants.timeSpentOnStories.toString());
-                timeSpentRequestQueue = Volley.newRequestQueue(NewsPageActivity.this);
+                timeSpentRequestQueue = Volley.newRequestQueue(StoriesPageActivity.this);
                 timeSpentArrayMap.put("token", AppConstants.token);
                 timeSpentArrayMap.put("timeRead",Long.toString(AppConstants.timeSpentOnStories/1000));
                 timeSpentArrayMap.put("contentID",mongoID);
@@ -60,7 +60,7 @@ public class NewsPageActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.d("NewsPageActivity",response);
-                        Intent intent = new Intent(NewsPageActivity.this,StoriesActivity.class);
+                        Intent intent = new Intent(StoriesPageActivity.this, StoriesMainActivity.class);
                         startActivity(intent);
                         finish();
 
@@ -69,7 +69,7 @@ public class NewsPageActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("NewsPageActivity?", error.toString());
-                        Intent intent = new Intent(NewsPageActivity.this,StoriesActivity.class);
+                        Intent intent = new Intent(StoriesPageActivity.this, StoriesMainActivity.class);
                         startActivity(intent);
                         finish();
                     }

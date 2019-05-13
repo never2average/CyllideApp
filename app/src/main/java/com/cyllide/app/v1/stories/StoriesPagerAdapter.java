@@ -22,16 +22,8 @@ public class StoriesPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        switch (position) {
-            case 0:
-                NewsFragment newsFragment = new NewsFragment();
-                return newsFragment;
-            case 1:
-                StoriesFragment storiesFragment = new StoriesFragment();
-                return storiesFragment;
-            default:
-                return null;
-        }
+        StoriesFragment storiesFragment = new StoriesFragment();
+        return storiesFragment;
     }
 
     @Override

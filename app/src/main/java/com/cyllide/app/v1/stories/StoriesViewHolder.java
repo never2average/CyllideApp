@@ -40,7 +40,7 @@ public class StoriesViewHolder extends RecyclerView.ViewHolder {
         storiesLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(itemView.getContext(),NewsPageActivity.class);
+                Intent intent = new Intent(itemView.getContext(), StoriesPageActivity.class);
                 intent.putExtra("url",stories.getContentMarkdownLink());
                 intent.putExtra("mongoID",stories.getMongoID());
                 itemView.getContext().startActivity(intent);
