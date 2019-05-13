@@ -29,10 +29,9 @@ import java.util.Map;
 public class PhoneAuth extends AppCompatActivity {
 
     MaterialButton materialButton;
-    TextInputEditText phone, sc_name;
+    TextInputEditText phone;
     String input_scName, input_phoneNo;
-    RequestQueue validityQueue;
-    Map<String,String> validityMap = new ArrayMap<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,40 +39,21 @@ public class PhoneAuth extends AppCompatActivity {
         setContentView(R.layout.activity_phone_auth);
         materialButton = findViewById(R.id.btn_send_otp);
         phone = findViewById(R.id.input_phoneNo);
-        sc_name = findViewById(R.id.input_scName);
 
-        sc_name.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checkUsernameValidity(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
         materialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 input_phoneNo = String.valueOf(phone.getText());
-                input_scName = String.valueOf(sc_name.getText());
 
                 boolean isPhoneValid = checkPhoneNumberValidity(input_phoneNo);
                 if(isPhoneValid){
                     final Map<String, String> mHeaders = new ArrayMap<String, String>();
                     mHeaders.put("phone", input_phoneNo);
-                    mHeaders.put("username", input_scName);
                     try {
                         RequestQueue requestQueue;
                         requestQueue = Volley.newRequestQueue(getBaseContext());
-                        String URL = getResources().getString(R.string.apiBaseURL)+"auth/otp/send";
+                        String URL = getResources().getString(R.string.apiBaseURL)+"auth/otp/send/existing";
                         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
 
                             @Override
@@ -84,7 +64,7 @@ public class PhoneAuth extends AppCompatActivity {
                                     JSONObject jsonObject = new JSONObject(response);
                                     String success = jsonObject.getString("message");
                                     if(success.equals("MessageSendingSuccessful")){
-                                        firstUser = jsonObject.getBoolean("firstTimeUser");
+                                        firstUser = false;
                                         Toast.makeText(PhoneAuth.this,"Message Sending Successful",Toast.LENGTH_LONG).show();
                                         Intent intent = new Intent(PhoneAuth.this,OTPVerification.class);
                                         intent.putExtra("phone",input_phoneNo);
@@ -93,9 +73,11 @@ public class PhoneAuth extends AppCompatActivity {
                                         finish();
                                     }
                                     else{
-                                        if(jsonObject.getString("message").equals("InvalidUsername")){
-                                            Toast.makeText(PhoneAuth.this,"The username entered does not match the one registered with the phone number",Toast.LENGTH_LONG).show();
-                                        }
+                                        if(jsonObject.getString("message").equals("NewUser")){
+                                            Intent intent = new Intent(PhoneAuth.this,UsernameActivity.class);
+                                            intent.putExtra("phone",input_phoneNo);
+                                            startActivity(intent);
+                                            finish();                                        }
                                         else{
                                             Toast.makeText(PhoneAuth.this,"Message Sending Failed",Toast.LENGTH_LONG).show();
                                         }
@@ -131,46 +113,6 @@ public class PhoneAuth extends AppCompatActivity {
         });
     }
 
-    void checkUsernameValidity(String username) {
-        int l = username.length();
-        for(int i = 0; i<l;i++){
-            char c = username.charAt(i);
-            if( c>='A' && c<='Z' || c>='a' && c<='z' || c>='0' && c<='9'){
-                continue;
-            }
-            sc_name.setError("Username must be alpha numeric");
-            return;
-        }
-
-        validityMap.put("phone",phone.getText().toString());
-        validityMap.put("username",username);
-        validityQueue = Volley.newRequestQueue(PhoneAuth.this);
-        String url = getResources().getString(R.string.apiBaseURL)+"username/validity";
-        StringRequest validityRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    String status = new JSONObject(response).getString("status");
-                    if(status.equals("taken")){
-                        sc_name.setError("username already taken");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
-            @Override
-            public Map<String,String> getHeaders(){
-                return validityMap;
-            }
-        };
-        validityQueue.add(validityRequest);
-    }
 
     public boolean checkPhoneNumberValidity(String s)
     {

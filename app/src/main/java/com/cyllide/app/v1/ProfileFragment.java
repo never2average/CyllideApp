@@ -87,6 +87,7 @@ public class ProfileFragment extends Fragment {
     AnimatedPieView contestWinPerc;
     byte[] data;
     Uri bitmapUri;
+    String url;
 
 
 
@@ -192,22 +193,25 @@ public class ProfileFragment extends Fragment {
 
 
 
+
     }
 
     private void getProfilePicVolley() {
-        String url = getResources().getString(R.string.apiBaseURL)+"profilepic";
+        final String[] url = {getResources().getString(R.string.apiBaseURL) + "profilepic"};
         getPicQueue = Volley.newRequestQueue(getContext());
         downloadPicUriMap.put("token", AppConstants.token);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url[0], new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String uri = jsonObject.getJSONArray("data").getJSONObject(0).getString("profilePic");
+                    url[0] = uri;
                     SharedPreferences.Editor editor=sharedPreferences.edit();
                     editor.putString("profileUri",uri);
                     editor.commit();
-
+                    Log.d("ProfileFragment", uri);
+                    Log.d("ProfileFragment",AppConstants.noProfilePicURL);
                     if(uri.equals(Uri.parse(AppConstants.noProfilePicURL))){
                         ColorGenerator generator = ColorGenerator.MATERIAL;
                         Log.d("ProfileFragment","inside if");
@@ -259,9 +263,24 @@ public class ProfileFragment extends Fragment {
 
             targetUri = data.getData();
 
-            RequestOptions requestOptions = new RequestOptions().override(100);
+            if(targetUri.equals(Uri.parse(AppConstants.noProfilePicURL))){
+                ColorGenerator generator = ColorGenerator.MATERIAL;
+                Log.d("ProfileFragment","inside if");
+                int color = generator.getColor(username.getText().toString());
+                TextDrawable drawable = TextDrawable.builder()
+                        .beginConfig()
+                        .width(60)  // width in px
+                        .height(60) // height in px
+                        .endConfig()
+                        .buildRect(Character.toString(username.getText().toString().charAt(0)).toUpperCase(), color);
 
-            Glide.with(getContext()).load(targetUri).apply(requestOptions).into(profilePic);
+                profilePic.setImageDrawable(drawable);
+
+            }
+            else {
+                RequestOptions requestOptions = new RequestOptions().override(100);
+                Glide.with(getContext()).load(targetUri).apply(requestOptions).into(profilePic);
+            }
             uploadImage(getContext());
             Log.e("ProfilePicSet","inside on activity result");
             Toast.makeText(getContext(),"onActivityResult",Toast.LENGTH_LONG).show();

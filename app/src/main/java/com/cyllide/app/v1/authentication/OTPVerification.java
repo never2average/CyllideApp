@@ -36,23 +36,19 @@ public class OTPVerification extends AppCompatActivity {
     boolean firstuser;
     MaterialButton verifyBtn;
     RequestQueue requestQueue;
-    LinearLayout referralLayout;
     String phoneNo,enteredOTP;
-    EditText referralCode;
+    String referralCode;
     Map<String,String> verificationMap = new ArrayMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         phoneNo = getIntent().getStringExtra("phone");
+        referralCode = getIntent().getStringExtra("referralcode");
         firstuser = getIntent().getBooleanExtra("firstuser",false);
         setContentView(R.layout.activity_otpverification);
         verifyBtn = findViewById(R.id.validate_otp_button);
-        referralLayout = findViewById(R.id.referral_layout);
-        referralCode = findViewById(R.id.activity_otpverification_referral_input);
-        if(!firstuser){
-            referralLayout.setVisibility(View.GONE);
-        }
+
         otpView = findViewById(R.id.otp_view);
         otpView.requestFocus();
 
@@ -74,8 +70,7 @@ public class OTPVerification extends AppCompatActivity {
         verificationMap.put("phone",phoneNo);
         verificationMap.put("otp",enteredOTP);
         if(firstuser){
-            String referralCodeString = referralCode.getText().toString();
-            verificationMap.put("referral",referralCodeString);
+            verificationMap.put("referral",referralCode);
         }
 
         requestQueue = Volley.newRequestQueue(OTPVerification.this);
