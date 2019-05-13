@@ -33,7 +33,7 @@ public class StoriesFragment extends Fragment {
     private List<StoriesModel> dummyData() {
         List<StoriesModel> data = new ArrayList<>(12);
         for (int i = 0; i < 3; i++) {
-            data.add(new StoriesModel(storiesTitle[i],storiesThumbnailSource[i],storiesDescription[i],"","",""));
+//            data.add(new StoriesModel(storiesTitle[i],storiesThumbnailSource[i],storiesDescription[i],"","",""));
         }//data is the list of objects to be set in the list item
         return data;
     }

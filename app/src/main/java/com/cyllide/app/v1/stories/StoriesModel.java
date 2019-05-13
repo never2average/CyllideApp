@@ -2,6 +2,15 @@ package com.cyllide.app.v1.stories;
 
 public class StoriesModel {
     private String storyName,storyDescription,storyImageURL, contentAuthor,contentType, contentMarkdownLink;
+    public String mongoID;
+
+    public String getMongoID() {
+        return mongoID;
+    }
+
+    public void setMongoID(String mongoID) {
+        this.mongoID = mongoID;
+    }
 
     public String getContentAuthor() {
         return contentAuthor;
@@ -27,7 +36,7 @@ public class StoriesModel {
         this.contentMarkdownLink = contentMarkdownLink;
     }
 
-    public StoriesModel(String storyName, String storyImageURL,
+    public StoriesModel(String mongoID, String storyName, String storyImageURL,
                         String storyDescription, String contentAuthor, String contentType, String contentMarkdownLink)
     {
         this.storyDescription=storyDescription;
@@ -36,6 +45,7 @@ public class StoriesModel {
         this.contentAuthor = contentAuthor;
         this.contentType = contentType;
         this.contentMarkdownLink = contentMarkdownLink;
+        this.mongoID = mongoID;
 
     }
 

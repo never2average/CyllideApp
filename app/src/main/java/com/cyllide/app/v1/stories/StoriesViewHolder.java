@@ -42,7 +42,9 @@ public class StoriesViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View view) {
                 Intent intent = new Intent(itemView.getContext(),NewsPageActivity.class);
                 intent.putExtra("url",stories.getContentMarkdownLink());
+                intent.putExtra("mongoID",stories.getMongoID());
                 itemView.getContext().startActivity(intent);
+
 
             }
         });

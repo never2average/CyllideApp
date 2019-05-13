@@ -120,6 +120,7 @@ public class NewsFragment extends Fragment {
                 for(int i =0; i<storiesJSONArray.length();i++) {
 
                         storiesModelArrayList.add(new StoriesModel(
+                                storiesJSONArray.getJSONObject(i).getJSONObject("_id").getString("$oid"),
                                 storiesJSONArray.getJSONObject(i).getString("contentTitle"),
                                 storiesJSONArray.getJSONObject(i).getString("contentPic"),
                                 storiesJSONArray.getJSONObject(i).getString("contentSummary"),

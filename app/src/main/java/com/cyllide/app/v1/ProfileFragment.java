@@ -210,9 +210,11 @@ public class ProfileFragment extends Fragment {
                     SharedPreferences.Editor editor=sharedPreferences.edit();
                     editor.putString("profileUri",uri);
                     editor.commit();
+
+                    Log.d("ProfileFragment","Inside get profile pic");
                     Log.d("ProfileFragment", uri);
                     Log.d("ProfileFragment",AppConstants.noProfilePicURL);
-                    if(uri.equals(Uri.parse(AppConstants.noProfilePicURL))){
+                    if(uri.equals(AppConstants.noProfilePicURL)){
                         ColorGenerator generator = ColorGenerator.MATERIAL;
                         Log.d("ProfileFragment","inside if");
                         int color = generator.getColor(username.getText().toString());
@@ -419,11 +421,17 @@ public class ProfileFragment extends Fragment {
 
                     if(sharedPreferences.getString("profileUri",null)==null)
                     {
+                        Log.d("ProfileFragment","null, getting profile pic volley");
                         getProfilePicVolley();
                     }else{
                         String ur=sharedPreferences.getString("profileUri",null);
                         Uri uri=Uri.parse(ur);
                         Log.d("imageuri",ur);
+                        Log.d("ProfileFragment","URI exists, checking condition");
+
+                        Log.d("ProfileFragment",uri.toString());
+
+                        Log.d("ProfileFragment",AppConstants.noProfilePicURL);
                         if(uri.equals(Uri.parse(AppConstants.noProfilePicURL))){
                             ColorGenerator generator = ColorGenerator.MATERIAL;
                             Log.d("ProfileFragment","inside if");
@@ -439,6 +447,8 @@ public class ProfileFragment extends Fragment {
 
                         }
                         else {
+
+                            Log.d("ProfileFragment","setting default pic from profile info");
                             RequestOptions requestOptions = new RequestOptions().override(100);
                             Glide.with(getContext()).load(uri).apply(requestOptions).into(profilePic);
                         }

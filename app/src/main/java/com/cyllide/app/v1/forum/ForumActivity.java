@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +61,7 @@ public class ForumActivity extends AppCompatActivity {
     ImageView backButton;
     ArrayList<String> selectedTags;
     JSONArray responseData;
+    LinearLayout loadingLayout;
     MaterialCardView askAQuestionCV;
     TextView askAQuestionTV;
     boolean flag;
@@ -93,6 +95,8 @@ public class ForumActivity extends AppCompatActivity {
         questionListAdapter = new QuestionListAdapter(questionList);
         filterList = questionList;
         forumRV.setAdapter(questionListAdapter);
+        loadingLayout.setVisibility(View.INVISIBLE);
+        forumRV.setVisibility(View.VISIBLE);
     }
 
     public void sortByNewest() {
@@ -128,10 +132,12 @@ public class ForumActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forum);
+        loadingLayout = findViewById(R.id.activity_forum_loading_layout);
         backButton = findViewById(R.id.activity_forum_back_button);
         askQuestion = findViewById(R.id.ask_question);
         forumRV = findViewById(R.id.topquesrecycler);
         forumRV.setLayoutManager(new LinearLayoutManager(this));
+
         selectedTags = new ArrayList<String>();
         askAQuestionTV = findViewById(R.id.answer_question_tv);
         askAQuestionCV = findViewById(R.id.answer_question);

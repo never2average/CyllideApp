@@ -45,6 +45,7 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         sourceTv.setText(source);
         descTv.setText(description);
         intent.putExtra("newsurl",url);
+        intent.putExtra("mongoID",news.getMongoID());
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

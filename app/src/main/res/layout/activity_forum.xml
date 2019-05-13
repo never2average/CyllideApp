@@ -168,12 +168,42 @@
             </LinearLayout>
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/topquesrecycler"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:overScrollMode="never"/>
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:visibility="invisible"
+                android:id="@+id/topquesrecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:overScrollMode="never"/>
+
+
+            <LinearLayout
+                android:id="@+id/activity_forum_loading_layout"
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+                <pl.droidsonroids.gif.GifImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/web_view_loading" />
+                <TextView
+                    android:layout_marginStart="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Loading..."/>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
     </LinearLayout>
 
 
