@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -98,7 +100,23 @@ public class ProfileActivity extends AppCompatActivity {
                     contestWinPerc.applyConfig (config);
                     contestWinPerc.start();
                     RequestOptions cropOptions = new RequestOptions().override(100,100);
-                    Glide.with(ProfileActivity.this).load(jsonResponse.getString("profilePic")).apply(cropOptions).into(profilePic);
+                    String profilePicURL = jsonResponse.getString("profilePic");
+                    if(profilePicURL.equals(AppConstants.noProfilePicURL)){
+                        ColorGenerator generator = ColorGenerator.MATERIAL;
+                        Log.d("ProfileFragment","inside if");
+                        int color = generator.getColor(username.getText().toString());
+                        TextDrawable drawable = TextDrawable.builder()
+                                .beginConfig()
+                                .width(60)  // width in px
+                                .height(60) // height in px
+                                .endConfig()
+                                .buildRect(Character.toString(username.getText().toString().charAt(0)).toUpperCase(), color);
+
+                        profilePic.setImageDrawable(drawable);
+                    }
+                    else {
+                        Glide.with(ProfileActivity.this).load(jsonResponse.getString("profilePic")).apply(cropOptions).into(profilePic);
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();

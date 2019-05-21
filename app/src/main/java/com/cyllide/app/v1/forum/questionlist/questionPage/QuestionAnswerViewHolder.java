@@ -9,6 +9,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,6 +31,7 @@ import java.util.Date;
 import java.util.Map;
 
 import androidx.recyclerview.widget.RecyclerView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 
@@ -37,7 +40,7 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 	ImageButton upVoteButton, downVoteButton;
 	private String answer, answeredBy;
 	long answeredOn;
-	ImageView answerProfilePic;
+	CircleImageView answerProfilePic;
 	Map<String, String> requestHeader = new ArrayMap<String, String>();
 	View view;
 
@@ -68,8 +71,23 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 		answerTV.setText(answer);
 		upVoteCount.setText(Integer.toString(answers.getAnswerUpVotes()));
 
-		Glide.with(itemView.getContext()).load(answers.getProfileURL()).into(answerProfilePic);
+		if(answers.getProfileURL().equals(AppConstants.noProfilePicURL)){
+			ColorGenerator generator = ColorGenerator.MATERIAL;
+			Log.d("ProfileFragment","inside if");
+			int color = generator.getColor(answeredBy);
+			TextDrawable drawable = TextDrawable.builder()
+					.beginConfig()
+					.width(60)  // width in px
+					.height(60) // height in px
+					.endConfig()
+					.buildRect(Character.toString(answeredBy.charAt(0)).toUpperCase(), color);
 
+			answerProfilePic.setImageDrawable(drawable);
+		}
+		else {
+
+			Glide.with(itemView.getContext()).load(answers.getProfileURL()).into(answerProfilePic);
+		}
 		upVoteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
