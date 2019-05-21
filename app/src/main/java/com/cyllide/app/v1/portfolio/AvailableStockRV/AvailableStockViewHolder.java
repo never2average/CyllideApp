@@ -170,7 +170,7 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
 
     void getSingleValue(String ticker, Context context){
         requestQueue = Volley.newRequestQueue(context);
-        String url = itemView.getResources().getString(R.string.dataApiBaseURL) + "stock/close";
+        String url = itemView.getResources().getString(R.string.dataApiBaseURL) + "stocks/close";
         stringMap.put("value","1231D123");
         stringMap.put("ticker","123"+ticker+"123");
         stringMap.put("singleVal","True");

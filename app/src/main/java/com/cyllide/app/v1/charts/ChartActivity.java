@@ -90,9 +90,9 @@ public class ChartActivity extends AppCompatActivity {
         balanceLiabilities = findViewById(R.id.balance_total_liabilities);
         balanceNetTangibleAssets = findViewById(R.id.balance_net_tangible_assets);
 
-        String summaryRequestEndPoint = getResources().getString(R.string.dataApiBaseURL)+"stock/summary";
-        String incomeSheetRequestEndPoint = getResources().getString(R.string.dataApiBaseURL)+"stock/income";
-        String balanceSheetRequestEndPoint = getResources().getString(R.string.dataApiBaseURL)+"stock/balance";
+        String summaryRequestEndPoint = getResources().getString(R.string.dataApiBaseURL)+"stocks/summary";
+        String incomeSheetRequestEndPoint = getResources().getString(R.string.dataApiBaseURL)+"stocks/income";
+        String balanceSheetRequestEndPoint = getResources().getString(R.string.dataApiBaseURL)+"stocks/balance";
 
 
         summaryRequestHeaders.put("ticker",ticker.toUpperCase());
@@ -273,7 +273,7 @@ public class ChartActivity extends AppCompatActivity {
 
     void getSingleValue(String ticker, Context context){
         requestQueue = Volley.newRequestQueue(context);
-        String url = getResources().getString(R.string.dataApiBaseURL)+"stock/close";
+        String url = getResources().getString(R.string.dataApiBaseURL)+"stocks/close";
         stringMap.put("value","1231D123");
         stringMap.put("ticker","123"+ticker+"123");
         stringMap.put("singleVal","True");

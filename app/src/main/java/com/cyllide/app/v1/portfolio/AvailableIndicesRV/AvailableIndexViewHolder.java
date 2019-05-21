@@ -84,7 +84,7 @@ public class AvailableIndexViewHolder extends RecyclerView.ViewHolder {
     Map<String,String> requestHeaders = new ArrayMap<String,String>();
     private void setIndexValue(final TextView indexValNet) {
         indexRequestQueue = Volley.newRequestQueue(indexValNet.getContext());
-        String requestEndpoint = indexValNet.getContext().getResources().getString(R.string.dataApiBaseURL)+ "stock/close";
+        String requestEndpoint = indexValNet.getContext().getResources().getString(R.string.dataApiBaseURL)+ "stocks/close";
         requestHeaders.put("value","1231D123");
         requestHeaders.put("ticker","123"+indexName.getText()+"123");
         requestHeaders.put("singleVal","True");

@@ -107,7 +107,7 @@ public class AvailableStocksFragment extends Fragment {
     }
 
     private void getStockList() {
-        String url = getResources().getString(R.string.dataApiBaseURL)+"stock/list";
+        String url = getResources().getString(R.string.dataApiBaseURL)+"stocks/list";
         stockListRequestQueue = Volley.newRequestQueue(getContext());
         stockListHeader.put("indexType", AppConstants.capex);
         StringRequest stockListStringRequest = new StringRequest(Request.Method.GET,url,  new Response.Listener<String>() {

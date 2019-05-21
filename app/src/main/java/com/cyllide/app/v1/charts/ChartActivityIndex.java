@@ -74,7 +74,7 @@ public class ChartActivityIndex extends AppCompatActivity {
         summaryDayRange = findViewById(R.id.summary_days_range);
 
 
-        String summaryRequestEndPoint = getResources().getString(R.string.dataApiBaseURL)+"stock/summary";
+        String summaryRequestEndPoint = getResources().getString(R.string.dataApiBaseURL)+"stocks/summary";
 
 
         summaryRequestHeaders.put("ticker",ticker);
@@ -179,7 +179,7 @@ public class ChartActivityIndex extends AppCompatActivity {
 
     void getSingleValue(String ticker, Context context){
         requestQueue = Volley.newRequestQueue(context);
-        String url = getResources().getString(R.string.dataApiBaseURL)+"stock/close";
+        String url = getResources().getString(R.string.dataApiBaseURL)+"stocks/close";
         stringMap.put("value","1231D123");
         stringMap.put("ticker","123"+ticker+"123");
         stringMap.put("singleVal","True");
