@@ -1,6 +1,8 @@
 package com.cyllide.app.v1.portfolio;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.collection.ArrayMap;
+import androidx.core.content.ContextCompat;
 import pl.droidsonroids.gif.GifImageView;
 
 import android.content.Intent;
@@ -23,11 +25,19 @@ import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.ConnectionStatus;
 import com.cyllide.app.v1.CustomWebView;
 import com.cyllide.app.v1.R;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.nex3z.togglebuttongroup.button.LabelToggle;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Map;
 
 
 public class PortfolioActivity extends AppCompatActivity {
@@ -39,6 +49,12 @@ public class PortfolioActivity extends AppCompatActivity {
     TextView previousCloseTV,openTV,dailyRangeTV,yearlyRangeTV;
     private GifImageView progressLoader;
     private WebView webView;
+
+    Map<String,String> lineChartRequestHeader = new ArrayMap<>();
+    RequestQueue lineChartRequestQueue;
+    LineChart lineChart;
+    ArrayList<Entry> yAxisValues = new ArrayList<>();
+    ArrayList<String> xAxisValues = new ArrayList<>();
 
 
     @Override
@@ -58,6 +74,14 @@ public class PortfolioActivity extends AppCompatActivity {
            }
        });
 
+
+
+
+        lineChart = findViewById(R.id.linechart);
+
+        setGraph("1D");
+
+
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("file:///android_asset/oneday.html");
 
@@ -66,6 +90,7 @@ public class PortfolioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(ConnectionStatus.connectionstatus){
+                    setGraph("1D");
                 webView.loadUrl("file:///android_asset/oneday.html");}
                 else{
                     Toast.makeText(PortfolioActivity.this,"Internet Connecion Lost",Toast.LENGTH_LONG).show();
@@ -78,6 +103,7 @@ public class PortfolioActivity extends AppCompatActivity {
         oneWeek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setGraph("1M");
                 if(ConnectionStatus.connectionstatus){
                 webView.loadUrl("file:///android_asset/oneweek.html");}
                 else {
@@ -93,6 +119,7 @@ public class PortfolioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(ConnectionStatus.connectionstatus){
+                    setGraph("1M");
                 webView.loadUrl("file:///android_asset/onemonth.html");}
                 else {
                     Toast.makeText(PortfolioActivity.this,"Internet Connecion Lost",Toast.LENGTH_LONG).show();
@@ -106,6 +133,7 @@ public class PortfolioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(ConnectionStatus.connectionstatus){
+                    setGraph("6M");
                 webView.loadUrl("file:///android_asset/sixmonths.html");}
                 else{
                     Toast.makeText(PortfolioActivity.this,"Internet Connecion Lost",Toast.LENGTH_LONG).show();
@@ -119,6 +147,7 @@ public class PortfolioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(ConnectionStatus.connectionstatus){
+                    setGraph("1Y");
                 webView.loadUrl("file:///android_asset/oneyear.html");}
                 else{
                     Toast.makeText(PortfolioActivity.this,"Internet Connecion Lost",Toast.LENGTH_LONG).show();
@@ -201,5 +230,72 @@ public class PortfolioActivity extends AppCompatActivity {
         });
 
         requestQueue.add(stringRequest);
+    }
+
+
+    private void setGraph(String header){
+
+
+        lineChartRequestQueue = Volley.newRequestQueue(this);
+        String url = "https://0e9xuk8re9.execute-api.ap-south-1.amazonaws.com/prod/data/nifty50";
+        lineChartRequestHeader.put("value",header);
+
+
+        StringRequest lineChartRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("Responses",response);
+
+                try {
+                    Log.d("ChartActivityIndex",response);
+                    JSONArray responseObject = new JSONObject(response).getJSONArray("data");
+                    int length = responseObject.length();
+                    yAxisValues = new ArrayList<>();
+                    xAxisValues = new ArrayList<>();
+                    for(int i=1; i<length;i++){
+                        JSONArray valuePair = responseObject.getJSONArray(i);
+                        yAxisValues.add(new Entry(Float.parseFloat(Integer.toString(valuePair.getInt(0))),Float.parseFloat(Double.toString(valuePair.getDouble(1)))));
+                        xAxisValues.add(i-1,String.valueOf(valuePair.getInt(0)));
+                    }
+                    String[] xaxes = new String[xAxisValues.size()];
+                    for(int i=0;i<xAxisValues.size();i++){
+                        xaxes[i] = xAxisValues.get(i);
+                    }
+
+                    ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
+                    LineDataSet lineDataSet = new LineDataSet(yAxisValues,"Test");
+                    lineDataSet.setDrawCircles(false);
+                    lineDataSet.setColor(ContextCompat.getColor(getBaseContext(),R.color.colorPrimary));
+
+                    lineDataSets.add(lineDataSet);
+
+                    lineChart.setData(new LineData(lineDataSets));
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Summary Error",error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                return lineChartRequestHeader;
+            }
+
+        };
+
+
+        lineChartRequestQueue.add(lineChartRequest);
+
+
+
     }
 }

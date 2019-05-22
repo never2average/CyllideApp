@@ -55,11 +55,11 @@
                         android:layout_marginBottom="5dp">
 
 
-
-                        <WebView
+                          <WebView
                             android:id="@+id/web_view_chart"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"></WebView>
+                            android:layout_height="match_parent"
+                            android:visibility="gone"></WebView>
 
                         <pl.droidsonroids.gif.GifImageView
                             android:layout_width="80dp"

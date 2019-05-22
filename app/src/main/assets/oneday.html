@@ -10,9 +10,11 @@
         return new Promise((resolve, reject) => {
             $.ajax({
                 type:"GET",
-                "url": "https://data.cyllide.com/data/nifty50",
+                "url": "https://0e9xuk8re9.execute-api.ap-south-1.amazonaws.com/prod/data/nifty50",
                 "headers": {
-                    "value": "1D"
+                    "value": "1D",
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Credentials" : true
                 },
                 success: function(res){
                     var array = res.data;

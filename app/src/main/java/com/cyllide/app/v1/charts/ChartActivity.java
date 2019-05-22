@@ -228,7 +228,7 @@ public class ChartActivity extends AppCompatActivity {
 
     public void setJavaScriptInterface(String frequency){
         webView.addJavascriptInterface(new JavaScriptChartInterface(this,ticker,frequency), "Android");
-        webView.loadUrl(getResources().getString(R.string.dataApiBaseURL)+"chart/\""+ticker+"\"/\""+frequency+"\"");
+        webView.loadUrl(getResources().getString(R.string.apiBaseURL)+"chart/\""+ticker+"\"/\""+frequency+"\"");
     }
     public void onFrequencyClick(View view){
         oneDay.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
