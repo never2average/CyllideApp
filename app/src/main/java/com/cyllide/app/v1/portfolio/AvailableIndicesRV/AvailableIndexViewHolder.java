@@ -85,15 +85,14 @@ public class AvailableIndexViewHolder extends RecyclerView.ViewHolder {
     private void setIndexValue(final TextView indexValNet) {
         indexRequestQueue = Volley.newRequestQueue(indexValNet.getContext());
         String requestEndpoint = indexValNet.getContext().getResources().getString(R.string.dataApiBaseURL)+ "stocks/close";
-        requestHeaders.put("value","1231D123");
-        requestHeaders.put("ticker","123"+indexName.getText()+"123");
-        requestHeaders.put("singleVal","True");
+        requestHeaders.put("value","1D");
+        requestHeaders.put("ticker",indexName.getText().toString());
+        requestHeaders.put("singleval","True");
         StringRequest stringRequest = new StringRequest(Request.Method.GET, requestEndpoint, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     DecimalFormat df = new DecimalFormat("####0.00");
-                    Log.d("IndexViewHolder",response);
                     JSONObject responseObject = new JSONObject(response);
                     double indexChanges = responseObject.getDouble("movement");
                     double indexValue = responseObject.getDouble("data");
@@ -112,7 +111,12 @@ public class AvailableIndexViewHolder extends RecyclerView.ViewHolder {
                     }
                     else{
                         indexValNet.setTextColor(ContextCompat.getColor(indexValNet.getContext(), R.color.dark_gray));
-                        indexValNet.setText(df.format(indexValue) + "(+" + String.valueOf(df.format(indexChanges)) + "%)" + "▲");
+                        if(indexChanges >= 0){
+                            indexValNet.setText(df.format(indexValue) + "(+" + String.valueOf(df.format(indexChanges)) + "%)" + "▲");
+                        }
+                        else{
+                            indexValNet.setText(df.format(indexValue) + "(+" + String.valueOf(df.format(indexChanges)) + "%)" + "▲");
+                        }
 
                     }
 

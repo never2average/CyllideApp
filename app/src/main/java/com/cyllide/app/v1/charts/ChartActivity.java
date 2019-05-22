@@ -28,7 +28,10 @@ import com.cyllide.app.v1.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 
@@ -274,9 +277,9 @@ public class ChartActivity extends AppCompatActivity {
     void getSingleValue(String ticker, Context context){
         requestQueue = Volley.newRequestQueue(context);
         String url = getResources().getString(R.string.dataApiBaseURL)+"stocks/close";
-        stringMap.put("value","1231D123");
-        stringMap.put("ticker","123"+ticker+"123");
-        stringMap.put("singleVal","True");
+        stringMap.put("value","1D");
+        stringMap.put("ticker",ticker);
+        stringMap.put("singleval","True");
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -285,14 +288,26 @@ public class ChartActivity extends AppCompatActivity {
                     Double data = jsonObject.getDouble("data");
                     Double movement = jsonObject.getDouble("movement");
                     DecimalFormat df = new DecimalFormat("####0.000");
-                    if (jsonObject.getDouble("movement") >= 0) {
-                        currentPriceTV.setTextColor(Color.parseColor("#00ff00"));
-                        currentPriceTV.setText(df.format(data) + "(+" + df.format(movement) + "%)" + "▲");
+                    Date date = new Date(jsonObject.getLong("timestamp"));
+                    DateFormat dateformatter = new SimpleDateFormat("HH");
+                    int hour = Integer.parseInt(dateformatter.format(date));
+                    if (hour < 16 && hour >= 9) {
+                        if (jsonObject.getDouble("movement") >= 0) {
+                            currentPriceTV.setTextColor(Color.parseColor("#00ff00"));
+                            currentPriceTV.setText(df.format(data) + "(+" + df.format(movement) + "%)" + "▲");
+                        } else {
+                            currentPriceTV.setTextColor(Color.parseColor("#ff0000"));
+                            currentPriceTV.setText(df.format(data) + "(" + df.format(movement) + "%)" + "▼");
+                        }
                     } else {
-                        currentPriceTV.setTextColor(Color.parseColor("#ff0000"));
-                        currentPriceTV.setText(df.format(data)+ "(" + df.format(movement) + "%)" + "▼");
+                        currentPriceTV.setTextColor(ContextCompat.getColor(currentPriceTV.getContext(), R.color.dark_gray));
+                        if (jsonObject.getDouble("movement") >= 0) {
+                            currentPriceTV.setText(df.format(data) + "(+" + df.format(movement) + "%)" + "▲");
+                        } else {
+                            currentPriceTV.setText(df.format(data) + "(+" + df.format(movement) + "%)" + "▼");
+                        }
                     }
-                } catch (JSONException e) {
+                }catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
