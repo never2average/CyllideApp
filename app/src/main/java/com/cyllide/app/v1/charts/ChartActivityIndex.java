@@ -304,6 +304,8 @@ public class ChartActivityIndex extends AppCompatActivity {
                     lineChart.getXAxis().setDrawLabels(false);
                     lineChart.getAxisLeft().setDrawGridLines(false);
                     lineChart.getLegend().setEnabled(false);
+                    lineDataSet.setDrawFilled(true);
+                    lineDataSet.setFillDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.chart_gradient));
                     Description d = new Description();
                     d.setText("");
                     lineChart.setDescription(d);

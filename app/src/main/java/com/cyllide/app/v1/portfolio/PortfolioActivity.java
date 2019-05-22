@@ -276,6 +276,8 @@ public class PortfolioActivity extends AppCompatActivity {
                     ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
                     LineDataSet lineDataSet = new LineDataSet(yAxisValues,"Test");
                     lineDataSet.setDrawCircles(false);
+                    lineDataSet.setDrawFilled(true);
+                    lineDataSet.setFillDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.chart_gradient));
                     lineDataSet.setColor(ContextCompat.getColor(getBaseContext(),R.color.colorPrimary));
 
                     lineDataSets.add(lineDataSet);
