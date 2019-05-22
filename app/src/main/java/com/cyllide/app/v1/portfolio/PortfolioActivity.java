@@ -26,6 +26,7 @@ import com.cyllide.app.v1.ConnectionStatus;
 import com.cyllide.app.v1.CustomWebView;
 import com.cyllide.app.v1.R;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -78,6 +79,7 @@ public class PortfolioActivity extends AppCompatActivity {
 
 
         lineChart = findViewById(R.id.linechart);
+
 
         setGraph("1D");
 
@@ -252,10 +254,19 @@ public class PortfolioActivity extends AppCompatActivity {
                     int length = responseObject.length();
                     yAxisValues = new ArrayList<>();
                     xAxisValues = new ArrayList<>();
+                    int c=0;
                     for(int i=1; i<length;i++){
                         JSONArray valuePair = responseObject.getJSONArray(i);
-                        yAxisValues.add(new Entry(Float.parseFloat(Integer.toString(valuePair.getInt(0))),Float.parseFloat(Double.toString(valuePair.getDouble(1)))));
-                        xAxisValues.add(i-1,String.valueOf(valuePair.getInt(0)));
+                        try {
+                            float y = Float.parseFloat(Integer.toString(valuePair.getInt(0)));
+                            float x =  Float.parseFloat(Double.toString(valuePair.getDouble(1)));
+                            yAxisValues.add(new Entry(y,x));
+                            xAxisValues.add(c, Float.toString(x));
+                            c++;
+                        }
+                        catch(JSONException e){
+                            continue;
+                        }
                     }
                     String[] xaxes = new String[xAxisValues.size()];
                     for(int i=0;i<xAxisValues.size();i++){
@@ -268,8 +279,19 @@ public class PortfolioActivity extends AppCompatActivity {
                     lineDataSet.setColor(ContextCompat.getColor(getBaseContext(),R.color.colorPrimary));
 
                     lineDataSets.add(lineDataSet);
+                    Log.d("PortfolioActivity","FInished making array lists");
 
                     lineChart.setData(new LineData(lineDataSets));
+                    lineChart.getXAxis().setDrawLabels(false);
+                    lineChart.getAxisLeft().setDrawGridLines(false);
+                    lineChart.getLegend().setEnabled(false);
+                    Description d = new Description();
+                    d.setText("");
+                    lineChart.setDescription(d);
+                    lineChart.invalidate();
+
+
+                    Log.d("PortfolioActivity","FInished setting data");
 
 
 
