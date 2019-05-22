@@ -85,6 +85,7 @@ dependencies {
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.+'
     implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
     implementation 'com.android.support:design:28.1.1'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
 
 
     implementation 'io.realm:android-adapters:2.1.1'

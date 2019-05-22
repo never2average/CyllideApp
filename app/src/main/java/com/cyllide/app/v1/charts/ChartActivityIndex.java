@@ -24,6 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.CustomWebView;
 import com.cyllide.app.v1.R;
+import com.github.mikephil.charting.charts.LineChart;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +38,7 @@ public class ChartActivityIndex extends AppCompatActivity {
     String ticker;
     RequestQueue summaryRequestQueue;
 
+
     private Map<String, String> summaryRequestHeaders = new ArrayMap<String, String>();
 
     TextView summaryPreviousClose, summaryOpen, summaryWeekRange, summaryDayRange,
@@ -45,6 +47,7 @@ public class ChartActivityIndex extends AppCompatActivity {
     TextView currentPriceTV;
     private RequestQueue requestQueue;
     Map<String,String> stringMap = new ArrayMap<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,14 @@ public class ChartActivityIndex extends AppCompatActivity {
         balanceAssets = findViewById(R.id.balance_total_assets);
         currentPriceTV = findViewById(R.id.current_price_chart_tv);
         getSingleValue(ticker,ChartActivityIndex.this);
+
+
+
+
+
+
+
+
 
 
         summaryPreviousClose = findViewById(R.id.summary_previous_close);
