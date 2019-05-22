@@ -25,13 +25,20 @@ import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.CustomWebView;
 import com.cyllide.app.v1.R;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
@@ -50,6 +57,7 @@ public class ChartActivityIndex extends AppCompatActivity {
     TextView currentPriceTV;
     private RequestQueue requestQueue;
     Map<String,String> stringMap = new ArrayMap<>();
+    LineChart lineChart;
 
 
     @Override
@@ -72,12 +80,9 @@ public class ChartActivityIndex extends AppCompatActivity {
         webView.getSettings().setDomStorageEnabled(true);
         balanceAssets = findViewById(R.id.balance_total_assets);
         currentPriceTV = findViewById(R.id.current_price_chart_tv);
+        lineChart = findViewById(R.id.linechart);
         getSingleValue(ticker,ChartActivityIndex.this);
-
-
-
-
-
+        getChartData(ticker,"1D",this);
 
 
 
@@ -166,26 +171,31 @@ public class ChartActivityIndex extends AppCompatActivity {
                 oneDay.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
                 oneDay.setTextColor(ContextCompat.getColor(this,R.color.white));
                 setJavaScriptInterface("1D");
+                getChartData(ticker,"1D",this);
                 break;
             case R.id.chart_button_five_days:
                 fiveDay.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
                 fiveDay.setTextColor(ContextCompat.getColor(this,R.color.white));
                 setJavaScriptInterface("5D");
+                getChartData(ticker,"5D",this);
                 break;
             case R.id.chart_button_one_month:
                 oneMonth.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
                 oneMonth.setTextColor(ContextCompat.getColor(this,R.color.white));
                 setJavaScriptInterface("1M");
+                getChartData(ticker,"1M",this);
                 break;
             case R.id.chart_button_six_months:
                 sixMonth.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
                 sixMonth.setTextColor(ContextCompat.getColor(this,R.color.white));
                 setJavaScriptInterface("6M");
+                getChartData(ticker,"6M",this);
                 break;
             case R.id.chart_button_one_year:
                 oneYear.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
                 oneYear.setTextColor(ContextCompat.getColor(this,R.color.white));
                 setJavaScriptInterface("1Y");
+                getChartData(ticker,"1Y",this);
                 break;
         }
 
@@ -244,4 +254,87 @@ public class ChartActivityIndex extends AppCompatActivity {
         stringRequest.setShouldCache(false);
         requestQueue.add(stringRequest);
     }
+
+
+    void getChartData(String ticker, String value, Context context){
+        requestQueue = Volley.newRequestQueue(context);
+        String url = getResources().getString(R.string.dataApiBaseURL)+"stocks/close";
+        stringMap.put("value",value);
+        stringMap.put("ticker",ticker);
+        stringMap.put("singleval","False");
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray responseArray = new JSONObject(response).getJSONArray("data");
+                    Log.d("ChartActivity",response);
+
+                    int length = responseArray.length();
+                    ArrayList<Entry> yAxisValues = new ArrayList<>();
+                    ArrayList<String> xAxisValues = new ArrayList<>();
+                    int c=0;
+                    for(int i=0; i<length;i++){
+
+                        try {
+                            Double yValue = responseArray.getDouble(i);
+                            float y = Float.parseFloat(Double.toString(yValue));
+                            float x =  Float.parseFloat(Integer.toString(i));
+                            yAxisValues.add(new Entry(x,y));
+                            xAxisValues.add(c, Float.toString(x));
+                            c++;
+                        }
+                        catch(JSONException e){
+                            continue;
+                        }
+                    }
+                    String[] xaxes = new String[xAxisValues.size()];
+                    for(int i=0;i<xAxisValues.size();i++){
+                        xaxes[i] = xAxisValues.get(i);
+                    }
+
+                    ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
+                    LineDataSet lineDataSet = new LineDataSet(yAxisValues,"Test");
+                    lineDataSet.setDrawCircles(false);
+                    lineDataSet.setColor(ContextCompat.getColor(getBaseContext(),R.color.colorPrimary));
+
+                    lineDataSets.add(lineDataSet);
+                    Log.d("PortfolioActivity","FInished making array lists");
+
+                    lineChart.setData(new LineData(lineDataSets));
+                    lineChart.getXAxis().setDrawLabels(false);
+                    lineChart.getAxisLeft().setDrawGridLines(false);
+                    lineChart.getLegend().setEnabled(false);
+                    Description d = new Description();
+                    d.setText("");
+                    lineChart.setDescription(d);
+                    lineChart.invalidate();
+
+
+                    Log.d("PortfolioActivity","FInished setting data");
+
+
+
+
+                }
+                catch (JSONException e){
+                    Log.d("ChartActivity",e.toString());
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("resp", error.toString());
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders(){
+                return stringMap;
+            }
+        };
+        stringRequest.setShouldCache(false);
+        requestQueue.add(stringRequest);
+    }
+
+
 }
