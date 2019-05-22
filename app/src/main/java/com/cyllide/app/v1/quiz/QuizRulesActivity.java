@@ -101,6 +101,9 @@ public class QuizRulesActivity extends AppCompatActivity {
 
         Intent serviceIntent = new Intent(this, GetLatestQuizIDService.class);
         startService(serviceIntent);
+
+
+
         currentTimeRequestQueue = Volley.newRequestQueue(this);
         String url = getResources().getString(R.string.currentTimeApiURL);
         StringRequest currentTimeStringRequest = new StringRequest(Request.Method.GET,url , new Response.Listener<String>() {
@@ -194,6 +197,13 @@ public class QuizRulesActivity extends AppCompatActivity {
                         quizPrize.setText("₹ "+Integer.toString(new JSONObject(response).getJSONObject("data").getInt("quizPrizeMoney")));
 
                         Log.d("Response", quizID);
+
+                        startQuizButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                fetchQuestions(quizID);
+                            }
+                        });
                         Log.d("Response", Long.toString(quizStartTime));
                         Log.d("Timer",Long.toString(quizStartTime-currentTime));
                         quizCountDownTimer =
