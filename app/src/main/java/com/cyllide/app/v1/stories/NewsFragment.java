@@ -3,6 +3,7 @@ package com.cyllide.app.v1.stories;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.R;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -26,6 +28,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,17 +40,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import static android.content.ContentValues.TAG;
 
 public class NewsFragment extends Fragment{
-
-    RequestQueue requestQueue;
+    private String newsURL;
+    private RequestQueue requestQueue;
     private RecyclerView newsRV;
-    ArrayList<String> newsTitle=new ArrayList<>();
-    ArrayList<String> newsThumbnailSource=new ArrayList<>();
-    ArrayList<String> newsDate=new ArrayList<>();
-    ArrayList<String> newsDescription=new ArrayList<>();
-    ArrayList<String> newsSource=new ArrayList<>();
-    ArrayList<String> url=new ArrayList<>();
-    ArrayList<String> author=new ArrayList<>();
-    LinearLayout loading;
+    private Map<String, String> newsMap= new ArrayMap<String, String>();
+    private LinearLayout loading;
 
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
@@ -62,59 +59,60 @@ public class NewsFragment extends Fragment{
         linearSnapHelper.attachToRecyclerView(newsRV);
         newsRV.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         Fresco.initialize(context);
-        if (newsDate.size()==0) jsonParse();
+        jsonParse(1);
         return view;
     }
 
 
-    private void jsonParse() {
+    private void jsonParse(Integer pageNo) {
         requestQueue= Volley.newRequestQueue(getContext());
-        final String newsURL = "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=f6bddf738e64468280f0a7173b265b41";
+        newsMap.put("pageno", pageNo.toString());
+        newsURL = getContext().getResources().getString(R.string.newsApiBaseURL);
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, newsURL, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("articles");
-
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject article = jsonArray.getJSONObject(i);
-
-                                newsTitle.add(article.getString("title"));
-                                newsThumbnailSource.add(article.getString("urlToImage"));
-                                newsSource.add(article.getJSONObject("source").getString("name"));
-                                url.add(article.getString("url"));
-                                author.add(article.getString("author"));
-                                newsDescription.add(article.getString("description"));
-                                newsDate.add(article.getString("publishedAt"));
-
-                            }
-                            List<NewsModel> data = new ArrayList<>(12);
-                            for (int i = 0; i < newsTitle.size(); i++) {
-                                data.add(new NewsModel(newsTitle.get(i),newsThumbnailSource.get(i),newsDate.get(i),newsSource.get(i),newsDescription.get(i),url.get(i),author.get(i)));
-                            }
-                            if (getActivity() != null) {
-                                final NewsAdapter mAdapter = new NewsAdapter(data);
-                                newsRV.setAdapter(mAdapter);
-                            } else {
-                                Log.e(TAG, "getActivity() returned null in onStart()");
-                            }
-                            NewsAdapter newsAdapter= new NewsAdapter(data);
-                            newsRV.setAdapter(newsAdapter);
-                            loading.setVisibility(View.GONE);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+        StringRequest request = new StringRequest(Request.Method.GET, newsURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+                    List<NewsModel> data = new ArrayList<>(10);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject article = jsonArray.getJSONObject(i);
+                        data.add(
+                                new NewsModel(
+                                        article.getString("title"),
+                                        article.getString("image"),
+                                        article.getString("pubDate"),
+                                        "Economic Times",
+                                        article.getString("description"),
+                                        article.getString("link"),
+                                        "Economic Times"
+                                )
+                        );
                     }
-                }, new Response.ErrorListener() {
+                    if (getActivity() != null) {
+                        final NewsAdapter mAdapter = new NewsAdapter(data);
+                        newsRV.setAdapter(mAdapter);
+                    } else {
+                        Log.e(TAG, "getActivity() returned null in onStart()");
+                    }
+                    NewsAdapter newsAdapter= new NewsAdapter(data);
+                    newsRV.setAdapter(newsAdapter);
+                    loading.setVisibility(View.GONE);
+                } catch (JSONException e) {
+                    Log.e(TAG, e.toString()); ;
+                }
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() {
+                return newsMap;
+            }
+        };
         requestQueue.add(request);
-
     }
-
 }
