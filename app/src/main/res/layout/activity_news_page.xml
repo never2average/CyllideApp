@@ -2,78 +2,78 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     >
-
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/newsThumbImage"
-        android:layout_width="match_parent"
-        android:layout_height="225dp"
-        android:layout_gravity="center_horizontal"
-        android:cropToPadding="false"
-        android:paddingBottom="12sp"
-        fresco:placeholderImage="@android:drawable/ic_menu_camera"
-        />
-
-    <TextView
-        android:layout_marginStart="4dp"
-        android:id="@+id/newsNameTV"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="10sp"
-        android:textSize="22sp"
-        android:fontFamily="@font/ralewaymedium"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        />
+        android:scrollbars="none">
 
-
-    <LinearLayout
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-        <TextView
-            android:layout_marginStart="4dp"
-            android:layout_width="0dp"
-            android:layout_weight="2"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:id="@+id/newsSourceTV"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/newsitembackbtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                />
+
+            <TextView
+                android:layout_marginVertical="@dimen/margin"
+                android:layout_marginHorizontal="@dimen/margin"
+                android:id="@+id/newsitemtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:fontFamily="@font/ralewaymedium"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/newsitemcover"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_gravity="center_horizontal"
+                android:cropToPadding="false"
+                fresco:placeholderImage="@android:drawable/ic_menu_camera"
             />
+            <TextView
+                android:layout_marginVertical="@dimen/margin"
+                android:layout_marginHorizontal="@dimen/default_stroke_width"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/newsitemsummary" />
 
-        <TextView
-            android:gravity="right"
-            android:layout_marginEnd="4dp"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:id="@+id/newsDateTV"
-            />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#000000" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/newsitemdate"
+                android:textColor="@android:color/black"
+                android:layout_marginVertical = "@dimen/default_stroke_width"
+                android:layout_marginHorizontal="@dimen/default_stroke_width"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/newsAuthorTV"
-        />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#000000" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="#000000"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/newsContent"
-        />
-
+            <TextView
+                android:layout_marginHorizontal="@dimen/default_stroke_width"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/newsitemcontent"
+                android:layout_marginVertical="@dimen/default_stroke_width"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
