@@ -13,6 +13,7 @@ import com.cyllide.app.v1.R;
 import com.facebook.network.connectionclass.ConnectionClassManager;
 import com.facebook.network.connectionclass.ConnectionQuality;
 import com.facebook.network.connectionclass.DeviceBandwidthSampler;
+import com.github.nkzawa.socketio.client.Socket;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
@@ -45,6 +46,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+import java.net.URISyntaxException;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.util.Map;
@@ -53,9 +56,18 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import android.os.Vibrator;
+import com.github.nkzawa.socketio.client.IO;
+
 
 
 public class QuizActivity extends AppCompatActivity {
+
+    private Socket mSocket;
+    {
+        try {
+            mSocket = IO.socket("http://chat.socket.io");
+        } catch (URISyntaxException e) {}
+    }
 
     public static boolean hasRevive = false;
     public static int numberOfRevivals=0;
@@ -90,6 +102,8 @@ public class QuizActivity extends AppCompatActivity {
     MediaPlayer quizMusicPlayer;
     MediaPlayer quizCorrectAnswerMusicPlayer;
     MediaPlayer quizWrongAnswerMusicPlayer;
+
+
 
     private ConnectionQuality mConnectionClass = ConnectionQuality.UNKNOWN;
     private ConnectionClassManager mConnectionClassManager;

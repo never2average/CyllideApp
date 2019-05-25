@@ -4,34 +4,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cyllide.app.v1.R;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class StoriesAdapter extends RecyclerView.Adapter<StoriesViewHolder> {
+import com.cyllide.app.v1.R;
 
-    List<StoriesModel> partList;
+public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
+    List<NewsModel> partList;
 
-    public StoriesAdapter(List<StoriesModel> partList) {
+    public NewsAdapter(List<NewsModel> partList) {
         this.partList = partList;
     }
 
     @NonNull
     @Override
-    public StoriesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         // view_g => name of the layout file
-        View view = inflater.inflate(R.layout.view_stories, parent, false);
-        StoriesViewHolder holder = new StoriesViewHolder(view);
+        View view = inflater.inflate(R.layout.view_news, parent, false);
+        NewsViewHolder holder = new NewsViewHolder(view);
         return holder;
     }//link xml to recycler view
 
     @Override//means whatever we are extending is changed to put our own stuff
-    public void onBindViewHolder(@NonNull StoriesViewHolder holder, int position) {
-        StoriesModel parts = partList.get(position);
+    public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
+        NewsModel parts = partList.get(position);
         holder.populate(parts);
     }
 

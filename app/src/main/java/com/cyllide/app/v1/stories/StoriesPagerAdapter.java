@@ -7,6 +7,10 @@ import androidx.fragment.app.FragmentManager;
 
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+
 public class StoriesPagerAdapter extends FragmentPagerAdapter {
 
 
@@ -22,8 +26,16 @@ public class StoriesPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        StoriesFragment storiesFragment = new StoriesFragment();
-        return storiesFragment;
+        switch (position) {
+            case 0:
+                NewsFragment newsFragment = new NewsFragment();
+                return newsFragment;
+            case 1:
+                StoriesFragment storiesFragment = new StoriesFragment();
+                return storiesFragment;
+            default:
+                return null;
+        }
     }
 
     @Override
