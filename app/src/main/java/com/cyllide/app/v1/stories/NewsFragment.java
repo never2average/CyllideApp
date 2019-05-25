@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -30,6 +31,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static android.content.ContentValues.TAG;
@@ -45,6 +47,7 @@ public class NewsFragment extends Fragment{
     ArrayList<String> newsSource=new ArrayList<>();
     ArrayList<String> url=new ArrayList<>();
     ArrayList<String> author=new ArrayList<>();
+    LinearLayout loading;
 
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
@@ -52,9 +55,12 @@ public class NewsFragment extends Fragment{
         View view=inflater.inflate(R.layout.fragment_news, container, false);
         final Activity activity = getActivity();
         final Context context = getContext();
+        loading = view.findViewById(R.id.activity_stories_news_loading_layout);
         newsRV = view.findViewById(R.id.fragment_news_rv);
         newsRV.setHasFixedSize(true);
-        newsRV.setLayoutManager(new LinearLayoutManager(context));
+        LinearSnapHelper linearSnapHelper = new SnapHelperOneByOne();
+        linearSnapHelper.attachToRecyclerView(newsRV);
+        newsRV.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         Fresco.initialize(context);
         if (newsDate.size()==0) jsonParse();
         return view;
@@ -96,6 +102,7 @@ public class NewsFragment extends Fragment{
                             }
                             NewsAdapter newsAdapter= new NewsAdapter(data);
                             newsRV.setAdapter(newsAdapter);
+                            loading.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

@@ -23,10 +23,12 @@ public class StoriesMainActivity extends AppCompatActivity {
     Toolbar toolbar;
     CircleImageView imageButton;
     ImageView back;
+    LinearLayout loading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stories);
+        loading = findViewById(R.id.activity_stories_loading_layout);
 
 
         TabLayout tabLayout =
@@ -41,6 +43,7 @@ public class StoriesMainActivity extends AppCompatActivity {
                 (getSupportFragmentManager(),
                         tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
+        loading.setVisibility(View.GONE);
 
         viewPager.addOnPageChangeListener(new
                 TabLayout.TabLayoutOnPageChangeListener(tabLayout));

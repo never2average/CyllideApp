@@ -35,6 +35,7 @@ import androidx.annotation.Nullable;
 import androidx.collection.ArrayMap;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
@@ -45,6 +46,7 @@ public class StoriesFragment extends Fragment {
 
     private RecyclerView newsRV;
     RequestQueue storiesQueue;
+    LinearLayout loading;
 
 
 
@@ -60,16 +62,19 @@ public class StoriesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_news, container, false);
         final Context context = getContext();
         newsRV = view.findViewById(R.id.fragment_news_rv);
+        loading = view.findViewById(R.id.activity_stories_news_loading_layout);
         newsRV.setHasFixedSize(true);
+        LinearSnapHelper linearSnapHelper = new SnapHelperOneByOne();
+        linearSnapHelper.attachToRecyclerView(newsRV);
         newsRV.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-        fetchStories();
+        fetchStories(container);
         return view;
 
 
     }
 
 
-    public void fetchStories()
+    public void fetchStories(final ViewGroup container)
     {
         final Map<String, String> mHeaders = new ArrayMap<String, String>();
         mHeaders.put("token", AppConstants.token);
@@ -97,6 +102,9 @@ public class StoriesFragment extends Fragment {
                     }
                     StoriesAdapter storiesAdapter = new StoriesAdapter(storiesModelArrayList);
                     newsRV.setAdapter(storiesAdapter);
+                    loading.setVisibility(View.GONE);
+
+
 
                 }
                 catch (JSONException e) {

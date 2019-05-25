@@ -13,15 +13,11 @@ public class customViewPager extends ViewPager {
 
     public customViewPager(Context context) {
         super(context);
-        setMyScroller();
     }
 
     public customViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setMyScroller();
     }
-
-
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
