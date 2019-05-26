@@ -41,13 +41,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 
-
 public class StoriesFragment extends Fragment {
 
     private RecyclerView newsRV;
     RequestQueue storiesQueue;
     LinearLayout loading;
-
 
 
     @Override
@@ -74,20 +72,19 @@ public class StoriesFragment extends Fragment {
     }
 
 
-    public void fetchStories(final ViewGroup container)
-    {
+    public void fetchStories(final ViewGroup container) {
         final Map<String, String> mHeaders = new ArrayMap<String, String>();
         mHeaders.put("token", AppConstants.token);
-        final String newsURL = getResources().getString(R.string.apiBaseURL)+"stories/view";
+        final String newsURL = getResources().getString(R.string.apiBaseURL) + "stories/view";
         storiesQueue = Volley.newRequestQueue(getContext());
         StringRequest request = new StringRequest(Request.Method.POST, newsURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("Stories", response);
                 try {
-                List<StoriesModel> storiesModelArrayList = new ArrayList<>();
-                JSONArray storiesJSONArray = new JSONObject(response).getJSONArray("data");
-                for(int i =0; i<storiesJSONArray.length();i++) {
+                    List<StoriesModel> storiesModelArrayList = new ArrayList<>();
+                    JSONArray storiesJSONArray = new JSONObject(response).getJSONArray("data");
+                    for (int i = 0; i < storiesJSONArray.length(); i++) {
 
                         storiesModelArrayList.add(new StoriesModel(
                                 storiesJSONArray.getJSONObject(i).getJSONObject("_id").getString("$oid"),
@@ -105,10 +102,8 @@ public class StoriesFragment extends Fragment {
                     loading.setVisibility(View.GONE);
 
 
-
-                }
-                catch (JSONException e) {
-                    Log.d("NewsFragment",e.toString());
+                } catch (JSONException e) {
+                    Log.d("NewsFragment", e.toString());
                 }
 
 

@@ -45,6 +45,10 @@ public class NewsFragment extends Fragment{
     private RecyclerView newsRV;
     private Map<String, String> newsMap= new ArrayMap<String, String>();
     private LinearLayout loading;
+    private int pageNo = 1;
+    boolean isLoading = false;
+    List<NewsModel> data = new ArrayList<>();
+    NewsAdapter mAdapter = new NewsAdapter(data);
 
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
@@ -54,27 +58,68 @@ public class NewsFragment extends Fragment{
         final Context context = getContext();
         loading = view.findViewById(R.id.activity_stories_news_loading_layout);
         newsRV = view.findViewById(R.id.fragment_news_rv);
+        newsRV.setAdapter(mAdapter);
         newsRV.setHasFixedSize(true);
         LinearSnapHelper linearSnapHelper = new SnapHelperOneByOne();
         linearSnapHelper.attachToRecyclerView(newsRV);
         newsRV.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+
+
+        newsRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                if (!isLoading) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == data.size() - 1) {
+                        //bottom of list!
+                        loadMore();
+                        isLoading = true;
+                    }
+                }
+            }
+        });
+
+
+
         Fresco.initialize(context);
-        jsonParse(1);
+        jsonParse(pageNo);
         return view;
     }
 
 
-    private void jsonParse(Integer pageNo) {
+    private void loadMore() {
+        data.add(null);
+        mAdapter.notifyItemInserted(data.size() - 1);
+
+
+        jsonParse(++pageNo);
+
+    }
+
+
+    private void jsonParse(final Integer pageNo) {
         requestQueue= Volley.newRequestQueue(getContext());
         newsMap.put("pageno", pageNo.toString());
         newsURL = getContext().getResources().getString(R.string.newsApiBaseURL);
+
 
         StringRequest request = new StringRequest(Request.Method.GET, newsURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
-                    List<NewsModel> data = new ArrayList<>(10);
+//                    List<NewsModel> data = new ArrayList<>(10);
+                    if(pageNo>1){
+                        data.remove(data.size() - 1);
+                    }
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject article = jsonArray.getJSONObject(i);
                         data.add(
@@ -90,13 +135,14 @@ public class NewsFragment extends Fragment{
                         );
                     }
                     if (getActivity() != null) {
-                        final NewsAdapter mAdapter = new NewsAdapter(data);
-                        newsRV.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
                     } else {
                         Log.e(TAG, "getActivity() returned null in onStart()");
                     }
-                    NewsAdapter newsAdapter= new NewsAdapter(data);
-                    newsRV.setAdapter(newsAdapter);
+//                    NewsAdapter newsAdapter= new NewsAdapter(data);
+//                    newsRV.setAdapter(newsAdapter);
+                    mAdapter.notifyDataSetChanged();
+                    isLoading = false;
                     loading.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     Log.e(TAG, e.toString()); ;
