@@ -65,6 +65,7 @@ public class SocketQuizActivity extends AppCompatActivity {
     ImageView closePrizePopup;
     ProgressBar pb;
     String selectedOption = "noOption";
+    boolean isCorrect;
     TextView mainQuestion, optionA, optionB, optionC, optionD, textTimer, viewersTV;
     MaterialCardView option1CV,option2CV,option3CV,option4CV;
     RequestQueue quizAnswersRequestQueue;
@@ -94,6 +95,7 @@ public class SocketQuizActivity extends AppCompatActivity {
     private ConnectionClassManager mConnectionClassManager;
     private DeviceBandwidthSampler mDeviceBandwidthSampler;
     private ConnectionChangedListener mListener;
+
 
     private Socket questionsSocket;
     {
@@ -184,16 +186,6 @@ public class SocketQuizActivity extends AppCompatActivity {
                     public void run() {
                         Log.d("SocketQuizActivity",args.toString());
                         JSONObject data = (JSONObject) args[0];
-                        String username;
-                        String message;
-                        try {
-                            username = data.getString("username");
-                            message = data.getString("message");
-                        } catch (JSONException e) {
-                            return;
-                        }
-
-                        // add the message to view
                         changeQuestion(data);
                     }
                 });
@@ -207,6 +199,62 @@ public class SocketQuizActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Log.d("QuizSocketActivity",args.toString());
+
+                        if(true)  //Condition to check if message given is stats
+                        {
+                            mDeviceBandwidthSampler.stopSampling();
+                            Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
+                            quizMusicPlayer.pause();
+                            quizMusicPlayer.seekTo(0);
+                            quizActivityAnswerIndicator.setVisibility(View.VISIBLE);
+                            textTimer.setVisibility(View.INVISIBLE);
+                            JSONObject jsonResponse = new JSONObject(args[0]);
+                            Log.d("changequestion","inside response question");
+                            showAnswer("");
+                            if(jsonResponse.getString("data").equals("Correct")){
+                                quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
+                                quizCorrectAnswerMusicPlayer.start();
+                                Log.d("questionID",Integer.toString(questionID));
+                                Log.d("changequestion","calling change change question");
+                                if(true) {
+                                    //check wheter last question
+                                    finishQuiz(questionID);
+                                }
+                            }
+                            else {
+                                quizActivityAnswerIndicator.setImageResource(R.drawable.ic_cancel);
+                                quizWrongAnswerMusicPlayer.start();
+                                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                                } else {
+
+                                    v.vibrate(500);
+                                }
+                                if (questionID == 9) {
+                                    losersPopup.show();
+                                } else {
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        public void run() {
+                                            showRevival();
+
+                                        }
+                                    }, 2000);
+                                }
+                            }
+
+                        }
+                        if(true) //Condition to check if message recieved is correct or not
+                        {
+                          //Check
+                          isCorrect = false;
+
+                        }
+
+
+
 
                     }
                 });
@@ -303,7 +351,7 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectedOption = optionA.getText().toString();
-                questionsSocket.emit("response",selectedOption);
+                sendAnswer(selectedOption);
                 option1CV.setBackgroundDrawable(ContextCompat.getDrawable(SocketQuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
                 optionA.setTextColor(ContextCompat.getColor(SocketQuizActivity.this,R.color.white));
                 option2CV.setClickable(false);
@@ -316,8 +364,8 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectedOption = optionB.getText().toString();
-                questionsSocket.emit("response",selectedOption);
-                option2CV.setBackgroundDrawable(ContextCompat.getDrawable(QuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
+                sendAnswer(selectedOption);
+                option2CV.setBackgroundDrawable(ContextCompat.getDrawable(SocketQuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
                 optionB.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
                 option1CV.setClickable(false);
                 option3CV.setClickable(false);
@@ -329,7 +377,7 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectedOption = optionC.getText().toString();
-                questionsSocket.emit("response",selectedOption);
+                sendAnswer(selectedOption);
                 option3CV.setBackgroundDrawable(ContextCompat.getDrawable(SocketQuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
                 optionC.setTextColor(ContextCompat.getColor(SocketQuizActivity.this,R.color.white));
                 option2CV.setClickable(false);
@@ -342,7 +390,7 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectedOption = optionD.getText().toString();
-                questionsSocket.emit("response",selectedOption);
+                sendAnswer(selectedOption);
                 option4CV.setBackgroundDrawable(ContextCompat.getDrawable(SocketQuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
                 optionD.setTextColor(ContextCompat.getColor(SocketQuizActivity.this,R.color.white));
                 option1CV.setClickable(false);
@@ -372,117 +420,15 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                     textTimer.setText("STOP");
-                    sendAnswer(questionID);
+                    if(isAnswered == false) {
+                        sendAnswer("");
+                    }
         }}.start();
 
     }
 
-    private boolean sendAnswer(final int questionID){
-        mDeviceBandwidthSampler.startSampling();
-//        if(selectedOption)
-        String url = getResources().getString(R.string.apiBaseURL)+"quiz/submit";
-        try {
-            JSONObject quizObject = jsonQuestionArray.getJSONObject(questionID);
-            String id = quizObject.getJSONObject("_id").getString("$oid");
-            answerRequestHeader.put("token", AppConstants.token);
-            answerRequestHeader.put("optionValue",selectedOption);
-            answerRequestHeader.put ("questionID",id);
-            quizAnswersRequestQueue = Volley.newRequestQueue(QuizActivity.this);
-            StringRequest submissionRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Log.d("submissionResponse", response);
-                    try {
-                        mDeviceBandwidthSampler.stopSampling();
-                        Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
-                        quizMusicPlayer.pause();
-                        quizMusicPlayer.seekTo(0);
-                        quizActivityAnswerIndicator.setVisibility(View.VISIBLE);
-                        textTimer.setVisibility(View.INVISIBLE);
-                        JSONObject jsonResponse = new JSONObject(response);
-                        Log.d("changequestion","inside response question");
-                        showAnswer("");
-                        if(jsonResponse.getString("data").equals("Correct")){
-                            quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
-                            quizCorrectAnswerMusicPlayer.start();
-                            Log.d("questionID",Integer.toString(questionID));
-                            Log.d("changequestion","calling change change question");
-//                            if(questionID == 9){
-                                finishQuiz(questionID);
-//                            }
-//
-//                            else{
-//
-//                                Handler handler = new Handler();
-//                                handler.postDelayed(new Runnable() {
-//                                    public void run() {
-//                                        quizCorrectAnswerMusicPlayer.pause();
-//                                        quizCorrectAnswerMusicPlayer.seekTo(0);
-//                                        changeQuestion();
-//
-//
-//                                    }
-//                                }, 6000);
-//                            }
-
-
-                        }
-                        else{
-                            quizActivityAnswerIndicator.setImageResource(R.drawable.ic_cancel);
-                            quizWrongAnswerMusicPlayer.start();
-                            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-                            } else {
-
-                                v.vibrate(500);
-                            }
-                            if(questionID == 9){
-                                losersPopup.show();
-                            }
-                            else {
-                                Handler handler = new Handler();
-                                handler.postDelayed(new Runnable() {
-                                    public void run() {
-                                        showRevival();
-
-                                    }
-                                }, 2000);
-                            }
-
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    mDeviceBandwidthSampler.stopSampling();
-                    Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
-                    Toast.makeText(QuizActivity.this,"Poor Internet Connection, please try again later",Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(QuizActivity.this, MainActivity.class));
-                    finish();
-
-
-
-                }
-            }){
-                @Override
-                public Map<String,String> getHeaders(){
-
-                    return answerRequestHeader;
-                }
-            };
-
-            quizAnswersRequestQueue.add(submissionRequest);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    private boolean sendAnswer(final String selectedOption){
+        questionsSocket.emit(selectedOption);
 
         return true;
     }

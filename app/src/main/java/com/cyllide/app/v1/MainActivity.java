@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     boolean doubleBackToExitPressedOnce = false;
 
 
+
+
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -319,6 +321,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                     .replace(R.id.fragment_container, fragment)
                     .commit();
          }
+
     }
 
 
