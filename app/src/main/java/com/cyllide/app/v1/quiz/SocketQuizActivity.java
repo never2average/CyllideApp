@@ -81,6 +81,7 @@ public class SocketQuizActivity extends AppCompatActivity {
     Dialog confirmExitPopup;
     ImageView quizActivityAnswerIndicator, sendUPI;
     private String quizID;
+    String socketQuestionID;
     ImageView exitQuiz;
     MediaPlayer quizMusicPlayer;
     MediaPlayer quizCorrectAnswerMusicPlayer;
@@ -127,15 +128,16 @@ public class SocketQuizActivity extends AppCompatActivity {
 
         JSONObject jsonObject = quizObject;
         try {
+            socketQuestionID = jsonObject.getString("id");
 //            viewersTV.setText(Integer.toString(jsonResponse));
             circularProgressBar.setProgress(0);
 //            jsonObject = jsonQuestionArray.getJSONObject(questionID);
-            mainQuestion.setText(jsonObject.getString("theQuestion"));
-            JSONArray answerArray = jsonObject.getJSONArray("answerOptions");
-            optionA.setText(answerArray.getJSONObject(0).getString("value"));
-            optionB.setText(answerArray.getJSONObject(1).getString("value"));
-            optionC.setText(answerArray.getJSONObject(2).getString("value"));
-            optionD.setText(answerArray.getJSONObject(3).getString("value"));
+            mainQuestion.setText(jsonObject.getString("question"));
+            JSONArray answerArray = jsonObject.getJSONArray("options");
+            optionA.setText(answerArray.getString(0));
+            optionB.setText(answerArray.getString(1));
+            optionC.setText(answerArray.getString(2));
+            optionD.setText(answerArray.getString(3));
             circularProgressBar.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
             circularProgressBar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
             circularProgressBar.setProgressBarWidth(10);
@@ -158,9 +160,45 @@ public class SocketQuizActivity extends AppCompatActivity {
         Emitter.Listener numActivePlayers = new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                viewersTV.setText(args[0].toString());
-                Log.d("QuizActivity",args.toString());
+                try {
+                    viewersTV.setText(Integer.toString(((JSONObject)args[1]).getInt("value")));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                catch (ArrayIndexOutOfBoundsException e1){
+                    try {
+                        Log.d("QuizActivity",args[0].toString());
+                        viewersTV.setText(Integer.toString(((JSONObject)args[0]).getInt("value")));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
 
+            }
+        };
+
+        Emitter.Listener answerResponseFromServer = new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                String result = "";
+                isCorrect = false;
+                try {
+                    result = ((JSONObject)args[1]).getString("myresp");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                catch (ArrayIndexOutOfBoundsException e1){
+                    try {
+                        Log.d("QuizActivity",args[0].toString());
+                        result = ((JSONObject)args[0]).getString("myresp");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if(result.equals("Correct")){
+                    isCorrect = true;
+                }
+                Log.d("QuizActivity", result);
             }
         };
 
@@ -172,7 +210,14 @@ public class SocketQuizActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Log.d("SocketQuizActivity",args.toString());
-                        JSONObject data = (JSONObject) args[0];
+                        JSONObject data;
+                        try {
+                            data = (JSONObject) args[1];
+                        }
+                        catch (ArrayIndexOutOfBoundsException e){
+                            data = (JSONObject) args[0];
+                        }
+                        Log.d("SocketQuizActivity",data.toString());
                         changeQuestion(data);
 
                     }
@@ -200,9 +245,15 @@ public class SocketQuizActivity extends AppCompatActivity {
                             Log.d("changequestion","inside response question");
 
                             try {
-                                jsonResponse =  new JSONObject(args[0].toString());
+                                try {
+                                    jsonResponse = (JSONObject) args[1];
+                                }
+                                catch(ArrayIndexOutOfBoundsException e){
+                                    jsonResponse = (JSONObject) args[0];
+                                }
                                 showAnswer(jsonResponse);
-                                if(jsonResponse.getString("data").equals("Correct")){
+                                if(isCorrect){
+                                    isCorrect = false;
                                     quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
                                     quizCorrectAnswerMusicPlayer.start();
                                     Log.d("questionID",Integer.toString(questionID));
@@ -235,17 +286,12 @@ public class SocketQuizActivity extends AppCompatActivity {
                                         }, 2000);
                                     }
                                 }
-                            } catch (JSONException e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
 
                         }
-                        if(true) //Condition to check if message recieved is correct or not
-                        {
-                            //Check
-                            isCorrect = false;
 
-                        }
 
 
 
@@ -398,9 +444,12 @@ public class SocketQuizActivity extends AppCompatActivity {
 
 
         questionsSocket.connect();
-        questionsSocket.on("question_data_response",onNewQuestion);
-        questionsSocket.on("onResponseFrom", onResponseFromServer);
         questionsSocket.on("numPlayers",numActivePlayers);
+        questionsSocket.on("question_data_response_test",onNewQuestion);
+        questionsSocket.on("amicorrect", answerResponseFromServer);
+        questionsSocket.emit("question_data_test");
+        questionsSocket.on("answer_stats_results",onResponseFromServer);
+
 
 
 
@@ -501,6 +550,16 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                     textTimer.setText("STOP");
+                    JSONObject response = new JSONObject();
+                    try{
+                        response = new JSONObject();
+                        response.put("id",socketQuestionID);
+                    }
+                    catch (JSONException e){
+                        Log.d("QuizActivity",e.toString());
+                    }
+                    questionsSocket.emit("answer_stats",response);
+                    Log.d("answer_stats","DONE");
 
         }}.start();
 
@@ -511,10 +570,19 @@ public class SocketQuizActivity extends AppCompatActivity {
         option2CV.setClickable(false);
         option3CV.setClickable(false);
         option4CV.setClickable(false);
-        questionsSocket.emit(selectedOption);
+        JSONObject answer = new JSONObject();
+        try {
+            answer.put("id",socketQuestionID);
+            answer.put("option",selectedOption);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        questionsSocket.emit("answer_option",answer);
+        Log.d("QuizActivity","Emitted");
 
         return true;
     }
+
 
     @Override
     protected void onDestroy() {
@@ -527,7 +595,14 @@ public class SocketQuizActivity extends AppCompatActivity {
         }
         quizCorrectAnswerMusicPlayer.stop();
         quizWrongAnswerMusicPlayer.stop();
+        questionsSocket.close();
     }
+    @Override
+            protected void onPause(){
+        super.onPause();
+        onDestroy();
+    }
+
 
 
     RequestQueue quizMoneyRequestQueue;
