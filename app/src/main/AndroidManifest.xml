@@ -112,9 +112,11 @@
             android:screenOrientation="portrait" />
         <activity android:name=".authentication.PhoneAuth" >
 
-
-
         </activity>
+
+        <activity
+            android:name=".quiz.SocketQuizActivity"
+            android:screenOrientation="portrait" />
 
         <receiver android:name=".background.services.QuizAlarmManager" />
         <receiver

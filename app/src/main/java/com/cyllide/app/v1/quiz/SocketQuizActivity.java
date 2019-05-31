@@ -159,6 +159,7 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void call(Object... args) {
                 viewersTV.setText(args[0].toString());
+                Log.d("QuizActivity",args.toString());
 
             }
         };
@@ -167,12 +168,13 @@ public class SocketQuizActivity extends AppCompatActivity {
         Emitter.Listener onNewQuestion = new Emitter.Listener() {
             @Override
             public void call(final Object... args) {
-                getActivity().runOnUiThread(new Runnable() {
+                SocketQuizActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Log.d("SocketQuizActivity",args.toString());
                         JSONObject data = (JSONObject) args[0];
                         changeQuestion(data);
+
                     }
                 });
             }
@@ -181,7 +183,7 @@ public class SocketQuizActivity extends AppCompatActivity {
         Emitter.Listener onResponseFromServer = new Emitter.Listener() {
             @Override
             public void call(final Object... args) {
-                getActivity().runOnUiThread(new Runnable() {
+                SocketQuizActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Log.d("QuizSocketActivity",args.toString());
@@ -194,41 +196,47 @@ public class SocketQuizActivity extends AppCompatActivity {
                             quizMusicPlayer.seekTo(0);
                             quizActivityAnswerIndicator.setVisibility(View.VISIBLE);
                             textTimer.setVisibility(View.INVISIBLE);
-                            JSONObject jsonResponse = new JSONObject(args[0]);
+                            JSONObject jsonResponse;
                             Log.d("changequestion","inside response question");
-                            showAnswer(jsonResponse);
-                            if(jsonResponse.getString("data").equals("Correct")){
-                                quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
-                                quizCorrectAnswerMusicPlayer.start();
-                                Log.d("questionID",Integer.toString(questionID));
-                                Log.d("changequestion","calling change change question");
-                                if(true) {
-                                    //check wheter last question
-                                    finishQuiz(questionID);
-                                }
-                            }
-                            else {
-                                quizActivityAnswerIndicator.setImageResource(R.drawable.ic_cancel);
-                                quizWrongAnswerMusicPlayer.start();
-                                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                    v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-                                } else {
-
-                                    v.vibrate(500);
+                            try {
+                                jsonResponse =  new JSONObject(args[0].toString());
+                                showAnswer(jsonResponse);
+                                if(jsonResponse.getString("data").equals("Correct")){
+                                    quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
+                                    quizCorrectAnswerMusicPlayer.start();
+                                    Log.d("questionID",Integer.toString(questionID));
+                                    Log.d("changequestion","calling change change question");
+                                    if(true) {
+                                        //check wheter last question
+                                        finishQuiz(questionID);
+                                    }
                                 }
-                                if (questionID == 9) {
-                                    losersPopup.show();
-                                } else {
-                                    Handler handler = new Handler();
-                                    handler.postDelayed(new Runnable() {
-                                        public void run() {
-                                            showRevival();
+                                else {
+                                    quizActivityAnswerIndicator.setImageResource(R.drawable.ic_cancel);
+                                    quizWrongAnswerMusicPlayer.start();
+                                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-                                        }
-                                    }, 2000);
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                        v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                                    } else {
+
+                                        v.vibrate(500);
+                                    }
+                                    if (questionID == 9) {
+                                        losersPopup.show();
+                                    } else {
+                                        Handler handler = new Handler();
+                                        handler.postDelayed(new Runnable() {
+                                            public void run() {
+                                                showRevival();
+
+                                            }
+                                        }, 2000);
+                                    }
                                 }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
 
                         }
@@ -246,10 +254,7 @@ public class SocketQuizActivity extends AppCompatActivity {
                 });
             }
         };
-        questionsSocket.connect();
-        questionsSocket.on("question_list_response",onNewQuestion);
-        questionsSocket.on("onResponseFrom", onResponseFromServer);
-        questionsSocket.on("numPlayers",numActivePlayers);
+
 
         quizMusicPlayer= MediaPlayer.create(getApplicationContext(), R.raw.quiz_backgorund_sound);
         quizMusicPlayer.start();
@@ -392,6 +397,12 @@ public class SocketQuizActivity extends AppCompatActivity {
         textTimer = findViewById(R.id.textTimer);
 
 
+        questionsSocket.connect();
+        questionsSocket.on("question_data_response",onNewQuestion);
+        questionsSocket.on("onResponseFrom", onResponseFromServer);
+        questionsSocket.on("numPlayers",numActivePlayers);
+
+
 
 
 
@@ -403,8 +414,10 @@ public class SocketQuizActivity extends AppCompatActivity {
     private Socket questionsSocket;
     {
         try {
-            questionsSocket = IO.socket(getString(R.string.quizSocketURL));
-        } catch (URISyntaxException e) {}
+            questionsSocket = IO.socket("http://quiz.cyllide.com:5000");
+        } catch (URISyntaxException e) {
+            Log.d("QUizActivity",e.toString());
+        }
     }
 
 
@@ -561,7 +574,7 @@ public class SocketQuizActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             quizWinPopup.dismiss();
-                            Toast.makeText(QuizActivity.this,"Money will be sent",Toast.LENGTH_LONG).show();
+                            Toast.makeText(SocketQuizActivity.this,"Money will be sent",Toast.LENGTH_LONG).show();
                             winnersMoney(string);
                         }
                     });

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingBottom="10dp"
-    tools:context="com.cyllide.app.v1.quiz.QuizActivity">
+    tools:context="com.cyllide.app.v1.quiz.SocketQuizActivity">
 
     <LinearLayout
         android:layout_margin="12dp"

@@ -144,6 +144,15 @@ public class QuizRulesActivity extends AppCompatActivity {
 
 
         startQuizButton=findViewById(R.id.startQuizButton);
+        startQuizButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent quizSwitcher = new Intent(QuizRulesActivity.this,SocketQuizActivity.class);
+                quizSwitcher.putExtra("questions","");
+                quizSwitcher.putExtra("quizID",quizID);
+                startActivity(quizSwitcher);
+                finish();            }
+        });
 
 
         quizPrize = findViewById(R.id.quiz_rules_qrize_text_view);
@@ -297,7 +306,7 @@ public class QuizRulesActivity extends AppCompatActivity {
         StringRequest questionRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Intent quizSwitcher = new Intent(QuizRulesActivity.this,QuizActivity.class);
+                Intent quizSwitcher = new Intent(QuizRulesActivity.this,SocketQuizActivity.class);
                 quizSwitcher.putExtra("questions",response);
                 quizSwitcher.putExtra("quizID",quizID);
                 startActivity(quizSwitcher);
