@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingBottom="10dp"
-    tools:context="com.cyllide.app.v1.quiz.QuizActivity">
+    tools:context="com.cyllide.app.v1.quiz.SocketQuizActivity">
 
     <LinearLayout
         android:layout_margin="12dp"
@@ -22,7 +22,7 @@
             android:layout_marginLeft="2dp"
             android:gravity="center_vertical"
             android:id="@+id/activity_quiz_viewers_text_view"
-            android:text="3.8K"
+            android:text="Loading..."
             android:textSize="18sp"
             android:layout_width="0dp"
             android:layout_weight="9"
@@ -137,7 +137,7 @@
                     android:textColor="@android:color/black"
                     android:gravity="center"
                     android:id="@+id/questionText"
-                    android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
+                    android:text="Loading..."
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </LinearLayout>
@@ -170,7 +170,7 @@
                     android:textColor="@android:color/white"
                     android:id="@+id/activity_quiz_option_1_text_view"
                     android:gravity="center"
-                    android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
+                    android:text="Loading..."
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
@@ -202,7 +202,7 @@
                     android:textColor="@android:color/white"
                     android:gravity="center"
                     android:id="@+id/activity_quiz_option_2_text_view"
-                    android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
+                    android:text="Loading..."
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </RelativeLayout>
@@ -233,7 +233,7 @@
                     android:textColor="@android:color/white"
                     android:gravity="center"
                     android:id="@+id/activity_quiz_option_3_text_view"
-                    android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
+                    android:text="Loading..."
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </RelativeLayout>
@@ -264,7 +264,7 @@
                     android:textColor="@android:color/white"
                     android:gravity="center"
                     android:id="@+id/activity_quiz_option_4_text_view"
-                    android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
+                    android:text="Loading..."
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </RelativeLayout>
