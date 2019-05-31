@@ -12,6 +12,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:contextClickable="true"
+    android:overScrollMode="never"
      />
     <LinearLayout
         android:id="@+id/activity_stories_news_loading_layout"

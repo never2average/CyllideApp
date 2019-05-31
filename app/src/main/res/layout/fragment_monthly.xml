@@ -7,4 +7,5 @@
     android:contextClickable="true"
     tools:context="contests.MonthlyFragment"
     tools:ignore="UnusedAttribute"
-    android:layout_marginTop="4dp"/>
+    android:layout_marginTop="4dp"
+    android:overScrollMode="never"/>

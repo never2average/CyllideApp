@@ -76,6 +76,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/showstocks"
         android:layout_margin="@dimen/margin"
+        android:overScrollMode="never"
         />
 
 </LinearLayout>

@@ -58,6 +58,7 @@
                     android:id="@+id/portfolios"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:overScrollMode="never"
                     />
                 <TextView
                     android:id="@+id/no_portfolios_to_show"

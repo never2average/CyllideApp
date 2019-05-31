@@ -20,8 +20,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class StoriesMainActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
-    CircleImageView imageButton;
     ImageView back;
     LinearLayout loading;
     @Override
@@ -73,7 +71,12 @@ public class StoriesMainActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+    }
+    @Override
+    public void onBackPressed(){
+        Intent returnHome = new Intent(this,MainActivity.class);
+        startActivity(returnHome);
+        finish();
     }
 }
 
