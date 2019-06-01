@@ -462,9 +462,9 @@ public class SocketQuizActivity extends AppCompatActivity {
 
         questionsSocket.connect();
         questionsSocket.on("numPlayers",numActivePlayers);
-        questionsSocket.on("question_data_response_test",onNewQuestion);
+        questionsSocket.on("question_data_response",onNewQuestion);
         questionsSocket.on("amicorrect", answerResponseFromServer);
-        questionsSocket.emit("question_data_test");
+//        questionsSocket.emit("question_data_test");
         questionsSocket.on("answer_stat_results",onResponseFromServer);
         questionsSocket.on("quiz_winners_listener",winnerMoney);
 
@@ -619,7 +619,6 @@ public class SocketQuizActivity extends AppCompatActivity {
     @Override
             protected void onPause(){
         super.onPause();
-        onDestroy();
     }
 
 

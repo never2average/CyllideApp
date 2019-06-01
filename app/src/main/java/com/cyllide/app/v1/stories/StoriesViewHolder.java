@@ -12,11 +12,14 @@ import com.google.android.material.button.MaterialButton;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+
+
+
 public class StoriesViewHolder extends RecyclerView.ViewHolder {
 
     private TextView titleTV,authorTV,summaryTV;
     private SimpleDraweeView image;
-    private MaterialButton storyTag;
+    private TextView storyTag;
     private LinearLayout storiesLL;
 
     public StoriesViewHolder(View itemView)
@@ -32,7 +35,7 @@ public class StoriesViewHolder extends RecyclerView.ViewHolder {
 
     public void populate(final StoriesModel stories)
     {
-        storyTag.setText(stories.getContentType());
+        storyTag.setText(" "+stories.getContentType());
         titleTV.setText(stories.getStoryName());
         authorTV.setText("By: "+stories.getContentAuthor());
         summaryTV.setText(stories.getStoryDescription());
