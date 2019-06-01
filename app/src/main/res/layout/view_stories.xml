@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:cardElevation="@dimen/margin"
+    android:id="@+id/stories_card_view"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <LinearLayout
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
@@ -28,8 +29,7 @@
                 android:layout_height="250dp"
                 android:scaleType="fitXY"
                 android:layout_gravity="center_horizontal"
-                fresco:placeholderImage="@android:drawable/ic_menu_camera"
-                android:clickable="true"/>
+                fresco:placeholderImage="@android:drawable/ic_menu_camera" />
 
             <TextView
                 android:id="@+id/story_title"
