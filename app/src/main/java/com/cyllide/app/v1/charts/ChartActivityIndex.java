@@ -29,7 +29,10 @@ import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -300,9 +303,34 @@ public class ChartActivityIndex extends AppCompatActivity {
                     lineDataSets.add(lineDataSet);
                     Log.d("PortfolioActivity","FInished making array lists");
 
+                    lineChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+                        @Override
+                        public void onValueSelected(Entry e, Highlight h) {
+
+                            Highlight highlight[] = new Highlight[lineChart.getData().getDataSets().size()];
+                            for (int j = 0; j < lineChart.getData().getDataSets().size(); j++) {
+
+                                IDataSet iDataSet = lineChart.getData().getDataSets().get(j);
+
+                                for (int i = 0; i < ((LineDataSet) iDataSet).getValues().size(); i++) {
+                                    if (((LineDataSet) iDataSet).getValues().get(i).getX() == e.getX()) {
+                                        highlight[j] = new Highlight(e.getX(), e.getY(), j);
+                                    }
+                                }
+
+                            }
+                            lineChart.highlightValues(highlight);
+                        }
+
+                        @Override
+                        public void onNothingSelected() {
+                        }
+                    });
+
+
                     lineChart.setData(new LineData(lineDataSets));
                     lineChart.getXAxis().setDrawLabels(false);
-                    lineChart.getAxisLeft().setDrawGridLines(false);
+                    lineChart.getAxisLeft().setDrawGridLines(true);
                     lineChart.getLegend().setEnabled(false);
                     lineDataSet.setDrawFilled(true);
                     lineDataSet.setFillDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.chart_gradient));
