@@ -27,6 +27,8 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
     private List<String> data;
     private Context context;
 
+
+
     public PortfolioGameCardAdapter(List<String> data, Context context) {
         this.data = data;
         this.context = context;

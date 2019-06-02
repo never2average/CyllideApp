@@ -93,6 +93,7 @@ dependencies {
     implementation 'com.github.hkk595:Resizer:v1.5'
     implementation 'com.treebo:internetavailabilitychecker:1.0.4'
     implementation 'com.github.nkzawa:socket.io-client:0.6.0'
+    implementation 'link.fls:swipestack:0.3.0'
 
 
 }
