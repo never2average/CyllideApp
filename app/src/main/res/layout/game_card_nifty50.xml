@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/portfolio_game_equity_card"
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="12dp"
+    android:outlineAmbientShadowColor="@android:color/black"
+    android:layout_margin="6dp"
+    android:gravity="center_horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2"
+            android:orientation="vertical">
+            <com.github.mikephil.charting.charts.LineChart
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/portfolio_game_home_chart"/>
+        </LinearLayout>
+        <ImageView
+            android:background="#66f20000"
+            android:id="@+id/left_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/left_arrow"
+            android:layout_centerHorizontal="true" />
+        <ImageView
+            android:background="#6600f200"
+            android:layout_width="match_parent"
+            android:id="@+id/right_image"
+            android:layout_height="match_parent"
+            android:src="@drawable/right_arrow"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

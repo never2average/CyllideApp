@@ -1,0 +1,63 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:swipedeck="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".portfolio.PortfolioGameHomeActivity">
+
+    <LinearLayout
+        android:weightSum="3"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/portfoliogametabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="@dimen/margin"
+            android:id="@+id/portfolio_game_leaderboard_back_button"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            android:tint="@color/white"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/pg_leaderboard_activity_1"
+                android:src="@drawable/portfolio_game_1"
+                android:layout_width="0dp"
+                android:tint="#444"
+                android:layout_weight="1"
+                android:padding="@dimen/margin"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/pg_leaderboard_activity_2"
+                android:tint="#444"
+                android:src="@drawable/portfolio_game_2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:padding="@dimen/margin"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/pg_leaderboard_activity_3"
+                android:tint="@color/white"
+                android:src="@drawable/portfolio_game_3"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:padding="@dimen/margin"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

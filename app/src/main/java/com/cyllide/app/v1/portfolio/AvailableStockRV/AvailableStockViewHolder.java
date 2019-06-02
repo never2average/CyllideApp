@@ -7,7 +7,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
-import com.cyllide.app.v1.charts.ChartActivity;
+import com.cyllide.app.v1.portfolio.PortfolioGameDetailedChartActivity;
 import com.cyllide.app.v1.R;
 import com.nex3z.togglebuttongroup.SingleSelectToggleGroup;
 
@@ -73,7 +73,7 @@ public class AvailableStockViewHolder extends RecyclerView.ViewHolder {
         analyzeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(itemView.getContext(),ChartActivity.class);
+                Intent intent=new Intent(itemView.getContext(), PortfolioGameDetailedChartActivity.class);
                 intent.putExtra("ticker",stockName.getText().toString());
                 itemView.getContext().startActivity(intent);
             }

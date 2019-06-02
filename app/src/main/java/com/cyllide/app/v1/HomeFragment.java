@@ -20,7 +20,7 @@ import android.view.View;
 
 //import com.example.kartikbhardwaj.bottom_navigation.stories.NewsData;
 import com.cyllide.app.v1.contests.MonthlyActivity;
-import com.cyllide.app.v1.portfolio.MyPortfolio;
+import com.cyllide.app.v1.portfolio.PortfolioGameHomeActivity;
 import com.cyllide.app.v1.forum.ForumActivity;
 import com.cyllide.app.v1.quiz.QuizRulesActivity;
 import com.cyllide.app.v1.stories.StoriesMainActivity;
@@ -110,7 +110,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 //                if(ConnectionStatus.connectionstatus){
-//                Intent intent=new Intent(getContext(), MyPortfolio.class);
+//                Intent intent=new Intent(getContext(), PortfolioGameHomeActivity.class);
 //                startActivity(intent);}
 //                else{
 //                    Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
@@ -125,7 +125,7 @@ public class HomeFragment extends Fragment {
                     Toast.makeText(getContext(), "Poor Network Connection", Toast.LENGTH_LONG).show();
 
                 } else {
-                    Intent portfolioIntent = new Intent(getContext(), MyPortfolio.class);
+                    Intent portfolioIntent = new Intent(getContext(), PortfolioGameHomeActivity.class);
                     startActivity(portfolioIntent);
                     getActivity().finish();
                 }
