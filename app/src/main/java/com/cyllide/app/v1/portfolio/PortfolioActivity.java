@@ -24,6 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.ConnectionStatus;
 import com.cyllide.app.v1.CustomWebView;
+import com.cyllide.app.v1.MainActivity;
 import com.cyllide.app.v1.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -69,7 +70,7 @@ public class PortfolioActivity extends AppCompatActivity {
        backButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               Intent intent = new Intent(PortfolioActivity.this, MyPortfolio.class);
+               Intent intent = new Intent(PortfolioActivity.this, PortfolioGameHomeActivity.class);
                startActivity(intent);
                finish();
            }
@@ -168,7 +169,7 @@ public class PortfolioActivity extends AppCompatActivity {
         stockAnalysis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PortfolioActivity.this, PortfolioDetailActivity.class);
+                Intent intent = new Intent(PortfolioActivity.this, MainActivity.class);
                 intent.putExtra("id","stockAnalysis");
                 startActivity(intent);
                 finish();
@@ -179,7 +180,7 @@ public class PortfolioActivity extends AppCompatActivity {
         orderHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PortfolioActivity.this, PortfolioDetailActivity.class);
+                Intent intent = new Intent(PortfolioActivity.this, MainActivity.class);
                 intent.putExtra("id","orderHistory");
                 startActivity(intent);
                 finish();
@@ -190,7 +191,7 @@ public class PortfolioActivity extends AppCompatActivity {
         portfolioPositions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PortfolioActivity.this, PortfolioDetailActivity.class);
+                Intent intent = new Intent(PortfolioActivity.this, MainActivity.class);
                 intent.putExtra("id","portfolioPositions");
                 startActivity(intent);
                 finish();

@@ -86,18 +86,12 @@ dependencies {
     implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
     implementation 'com.android.support:design:28.1.1'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
-
+    implementation 'com.daprlabs.aaron:swipedeck:2.0.6'
     implementation 'io.realm:android-adapters:2.1.1'
     implementation "android.arch.work:work-runtime:1.0.0"
     implementation 'com.github.clans:fab:1.6.4'
-//    implementation 'com.amazonaws:aws-android-sdk-core:2.3.3'
-//    implementation 'com.amazonaws:aws-android-sdk-ddb:2.3.3'
-//    implementation('com.amazonaws:aws-android-sdk-mobile-client:2.6.7@aar') { transitive = true }
-//    implementation 'com.amazonaws:aws-android-sdk-s3:2.6.+'
-//    implementation 'com.amazonaws:aws-android-sdk-cognito:2.6.+'
     implementation 'com.github.hkk595:Resizer:v1.5'
     implementation 'com.treebo:internetavailabilitychecker:1.0.4'
-
     implementation 'com.github.nkzawa:socket.io-client:0.6.0'
 
 

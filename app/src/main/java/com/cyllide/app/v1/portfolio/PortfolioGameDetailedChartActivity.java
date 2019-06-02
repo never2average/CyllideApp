@@ -1,4 +1,4 @@
-package com.cyllide.app.v1.charts;
+package com.cyllide.app.v1.portfolio;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -24,6 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.CustomWebView;
 import com.cyllide.app.v1.R;
+import com.cyllide.app.v1.charts.JavaScriptChartInterface;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
@@ -46,7 +47,7 @@ import java.util.Date;
 import java.util.Map;
 
 
-public class ChartActivity extends AppCompatActivity {
+public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
 
     Button oneDay,fiveDay,oneMonth,sixMonth,oneYear;
     WebView webView;
@@ -72,7 +73,7 @@ public class ChartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         ticker = intent.getStringExtra("ticker").toUpperCase();
-        setContentView(R.layout.activity_chart);
+        setContentView(R.layout.activity_chart_detailed_game_portfolio);
         oneDay = findViewById(R.id.chart_button_one_day);
         fiveDay = findViewById(R.id.chart_button_five_days);
         oneMonth = findViewById(R.id.chart_button_one_month);
@@ -87,7 +88,7 @@ public class ChartActivity extends AppCompatActivity {
         webView.getSettings().setDomStorageEnabled(true);
         balanceAssets = findViewById(R.id.balance_total_assets);
         currentPriceTV = findViewById(R.id.current_price_chart_tv);
-        getSingleValue(ticker,ChartActivity.this);
+        getSingleValue(ticker, PortfolioGameDetailedChartActivity.this);
         summaryAsk = findViewById(R.id.summary_ask);
         summaryBeta = findViewById(R.id.summary_beta);
         summaryPreviousClose = findViewById(R.id.summary_previous_close);
@@ -359,7 +360,7 @@ public class ChartActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONArray responseArray = new JSONObject(response).getJSONArray("data");
-                    Log.d("ChartActivity",response);
+                    Log.d("PortfolioGameDetailedChartActivity",response);
 
                     int length = responseArray.length();
                     ArrayList<Entry> yAxisValues = new ArrayList<>();
@@ -435,7 +436,7 @@ public class ChartActivity extends AppCompatActivity {
 
                 }
                 catch (JSONException e){
-                    Log.d("ChartActivity",e.toString());
+                    Log.d("PortfolioGameDetailedChartActivity",e.toString());
 
                 }
             }

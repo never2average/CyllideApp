@@ -270,7 +270,7 @@ public class ChartActivityIndex extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONArray responseArray = new JSONObject(response).getJSONArray("data");
-                    Log.d("ChartActivity",response);
+                    Log.d("PortfolioGameDetailedChartActivity",response);
 
                     int length = responseArray.length();
                     ArrayList<Entry> yAxisValues = new ArrayList<>();
@@ -347,7 +347,7 @@ public class ChartActivityIndex extends AppCompatActivity {
 
                 }
                 catch (JSONException e){
-                    Log.d("ChartActivity",e.toString());
+                    Log.d("PortfolioGameDetailedChartActivity",e.toString());
 
                 }
             }
