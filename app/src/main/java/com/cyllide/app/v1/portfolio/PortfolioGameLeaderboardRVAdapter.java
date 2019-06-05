@@ -1,18 +1,15 @@
 package com.cyllide.app.v1.portfolio;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cyllide.app.v1.R;
-import com.cyllide.app.v1.leaderboardRV.LeaderboardAdapter;
-import com.cyllide.app.v1.leaderboardRV.LeaderboardModel;
 
 import java.util.List;
 
@@ -39,6 +36,12 @@ public class PortfolioGameLeaderboardRVAdapter extends RecyclerView.Adapter<Port
     @Override
     public void onBindViewHolder(@NonNull PortfolioGameLeaderboardRVViewHolder holder, int position) {
         holder.populate(leaderboardModelList.get(position));
+        if(position %2 == 1)
+        {
+            holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
+        }else {
+            holder.itemView.setBackgroundColor(Color.parseColor("#FF999999"));
+        }
     }
 
     @Override
