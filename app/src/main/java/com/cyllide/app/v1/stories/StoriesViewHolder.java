@@ -10,19 +10,23 @@ import com.cyllide.app.v1.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.material.button.MaterialButton;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+
+
 
 public class StoriesViewHolder extends RecyclerView.ViewHolder {
 
     private TextView titleTV,authorTV,summaryTV;
     private SimpleDraweeView image;
-    private MaterialButton storyTag;
-    private LinearLayout storiesLL;
+    private TextView storyTag;
+    private CardView storiesLL;
 
     public StoriesViewHolder(View itemView)
     {
         super(itemView);
-        storiesLL=itemView.findViewById(R.id.storiesll);
+        storiesLL=itemView.findViewById(R.id.stories_card_view);
         image=itemView.findViewById(R.id.stories_image_view);
         storyTag = itemView.findViewById(R.id.story_tag);
         titleTV=itemView.findViewById(R.id.story_title);
@@ -32,7 +36,7 @@ public class StoriesViewHolder extends RecyclerView.ViewHolder {
 
     public void populate(final StoriesModel stories)
     {
-        storyTag.setText(stories.getContentType());
+        storyTag.setText(" "+stories.getContentType());
         titleTV.setText(stories.getStoryName());
         authorTV.setText("By: "+stories.getContentAuthor());
         summaryTV.setText(stories.getStoryDescription());

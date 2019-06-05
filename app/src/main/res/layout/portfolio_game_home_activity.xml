@@ -7,6 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".portfolio.PortfolioGameHomeActivity">
 
+    <!--<com.daprlabs.aaron.swipedeck.SwipeDeck-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:id="@+id/swipe_deck"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginTop="50dp"-->
+        <!--android:layout_marginBottom="100dp"-->
+        <!--swipedeck:card_spacing="0dp"-->
+        <!--swipedeck:max_visible="3"-->
+        <!--android:visibility="visible"-->
+        <!--swipedeck:swipe_enabled="true" />-->
+
+
+
+
     <LinearLayout
         android:weightSum="3"
         android:orientation="vertical"
@@ -61,24 +76,10 @@
             android:layout_height="match_parent" />
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        >
 
-        <com.daprlabs.aaron.swipedeck.SwipeDeck
-            android:background="@android:color/transparent"
-            android:id="@+id/swipe_deck"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="100dp"
-            swipedeck:card_spacing="0dp"
-            swipedeck:max_visible="3"
-            swipedeck:swipe_enabled="true" />
 
-    </LinearLayout>
+
+
     <LinearLayout
         android:background="@android:color/transparent"
         android:layout_alignParentBottom="true"
@@ -150,5 +151,39 @@
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
+
+    <!--<FrameLayout-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:clipChildren="false">-->
+
+        <!--<com.daprlabs.aaron.swipedeck.SwipeDeck-->
+            <!--android:background="@android:color/transparent"-->
+            <!--android:id="@+id/swipe_deck"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginTop="50dp"-->
+            <!--android:layout_marginBottom="100dp"-->
+            <!--swipedeck:card_spacing="0dp"-->
+            <!--swipedeck:max_visible="5"-->
+            <!--swipedeck:swipe_enabled="true" />-->
+
+    <!--</FrameLayout>-->
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false">
+
+        <link.fls.swipestack.SwipeStack
+            android:id="@+id/swipe_deck"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="32dp"/>
+
+    </FrameLayout>
 
 </RelativeLayout>

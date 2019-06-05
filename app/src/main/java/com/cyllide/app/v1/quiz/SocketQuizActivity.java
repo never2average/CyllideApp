@@ -95,7 +95,7 @@ public class SocketQuizActivity extends AppCompatActivity {
     private void changeQuestion(JSONObject quizObject){
 
         quizMusicPlayer.start();
-
+        questionID++;
 
         String id;
 
@@ -155,6 +155,28 @@ public class SocketQuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        Emitter.Listener winnerMoney = new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                JSONObject response;
+                try{
+                 response = (JSONObject)args[1];
+
+                }
+                catch (ArrayIndexOutOfBoundsException e){
+                    response = (JSONObject)args[0];
+                }
+                try{
+                    finishQuiz(10,response.getDouble("amount"));
+                }
+                catch(Exception e){
+                    Log.d("QuizSocket",e.toString());
+                }
+
+            }
+        };
 
 
         Emitter.Listener numActivePlayers = new Emitter.Listener() {
@@ -232,9 +254,6 @@ public class SocketQuizActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Log.d("QuizSocketActivity",args.toString());
-
-                        if(true)  //Condition to check if message given is stats
-                        {
                             mDeviceBandwidthSampler.stopSampling();
                             Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
                             quizMusicPlayer.pause();
@@ -258,9 +277,9 @@ public class SocketQuizActivity extends AppCompatActivity {
                                     quizCorrectAnswerMusicPlayer.start();
                                     Log.d("questionID",Integer.toString(questionID));
                                     Log.d("changequestion","calling change change question");
-                                    if(true) {
+                                    if(questionID == 10) {
                                         //check wheter last question
-                                        finishQuiz(questionID);
+                                        finishQuiz(questionID,0.0);
                                     }
                                 }
                                 else {
@@ -296,7 +315,7 @@ public class SocketQuizActivity extends AppCompatActivity {
 
 
 
-                    }
+
                 });
             }
         };
@@ -314,8 +333,6 @@ public class SocketQuizActivity extends AppCompatActivity {
         mConnectionClassManager = ConnectionClassManager.getInstance();
         mDeviceBandwidthSampler = DeviceBandwidthSampler.getInstance();
         mConnectionClassManager.register(mListener);
-
-
 
 
 
@@ -445,10 +462,11 @@ public class SocketQuizActivity extends AppCompatActivity {
 
         questionsSocket.connect();
         questionsSocket.on("numPlayers",numActivePlayers);
-        questionsSocket.on("question_data_response_test",onNewQuestion);
+        questionsSocket.on("question_data_response",onNewQuestion);
         questionsSocket.on("amicorrect", answerResponseFromServer);
-        questionsSocket.emit("question_data_test");
-        questionsSocket.on("answer_stats_results",onResponseFromServer);
+//        questionsSocket.emit("question_data_test");
+        questionsSocket.on("answer_stat_results",onResponseFromServer);
+        questionsSocket.on("quiz_winners_listener",winnerMoney);
 
 
 
@@ -494,7 +512,7 @@ public class SocketQuizActivity extends AppCompatActivity {
                 confirmExitPopup.dismiss();
                 startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
                 finish();
-                questionID = -1;
+                questionID = 0;
                 quizMusicPlayer.stop();
                 if(countDownTimer != null) {
                     countDownTimer.cancel();
@@ -553,12 +571,13 @@ public class SocketQuizActivity extends AppCompatActivity {
                     JSONObject response = new JSONObject();
                     try{
                         response = new JSONObject();
-                        response.put("id",socketQuestionID);
+                        response.put("qid",socketQuestionID);
                     }
                     catch (JSONException e){
                         Log.d("QuizActivity",e.toString());
                     }
                     questionsSocket.emit("answer_stats",response);
+                    Log.d("answer_stats",response.toString());
                     Log.d("answer_stats","DONE");
 
         }}.start();
@@ -600,7 +619,6 @@ public class SocketQuizActivity extends AppCompatActivity {
     @Override
             protected void onPause(){
         super.onPause();
-        onDestroy();
     }
 
 
@@ -608,13 +626,56 @@ public class SocketQuizActivity extends AppCompatActivity {
     RequestQueue quizMoneyRequestQueue;
     Map<String,String> quizMoneyRequestHeader = new ArrayMap<>();
 
-    private void finishQuiz(int questionID){
-        if(questionID != 9){
+    private void finishQuiz(int questionID,Double response){
+        if(questionID != 10){
             Toast.makeText(this,"You  lol",Toast.LENGTH_LONG).show();
             questionsSocket.close();
             losersPopup.show();
         }
         else{
+
+
+            Double prize = 0.0;
+            DecimalFormat format = new DecimalFormat("####0.0");
+            try {
+                prize = response;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            TextView quizMoney = quizWinPopup.findViewById(R.id.quiz_winning_prize_money);
+            TextInputEditText upiID = quizWinPopup.findViewById(R.id.upi_id);
+            final String string = upiID.getText().toString();
+
+            quizWinPopup.show();
+            quizMoney.setText("₹ "+format.format(prize));
+            closePrizePopup = quizWinPopup.findViewById(R.id.close_prize_popup);
+            closePrizePopup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    quizWinPopup.dismiss();
+                }
+            });
+            sendUPI = quizWinPopup.findViewById(R.id.upi_id_button);
+            sendUPI.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    quizWinPopup.dismiss();
+                    Toast.makeText(SocketQuizActivity.this,"Money will be sent",Toast.LENGTH_LONG).show();
+                    winnersMoney(string);
+                }
+            });
+
+            if(prize==0){
+                quizMoney.setVisibility(View.GONE);
+                sendUPI.setVisibility(View.GONE);
+                upiID.setVisibility(View.GONE);
+                quizWinPopup.findViewById(R.id.quiz_winning_text).setVisibility(View.GONE);
+
+            }
+
+
+
+
             quizMoneyRequestQueue = Volley.newRequestQueue(this);
             quizMoneyRequestHeader.put("token",AppConstants.token);
             quizMoneyRequestHeader.put("quizID",quizID);
@@ -624,43 +685,6 @@ public class SocketQuizActivity extends AppCompatActivity {
                 public void onResponse(String response) {
 
                     Log.d("QuizActivityWinning",response);
-                    Double prize = 0.0;
-                    DecimalFormat format = new DecimalFormat("####0.0");
-                    try {
-                        prize = new JSONObject(response).getDouble("data");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    TextView quizMoney = quizWinPopup.findViewById(R.id.quiz_winning_prize_money);
-                    TextInputEditText upiID = quizWinPopup.findViewById(R.id.upi_id);
-                    final String string = upiID.getText().toString();
-
-                    quizWinPopup.show();
-                    quizMoney.setText("₹ "+format.format(prize));
-                    closePrizePopup = quizWinPopup.findViewById(R.id.close_prize_popup);
-                    closePrizePopup.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            quizWinPopup.dismiss();
-                        }
-                    });
-                    sendUPI = quizWinPopup.findViewById(R.id.upi_id_button);
-                    sendUPI.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            quizWinPopup.dismiss();
-                            Toast.makeText(SocketQuizActivity.this,"Money will be sent",Toast.LENGTH_LONG).show();
-                            winnersMoney(string);
-                        }
-                    });
-
-                    if(prize==0){
-                        quizMoney.setVisibility(View.GONE);
-                        sendUPI.setVisibility(View.GONE);
-                        upiID.setVisibility(View.GONE);
-                        quizWinPopup.findViewById(R.id.quiz_winning_text).setVisibility(View.GONE);
-
-                    }
 
                 }
             }, new Response.ErrorListener() {
@@ -717,9 +741,10 @@ public class SocketQuizActivity extends AppCompatActivity {
 
     private void showAnswer(JSONObject response){
         try {
+            Log.d("showAnswer", response.toString());
 
 //            JSONArray jsonAnswerResponseList = new JSONObject(response).getJSONArray("data").getJSONObject(0).getJSONArray("answerOptions");
-            JSONArray jsonAnswerResponseList = response.getJSONArray("answerOptions");
+            JSONArray jsonAnswerResponseList = response.getJSONArray("optionsData");
             int numCorrectOptionA = jsonAnswerResponseList.getJSONObject(0).getInt("numResponses");
             int isOptionACorrect = jsonAnswerResponseList.getJSONObject(0).getInt("isCorrect");
 
@@ -732,9 +757,8 @@ public class SocketQuizActivity extends AppCompatActivity {
             int numCorrectOptionD = jsonAnswerResponseList.getJSONObject(3).getInt("numResponses");
             int isOptionDCorrect = jsonAnswerResponseList.getJSONObject(3).getInt("isCorrect");
 
-            int totalResponses = numCorrectOptionA + numCorrectOptionB + numCorrectOptionC + numCorrectOptionD;
-//                    viewersTV.setText(Integer.toString(totalResponses));
-
+//            int totalResponses = numCorrectOptionA + numCorrectOptionB + numCorrectOptionC + numCorrectOptionD;
+            int totalResponses = response.getInt("totalresponses");
             option1PB.setProgressDrawable(ContextCompat.getDrawable(SocketQuizActivity.this, R.drawable.answer_progress_bar_wrong));
             option2PB.setProgressDrawable(ContextCompat.getDrawable(SocketQuizActivity.this, R.drawable.answer_progress_bar_wrong));
             option3PB.setProgressDrawable(ContextCompat.getDrawable(SocketQuizActivity.this, R.drawable.answer_progress_bar_wrong));

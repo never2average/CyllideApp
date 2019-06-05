@@ -60,9 +60,10 @@ public class StoriesPageActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.d("NewsPageActivity",response);
-                        Intent intent = new Intent(StoriesPageActivity.this, StoriesMainActivity.class);
-                        startActivity(intent);
-                        finish();
+//                        Intent intent = new Intent(StoriesPageActivity.this, StoriesMainActivity.class);
+//                        startActivity(intent);
+//                        finish();
+                        onBackPressed();
 
                     }
                 }, new Response.ErrorListener() {
@@ -102,9 +103,5 @@ public class StoriesPageActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onBackPressed() {
-        imageView.performClick();
 
-    }
 }

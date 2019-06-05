@@ -38,10 +38,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import link.fls.swipestack.SwipeStack;
+
 
 public class PortfolioGameHomeActivity extends AppCompatActivity {
 
-    SwipeDeck cardStack;
+    SwipeStack cardStack;
     List<String> testData;
     ImageView backBtn;
     PortfolioGameCardAdapter adapter;
@@ -82,35 +84,55 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
         if(cardStack != null){
             cardStack.setAdapter(adapter);
         }
-        cardStack.setCallback(new SwipeDeck.SwipeDeckCallback() {
+
+
+        cardStack.setListener(new SwipeStack.SwipeStackListener() {
             @Override
-            public void cardSwipedLeft(long positionInAdapter) {
-                Log.i("MainActivity", "card was swiped left, position in adapter: " + positionInAdapter);
+            public void onViewSwipedToLeft(int position) {
+                Log.i("MainActivity", "card was swiped left, position in adapter: " + position);
             }
 
             @Override
-            public void cardSwipedRight(long positionInAdapter) {
-                Log.i("MainActivity", "card was swiped right, position in adapter: " + positionInAdapter);
+            public void onViewSwipedToRight(int position) {
+                Log.i("MainActivity", "card was swiped right, position in adapter: " + position);
+            }
+
+            @Override
+            public void onStackEmpty() {
 
             }
         });
 
-        cardStack.setLeftImage(R.id.left_image);
-        cardStack.setRightImage(R.id.right_image);
+
+//        cardStack.setCallback(new SwipeDeck.SwipeDeckCallback() {
+//            @Override
+//            public void cardSwipedLeft(long positionInAdapter) {
+//                Log.i("MainActivity", "card was swiped left, position in adapter: " + positionInAdapter);
+//            }
+//
+//            @Override
+//            public void cardSwipedRight(long positionInAdapter) {
+//                Log.i("MainActivity", "card was swiped right, position in adapter: " + positionInAdapter);
+//
+//            }
+//        });
+
+//        cardStack.setLeftImage(R.id.left_image);
+//        cardStack.setRightImage(R.id.right_image);
 
         //example of buttons triggering events on the deck
         MaterialCardView dontChooseStockBtn = findViewById(R.id.portfolio_game_cross);
         dontChooseStockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cardStack.swipeTopCardLeft(300);
+                cardStack.swipeTopViewToLeft();
             }
         });
         MaterialCardView chooseStockDoubleQuantity = findViewById(R.id.portfolio_game_diamond);
         chooseStockDoubleQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cardStack.swipeTopCardRight(300);
+                cardStack.swipeTopViewToRight();
             }
         });
 
@@ -119,7 +141,7 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                adapter.notifyDataSetChanged();
-                cardStack.swipeTopCardRight(300);
+//                cardStack.swipeTopCardRight(300);
             }
         });
         backBtn = findViewById(R.id.portfolio_game_back_button);
@@ -131,6 +153,10 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
                 finish();
             }
         });
+        cardStack.setAdapter(adapter);
+        cardStack.forceLayout();
+        cardStack.invalidate();
+        cardStack.refreshDrawableState();
     }
 
     @Override
