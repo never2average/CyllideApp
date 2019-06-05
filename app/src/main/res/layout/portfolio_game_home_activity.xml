@@ -23,6 +23,7 @@
 
 
     <LinearLayout
+        android:id="@+id/portfolio_game_upper_tab"
         android:weightSum="3"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -78,9 +79,33 @@
     </LinearLayout>
 
 
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_below="@id/portfoliogametabs"
+        android:layout_above="@id/portfolio_game_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false">
+
+        <!--<link.fls.swipestack.SwipeStack-->
+            <!--app:stack_rotation="0"-->
+            <!--android:id="@+id/swipe_deck"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:padding="32dp"/>-->
+    <com.yuyakaido.android.cardstackview.CardStackView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/swipe_deck"
+        ></com.yuyakaido.android.cardstackview.CardStackView>
+    </FrameLayout>
+
+
 
 
     <LinearLayout
+        android:id="@+id/portfolio_game_buttons"
         android:background="@android:color/transparent"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
@@ -171,19 +196,6 @@
             <!--swipedeck:swipe_enabled="true" />-->
 
     <!--</FrameLayout>-->
-    <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipChildren="false">
 
-        <link.fls.swipestack.SwipeStack
-            android:id="@+id/swipe_deck"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="32dp"/>
-
-    </FrameLayout>
 
 </RelativeLayout>

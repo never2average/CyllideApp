@@ -29,6 +29,8 @@ import com.cyllide.app.v1.R;
 import com.daprlabs.aaron.swipedeck.SwipeDeck;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
+import com.yuyakaido.android.cardstackview.CardStackView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,7 +45,7 @@ import link.fls.swipestack.SwipeStack;
 
 public class PortfolioGameHomeActivity extends AppCompatActivity {
 
-    SwipeStack cardStack;
+    CardStackView cardStack;
     List<String> testData;
     ImageView backBtn;
     PortfolioGameCardAdapter adapter;
@@ -79,8 +81,8 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
         for(int i=0;i<5; i++){
             testData.add(String.valueOf(i));
         }
-
-        adapter = new PortfolioGameCardAdapter(testData, PortfolioGameHomeActivity.this);
+/**
+     adapter = new PortfolioGameCardAdapter(testData, PortfolioGameHomeActivity.this);
         if(cardStack != null){
             cardStack.setAdapter(adapter);
         }
@@ -104,35 +106,22 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
         });
 
 
-//        cardStack.setCallback(new SwipeDeck.SwipeDeckCallback() {
-//            @Override
-//            public void cardSwipedLeft(long positionInAdapter) {
-//                Log.i("MainActivity", "card was swiped left, position in adapter: " + positionInAdapter);
-//            }
-//
-//            @Override
-//            public void cardSwipedRight(long positionInAdapter) {
-//                Log.i("MainActivity", "card was swiped right, position in adapter: " + positionInAdapter);
-//
-//            }
-//        });
 
-//        cardStack.setLeftImage(R.id.left_image);
-//        cardStack.setRightImage(R.id.right_image);
+**/
 
-        //example of buttons triggering events on the deck
         MaterialCardView dontChooseStockBtn = findViewById(R.id.portfolio_game_cross);
         dontChooseStockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cardStack.swipeTopViewToLeft();
+//                cardStack.swipeTopViewToLeft();
+                cardStack.swipe();
             }
         });
         MaterialCardView chooseStockDoubleQuantity = findViewById(R.id.portfolio_game_diamond);
         chooseStockDoubleQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cardStack.swipeTopViewToRight();
+//                cardStack.swipeTopViewToRight();
             }
         });
 
@@ -153,10 +142,11 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
                 finish();
             }
         });
-        cardStack.setAdapter(adapter);
-        cardStack.forceLayout();
-        cardStack.invalidate();
-        cardStack.refreshDrawableState();
+        ArrayList<String> lol = new ArrayList<>(4);
+        lol.add("fsd");
+        lol.add("dfsg");
+        cardStack.setLayoutManager( new CardStackLayoutManager(this));
+        cardStack.setAdapter(new newCustomRecyclerAdapter(lol));
     }
 
     @Override

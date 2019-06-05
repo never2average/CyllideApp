@@ -25,19 +25,24 @@
                 android:layout_weight="1"
                 android:id="@+id/portfolio_game_home_chart"/>
         </LinearLayout>
-        <ImageView
+        <FrameLayout
             android:background="#66f20000"
-            android:id="@+id/left_image"
+            android:id="@+id/left_overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/left_arrow"
             android:layout_centerHorizontal="true" />
-        <ImageView
+        <FrameLayout
             android:background="#6600f200"
             android:layout_width="match_parent"
-            android:id="@+id/right_image"
+            android:id="@+id/right_overlay"
             android:layout_height="match_parent"
             android:src="@drawable/right_arrow"
             android:layout_centerHorizontal="true" />
+        <FrameLayout
+            android:id="@+id/top_overlay"
+            android:background="@color/dark_gray"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

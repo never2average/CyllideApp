@@ -94,6 +94,8 @@ dependencies {
     implementation 'com.treebo:internetavailabilitychecker:1.0.4'
     implementation 'com.github.nkzawa:socket.io-client:0.6.0'
     implementation 'link.fls:swipestack:0.3.0'
+    implementation "com.yuyakaido.android:card-stack-view:2.3.3"
+
 
 
 }
