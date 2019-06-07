@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -11,6 +12,7 @@ import com.cyllide.app.v1.MainActivity;
 import com.cyllide.app.v1.R;
 import com.google.android.material.card.MaterialCardView;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
+import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
 
 import java.util.ArrayList;
@@ -117,6 +119,11 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
             }
         });
         ArrayList<String> lol = new ArrayList<>(4);
+
+
+//        CardStackListener.onCardDragging
+//        cardStack.onInterceptTouchEvent(MotionEvent.obtain(new I))
+
         cardStack.setLayoutManager( new CardStackLayoutManager(this));
         cardStack.setAdapter(new CardSwipeRecyclerAdapter(testData,this));
     }
@@ -129,3 +136,4 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
     }
 
 }
+
