@@ -7,21 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".portfolio.PortfolioGameHomeActivity">
 
-    <!--<com.daprlabs.aaron.swipedeck.SwipeDeck-->
-        <!--android:background="@android:color/transparent"-->
-        <!--android:id="@+id/swipe_deck"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginTop="50dp"-->
-        <!--android:layout_marginBottom="100dp"-->
-        <!--swipedeck:card_spacing="0dp"-->
-        <!--swipedeck:max_visible="3"-->
-        <!--android:visibility="visible"-->
-        <!--swipedeck:swipe_enabled="true" />-->
-
-
-
-
     <LinearLayout
         android:id="@+id/portfolio_game_upper_tab"
         android:weightSum="3"
@@ -78,31 +63,18 @@
         </LinearLayout>
     </LinearLayout>
 
-
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_below="@id/portfoliogametabs"
         android:layout_above="@id/portfolio_game_buttons"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false">
-
-        <!--<link.fls.swipestack.SwipeStack-->
-            <!--app:stack_rotation="0"-->
-            <!--android:id="@+id/swipe_deck"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:padding="32dp"/>-->
-    <com.yuyakaido.android.cardstackview.CardStackView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/swipe_deck"
-        ></com.yuyakaido.android.cardstackview.CardStackView>
+        <com.yuyakaido.android.cardstackview.CardStackView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/swipe_deck" />
     </FrameLayout>
-
-
-
 
     <LinearLayout
         android:id="@+id/portfolio_game_buttons"

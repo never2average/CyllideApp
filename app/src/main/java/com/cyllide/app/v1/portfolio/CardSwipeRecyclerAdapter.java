@@ -1,10 +1,12 @@
 package com.cyllide.app.v1.portfolio;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,13 +41,12 @@ public class CardSwipeRecyclerAdapter extends
         LayoutInflater inflater = LayoutInflater.from(context);
         View contactView = inflater.inflate(R.layout.game_card_nifty50, parent, false);
         ViewHolder itemView = new ViewHolder(contactView);
-
         return itemView;
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         ArrayList<Entry> yAxisValues = new ArrayList<>();
         for(int i=0;i<100;i++){
             yAxisValues.add(new Entry((float)i,(float)(2*i+1)));
@@ -69,14 +70,14 @@ public class CardSwipeRecyclerAdapter extends
         d.setText("");
         holder.lineChart.setDescription(d);
         holder. lineChart.invalidate();
-        holder.infoButton.setText(data.get(position));
         holder.infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(),data.get(position),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(holder.itemView.getContext(), PortfolioGameDetailedChartActivity.class);
+                intent.putExtra("ticker", "RELIANCE");
+                holder.itemView.getContext().startActivity(intent);
             }
         });
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +97,7 @@ public class CardSwipeRecyclerAdapter extends
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private LineChart lineChart;
-        private MaterialButton infoButton;
+        private ImageView infoButton;
         public ViewHolder(View itemView) {
             super(itemView);
             lineChart = itemView.findViewById(R.id.portfolio_game_home_chart);

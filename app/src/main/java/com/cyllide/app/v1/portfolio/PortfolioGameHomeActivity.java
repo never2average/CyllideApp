@@ -57,33 +57,6 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
         for(int i=0;i<5; i++){
             testData.add(String.valueOf(i));
         }
-/**
-     adapter = new PortfolioGameCardAdapter(testData, PortfolioGameHomeActivity.this);
-        if(cardStack != null){
-            cardStack.setAdapter(adapter);
-        }
-
-
-        cardStack.setListener(new SwipeStack.SwipeStackListener() {
-            @Override
-            public void onViewSwipedToLeft(int position) {
-                Log.i("MainActivity", "card was swiped left, position in adapter: " + position);
-            }
-
-            @Override
-            public void onViewSwipedToRight(int position) {
-                Log.i("MainActivity", "card was swiped right, position in adapter: " + position);
-            }
-
-            @Override
-            public void onStackEmpty() {
-
-            }
-        });
-
-
-
-**/
 
         MaterialCardView dontChooseStockBtn = findViewById(R.id.portfolio_game_cross);
         dontChooseStockBtn.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +107,5 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
         startActivity(returnHome);
         finish();
     }
-
 }
 

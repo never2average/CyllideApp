@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".portfolio.PortfolioGameDetailedChartActivity"
-    android:orientation="vertical">
+    tools:context=".portfolio.PortfolioGameDetailedChartActivity">
 
+    <LinearLayout
+        android:weightSum="3"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"/>
+    </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,9 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-
-        <LinearLayout
+            <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4">
@@ -25,12 +33,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <LinearLayout
-                android:background="@drawable/gradientbackground"
-                android:layout_width="match_parent"
-                android:layout_height="275dp"
-                android:orientation="vertical">
-
                 <TextView
                     android:id="@+id/current_price_chart_tv"
                     android:layout_width="match_parent"
@@ -43,8 +45,6 @@
                     android:textStyle="bold"
                     android:text="1234.56"
                     android:gravity="center"/>
-
-            </LinearLayout>
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_marginStart="20dp"
@@ -91,7 +91,7 @@
 
     </LinearLayout>
 
-        <LinearLayout
+            <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
@@ -160,369 +160,9 @@
             android:layout_marginEnd="1dp"/>
 
     </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="5dp">
-
-               \
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|top"
-                        android:layout_marginTop="13dp"
-                        android:layout_marginBottom="6dp"
-                        android:layout_weight="3"
-                        android:gravity="center"
-                        android:text="Summary"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="25sp" />
-
-
-                    <TableLayout
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Previous Close: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:layout_margin="3dp"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:id="@+id/summary_previous_close"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
-
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Open: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:layout_margin="3dp"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:id="@+id/summary_open"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
-
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Bid: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:layout_margin="3dp"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:id="@+id/summary_bid"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
-
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Ask: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:layout_margin="3dp"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:id="@+id/summary_ask"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
-
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Volume: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:layout_margin="3dp"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:id="@+id/summary_volume"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
-
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Market Cap: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:layout_margin="3dp"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:id="@+id/summary_market_cap"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
-
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Beta: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:layout_margin="3dp"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:id="@+id/summary_beta"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
-
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Day's Range: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:layout_margin="3dp"
-                                android:id="@+id/summary_days_range"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
-
-                    </TableLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|top"
-                        android:layout_marginTop="13dp"
-                        android:layout_marginBottom="6dp"
-                        android:layout_weight="3"
-                        android:gravity="center"
-                        android:text="Income Statement"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="25sp" />
-
-
-                    <TableLayout
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Gross Profit: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:id="@+id/income_gross_profit"
-                                android:layout_margin="3dp"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
-
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Operating Income/Loss: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:layout_margin="3dp"
-                                android:id="@+id/income_net_operating_income"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
-
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Operational Income: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:id="@+id/income_operational_income"
-                                android:layout_margin="3dp"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
-
-
-                    </TableLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|top"
-                        android:layout_marginTop="13dp"
-                        android:layout_marginBottom="6dp"
-                        android:layout_weight="3"
-                        android:gravity="center"
-                        android:text="Balance Sheet"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="25sp" />
-
-
-                    <TableLayout
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Total Current Assets: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:id="@+id/balance_total_assets"
-                                android:layout_margin="3dp"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
-
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Total current Liabilities: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:layout_margin="3dp"
-                                android:id="@+id/balance_total_liabilities"
-                                android:gravity="start|center_vertical"
-                                android:text="1,2345.67"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
-
-                        <TableRow>
-                            <TextView
-                                android:gravity="end|center_vertical"
-                                android:text="Net Tangible Assets: "
-                                android:textStyle="bold"
-                                android:layout_margin="3dp"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                            <TextView
-                                android:layout_margin="3dp"
-                                android:gravity="start|center_vertical"
-                                android:id="@+id/balance_net_tangible_assets"
-                                android:text="1,2345.67"
-                                android:layout_height="50dp"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"/>
-                        </TableRow>
-
-
-                    </TableLayout>
-                </LinearLayout>
-
-
-
-
-
-            </LinearLayout>
-
+            
         </LinearLayout>
 
     </ScrollView>
 
-</LinearLayout>
+</RelativeLayout>
