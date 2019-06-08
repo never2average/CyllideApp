@@ -9,7 +9,9 @@ import java.lang.reflect.Field;
 import androidx.viewpager.widget.ViewPager;
 
 
-public class customViewPager extends ViewPager {
+public class
+
+customViewPager extends ViewPager {
 
     public customViewPager(Context context) {
         super(context);

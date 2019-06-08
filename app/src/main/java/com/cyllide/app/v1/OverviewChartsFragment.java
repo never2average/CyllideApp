@@ -326,6 +326,36 @@ public class OverviewChartsFragment extends Fragment {
         currentPriceTV = view.findViewById(R.id.current_price_chart_tv);
         getSingleValue(ticker, view.getContext());
         lineChart = view.findViewById(R.id.linechart);
+        oneDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onFrequencyClick(view);
+            }
+        });
+        oneMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onFrequencyClick(view);
+            }
+        });
+        fiveDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onFrequencyClick(view);
+            }
+        });
+        sixMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onFrequencyClick(view);
+            }
+        });
+        oneYear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onFrequencyClick(view);
+            }
+        });
 
 
         return view;
