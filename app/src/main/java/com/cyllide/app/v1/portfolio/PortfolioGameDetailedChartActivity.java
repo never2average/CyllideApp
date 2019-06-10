@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
@@ -23,10 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.cyllide.app.v1.ChartsPagerAdapter;
 import com.cyllide.app.v1.R;
-import com.cyllide.app.v1.stories.StoriesPagerAdapter;
-import com.cyllide.app.v1.stories.customViewPager;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
@@ -83,11 +82,12 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
 
 
 
-        tabLayout.addTab(tabLayout.newTab().setCustomView(creatCcustomTabView(this,"Futures")));
-        tabLayout.addTab(tabLayout.newTab().setCustomView(creatCcustomTabView(this,"Overview")));
-        tabLayout.addTab(tabLayout.newTab().setCustomView(creatCcustomTabView(this,"Options")));
-        tabLayout.addTab(tabLayout.newTab().setCustomView(creatCcustomTabView(this,"News and Research")));
-        tabLayout.addTab(tabLayout.newTab().setCustomView(creatCcustomTabView(this,"Forum")));
+        tabLayout.addTab(tabLayout.newTab().setCustomView(createCustomTabView(this,"Summary")));
+        tabLayout.addTab(tabLayout.newTab().setCustomView(createCustomTabView(this,"Stats")));
+        tabLayout.addTab(tabLayout.newTab().setCustomView(createCustomTabView(this,"Income Statement")));
+        tabLayout.addTab(tabLayout.newTab().setCustomView(createCustomTabView(this,"Cash FLow")));
+        tabLayout.addTab(tabLayout.newTab().setCustomView(createCustomTabView(this,"Balance Sheet")));
+//        tabLayout.getTabAt(0).getCustomView().setTextColor
         final ViewPager viewPager =
                 findViewById(R.id.view_pager_chart_activity);
         final PagerAdapter adapter = new ChartsPagerAdapter
@@ -100,11 +100,23 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                TextView tv = (TextView) tab.getCustomView();
+                tv.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.colorPrimary));
+                String udata = tv.getText().toString();
+                SpannableString content = new SpannableString(udata);
+                content.setSpan(new UnderlineSpan(), 0, udata.length(), 0);
+                tv.setText(content);
+                tab.setCustomView(tv);
                 viewPager.setCurrentItem(tab.getPosition());
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
+                TextView tv = (TextView) tab.getCustomView();
+                String udata = tv.getText().toString();
+                tv.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.black));
+                tv.setText(udata);
+                tab.setCustomView(tv);
 
             }
 
@@ -119,10 +131,12 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
 
     }
 
-    TextView creatCcustomTabView(Context context, String name){
+    TextView createCustomTabView(Context context, String name){
         TextView tv = new TextView(context);
         tv.setText(name);
-        tv.setTextSize(15);
+        tv.setTextColor(ContextCompat.getColor(context,R.color.black));
+        tv.setTextSize(10);
+        tv.setMaxLines(1);
         return tv;
     }
 

@@ -1,4 +1,4 @@
-package com.cyllide.app.v1;
+package com.cyllide.app.v1.portfolio.tabs;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -22,7 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.cyllide.app.v1.portfolio.PortfolioGameDetailedChartActivity;
+import com.cyllide.app.v1.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
@@ -51,12 +51,12 @@ import pl.droidsonroids.gif.GifImageView;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link OverviewChartsFragment.OnFragmentInteractionListener} interface
+ * {@link SummaryFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link OverviewChartsFragment#newInstance} factory method to
+ * Use the {@link SummaryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OverviewChartsFragment extends Fragment {
+public class SummaryFragment extends Fragment {
 
     Button oneDay,fiveDay,oneMonth,sixMonth,oneYear;
     String ticker;
@@ -77,7 +77,7 @@ public class OverviewChartsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public OverviewChartsFragment() {
+    public SummaryFragment() {
         // Required empty public constructor
     }
 
@@ -90,8 +90,8 @@ public class OverviewChartsFragment extends Fragment {
      * @return A new instance of fragment OverviewChartsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OverviewChartsFragment newInstance(String param1, String param2) {
-        OverviewChartsFragment fragment = new OverviewChartsFragment();
+    public static SummaryFragment newInstance(String param1, String param2) {
+        SummaryFragment fragment = new SummaryFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -109,7 +109,7 @@ public class OverviewChartsFragment extends Fragment {
     }
 
     public void onFrequencyClick(View view){
-        oneDay.setBackgroundColor(ContextCompat.getColor(view.getContext(),R.color.white));
+        oneDay.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.white));
         fiveDay.setBackgroundColor(ContextCompat.getColor(view.getContext(),R.color.white));
         oneMonth.setBackgroundColor(ContextCompat.getColor(view.getContext(),R.color.white));
         oneYear.setBackgroundColor(ContextCompat.getColor(view.getContext(),R.color.white));

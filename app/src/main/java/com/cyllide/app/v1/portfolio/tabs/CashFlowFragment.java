@@ -1,6 +1,5 @@
-package com.cyllide.app.v1;
+package com.cyllide.app.v1.portfolio.tabs;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,16 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cyllide.app.v1.R;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FuturesChartsFragment.OnFragmentInteractionListener} interface
+ * {@link CashFlowFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FuturesChartsFragment#newInstance} factory method to
+ * Use the {@link CashFlowFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FuturesChartsFragment extends Fragment {
+public class CashFlowFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,7 +31,7 @@ public class FuturesChartsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public FuturesChartsFragment() {
+    public CashFlowFragment() {
         // Required empty public constructor
     }
 
@@ -41,11 +41,11 @@ public class FuturesChartsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FuturesChartsFragment.
+     * @return A new instance of fragment ForumChartsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FuturesChartsFragment newInstance(String param1, String param2) {
-        FuturesChartsFragment fragment = new FuturesChartsFragment();
+    public static CashFlowFragment newInstance(String param1, String param2) {
+        CashFlowFragment fragment = new CashFlowFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,7 +66,7 @@ public class FuturesChartsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_futures_charts, container, false);
+        return inflater.inflate(R.layout.fragment_forum_charts, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -75,7 +75,7 @@ public class FuturesChartsFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-//
+
 //    @Override
 //    public void onAttach(Context context) {
 //        super.onAttach(context);
