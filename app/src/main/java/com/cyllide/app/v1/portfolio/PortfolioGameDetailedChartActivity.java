@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -77,7 +78,7 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
         getSingleValue(ticker, PortfolioGameDetailedChartActivity.this);
         lineChart = findViewById(R.id.linechart);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout_chart_activity);
-
+        AppConstants.currTicker = ticker;
         getChartData(ticker, "1D", this);
 
 

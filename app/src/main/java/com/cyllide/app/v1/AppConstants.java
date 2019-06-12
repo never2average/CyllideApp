@@ -16,4 +16,5 @@ public class AppConstants {
     public static Long timeSpentOnStories = 0l;
     public static boolean cameraAccepted;
     public static boolean readExternalStorage;
+    public static String currTicker = "RELIANCE";
 }
