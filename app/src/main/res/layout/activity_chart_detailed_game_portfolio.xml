@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".portfolio.PortfolioGameDetailedChartActivity">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
 
 
     <LinearLayout
@@ -181,7 +186,7 @@
                 android:background="@color/black"
                 />
 
-            <androidx.viewpager.widget.ViewPager
+            <com.cyllide.app.v1.portfolio.CustomViewPager
                 android:id="@+id/view_pager_chart_activity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -191,3 +196,4 @@
     <!--</ScrollView>-->
 
 </RelativeLayout>
+</androidx.core.widget.NestedScrollView>
