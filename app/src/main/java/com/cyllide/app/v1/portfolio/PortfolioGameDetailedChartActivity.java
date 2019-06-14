@@ -89,7 +89,7 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Income Statement"));
         tabLayout.addTab(tabLayout.newTab().setText("Cash Flow Statement"));
         tabLayout.addTab(tabLayout.newTab().setText("Balance Sheet"));
-        final ViewPager viewPager =
+        final CustomViewPager viewPager =
                 findViewById(R.id.view_pager_chart_activity);
         final PagerAdapter adapter = new ChartsPagerAdapter
                 (getSupportFragmentManager(),
@@ -101,6 +101,7 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
 
             }
 
