@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    tools:context=".portfolio.tabs.CashFlowFragment">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_margin="@dimen/default_background_stroke_width"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textColor="@color/black"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="2019"/>
+
+            <Spinner
+                android:id="@+id/cflow_year_selector"
+                android:spinnerMode="dropdown"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:weightSum="3"
+            android:layout_margin="@dimen/default_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="Cash Flow on Operations"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center_vertical"
+                android:text="Net Income"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/cflow_net_income_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/cflow_net_income_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Depreciation"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_depreciation_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_depreciation_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Adjustments to net income	"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_adj_net_income_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_adj_net_income_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Changes in accounts receivable"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_chg_acc_rec_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_chg_acc_rec_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Changes in liabilities"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_chg_liabilities_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_chg_liabilities_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Changes in inventory"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_chg_inventory_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_chg_inventory_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Changes in other operating activities	"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_chg_ops_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_chg_ops_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center_vertical"
+                android:text="Total cash flow from operating activities"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/cflow_total_ops_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/cflow_total_ops_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:weightSum="3"
+            android:layout_margin="@dimen/default_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="Cash Flow in Investment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Capital expenditure"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_capital_exp_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_capital_exp_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Investments"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_investments_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_investments_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Other cash flow from investment activities"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_inv_act_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_inv_act_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center_vertical"
+                android:text="Total cash flow from investment activities"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/cflow_total_inv_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/cflow_total_inv_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:weightSum="3"
+            android:layout_margin="@dimen/default_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="Cash Flow in Financing Activities"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Dividends paid"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_dividends_paid_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_dividends_paid_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Sale purchase of stock	"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_stock_sale_purchase_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_stock_sale_purchase_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Net borrowings"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_net_borrowings_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_net_borrowings_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Other cash flow from financing activities"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_fin_other_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_fin_other_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center_vertical"
+                android:text="Total cash flow from financing activities"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/cflow_total_fin_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/cflow_total_fin_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Effect of exchange rate changes"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_effect_exchange_rate_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/cflow_effect_exchange_rate_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center_vertical"
+                android:text="Change in cash and cash equivalents"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/cflow_cash_change_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/cflow_cash_change_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
