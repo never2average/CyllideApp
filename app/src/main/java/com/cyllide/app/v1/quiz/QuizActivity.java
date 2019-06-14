@@ -36,8 +36,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -161,159 +164,174 @@ public class QuizActivity extends AppCompatActivity {
             });
         }
     }
-
-
+    RelativeLayout quizScreen;
+    LinearLayout quizLinearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        quizMusicPlayer= MediaPlayer.create(getApplicationContext(), R.raw.quiz_backgorund_sound);
-        quizMusicPlayer.start();
-        quizMusicPlayer.setLooping(true);
-
-        quizCorrectAnswerMusicPlayer = MediaPlayer.create(getApplicationContext(),R.raw.correct_answer_sound);
-
-        quizWrongAnswerMusicPlayer = MediaPlayer.create(getApplicationContext(),R.raw.wrong_answer_sound);
-
-
-
-        mConnectionClassManager = ConnectionClassManager.getInstance();
-        mDeviceBandwidthSampler = DeviceBandwidthSampler.getInstance();
-        mConnectionClassManager.register(mListener);
-
-
-
-
-
-
         setContentView(R.layout.activity_quiz);
-        revivalpopup=new Dialog(this);
-        revivalpopup.setContentView(R.layout.quiz_revival_xml);
-        revivalpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        confirmExitPopup = new Dialog(this);
-        confirmExitPopup.setContentView(R.layout.quiz_exit_confirm_dialog);
-        confirmExitPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        quizWinPopup = new Dialog(this);
-        quizWinPopup.setContentView(R.layout.quiz_wining_xml);
-        quizWinPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        losersPopup=new Dialog(this);
-        losersPopup.setContentView(R.layout.quiz_loser_popup);
-        losersPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ImageView imageView = losersPopup.findViewById(R.id.close_loser_popup);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
-            public void onClick(View v) {
-                losersPopup.dismiss();
-                startActivity(new Intent(QuizActivity.this,MainActivity.class));
-                finish();
+            public void run() {
+                setContentView(R.layout.activity_quiz);
+
+                quizLinearLayout = findViewById(R.id.quiz_waiting_ll);
+                quizScreen = findViewById(R.id.quiz_waiting_layout);
+
+                quizScreen.setVisibility(View.GONE);
+                quizLinearLayout.setVisibility(View.GONE);
+                quizMusicPlayer= MediaPlayer.create(getApplicationContext(), R.raw.quiz_backgorund_sound);
+                quizMusicPlayer.start();
+                quizMusicPlayer.setLooping(true);
+
+                quizCorrectAnswerMusicPlayer = MediaPlayer.create(getApplicationContext(),R.raw.correct_answer_sound);
+
+                quizWrongAnswerMusicPlayer = MediaPlayer.create(getApplicationContext(),R.raw.wrong_answer_sound);
+
+
+
+                mConnectionClassManager = ConnectionClassManager.getInstance();
+                mDeviceBandwidthSampler = DeviceBandwidthSampler.getInstance();
+                mConnectionClassManager.register(mListener);
+
+
+
+
+
+
+                revivalpopup=new Dialog(QuizActivity.this);
+                revivalpopup.setContentView(R.layout.quiz_revival_xml);
+                revivalpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                confirmExitPopup = new Dialog(QuizActivity.this);
+                confirmExitPopup.setContentView(R.layout.quiz_exit_confirm_dialog);
+                confirmExitPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                quizWinPopup = new Dialog(QuizActivity.this);
+                quizWinPopup.setContentView(R.layout.quiz_wining_xml);
+                quizWinPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                losersPopup=new Dialog(QuizActivity.this);
+                losersPopup.setContentView(R.layout.quiz_loser_popup);
+                losersPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                ImageView imageView = losersPopup.findViewById(R.id.close_loser_popup);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        losersPopup.dismiss();
+                        startActivity(new Intent(QuizActivity.this,MainActivity.class));
+                        finish();
+                    }
+                });
+
+                losersPopup.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        startActivity(new Intent(QuizActivity.this,MainActivity.class));
+                        finish();
+                    }
+                });
+
+                mainQuestion = findViewById(R.id.questionText);
+                exitQuiz = findViewById(R.id.exit_quiz);
+                exitQuiz.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        exitConfirmDialog();
+
+                    }
+                });
+
+                optionA = findViewById(R.id.activity_quiz_option_1_text_view);
+                optionB = findViewById(R.id.activity_quiz_option_2_text_view);
+                optionC = findViewById(R.id.activity_quiz_option_3_text_view);
+                optionD = findViewById(R.id.activity_quiz_option_4_text_view);
+
+                option1CV = findViewById(R.id.question_activity_option_1_card_view);
+                option2CV = findViewById(R.id.question_activity_option_2_card_view);
+                option3CV = findViewById(R.id.question_activity_option_3_card_view);
+                option4CV = findViewById(R.id.question_activity_option_4_card_view);
+
+                option1PB = findViewById(R.id.activity_quiz_option_1_progress_bar);
+                option2PB = findViewById(R.id.activity_quiz_option_2_progress_bar);
+                option3PB = findViewById(R.id.activity_quiz_option_3_progress_bar);
+                option4PB = findViewById(R.id.activity_quiz_option_4_progress_bar);
+
+                viewersTV = findViewById(R.id.activity_quiz_viewers_text_view);
+                quizActivityAnswerIndicator = findViewById(R.id.activity_quiz_indicator);
+
+
+
+
+                option1CV.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        selectedOption = optionA.getText().toString();
+                        option1CV.setBackgroundDrawable(ContextCompat.getDrawable(QuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
+                        optionA.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+                        option2CV.setClickable(false);
+                        option3CV.setClickable(false);
+                        option4CV.setClickable(false);
+                        option1CV.setPressed(true);
+                    }
+                });
+                option2CV.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        selectedOption = optionB.getText().toString();
+                        option2CV.setBackgroundDrawable(ContextCompat.getDrawable(QuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
+                        optionB.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+                        option1CV.setClickable(false);
+                        option3CV.setClickable(false);
+                        option4CV.setClickable(false);
+                        option2CV.setPressed(true);
+                    }
+                });
+                option3CV.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        selectedOption = optionC.getText().toString();
+                        option3CV.setBackgroundDrawable(ContextCompat.getDrawable(QuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
+                        optionC.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+                        option2CV.setClickable(false);
+                        option1CV.setClickable(false);
+                        option4CV.setClickable(false);
+                        option3CV.setPressed(true);
+                    }
+                });
+                option4CV.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        selectedOption = optionD.getText().toString();
+                        option4CV.setBackgroundDrawable(ContextCompat.getDrawable(QuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
+                        optionD.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
+                        option1CV.setClickable(false);
+                        option2CV.setClickable(false);
+                        option3CV.setClickable(false);
+                        option4CV.setPressed(true);
+                    }
+                });
+                pb = findViewById(R.id.progressBarToday);
+                circularProgressBar = findViewById(R.id.question_time_remaining);
+                textTimer = findViewById(R.id.textTimer);
+                Intent intent = getIntent();
+                String allQuestions = intent.getStringExtra("questions");
+                quizID = intent.getStringExtra("quizID");
+                Log.d("Questions",allQuestions);
+                try {
+                    JSONObject responseObject = new JSONObject(allQuestions);
+                    jsonQuestionArray = responseObject.getJSONArray("data");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                changeQuestion();
+
+
+
             }
-        });
-
-        losersPopup.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                startActivity(new Intent(QuizActivity.this,MainActivity.class));
-                finish();
-            }
-        });
-
-        mainQuestion = findViewById(R.id.questionText);
-        exitQuiz = findViewById(R.id.exit_quiz);
-        exitQuiz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                exitConfirmDialog();
-
-            }
-        });
-
-        optionA = findViewById(R.id.activity_quiz_option_1_text_view);
-        optionB = findViewById(R.id.activity_quiz_option_2_text_view);
-        optionC = findViewById(R.id.activity_quiz_option_3_text_view);
-        optionD = findViewById(R.id.activity_quiz_option_4_text_view);
-
-        option1CV = findViewById(R.id.question_activity_option_1_card_view);
-        option2CV = findViewById(R.id.question_activity_option_2_card_view);
-        option3CV = findViewById(R.id.question_activity_option_3_card_view);
-        option4CV = findViewById(R.id.question_activity_option_4_card_view);
-
-        option1PB = findViewById(R.id.activity_quiz_option_1_progress_bar);
-        option2PB = findViewById(R.id.activity_quiz_option_2_progress_bar);
-        option3PB = findViewById(R.id.activity_quiz_option_3_progress_bar);
-        option4PB = findViewById(R.id.activity_quiz_option_4_progress_bar);
-
-        viewersTV = findViewById(R.id.activity_quiz_viewers_text_view);
-        quizActivityAnswerIndicator = findViewById(R.id.activity_quiz_indicator);
-
-
-
-
-        option1CV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectedOption = optionA.getText().toString();
-                option1CV.setBackgroundDrawable(ContextCompat.getDrawable(QuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
-                optionA.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
-                option2CV.setClickable(false);
-                option3CV.setClickable(false);
-                option4CV.setClickable(false);
-                option1CV.setPressed(true);
-            }
-        });
-        option2CV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectedOption = optionB.getText().toString();
-                option2CV.setBackgroundDrawable(ContextCompat.getDrawable(QuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
-                optionB.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
-                option1CV.setClickable(false);
-                option3CV.setClickable(false);
-                option4CV.setClickable(false);
-                option2CV.setPressed(true);
-            }
-        });
-        option3CV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectedOption = optionC.getText().toString();
-                option3CV.setBackgroundDrawable(ContextCompat.getDrawable(QuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
-                optionC.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
-                option2CV.setClickable(false);
-                option1CV.setClickable(false);
-                option4CV.setClickable(false);
-                option3CV.setPressed(true);
-            }
-        });
-        option4CV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectedOption = optionD.getText().toString();
-                option4CV.setBackgroundDrawable(ContextCompat.getDrawable(QuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
-                optionD.setTextColor(ContextCompat.getColor(QuizActivity.this,R.color.white));
-                option1CV.setClickable(false);
-                option2CV.setClickable(false);
-                option3CV.setClickable(false);
-                option4CV.setPressed(true);
-            }
-        });
-        pb = findViewById(R.id.progressBarToday);
-        circularProgressBar = findViewById(R.id.question_time_remaining);
-        textTimer = findViewById(R.id.textTimer);
-        Intent intent = getIntent();
-        String allQuestions = intent.getStringExtra("questions");
-        quizID = intent.getStringExtra("quizID");
-        Log.d("Questions",allQuestions);
-        try {
-            JSONObject responseObject = new JSONObject(allQuestions);
-            jsonQuestionArray = responseObject.getJSONArray("data");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        changeQuestion();
-
+        }, 3000);
 
 
 
