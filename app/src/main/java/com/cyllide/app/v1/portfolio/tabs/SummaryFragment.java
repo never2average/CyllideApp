@@ -60,7 +60,7 @@ import pl.droidsonroids.gif.GifImageView;
 public class SummaryFragment extends Fragment {
     TextView companyName, companyAddress, companySector, companyIndustry;
     RequestQueue summaryQueue;
-    Map<String, String> summaryHeaders;
+    Map<String, String> summaryHeaders = new ArrayMap<>();
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
