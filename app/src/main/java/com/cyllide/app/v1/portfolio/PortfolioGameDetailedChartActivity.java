@@ -16,6 +16,7 @@ import android.text.style.UnderlineSpan;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -83,12 +84,11 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
 
 
 
-        tabLayout.addTab(tabLayout.newTab().setCustomView(createCustomTabView(this,"Summary")));
-        tabLayout.addTab(tabLayout.newTab().setCustomView(createCustomTabView(this,"Stats")));
-        tabLayout.addTab(tabLayout.newTab().setCustomView(createCustomTabView(this,"Income Statement")));
-        tabLayout.addTab(tabLayout.newTab().setCustomView(createCustomTabView(this,"Cash FLow")));
-        tabLayout.addTab(tabLayout.newTab().setCustomView(createCustomTabView(this,"Balance Sheet")));
-//        tabLayout.getTabAt(0).getCustomView().setTextColor
+        tabLayout.addTab(tabLayout.newTab().setText("Summary"));
+        tabLayout.addTab(tabLayout.newTab().setText("Statistics"));
+        tabLayout.addTab(tabLayout.newTab().setText("Income Statement"));
+        tabLayout.addTab(tabLayout.newTab().setText("Cash Flow Statement"));
+        tabLayout.addTab(tabLayout.newTab().setText("Balance Sheet"));
         final ViewPager viewPager =
                 findViewById(R.id.view_pager_chart_activity);
         final PagerAdapter adapter = new ChartsPagerAdapter
@@ -101,23 +101,11 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                TextView tv = (TextView) tab.getCustomView();
-                tv.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.colorPrimary));
-                String udata = tv.getText().toString();
-                SpannableString content = new SpannableString(udata);
-                content.setSpan(new UnderlineSpan(), 0, udata.length(), 0);
-                tv.setText(content);
-                tab.setCustomView(tv);
-                viewPager.setCurrentItem(tab.getPosition());
+
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                TextView tv = (TextView) tab.getCustomView();
-                String udata = tv.getText().toString();
-                tv.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.black));
-                tv.setText(udata);
-                tab.setCustomView(tv);
 
             }
 
@@ -135,9 +123,6 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
     TextView createCustomTabView(Context context, String name){
         TextView tv = new TextView(context);
         tv.setText(name);
-        tv.setTextColor(ContextCompat.getColor(context,R.color.black));
-        tv.setTextSize(10);
-        tv.setMaxLines(1);
         return tv;
     }
 
@@ -195,7 +180,7 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     Double data = jsonObject.getDouble("data");
                     Double movement = jsonObject.getDouble("movement");
-                    DecimalFormat df = new DecimalFormat("####0.000");
+                    DecimalFormat df = new DecimalFormat("####0.00");
                     Date date = new Date(jsonObject.getLong("timestamp"));
                     DateFormat dateformatter = new SimpleDateFormat("HH");
                     int hour = Integer.parseInt(dateformatter.format(date));
