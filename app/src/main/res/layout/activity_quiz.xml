@@ -1,278 +1,312 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="10dp"
-    tools:context="com.cyllide.app.v1.quiz.QuizActivity">
+    android:layout_height="match_parent">
+
 
     <LinearLayout
-        android:layout_margin="12dp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <ImageView
-            android:src="@drawable/ic_view_eye"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent" />
-        <TextView
-            android:layout_marginLeft="2dp"
-            android:gravity="center_vertical"
-            android:id="@+id/activity_quiz_viewers_text_view"
-            android:text="3.8K"
-            android:textSize="18sp"
-            android:layout_width="0dp"
-            android:layout_weight="9"
-            android:layout_height="match_parent" />
-        <ImageView
-            android:id="@+id/exit_quiz"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="@dimen/default_background_stroke_width"
-            android:src="@drawable/ic_clear_black_24dp"
-            android:tint="@color/colorPrimary"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_margin="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:gravity="center">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-
-            <TextView
-                android:id="@+id/textTimer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="32sp"
-                android:text="00:00"
-                android:layout_centerInParent="true"/>
-
-            <ProgressBar
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:layout_centerInParent="true"
-                android:indeterminate="false"
-                android:max="1"
-                android:progressBackgroundTint="@color/primary_light_max"
-                android:progress="1450"
-                android:rotation="-90"
-                android:progressDrawable="@drawable/circular_progress_fill_test"/>
-
-            <ProgressBar
-                android:id="@+id/progressBarToday"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:layout_centerInParent="true"
-                android:indeterminate="false"
-                android:max="10000"
-                android:progress="7500"
-                android:rotation="-90"
-                android:progressDrawable="@drawable/circular_progress_bar_test" />
-
-            <com.mikhaellopez.circularprogressbar.CircularProgressBar
-                android:id="@+id/question_time_remaining"
-                android:layout_width="0dp"
-                android:layout_centerInParent="true"
-                android:layout_height="0dp"
-                app:cpb_background_progressbar_color="@color/colorPrimary"
-                app:cpb_background_progressbar_width="5dp"
-                app:cpb_progressbar_color="@color/primary_light_max"
-                app:cpb_progressbar_width="10dp" />
-            <ImageView
-                android:id="@+id/activity_quiz_indicator"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_centerInParent="true"
-                android:visibility="invisible"/>
-
-        <!--<ProgressBar-->
-            <!--android:id="@+id/barTimer"-->
-            <!--style="?android:attr/progressBarStyleHorizontal"-->
-            <!--android:layout_width="250dp"-->
-            <!--android:layout_height="250dp"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--android:progress="2"-->
-            <!--android:max="100"-->
-            <!--android:progressDrawable="@drawable/progress_circle"-->
-            <!--/>-->
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <!--<FrameLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_weight="8"></FrameLayout>-->
-    <LinearLayout
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_margin="@dimen/default_stroke_width"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8">
-        <com.google.android.material.card.MaterialCardView
+        android:paddingBottom="10dp"
+        tools:context="com.cyllide.app.v1.quiz.SocketQuizActivity">
+
+        <LinearLayout
+            android:layout_margin="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:src="@drawable/ic_view_eye"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_marginLeft="2dp"
+                android:gravity="center_vertical"
+                android:id="@+id/activity_quiz_viewers_text_view"
+                android:text="Loading..."
+                android:textSize="18sp"
+                android:layout_width="0dp"
+                android:layout_weight="9"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/exit_quiz"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/default_background_stroke_width"
+                android:src="@drawable/ic_clear_black_24dp"
+                android:tint="@color/colorPrimary"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
-            app:cardBackgroundColor="#f1fafe"
-            app:cardElevation="5dp"
-            app:cardCornerRadius="12dp"
-            android:layout_marginBottom="10dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:textColor="@android:color/black"
-                    android:gravity="center"
-                    android:id="@+id/questionText"
-                    android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/question_activity_option_1_card_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.8"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="5dp"
-            android:layout_marginBottom="10dp">
+            android:gravity="center">
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
 
-
-                <ProgressBar
-                    android:id="@+id/activity_quiz_option_1_progress_bar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:progress="60"
-                    android:progressDrawable="@drawable/answer_progress_bar_correct"
-                    android:visibility="invisible" />
 
                 <TextView
-                    android:textColor="@android:color/white"
-                    android:id="@+id/activity_quiz_option_1_text_view"
-                    android:gravity="center"
-                    android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:id="@+id/textTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="32sp"
+                    android:text="00:00"
+                    android:layout_centerInParent="true"/>
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_centerInParent="true"
+                    android:indeterminate="false"
+                    android:max="1"
+                    android:progressBackgroundTint="@color/primary_light_max"
+                    android:progress="1450"
+                    android:rotation="-90"
+                    android:progressDrawable="@drawable/circular_progress_fill_test"/>
+
+                <ProgressBar
+                    android:id="@+id/progressBarToday"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_centerInParent="true"
+                    android:indeterminate="false"
+                    android:max="10000"
+                    android:progress="7500"
+                    android:rotation="-90"
+                    android:progressDrawable="@drawable/circular_progress_bar_test" />
+
+                <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                    android:id="@+id/question_time_remaining"
+                    android:layout_width="0dp"
+                    android:layout_centerInParent="true"
+                    android:layout_height="0dp"
+                    app:cpb_background_progressbar_color="@color/colorPrimary"
+                    app:cpb_background_progressbar_width="5dp"
+                    app:cpb_progressbar_color="@color/primary_light_max"
+                    app:cpb_progressbar_width="10dp" />
+                <ImageView
+                    android:id="@+id/activity_quiz_indicator"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible"/>
+
+                <!--<ProgressBar-->
+                <!--android:id="@+id/barTimer"-->
+                <!--style="?android:attr/progressBarStyleHorizontal"-->
+                <!--android:layout_width="250dp"-->
+                <!--android:layout_height="250dp"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:progress="2"-->
+                <!--android:max="100"-->
+                <!--android:progressDrawable="@drawable/progress_circle"-->
+                <!--/>-->
 
             </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/question_activity_option_2_card_view"
+
+        </LinearLayout>
+
+        <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="8"></FrameLayout>-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_margin="@dimen/default_stroke_width"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.8"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:cardElevation="5dp"
-            app:cardCornerRadius="20dp"
-            android:layout_marginBottom="10dp">
-            <RelativeLayout
+            android:layout_weight="8">
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ProgressBar
-                    android:id="@+id/activity_quiz_option_2_progress_bar"
-                    style="?android:attr/progressBarStyleHorizontal"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                app:cardBackgroundColor="#f1fafe"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="12dp"
+                android:layout_marginBottom="10dp">
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:progress="60"
-                    android:progressDrawable="@drawable/answer_progress_bar_correct"
-                    android:visibility="invisible" />
-
-                <TextView
-                    android:textColor="@android:color/white"
-                    android:gravity="center"
-                    android:id="@+id/activity_quiz_option_2_text_view"
-                    android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/question_activity_option_3_card_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.8"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:cardElevation="5dp"
-            app:cardCornerRadius="20dp"
-            android:layout_marginBottom="10dp">
-            <RelativeLayout
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textColor="@android:color/black"
+                        android:gravity="center"
+                        android:id="@+id/questionText"
+                        android:text="Loading..."
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/question_activity_option_1_card_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ProgressBar
-                    android:id="@+id/activity_quiz_option_3_progress_bar"
-                    style="?android:attr/progressBarStyleHorizontal"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="5dp"
+                android:layout_marginBottom="10dp">
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:progress="60"
-                    android:progressDrawable="@drawable/answer_progress_bar_correct"
-                    android:visibility="invisible" />
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:textColor="@android:color/white"
-                    android:gravity="center"
-                    android:id="@+id/activity_quiz_option_3_text_view"
-                    android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/question_activity_option_4_card_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.8"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:cardElevation="5dp"
-            app:cardCornerRadius="20dp"
-            android:layout_marginBottom="10dp">
-            <RelativeLayout
+
+
+                    <ProgressBar
+                        android:id="@+id/activity_quiz_option_1_progress_bar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:progress="60"
+                        android:progressDrawable="@drawable/answer_progress_bar_correct"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:textColor="@android:color/white"
+                        android:id="@+id/activity_quiz_option_1_text_view"
+                        android:gravity="center"
+                        android:text="Loading..."
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/question_activity_option_2_card_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ProgressBar
-                    android:id="@+id/activity_quiz_option_4_progress_bar"
-                    style="?android:attr/progressBarStyleHorizontal"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginBottom="10dp">
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:progress="100"
-                    android:progressDrawable="@drawable/answer_progress_bar_correct"
-                    android:visibility="visible" />
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:textColor="@android:color/white"
-                    android:gravity="center"
-                    android:id="@+id/activity_quiz_option_4_text_view"
-                    android:text="wvgehqjwdfkddbwnlwcfkdknbwmqlkwfndw"
+                    <ProgressBar
+                        android:id="@+id/activity_quiz_option_2_progress_bar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:progress="60"
+                        android:progressDrawable="@drawable/answer_progress_bar_correct"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        android:id="@+id/activity_quiz_option_2_text_view"
+                        android:text="Loading..."
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/question_activity_option_3_card_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginBottom="10dp">
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    android:layout_height="match_parent">
+
+                    <ProgressBar
+                        android:id="@+id/activity_quiz_option_3_progress_bar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:progress="60"
+                        android:progressDrawable="@drawable/answer_progress_bar_correct"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        android:id="@+id/activity_quiz_option_3_text_view"
+                        android:text="Loading..."
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/question_activity_option_4_card_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginBottom="10dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ProgressBar
+                        android:id="@+id/activity_quiz_option_4_progress_bar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:progress="100"
+                        android:progressDrawable="@drawable/answer_progress_bar_correct"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        android:id="@+id/activity_quiz_option_4_text_view"
+                        android:text="Loading..."
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
     </LinearLayout>
 
-</LinearLayout>
 
+
+        <RelativeLayout
+            android:background="@color/white"
+            android:id="@+id/quiz_waiting_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/quiz_waiting_ll"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <pl.droidsonroids.gif.GifImageView
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/web_view_loading"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Waiting for other players to join"/>
+            </LinearLayout>
+        </RelativeLayout>
+</RelativeLayout>
 
 
 
