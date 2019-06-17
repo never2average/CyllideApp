@@ -102,6 +102,7 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                viewPager.onMeasure(View.MeasureSpec.getSize(View.MeasureSpec.EXACTLY),View.MeasureSpec.getSize(View.MeasureSpec.EXACTLY));
 
             }
 
