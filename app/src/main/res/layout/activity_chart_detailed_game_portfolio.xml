@@ -1,34 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fillViewport="true"
+    tools:context=".portfolio.PortfolioGameDetailedChartActivity"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".portfolio.PortfolioGameDetailedChartActivity">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:weightSum="3"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="3">
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@color/colorPrimary"/>
     </LinearLayout>
 
-    <!--<ScrollView-->
-        <!--android:fillViewport="true"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
+    <androidx.core.widget.NestedScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:orientation="vertical"
@@ -171,7 +167,7 @@
                     android:layout_width="match_parent"
                     app:tabTextColor="@color/black"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
+                    android:background="@color/white"
                     app:tabGravity="fill"
                     app:tabTextAppearance="@style/TabLayoutTextAppearance"
                     app:tabSelectedTextColor="@color/colorPrimary"
@@ -187,13 +183,23 @@
                 />
 
             <com.cyllide.app.v1.portfolio.CustomViewPager
+                android:background="@color/white"
                 android:id="@+id/view_pager_chart_activity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-    <!--</ScrollView>-->
+    <ImageView
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="@dimen/default_stroke_width"
+        android:id="@+id/portfolio_detailed_chart_back_btn"
+        android:tint="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back_black_24dp"/>
+
 
 </RelativeLayout>
-</androidx.core.widget.NestedScrollView>

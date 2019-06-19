@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -58,9 +59,17 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
     GifImageView webViewLoading;
     TextView currentPriceTV;
     LineChart lineChart;
+    ImageView backBtn;
     TabLayout tabLayout;
     private RequestQueue requestQueue;
     Map<String,String> stringMap = new ArrayMap<>();
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(PortfolioGameDetailedChartActivity.this, PortfolioGameHomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +90,15 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tab_layout_chart_activity);
         AppConstants.currTicker = ticker;
         getChartData(ticker, "1D", this);
-
+        backBtn = findViewById(R.id.portfolio_detailed_chart_back_btn);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PortfolioGameDetailedChartActivity.this, PortfolioGameHomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
         tabLayout.addTab(tabLayout.newTab().setText("Summary"));

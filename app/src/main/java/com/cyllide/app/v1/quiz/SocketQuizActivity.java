@@ -481,9 +481,9 @@ public class SocketQuizActivity extends AppCompatActivity {
     private Socket questionsSocket;
     {
         try {
-            questionsSocket = IO.socket("http://quiz.cyllide.com:5000");
+            questionsSocket = IO.socket("https://quiz.cyllide.com");
         } catch (URISyntaxException e) {
-            Log.d("QUizActivity",e.toString());
+            Log.d("QuizActivity",e.toString());
         }
     }
 

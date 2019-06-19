@@ -1,0 +1,973 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".portfolio.tabs.BalanceSheetFragment">
+
+    <LinearLayout
+        android:layout_margin="@dimen/default_background_stroke_width"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textColor="@color/black"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="2019"/>
+
+            <Spinner
+                android:spinnerMode="dropdown"
+                android:id="@+id/bal_sheet_year_selector_spinner"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:weightSum="3"
+            android:layout_margin="@dimen/default_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="Current Assets"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Cash and cash equivalents	"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_cash_eq_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_cash_eq_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Short-term investments"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_st_investment_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_st_investment_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Net receivables"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_net_recv_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_net_recv_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Inventory"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_inventory_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_inventory_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Other current assets"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_oth_cur_assets_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_oth_cur_assets_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center_vertical"
+                android:text="Total current assets"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/bal_sheet_tot_cur_assets_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/bal_sheet_tot_cur_assets_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Long-term investments"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_lt_investment_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_lt_investment_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Property plant and equipment"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_ppe_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_ppe_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Goodwill"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_goodwill_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_goodwill_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Intangible assets"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_intangible_assets_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_intangible_assets_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Accumulated amortisation"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_acc_amortization_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_acc_amortization_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Other assets"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_oth_assets_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_oth_assets_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Deferred long-term asset charges"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_lt_asset_charges_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_lt_asset_charges_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center_vertical"
+                android:text="Total assets"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/bal_sheet_tot_assets_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/bal_sheet_tot_assets_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:weightSum="3"
+            android:layout_margin="@dimen/default_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="Current Liabilities"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Accounts payable"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_acc_payable_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_acc_payable_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Short/current long-term debt"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_st_debt_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_st_debt_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Other current liabilities"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_oth_cur_liabilities_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_oth_cur_liabilities_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center_vertical"
+                android:text="Total current liabilities"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/bal_sheet_tot_cur_liabilities_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/bal_sheet_tot_cur_liabilities_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Long-term debt"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_lt_debt_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_lt_debt_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Other liabilities"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_oth_liabilities_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_oth_liabilities_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Deferred long-term liability charges"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_lt_liability_charges_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_lt_liability_charges_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Minority interest"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_min_interest_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_min_interest_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Negative goodwill"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_neg_goodwill_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_neg_goodwill_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center_vertical"
+                android:text="Total liabilities"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/bal_sheet_tot_liabilities_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/bal_sheet_tot_liabilities_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:weightSum="3"
+            android:layout_margin="@dimen/default_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="Stockholders' Equity"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Misc. Stock options warrants"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_misc_stock_options_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_misc_stock_options_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Redeemable preferred stock"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_red_preferred_stock_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_red_preferred_stock_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Preferred stock"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_preferred_stock_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_preferred_stock_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Common stock"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_common_stock_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_common_stock_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Retained earnings"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_retained_earnings_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_retained_earnings_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Treasury stock"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_treasury_stock_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_treasury_stock_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Capital surplus"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_capital_surplus_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_capital_surplus_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:text="Other stockholder equity"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_oth_stockholder_equity_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_oth_stockholder_equity_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="Total stockholder equity"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_tot_stockholder_equity_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:textSize="10sp"
+                android:id="@+id/bal_sheet_tot_stockholder_equity_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center_vertical"
+                android:text="Net tangible assets"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/bal_sheet_net_tangible_assets_cur_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/bal_sheet_net_tangible_assets_selected_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>
