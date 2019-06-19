@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
+<FrameLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#00FFFFFF"
     tools:context=".portfolio.tabs.IncomeStatementFragment"
@@ -715,4 +715,4 @@
     </LinearLayout>
 
 </LinearLayout>
-</ScrollView>
+</FrameLayout>
