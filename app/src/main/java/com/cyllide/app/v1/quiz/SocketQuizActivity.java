@@ -29,10 +29,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.VibrationEffect;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -155,11 +157,15 @@ public class SocketQuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        quizID = getIntent().getStringExtra("quizID");
+        Log.d("Value",quizID);
+        Log.d("Value",AppConstants.token);
+//        Log.d("Value",)
 
         Emitter.Listener winnerMoney = new Emitter.Listener() {
             @Override
             public void call(Object... args) {
+                Log.d("HEAAARRRR",args.toString());
                 JSONObject response;
                 try{
                  response = (JSONObject)args[1];
@@ -169,11 +175,25 @@ public class SocketQuizActivity extends AppCompatActivity {
                     response = (JSONObject)args[0];
                 }
                 try{
+                    final JSONObject finalResponse = response;
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            try {
+                                finishQuiz(10, finalResponse.getDouble("amount"));
+                            }
+                            catch (Exception e){
+                                Log.d("Inner Try",e.toString());
+                            }
+                        }
+                    });
+                    Log.d("Value",Double.toString(response.getDouble("amount")));
+//                    Looper.prepare();
                     finishQuiz(10,response.getDouble("amount"));
                 }
                 catch(Exception e){
                     Log.d("QuizSocket",e.toString());
                 }
+                Log.d("HEAAARR",args.toString());
 
             }
         };
@@ -203,7 +223,7 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void call(Object... args) {
                 String result = "";
-                isCorrect = false;
+//                isCorrect = false;
                 try {
                     result = ((JSONObject)args[1]).getString("myresp");
                 } catch (JSONException e) {
@@ -272,38 +292,18 @@ public class SocketQuizActivity extends AppCompatActivity {
                                 }
                                 showAnswer(jsonResponse);
                                 if(isCorrect){
-                                    isCorrect = false;
+//                                    isCorrect = false;
                                     quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
                                     quizCorrectAnswerMusicPlayer.start();
                                     Log.d("questionID",Integer.toString(questionID));
                                     Log.d("changequestion","calling change change question");
                                     if(questionID == 10) {
                                         //check wheter last question
-                                        finishQuiz(questionID,0.0);
+//                                        finishQuiz(questionID,0.0);
                                     }
                                 }
                                 else {
-                                    quizActivityAnswerIndicator.setImageResource(R.drawable.ic_cancel);
-                                    quizWrongAnswerMusicPlayer.start();
-                                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                        v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-                                    } else {
-
-                                        v.vibrate(500);
-                                    }
-                                    if (questionID == 9) {
-                                        losersPopup.show();
-                                    } else {
-                                        Handler handler = new Handler();
-                                        handler.postDelayed(new Runnable() {
-                                            public void run() {
-                                                showRevival();
-
-                                            }
-                                        }, 2000);
-                                    }
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -338,19 +338,19 @@ public class SocketQuizActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_quiz);
-        revivalpopup=new Dialog(this);
+        revivalpopup=new Dialog(SocketQuizActivity.this);
         revivalpopup.setContentView(R.layout.quiz_revival_xml);
         revivalpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        confirmExitPopup = new Dialog(this);
+        confirmExitPopup = new Dialog(SocketQuizActivity.this);
         confirmExitPopup.setContentView(R.layout.quiz_exit_confirm_dialog);
         confirmExitPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        quizWinPopup = new Dialog(this);
+        quizWinPopup = new Dialog(SocketQuizActivity.this);
         quizWinPopup.setContentView(R.layout.quiz_wining_xml);
         quizWinPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        losersPopup=new Dialog(this);
+        losersPopup=new Dialog(SocketQuizActivity.this);
         losersPopup.setContentView(R.layout.quiz_loser_popup);
         losersPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         ImageView imageView = losersPopup.findViewById(R.id.close_loser_popup);
@@ -366,9 +366,25 @@ public class SocketQuizActivity extends AppCompatActivity {
         losersPopup.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                questionsSocket.close();
-                startActivity(new Intent(SocketQuizActivity.this,MainActivity.class));
-                finish();
+                questionID = -1;
+                quizMusicPlayer.stop();
+                if(countDownTimer != null) {
+                    countDownTimer.cancel();
+                    countDownTimer = null;
+                }
+                try {
+                    quizCorrectAnswerMusicPlayer.stop();
+                    quizWrongAnswerMusicPlayer.stop();
+                    questionsSocket.close();
+                    questionsSocket.disconnect();
+                    startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
+                    finish();
+                }
+                catch(Exception e){
+                    startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
+                    finish();
+                    Log.d("QuizSocketActivity","SUm Catch Prob");
+                }
             }
         });
 
@@ -468,8 +484,8 @@ public class SocketQuizActivity extends AppCompatActivity {
         questionsSocket.on("answer_stat_results",onResponseFromServer);
         questionsSocket.on("quiz_winners_listener",winnerMoney);
 
-
-
+//    losersPopup.show();
+//        revivalpopup.show();
 
 
 
@@ -490,6 +506,7 @@ public class SocketQuizActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+//        showRevival();
         exitConfirmDialog();
     }
 
@@ -576,7 +593,24 @@ public class SocketQuizActivity extends AppCompatActivity {
                     catch (JSONException e){
                         Log.d("QuizActivity",e.toString());
                     }
-                    questionsSocket.emit("answer_stats",response);
+                    if(!isCorrect){
+                        quizActivityAnswerIndicator.setImageResource(R.drawable.ic_cancel);
+                        quizWrongAnswerMusicPlayer.start();
+                        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                        } else {
+
+                            v.vibrate(500);
+                        }
+                        if (questionID == 9) {
+                            losersPopup.show();
+                        } else {
+                            showRevival();
+                        }
+                    }
+////                    questionsSocket.emit("answer_stats",response);
                     Log.d("answer_stats",response.toString());
                     Log.d("answer_stats","DONE");
 
@@ -706,6 +740,7 @@ public class SocketQuizActivity extends AppCompatActivity {
     }
 
     void winnersMoney(String upiID){
+        Log.d("value",upiID);
         winPaytmRequestQueue = Volley.newRequestQueue(SocketQuizActivity.this);
         winPaytmRequestHeader.put("quizID",quizID);
         winPaytmRequestHeader.put("token",AppConstants.token);
@@ -862,6 +897,43 @@ public class SocketQuizActivity extends AppCompatActivity {
             }, 3000);
         }
         else{
+            losersPopup=new Dialog(SocketQuizActivity.this);
+            losersPopup.setContentView(R.layout.quiz_loser_popup);
+            losersPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            ImageView imageView = losersPopup.findViewById(R.id.close_loser_popup);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    losersPopup.dismiss();
+                    startActivity(new Intent(SocketQuizActivity.this,MainActivity.class));
+                    finish();
+                }
+            });
+
+            losersPopup.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    questionID = -1;
+                    quizMusicPlayer.stop();
+                    if(countDownTimer != null) {
+                        countDownTimer.cancel();
+                        countDownTimer = null;
+                    }
+                    try {
+                        quizCorrectAnswerMusicPlayer.stop();
+                        quizWrongAnswerMusicPlayer.stop();
+                        questionsSocket.close();
+                        questionsSocket.disconnect();
+                        startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
+                        finish();
+                    }
+                    catch(Exception e){
+                        startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
+                        finish();
+                        Log.d("QuizSocketActivity","SUm Catch Prob");
+                    }
+                }
+            });
             losersPopup.show();
         }
     }
