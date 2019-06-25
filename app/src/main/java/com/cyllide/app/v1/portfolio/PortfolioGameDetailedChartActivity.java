@@ -285,7 +285,10 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
 
                     lineChart.setData(new LineData(lineDataSets));
                     lineChart.getXAxis().setDrawLabels(false);
-                    lineChart.getAxisLeft().setDrawGridLines(false);
+                    lineChart.getXAxis().setDrawGridLines(false);
+                    lineChart.getAxisRight().setEnabled(false);
+                    lineChart.getAxisLeft().setTextColor(ContextCompat.getColor(getBaseContext(),R.color.white));
+                    lineChart.getAxisLeft().setGridColor(ContextCompat.getColor(getBaseContext(),R.color.white));
                     lineChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
                         @Override
                         public void onValueSelected(Entry e, Highlight h) {
@@ -310,8 +313,9 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
                         }
                     });
 
-                    lineDataSet.setDrawFilled(true);
-                    lineDataSet.setFillDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.chart_gradient));
+                    lineDataSet.setLineWidth(3);
+                    lineDataSet.setCircleRadius(5);
+                    lineDataSet.setColor(ContextCompat.getColor(getBaseContext(),R.color.white));
                     lineChart.getLegend().setEnabled(false);
                     Description d = new Description();
                     d.setText("");
