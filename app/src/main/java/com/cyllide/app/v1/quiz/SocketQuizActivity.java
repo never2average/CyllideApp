@@ -37,6 +37,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -92,10 +93,11 @@ public class SocketQuizActivity extends AppCompatActivity {
     private ConnectionClassManager mConnectionClassManager;
     private DeviceBandwidthSampler mDeviceBandwidthSampler;
     private ConnectionChangedListener mListener;
+    private FrameLayout waitingScreen;
 
 
     private void changeQuestion(JSONObject quizObject){
-
+        waitingScreen.setVisibility(View.GONE);
         quizMusicPlayer.start();
         questionID++;
 
@@ -160,6 +162,8 @@ public class SocketQuizActivity extends AppCompatActivity {
         quizID = getIntent().getStringExtra("quizID");
         Log.d("Value",quizID);
         Log.d("Value",AppConstants.token);
+//        waitingScreen = findViewById(R.id.waiting_layout);
+//        waitingScreen.setVisibility(View.VISIBLE);
 //        Log.d("Value",)
 
         Emitter.Listener winnerMoney = new Emitter.Listener() {
@@ -202,6 +206,8 @@ public class SocketQuizActivity extends AppCompatActivity {
         Emitter.Listener numActivePlayers = new Emitter.Listener() {
             @Override
             public void call(Object... args) {
+//                waitingScreen.setVisibility(View.GONE);
+
                 try {
                     viewersTV.setText(Integer.toString(((JSONObject)args[1]).getInt("value")));
                 } catch (JSONException e) {
@@ -338,6 +344,7 @@ public class SocketQuizActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_quiz);
+        waitingScreen = findViewById(R.id.waiting_layout);
         revivalpopup=new Dialog(SocketQuizActivity.this);
         revivalpopup.setContentView(R.layout.quiz_revival_xml);
         revivalpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -415,6 +422,7 @@ public class SocketQuizActivity extends AppCompatActivity {
 
         viewersTV = findViewById(R.id.activity_quiz_viewers_text_view);
         quizActivityAnswerIndicator = findViewById(R.id.activity_quiz_indicator);
+
 
 
 
