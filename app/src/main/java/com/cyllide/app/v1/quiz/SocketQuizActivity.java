@@ -97,8 +97,9 @@ public class SocketQuizActivity extends AppCompatActivity {
 
 
     private void changeQuestion(JSONObject quizObject){
-        waitingScreen.setVisibility(View.GONE);
         quizMusicPlayer.start();
+        quizMusicPlayer.setLooping(true);
+        waitingScreen.setVisibility(View.GONE);
         questionID++;
 
         String id;
@@ -328,8 +329,7 @@ public class SocketQuizActivity extends AppCompatActivity {
 
 
         quizMusicPlayer= MediaPlayer.create(getApplicationContext(), R.raw.quiz_backgorund_sound);
-        quizMusicPlayer.start();
-        quizMusicPlayer.setLooping(true);
+
 
         quizCorrectAnswerMusicPlayer = MediaPlayer.create(getApplicationContext(),R.raw.correct_answer_sound);
 
@@ -706,6 +706,12 @@ public class SocketQuizActivity extends AppCompatActivity {
                     winnersMoney(string);
                 }
             });
+            quizWinPopup.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    finish();
+                }
+            });
 
             if(prize==0){
                 quizMoney.setVisibility(View.GONE);
@@ -823,14 +829,14 @@ public class SocketQuizActivity extends AppCompatActivity {
 
             Toast.makeText(SocketQuizActivity.this, "Showing Answers", Toast.LENGTH_SHORT).show();
             option1PB.setVisibility(View.VISIBLE);
-            startAnswerAnimation(option1PB, (numCorrectOptionA * 100) / totalResponses, 3000);
-            Log.d("percent", Integer.toString((numCorrectOptionA * 100) / totalResponses));
+            startAnswerAnimation(option1PB, (numCorrectOptionA * 400) / totalResponses, 3000);
+            Log.d("percent", Integer.toString((numCorrectOptionA * 400) / totalResponses));
             option2PB.setVisibility(View.VISIBLE);
-            startAnswerAnimation(option2PB, (numCorrectOptionB * 100) / totalResponses, 3000);
+            startAnswerAnimation(option2PB, (numCorrectOptionB * 400) / totalResponses, 3000);
             option3PB.setVisibility(View.VISIBLE);
-            startAnswerAnimation(option3PB, (numCorrectOptionC * 100) / totalResponses, 3000);
+            startAnswerAnimation(option3PB, (numCorrectOptionC * 400) / totalResponses, 3000);
             option4PB.setVisibility(View.VISIBLE);
-            startAnswerAnimation(option4PB, (numCorrectOptionD * 100) / totalResponses, 3000);
+            startAnswerAnimation(option4PB, (numCorrectOptionD * 400) / totalResponses, 3000);
         }
         catch (JSONException e){
             Log.d("SocketQuizActivity",e.toString());
