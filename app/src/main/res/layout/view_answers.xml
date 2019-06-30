@@ -5,19 +5,10 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="5dp"
-        android:layout_marginHorizontal="@dimen/margin"
-        android:layout_marginVertical="@dimen/default_background_stroke_width">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginHorizontal="@dimen/default_stroke_width"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -78,7 +69,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="left"
-                                android:layout_marginLeft="5dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/barlow_regular"
@@ -168,6 +158,9 @@
         </LinearLayout>
 
 
-    </androidx.cardview.widget.CardView>
+   <View
+       android:layout_width="match_parent"
+       android:layout_height="1dp"
+       android:background="@color/cyllide_grey"></View>
 
 </LinearLayout>

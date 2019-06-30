@@ -2,32 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
+    android:minHeight="100dp"
+    android:id="@+id/question_card"
     android:layout_width="match_parent">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:id="@+id/question_card"
-        app:cardElevation="6dp"
-        android:padding="2dp">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:layout_marginBottom="5dp"
-                android:gravity="center_vertical|left"
-                android:paddingStart="10dp"
-                android:id="@+id/questionText"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
 
+     <TextView
+         android:paddingStart="@dimen/margin"
+         android:gravity="center_vertical|left"
+         android:id="@+id/questionText"
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="3" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/cyllide_grey"/>
 </LinearLayout>

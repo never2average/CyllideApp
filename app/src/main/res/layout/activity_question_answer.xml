@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="@dimen/margin"
+    android:layout_marginHorizontal="@dimen/default_stroke_width"
     tools:context=".forum.questionlist.questionPage.QuestionAnswerActivity">
 
     <ScrollView
@@ -18,11 +18,12 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:layout_marginTop="@dimen/default_background_stroke_width"
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="24dp">
                 <ImageView
                     android:id="@+id/activity_question_answer_back_button"
-                    android:layout_width="40dp"
+                    android:layout_width="24dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_arrow_back_black_24dp"
                     android:tint="@color/colorPrimary"/>
@@ -32,7 +33,6 @@
                 android:id="@+id/questionTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
                 android:text="Is this a simple sample question?"
                 android:textSize="20sp" />
 
@@ -57,7 +57,6 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
                             android:layout_marginTop="1dp"
                             android:fontFamily="@font/barlow_regular"
                             android:text="Asked By:   "
@@ -85,7 +84,7 @@
                             android:layout_marginEnd="1dp"
                             android:layout_marginTop="1dp"
                             android:fontFamily="@font/barlow_regular"
-                            android:text="Last Updated:   "
+                            android:text="Last Updated:"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
 
@@ -99,6 +98,7 @@
                             android:textSize="13sp" />
 
                     </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
 

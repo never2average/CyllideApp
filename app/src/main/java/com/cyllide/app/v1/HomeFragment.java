@@ -14,11 +14,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
 
 //import com.example.kartikbhardwaj.bottom_navigation.stories.NewsData;
+import com.cyllide.app.v1.background.services.AppSignatureHelper;
 import com.cyllide.app.v1.contests.MonthlyActivity;
 import com.cyllide.app.v1.portfolio.PortfolioGameHomeActivity;
 import com.cyllide.app.v1.forum.ForumActivity;
@@ -51,6 +53,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Fresco.initialize(getContext());
+
         return inflater.inflate(R.layout.home_fragment, null);
     }
 
