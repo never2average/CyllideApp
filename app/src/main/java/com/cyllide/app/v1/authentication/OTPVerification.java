@@ -1,5 +1,6 @@
 package com.cyllide.app.v1.authentication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -22,6 +23,11 @@ import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.MainActivity;
 import com.cyllide.app.v1.R;
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.mukesh.OnOtpCompletionListener;
 import com.mukesh.OtpView;
@@ -36,7 +42,8 @@ public class OTPVerification extends AppCompatActivity {
     boolean firstuser;
     MaterialButton verifyBtn;
     RequestQueue requestQueue;
-    String phoneNo,enteredOTP;
+     String phoneNo,enteredOTP;
+    public static String otpFromSMS;
     String referralCode;
     Map<String,String> verificationMap = new ArrayMap<>();
 
@@ -48,7 +55,7 @@ public class OTPVerification extends AppCompatActivity {
         firstuser = getIntent().getBooleanExtra("firstuser",false);
         setContentView(R.layout.activity_otpverification);
         verifyBtn = findViewById(R.id.validate_otp_button);
-
+        otpFromSMS = null;
         otpView = findViewById(R.id.otp_view);
         otpView.requestFocus();
 
@@ -64,6 +71,27 @@ public class OTPVerification extends AppCompatActivity {
                 verifyMyOTP();
             }
         });
+
+        SmsRetrieverClient client = SmsRetriever.getClient(this /* context */);
+
+        Task<Void> task = client.startSmsRetriever();
+
+        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+
+            }
+        });
+
+        task.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+
     }
 
     void verifyMyOTP() {
