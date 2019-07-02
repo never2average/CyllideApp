@@ -3,6 +3,7 @@ package com.cyllide.app.v1.forum.questionlist;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cyllide.app.v1.R;
@@ -18,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class QuestionListViewHolder extends RecyclerView.ViewHolder {
 
     private TextView questionTV;
-    private MaterialCardView questionCard;
+    private LinearLayout questionCard;
     private String question;
     ArrayList<String> tagList= new ArrayList<>();
     private View questionView;

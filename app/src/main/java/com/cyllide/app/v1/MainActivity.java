@@ -20,6 +20,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.cyllide.app.v1.authentication.PhoneAuth;
+import com.cyllide.app.v1.background.services.AppSignatureHelper;
 import com.cyllide.app.v1.background.services.GetLatestQuizIDService;
 import com.cyllide.app.v1.faq_view.FAQActivity;
 import com.cyllide.app.v1.intro.IntroActivity;
@@ -154,6 +155,9 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
 
         notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+
+        AppSignatureHelper appSignature = new AppSignatureHelper(this);
+//        Log.d("HASH",appSignature.getAppSignatures().toString());
 
 
         Intent serviceIntent = new Intent(this, GetLatestQuizIDService.class);
