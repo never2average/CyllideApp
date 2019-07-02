@@ -28,6 +28,8 @@ public class MySMSBroadcastReceiver extends BroadcastReceiver {
                     String OTP = message.substring(colonOccurance+2,colonOccurance+8);
                     OTPVerification.otpFromSMS = OTP;
                     Log.d("messsage",message);
+                    OTPVerification.otpView.setText(OTP);
+                    OTPVerification.verifyBtn.performClick();
                     // Extract one-time code from the message and complete verification
                     // by sending the code back to your server.
                     break;

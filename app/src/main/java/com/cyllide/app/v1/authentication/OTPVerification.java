@@ -38,9 +38,9 @@ import org.json.JSONObject;
 import java.util.Map;
 
 public class OTPVerification extends AppCompatActivity {
-    OtpView otpView;
+    public static OtpView otpView;
     boolean firstuser;
-    MaterialButton verifyBtn;
+    public static MaterialButton verifyBtn;
     RequestQueue requestQueue;
      String phoneNo,enteredOTP;
     public static String otpFromSMS;
