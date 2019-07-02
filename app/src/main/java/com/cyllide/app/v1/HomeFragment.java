@@ -42,10 +42,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
 
-    MaterialCardView stories, contest, portfolios, quiz, forum;
+    MaterialCardView stories, portfolios, quiz, forum;
 
     @Nullable
     @Override
@@ -61,7 +60,6 @@ public class HomeFragment extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
         stories = view.findViewById(R.id.storiescard);
-        contest = view.findViewById(R.id.contestcard);
         portfolios = view.findViewById(R.id.portfoliocard);
         quiz = view.findViewById(R.id.quizcard);
         forum = view.findViewById(R.id.forumcard);
@@ -83,41 +81,9 @@ public class HomeFragment extends Fragment {
                 getActivity().finish();
             }
         });
-        contest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if(ConnectionStatus.connectionstatus){
-//                Intent intent=new Intent(getContext(), MonthlyActivity.class);
-//                startActivity(intent);
-//                getActivity().finish();
-//                }
-//                else{
-//                    Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
-//                }
-                ConnectivityManager conMgr = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
-
-                if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
-                    Toast.makeText(getContext(), "Check your Network Connection", Toast.LENGTH_LONG).show();
-
-                } else {
-                    Intent intent = new Intent(getContext(), MonthlyActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
         portfolios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(ConnectionStatus.connectionstatus){
-//                Intent intent=new Intent(getContext(), PortfolioGameHomeActivity.class);
-//                startActivity(intent);}
-//                else{
-//                    Toast.makeText(getContext(),"Internet Connection Lost",Toast.LENGTH_LONG).show();
-//
-//
-//                }
-
                 ConnectivityManager conMgr = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
@@ -143,12 +109,7 @@ public class HomeFragment extends Fragment {
                     SharedPreferences sharedPreferences = getContext().getSharedPreferences("AUTHENTICATION", Context.MODE_PRIVATE);
                     String token = sharedPreferences.getString("token", "Not found!");
                     Intent intent;
-//                if(token.equals("Not found!")){
-//                    intent = new Intent(getContext(), PhoneAuth.class);
-//                }
-//                else{
                     intent = new Intent(getContext(), QuizRulesActivity.class);
-//                }
 
                     getContext().startActivity(intent);
                     getActivity().finish();
@@ -170,22 +131,7 @@ public class HomeFragment extends Fragment {
                     Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
 
                 }
-
-//                ConnectivityManager conMgr = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-//                NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
-//
-//                if(netInfo ==null||!netInfo.isConnected()||!netInfo.isAvailable())
-//                {
-//                    Toast.makeText(getContext()," Check your Network Connection",Toast.LENGTH_LONG).show();
-//
-//                } else {
-//                    Intent intent = new Intent(getContext(), ForumActivity.class);
-//                    getContext().startActivity(intent);
-//              }
-//            }
             }
-
-
         });
     }
 }

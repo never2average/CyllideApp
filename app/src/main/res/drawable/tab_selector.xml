@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:drawable="@drawable/tab_indicator_selected" android:state_selected="true"/>
-
-    <item android:drawable="@drawable/tab_indicator_default"/>
+    <!-- UNSELECTED TAB STATE -->
+    <item android:state_selected="false" android:state_pressed="false">
+        <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+            <!-- Bottom indicator color for the UNSELECTED tab state -->
+            <item android:top="-5dp" android:left="-3dp" android:right="-3dp">
+                <shape android:shape="rectangle">
+                    <stroke android:color="@color/colorPrimary" android:width="2dp"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
 </selector>
