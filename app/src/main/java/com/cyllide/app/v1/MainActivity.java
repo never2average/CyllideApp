@@ -43,11 +43,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity implements InternetConnectivityListener {
 
 
-    Toolbar toolbar;
-    ImageView logo;
-    CircleImageView profilepic;
-    ImageView notificationButton;
-    com.github.clans.fab.FloatingActionButton referrals, faq, feedback, help;
+
+    com.github.clans.fab.FloatingActionButton referrals, feedback, help;
     InternetAvailabilityChecker internetAvailabilityChecker;
     public static String COMPLETED_TUTORIAL_PREF_NAME = "tutorialcompleted";
     public final static int MY_PERMISSION_REQUEST_CODE = 200;
@@ -165,9 +162,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 //        Log.d("HASH",appSignature.getAppSignatures().toString());
 
 
-        logo=findViewById(R.id.logo);
-        notificationButton=findViewById(R.id.notificationicon);
-        profilepic=findViewById(R.id.profilePic);
         Intent serviceIntent = new Intent(this, GetLatestQuizIDService.class);
         startService(serviceIntent);
 
@@ -219,29 +213,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                finish();
            }
        });
-
-
-        toolbar = findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
-        profilepic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                swapProfileFragment();
-
-
-            }
-        });
-
-        notificationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this, NotificationActivity.class);
-                startActivity(intent);
-                finish();
-
-            }
-        });
-
 
         AnimatorSet set = new AnimatorSet();
 

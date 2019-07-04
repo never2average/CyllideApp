@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -182,10 +184,19 @@ public class ForumActivity extends AppCompatActivity {
         });
         tags=findViewById(R.id.tags);
         for(int i = 1; i<10; i++) {
+            int pixels = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+
             LabelToggle lt = new LabelToggle(ForumActivity.this);
             lt.setId(i);
             final int id_ = lt.getId();
             lt.setText("LOL"+id_);
+            LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            buttonLayoutParams.setMargins(pixels,pixels,pixels,pixels);
+            lt.setPadding(pixels,pixels,pixels,pixels);
+            lt.setLayoutParams(buttonLayoutParams);
+            lt.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,6, getResources().getDisplayMetrics()));
+
+//            lt.setMargin
             tags.addView(lt);
 
 
@@ -201,49 +212,58 @@ public class ForumActivity extends AppCompatActivity {
             public void onCheckedStateChanged(MultiSelectToggleGroup group, int checkedId, boolean isChecked) {
                 Log.d("CheckedID",Integer.toString(checkedId));
 
-                switch (checkedId){
 
-                    case R.id.tb_finance:
-
-
-                            if(!selectedTags.contains("Finance")){
-                                selectedTags.add("Finance");
+                            if(!selectedTags.contains(tagList.get(checkedId))){
+                                selectedTags.add(tagList.get(checkedId));
                             }
                             else{
-                                selectedTags.remove("Finance");
+                                selectedTags.remove(tagList.get(checkedId));
                             }
+//
 
-
-                        break;
-                    case R.id.tb_capital_markets:
-                            if(!selectedTags.contains("Stock Markets")){
-                                selectedTags.add("Stock Markets");
-                            }
-                            else{
-                                selectedTags.remove("Stock Markets");
-                            }
-                        break;
-                    case R.id.tb_macro_economics:
-                            if(!selectedTags.contains("Macro-Economics")){
-                                selectedTags.add("Macro-Economics");
-                            }
-                            else{
-                                selectedTags.remove("Macro-Economics");
-                            }
-                        break;
-                    case R.id.tb_business:
-                            if(!selectedTags.contains("Business")){
-                                selectedTags.add("Business");
-                            }
-                            else {
-                                selectedTags.remove("Business");
-
-                            }
-                            break;
-
-
-
-                }
+//                switch (checkedId){
+//
+//                    case R.id.tb_finance:
+//
+//
+//                            if(!selectedTags.contains("Finance")){
+//                                selectedTags.add("Finance");
+//                            }
+//                            else{
+//                                selectedTags.remove("Finance");
+//                            }
+//
+//
+//                        break;
+//                    case R.id.tb_capital_markets:
+//                            if(!selectedTags.contains("Stock Markets")){
+//                                selectedTags.add("Stock Markets");
+//                            }
+//                            else{
+//                                selectedTags.remove("Stock Markets");
+//                            }
+//                        break;
+//                    case R.id.tb_macro_economics:
+//                            if(!selectedTags.contains("Macro-Economics")){
+//                                selectedTags.add("Macro-Economics");
+//                            }
+//                            else{
+//                                selectedTags.remove("Macro-Economics");
+//                            }
+//                        break;
+//                    case R.id.tb_business:
+//                            if(!selectedTags.contains("Business")){
+//                                selectedTags.add("Business");
+//                            }
+//                            else {
+//                                selectedTags.remove("Business");
+//
+//                            }
+//                            break;
+//
+//
+//
+//                }
                 Log.d("ForumActivity",Integer.toString(selectedTags.size()));
                 if(responseData==null){
                     getQuestions();

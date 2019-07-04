@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"/>
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -46,37 +46,38 @@
 
 
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@android:color/transparent">
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
-        <ImageView
-            android:background="@color/transparent"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:padding="6dp"
-            android:id="@+id/newsbackbutton"
-            android:src="@drawable/ic_arrow_back_black_24dp"
-            android:tint="@color/white" />
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            app:tabTextColor="#ffffff"
-            android:layout_height="60dp"
-            android:background="@android:color/transparent"
-            app:tabGravity="fill"
-            app:tabSelectedTextColor="@color/black"
-            app:tabIndicatorColor="@color/white"
-            app:tabIndicator="@drawable/tab_selector"
-            app:tabIndicatorFullWidth="false"
-            app:tabMode="fixed"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@android:color/transparent"
+        android:padding="8dp">
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+            <ImageView
+                android:background="@color/transparent"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:padding="6dp"
+                android:id="@+id/newsbackbutton"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                android:tint="@color/colorPrimary" />
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent" app:tabTextColor="#000000"
+                android:layout_height="60dp"
+                android:background="@android:color/transparent"
+                app:tabGravity="fill"
+                app:tabSelectedTextColor="@color/colorPrimary"
+                app:tabIndicatorColor="@color/colorPrimary"
+                app:tabIndicator="@drawable/tab_selector"
+                app:tabIndicatorFullWidth="false"
+                app:tabMode="fixed"
+                />
+
+        </LinearLayout>
 
 
 
@@ -90,7 +91,7 @@
 
 
 
-</LinearLayout>
+    </LinearLayout>
 
 
 

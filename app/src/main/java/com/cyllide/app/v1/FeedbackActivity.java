@@ -39,10 +39,8 @@ public class FeedbackActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(feedbackEdittext.getText().toString().equals("")){
-
                     return;
                 }
-
                 sendEmailVolley();
             }
         });
