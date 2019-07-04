@@ -155,7 +155,9 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             }
         }
 
-
+        Intent intent = new Intent(MainActivity.this,ProfileActivity.class);
+        intent.putExtra("Editable",true);
+//        startActivity(intent);
 
         notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
 

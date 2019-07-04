@@ -30,6 +30,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.nex3z.togglebuttongroup.MultiSelectToggleGroup;
 import com.nex3z.togglebuttongroup.SingleSelectToggleGroup;
+import com.nex3z.togglebuttongroup.button.LabelToggle;
 import com.nex3z.togglebuttongroup.button.ToggleButton;
 
 import org.json.JSONArray;
@@ -65,6 +66,8 @@ public class ForumActivity extends AppCompatActivity {
     MaterialCardView askAQuestionCV;
     TextView askAQuestionTV;
     boolean flag;
+    MultiSelectToggleGroup multiSelectToggleGroup;
+
 
     private void displayQuestions(JSONArray responseData) {
         questionList = new ArrayList<>();
@@ -178,12 +181,25 @@ public class ForumActivity extends AppCompatActivity {
             }
         });
         tags=findViewById(R.id.tags);
+        for(int i = 1; i<10; i++) {
+            LabelToggle lt = new LabelToggle(ForumActivity.this);
+            lt.setId(i);
+            final int id_ = lt.getId();
+            lt.setText("LOL"+id_);
+            tags.addView(lt);
+
+
+
+        }
+
+
 
 
 
         tags.setOnCheckedChangeListener(new MultiSelectToggleGroup.OnCheckedStateChangeListener() {
             @Override
             public void onCheckedStateChanged(MultiSelectToggleGroup group, int checkedId, boolean isChecked) {
+                Log.d("CheckedID",Integer.toString(checkedId));
 
                 switch (checkedId){
 

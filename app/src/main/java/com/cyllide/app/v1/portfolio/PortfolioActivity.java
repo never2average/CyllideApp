@@ -32,6 +32,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.nex3z.togglebuttongroup.MultiSelectToggleGroup;
 import com.nex3z.togglebuttongroup.button.LabelToggle;
 
 import org.json.JSONArray;
@@ -66,6 +67,7 @@ public class PortfolioActivity extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.web_view_chart_portfolio);
         progressLoader = findViewById(R.id.web_view_loading);
        webView.setWebViewClient(new CustomWebView(progressLoader,webView));
+
        backButton = findViewById(R.id.portfolio_activity_back_button);
        backButton.setOnClickListener(new View.OnClickListener() {
            @Override
