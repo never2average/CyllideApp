@@ -68,8 +68,8 @@ public class ForumActivity extends AppCompatActivity {
     MaterialCardView askAQuestionCV;
     TextView askAQuestionTV;
     boolean flag;
-    MultiSelectToggleGroup multiSelectToggleGroup;
 
+    ArrayList<String> forumTags= new ArrayList<>();
 
     private void displayQuestions(JSONArray responseData) {
         questionList = new ArrayList<>();
@@ -157,24 +157,20 @@ public class ForumActivity extends AppCompatActivity {
                 }
                 else{
                     askAQuestionTV.setTextColor(ContextCompat.getColor(view.getContext(),R.color.white));
-                askAQuestionCV.setCardBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimary));
-                flag = true;
-                sortByNewest();
-            }
+                    askAQuestionCV.setCardBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimary));
+                    flag = true;
+                    sortByNewest();
+                }
             }
         });
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 searchQuestions.clearQuery();
                 if(getCurrentFocus()!=null)
                 {
                     InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
-
-
                 }
 
                 startActivity(new Intent(ForumActivity.this, MainActivity.class));
@@ -183,13 +179,13 @@ public class ForumActivity extends AppCompatActivity {
             }
         });
         tags=findViewById(R.id.tags);
-        for(int i = 1; i<10; i++) {
+        for(int i = 0; i<forumTags.size(); i++) {
             int pixels = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
 
             LabelToggle lt = new LabelToggle(ForumActivity.this);
             lt.setId(i);
             final int id_ = lt.getId();
-            lt.setText("LOL"+id_);
+            lt.setText(forumTags.get(i));
             LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             buttonLayoutParams.setMargins(pixels,pixels,pixels,pixels);
             lt.setPadding(pixels,pixels,pixels,pixels);
@@ -213,57 +209,13 @@ public class ForumActivity extends AppCompatActivity {
                 Log.d("CheckedID",Integer.toString(checkedId));
 
 
-                            if(!selectedTags.contains(tagList.get(checkedId))){
-                                selectedTags.add(tagList.get(checkedId));
+                            if(!selectedTags.contains(forumTags.get(checkedId))){
+                                selectedTags.add(forumTags.get(checkedId));
                             }
                             else{
-                                selectedTags.remove(tagList.get(checkedId));
+                                selectedTags.remove(forumTags.get(checkedId));
                             }
-//
 
-//                switch (checkedId){
-//
-//                    case R.id.tb_finance:
-//
-//
-//                            if(!selectedTags.contains("Finance")){
-//                                selectedTags.add("Finance");
-//                            }
-//                            else{
-//                                selectedTags.remove("Finance");
-//                            }
-//
-//
-//                        break;
-//                    case R.id.tb_capital_markets:
-//                            if(!selectedTags.contains("Stock Markets")){
-//                                selectedTags.add("Stock Markets");
-//                            }
-//                            else{
-//                                selectedTags.remove("Stock Markets");
-//                            }
-//                        break;
-//                    case R.id.tb_macro_economics:
-//                            if(!selectedTags.contains("Macro-Economics")){
-//                                selectedTags.add("Macro-Economics");
-//                            }
-//                            else{
-//                                selectedTags.remove("Macro-Economics");
-//                            }
-//                        break;
-//                    case R.id.tb_business:
-//                            if(!selectedTags.contains("Business")){
-//                                selectedTags.add("Business");
-//                            }
-//                            else {
-//                                selectedTags.remove("Business");
-//
-//                            }
-//                            break;
-//
-//
-//
-//                }
                 Log.d("ForumActivity",Integer.toString(selectedTags.size()));
                 if(responseData==null){
                     getQuestions();
@@ -309,10 +261,11 @@ public class ForumActivity extends AppCompatActivity {
             }
         });
 
-        finance = findViewById(R.id.tb_finance);
-        capitalMarkets = findViewById(R.id.tb_capital_markets);
-        macroEconimics = findViewById(R.id.tb_macro_economics);
-        business = findViewById(R.id.tb_business);
+//        finance = findViewById(R.id.tb_finance);
+//        capitalMarkets = findViewById(R.id.tb_capital_markets);
+//        macroEconimics = findViewById(R.id.tb_macro_economics);
+//        business = findViewById(R.id.tb_business);
+        forumTagsVolley();
 
 
 
@@ -375,4 +328,48 @@ public class ForumActivity extends AppCompatActivity {
         questionRequestQueue.add(stringRequest);
     }
 
+    void forumTagsVolley(){
+        final RequestQueue forumTagsQueue = Volley.newRequestQueue(ForumActivity.this);
+        String url = getString(R.string.apiBaseURL) + "forum/tags";
+        StringRequest forumRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+                    for(int i=0;i<jsonArray.length();i++){
+                        forumTags.add(jsonArray.getString(i));
+                    }
+                    Log.d("ForumActivity", String.valueOf(forumTags.size()));
+                    for(int i = 0; i<forumTags.size(); i++) {
+                        int pixels = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+
+                        LabelToggle lt = new LabelToggle(ForumActivity.this);
+                        lt.setId(i);
+                        final int id_ = lt.getId();
+                        lt.setText(forumTags.get(i));
+                        LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        buttonLayoutParams.setMargins(pixels,pixels,pixels,pixels);
+                        lt.setPadding(pixels,pixels,pixels,pixels);
+                        lt.setLayoutParams(buttonLayoutParams);
+                        lt.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,6, getResources().getDisplayMetrics()));
+
+//            lt.setMargin
+                        tags.addView(lt);
+
+
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        forumTagsQueue.add(forumRequest);
+    }
 }
