@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -31,21 +32,30 @@ public class UsernameActivity extends AppCompatActivity {
 
     RequestQueue validityQueue;
     Map<String,String> validityMap = new ArrayMap<>();
-    TextInputEditText usernameEditText;
-    String phoneNumber;
-    MaterialButton proceedButton;
-    EditText referralCode;
+    TextInputEditText usernameEditText, phoneNumberEditText, referralCodeEditText;
+    MaterialButton registerButton;
+    TextView loginRedirect;
+    Map<String, String> signUpMap = new ArrayMap<>();
+    RequestQueue signUpQueue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_username);
-
-        Intent intent = getIntent();
-        referralCode = findViewById(R.id.activity_otpverification_referral_input);
-        phoneNumber = intent.getStringExtra("phone");
-        usernameEditText = findViewById(R.id.input_scName);
-        proceedButton = findViewById(R.id.btn_send_otp);
+        usernameEditText = findViewById(R.id.input_scName_signup);
+        phoneNumberEditText = findViewById(R.id.input_phoneNo_signup);
+        referralCodeEditText = findViewById(R.id.input_referral_signup);
+        registerButton = findViewById(R.id.signup_btn);
+        loginRedirect = findViewById(R.id.login_redirect);
+        loginRedirect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UsernameActivity.this, PhoneAuth.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         usernameEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -58,73 +68,57 @@ public class UsernameActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-
-        proceedButton.setOnClickListener(new View.OnClickListener() {
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                final Map<String, String> mHeaders = new ArrayMap<String, String>();
-                mHeaders.put("phone", phoneNumber);
-                if(usernameEditText.getError() != null) {
-                   return;
-                }
-                mHeaders.put("username", usernameEditText.getText().toString());
-                try {
-                    RequestQueue requestQueue;
-                    requestQueue = Volley.newRequestQueue(getBaseContext());
-                    String URL = getResources().getString(R.string.apiBaseURL)+"auth/otp/send/new";
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            boolean firstUser = true;
-                            Log.d("UsernameActivity",response);
-                            try {
-                                JSONObject jsonObject = new JSONObject(response);
-                                String success = jsonObject.getString("message");
-                                if(success.equals("MessageSendingSuccessful")){
-                                    Toast.makeText(UsernameActivity.this,"Message Sending Successful",Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(UsernameActivity.this,OTPVerification.class);
-                                    intent.putExtra("phone",phoneNumber);
-                                    intent.putExtra("firstuser",firstUser);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                                else{
-                                    if(jsonObject.getString("message").equals("InvalidUsername")){
-                                        Toast.makeText(UsernameActivity.this,"The username entered does not match the one registered with the phone number",Toast.LENGTH_LONG).show();
-                                    }
-                                    else{
-                                        Toast.makeText(UsernameActivity.this,"Message Sending Failed",Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                            }
-                            catch (JSONException e) {
-                                Log.d("UsernameActivity",e.toString());
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.e("VOLLEY", error.toString());
-                        }
-                    })
-                    {
-                        @Override
-                        public Map<String, String> getHeaders () {
-                            return mHeaders;
-                        }
-                    };
-                    requestQueue.add(stringRequest);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            public void onClick(View v) {
+                signUp();
             }
         });
-
-
     }
 
 
-    void checkUsernameValidity(String username) {
+    void signUp(){
+        signUpQueue = Volley.newRequestQueue(getBaseContext());
+        signUpMap.put("phone", phoneNumberEditText.getText().toString());
+        signUpMap.put("username", usernameEditText.getText().toString());
+        signUpMap.put("referral", referralCodeEditText.getText().toString());
+        String url = getString(R.string.apiBaseURL)+"auth/otp/send/new";
+        StringRequest signUpRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String message = jsonObject.getString("message");
+                    if(message.equals("MessageSendingSuccessful")){
+                        Intent intent = new Intent(UsernameActivity.this, OTPVerification.class);
+                        intent.putExtra("firstuser",true);
+                        intent.putExtra("phone", phoneNumberEditText.getText().toString());
+                        startActivity(intent);
+                        finish();
+                    }
+                    else{
+                        Toast.makeText(getBaseContext(),"Failed to send SMS",Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+          @Override
+          public Map<String, String> getHeaders(){
+              return signUpMap;
+          }
+        };
+        signUpQueue.add(signUpRequest);
+    }
+
+
+    void checkUsernameValidity(final String username) {
         int l = username.length();
         for(int i = 0; i<l;i++){
             char c = username.charAt(i);
@@ -135,7 +129,6 @@ public class UsernameActivity extends AppCompatActivity {
             return;
         }
 
-        validityMap.put("phone",phoneNumber.toString());
         validityMap.put("username",username);
         validityQueue = Volley.newRequestQueue(UsernameActivity.this);
         String url = getResources().getString(R.string.apiBaseURL)+"username/validity";
@@ -146,6 +139,9 @@ public class UsernameActivity extends AppCompatActivity {
                     String status = new JSONObject(response).getString("status");
                     if(status.equals("taken")){
                         usernameEditText.setError("username already taken");
+                    }
+                    else{
+                        usernameEditText.setError(null);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -164,5 +160,4 @@ public class UsernameActivity extends AppCompatActivity {
         };
         validityQueue.add(validityRequest);
     }
-
 }

@@ -42,7 +42,7 @@ public class OTPVerification extends AppCompatActivity {
     boolean firstuser;
     public static MaterialButton verifyBtn;
     RequestQueue requestQueue;
-     String phoneNo,enteredOTP;
+    String phoneNo,enteredOTP;
     public static String otpFromSMS;
     String referralCode;
     Map<String,String> verificationMap = new ArrayMap<>();
@@ -51,7 +51,6 @@ public class OTPVerification extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         phoneNo = getIntent().getStringExtra("phone");
-        referralCode = getIntent().getStringExtra("referralcode");
         firstuser = getIntent().getBooleanExtra("firstuser",false);
         setContentView(R.layout.activity_otpverification);
         verifyBtn = findViewById(R.id.validate_otp_button);
@@ -97,9 +96,6 @@ public class OTPVerification extends AppCompatActivity {
     void verifyMyOTP() {
         verificationMap.put("phone",phoneNo);
         verificationMap.put("otp",enteredOTP);
-        if(firstuser){
-            verificationMap.put("referral",referralCode);
-        }
 
         requestQueue = Volley.newRequestQueue(OTPVerification.this);
         String url = getResources().getString(R.string.apiBaseURL)+"auth/otp/verify";

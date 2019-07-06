@@ -59,7 +59,6 @@ public class PhoneAuth extends AppCompatActivity {
                             @Override
                             public void onResponse(String response) {
                                 boolean firstUser = false;
-                                Log.d("PhoneAuth",response);
                                 try {
                                     JSONObject jsonObject = new JSONObject(response);
                                     String success = jsonObject.getString("message");
