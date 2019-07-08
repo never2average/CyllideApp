@@ -43,48 +43,61 @@
              android:textColor="@color/white"
              android:textSize="@dimen/suggestion_body_text_size" />
 
-         <ImageView
+         <de.hdodenhof.circleimageview.CircleImageView
              android:id="@+id/profile_pic_container"
-             android:layout_marginVertical="@dimen/default_stroke_width"
+             android:layout_marginVertical="@dimen/text_content_margin"
              android:layout_below="@+id/home_fragment_greetings"
              android:layout_width="wrap_content"
              android:layout_centerHorizontal="true"
              android:layout_height="wrap_content"
-             android:maxHeight="130dp"
-             android:maxWidth="130dp"
+             android:maxHeight="110dp"
+             android:maxWidth="110dp"
              android:minHeight="80dp"
              android:minWidth="80dp"/>
          <LinearLayout
-             android:layout_marginVertical="@dimen/default_stroke_width"
              android:layout_below="@+id/profile_pic_container"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:minHeight="50dp">
 
-             <ImageView
-                 android:src="@drawable/ic_cash"
-                 android:gravity="start"
+
+
+             android:minHeight="40dp">
+             <LinearLayout
+                 android:gravity="center"
                  android:layout_width="0dp"
                  android:layout_weight="1"
-                 android:layout_height="match_parent" />
-
-             <TextView
-                 android:id="@+id/money_won"
-                 android:layout_width="0dp"
-                 android:layout_height="match_parent"
-                 android:layout_weight="2" />
-
-             <TextView
-                 android:id="@+id/points_collected"
-                 android:layout_width="0dp"
-                 android:layout_weight="2"
-                 android:layout_height="match_parent" />
-             <ImageView
-                 android:paddingVertical="@dimen/default_background_stroke_width"
-                 android:src="@drawable/ic_coins"
+                 android:layout_height="match_parent">
+                 <TextView
+                     android:textSize="@dimen/suggestion_body_text_size"
+                     android:textColor="@color/white"
+                     android:gravity="center_vertical|end"
+                     android:id="@+id/money_won"
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent" />
+                 <ImageView
+                     android:src="@drawable/ic_cash"
+                     android:gravity="center_vertical|start"
+                     android:layout_width="40dp"
+                     android:layout_height="match_parent" />
+             </LinearLayout>
+             <LinearLayout
+                 android:gravity="center"
                  android:layout_width="0dp"
                  android:layout_weight="1"
-                 android:layout_height="match_parent" />
+                 android:layout_height="match_parent">
+                 <TextView
+                     android:textColor="@color/white"
+                     android:gravity="center_vertical|end"
+                     android:textSize="@dimen/suggestion_body_text_size"
+                     android:id="@+id/points_collected"
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent" />
+                 <ImageView
+                     android:paddingVertical="@dimen/default_background_stroke_width"
+                     android:src="@drawable/ic_coins"
+                     android:layout_width="40dp"
+                     android:layout_height="match_parent" />
+             </LinearLayout>
 
          </LinearLayout>
 

@@ -65,6 +65,7 @@ public class ForumActivity extends AppCompatActivity {
     MaterialCardView askAQuestionCV;
     TextView askAQuestionTV;
     boolean flag;
+    ArrayList<String> forumTags= new ArrayList<>();
 
     private void displayQuestions(JSONArray responseData) {
         questionList = new ArrayList<>();
@@ -152,24 +153,20 @@ public class ForumActivity extends AppCompatActivity {
                 }
                 else{
                     askAQuestionTV.setTextColor(ContextCompat.getColor(view.getContext(),R.color.white));
-                askAQuestionCV.setCardBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimary));
-                flag = true;
-                sortByNewest();
-            }
+                    askAQuestionCV.setCardBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimary));
+                    flag = true;
+                    sortByNewest();
+                }
             }
         });
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 searchQuestions.clearQuery();
                 if(getCurrentFocus()!=null)
                 {
                     InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
-
-
                 }
 
                 startActivity(new Intent(ForumActivity.this, MainActivity.class));
@@ -277,6 +274,7 @@ public class ForumActivity extends AppCompatActivity {
         capitalMarkets = findViewById(R.id.tb_capital_markets);
         macroEconimics = findViewById(R.id.tb_macro_economics);
         business = findViewById(R.id.tb_business);
+        forumTagsVolley();
 
 
 
@@ -339,4 +337,28 @@ public class ForumActivity extends AppCompatActivity {
         questionRequestQueue.add(stringRequest);
     }
 
+    void forumTagsVolley(){
+        final RequestQueue forumTagsQueue = Volley.newRequestQueue(ForumActivity.this);
+        String url = getString(R.string.apiBaseURL) + "forum/tags";
+        StringRequest forumRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+                    for(int i=0;i<jsonArray.length();i++){
+                        forumTags.add(jsonArray.getString(i));
+                    }
+                    Log.d("ForumActivity", String.valueOf(forumTags.size()));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        forumTagsQueue.add(forumRequest);
+    }
 }
