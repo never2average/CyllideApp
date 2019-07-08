@@ -2,6 +2,7 @@ package com.cyllide.app.v1;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,9 +38,11 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 
 import com.google.android.material.card.MaterialCardView;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,6 +52,12 @@ import java.util.Map;
 public class HomeFragment extends Fragment {
     Calendar startTime = Calendar.getInstance();
     Dialog quizPopup;
+
+    TextView timer;
+    ImageView networkTower;
+    View content;
+    TextView retry_button;
+
     TextView greetingsTV, winningsTV, pointsTV;
     de.hdodenhof.circleimageview.CircleImageView profilePic;
     Map<String,String> homepageDataHeaders = new ArrayMap<>();
@@ -81,6 +90,9 @@ public class HomeFragment extends Fragment {
         quiz = view.findViewById(R.id.quizcard);
         forum = view.findViewById(R.id.forumcard);
         quizPopup = new Dialog(view.getContext());
+        networkTower=view.findViewById(R.id.network_tower);
+        retry_button=view.findViewById(R.id.retry_button);
+        content=view;
         greetingsTV = view.findViewById(R.id.home_fragment_greetings);
         winningsTV = view.findViewById(R.id.money_won);
         pointsTV = view.findViewById(R.id.points_collected);
@@ -92,6 +104,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+
+
         final Activity activity = getActivity();
         stories.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +124,10 @@ public class HomeFragment extends Fragment {
 
                 if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
                     Toast.makeText(getContext(), "Poor Network Connection", Toast.LENGTH_LONG).show();
+                    content.findViewById(R.id.main_content).setVisibility(View.GONE);
+                    content.findViewById(R.id.network_retry_layout).setVisibility(View.VISIBLE);
+                    Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
+
 
                 } else {
                     Intent portfolioIntent = new Intent(getContext(), PortfolioGameHomeActivity.class);
@@ -135,11 +154,19 @@ public class HomeFragment extends Fragment {
                     getActivity().finish();
                 } else {
                     Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
+                    content.findViewById(R.id.main_content).setVisibility(View.GONE);
+                    content.findViewById(R.id.network_retry_layout).setVisibility(View.VISIBLE);
+                    Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
+
 
                 }
             }
 
         });
+
+
+
+
         forum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,11 +175,35 @@ public class HomeFragment extends Fragment {
                     getContext().startActivity(intent);
                     getActivity().finish();
                 } else {
+
+
+                   content.findViewById(R.id.main_content).setVisibility(View.GONE);
+                   content.findViewById(R.id.network_retry_layout).setVisibility(View.VISIBLE);
                     Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
 
                 }
             }
         });
+
+        retry_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (ConnectionStatus.connectionstatus) {
+                  content.findViewById(R.id.network_retry_layout).setVisibility(View.GONE);
+                  content.findViewById(R.id.main_content).setVisibility(View.VISIBLE);
+                } else {
+
+
+                    content.findViewById(R.id.main_content).setVisibility(View.GONE);
+                    content.findViewById(R.id.network_retry_layout).setVisibility(View.VISIBLE);
+                    Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+        });
+
         fetchDataVolley();
     }
 
@@ -203,4 +254,6 @@ public class HomeFragment extends Fragment {
         };
         homepageQueue.add(homepageRequest); 
     }
+
+
 }
