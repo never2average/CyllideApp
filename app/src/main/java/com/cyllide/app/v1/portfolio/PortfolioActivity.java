@@ -218,13 +218,9 @@ public class PortfolioActivity extends AppCompatActivity {
                     openTV.setText(jsonResponse.getString("Open"));
                     dailyRangeTV.setText(jsonResponse.getString("Day's range"));
                     yearlyRangeTV.setText(jsonResponse.getString("52-week range"));
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
         }, new Response.ErrorListener() {
             @Override

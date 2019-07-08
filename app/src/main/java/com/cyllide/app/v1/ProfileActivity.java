@@ -78,15 +78,15 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.new_activity_profile);
         Fresco.initialize(this);
         storageReference= FirebaseStorage.getInstance().getReference();
         sharedPreferences=getApplicationContext().getSharedPreferences("profileUrl", MODE_PRIVATE);
 
-        cross=findViewById(R.id.view_only_cross_btn);
-        username=findViewById(R.id.view_only_profile_username);
-        profilePic=findViewById(R.id.view_only_profile_pic);
-        username = findViewById(R.id.view_only_profile_username);
+//        cross=findViewById(R.id.view_only_cross_btn);
+//        username=findViewById(R.id.view_only_profile_username);
+//        profilePic=findViewById(R.id.view_only_profile_pic);
+//        username = findViewById(R.id.view_only_profile_username);
         quizzesWon = findViewById(R.id.view_only_profile_quiz_wins);
         quizzesParticipated = findViewById(R.id.view_only_profile_quizzes);
         numReferrals = findViewById(R.id.view_only_profile_referrals);

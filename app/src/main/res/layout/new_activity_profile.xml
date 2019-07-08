@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cyllide.app.v1.ProfileActivity"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:background="@color/colorPrimary"
+                        />
+
+
+                </LinearLayout>
+            </FrameLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:layout_centerHorizontal="true"
+                android:textAlignment="center"
+                android:text="88%"
+                android:textSize="40sp"
+                android:gravity="center"/>
+
+            <com.razerdp.widget.animatedpieview.AnimatedPieView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/view_only_contest_win_perc"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/profile_activity_coins_rl"
+                android:layout_marginVertical="85dp"
+                android:layout_below="@id/view_only_contest_win_perc"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="@dimen/fab_size_mini"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="8dp"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:padding="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="40dp">
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:textSize="@dimen/suggestion_body_text_size"
+                            android:gravity="center_vertical|end"
+                            android:id="@+id/money_won"
+                            android:text="300"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                        <ImageView
+                            android:src="@drawable/ic_cash"
+                            android:gravity="center_vertical|start"
+                            android:layout_width="40dp"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:text="40"
+                            android:gravity="center_vertical|end"
+                            android:textSize="@dimen/suggestion_body_text_size"
+                            android:id="@+id/points_collected"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                        <ImageView
+                            android:paddingVertical="@dimen/default_background_stroke_width"
+                            android:src="@drawable/ic_coins"
+                            android:layout_width="40dp"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                ></com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_marginStart="@dimen/fab_size_normal"
+                android:layout_marginEnd="@dimen/fab_size_normal"
+                android:layout_marginTop="@dimen/default_background_stroke_width"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_activity_coins_rl">
+
+                <LinearLayout
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/margin"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_posts" />
+
+                    <!--<TextView-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:text="Posts"-->
+                        <!--android:layout_gravity="center"/>-->
+                    <TextView
+                        android:layout_marginStart="@dimen/fab_size_mini"
+                        android:text="45"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/view_only_profile_posts"/>
+
+                </LinearLayout>
+                <View
+                    android:layout_marginTop="@dimen/default_stroke_width"
+                    android:layout_marginBottom="@dimen/default_background_stroke_width"
+                    android:layout_height="2dp"
+                    android:layout_width="wrap_content"
+                    android:background="@color/cyllide_grey"/>
+
+                <LinearLayout
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/margin"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/badge" />
+
+                    <!--<TextView-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:text="Posts"-->
+                    <!--android:layout_gravity="center"/>-->
+                    <TextView
+                        android:layout_marginStart="@dimen/fab_size_mini"
+                        android:text="45"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/view_only_profile_prizes"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_marginTop="@dimen/default_stroke_width"
+                    android:layout_marginBottom="@dimen/default_background_stroke_width"
+                    android:layout_height="2dp"
+                    android:layout_width="wrap_content"
+                    android:background="@color/cyllide_grey"/>
+
+
+                <LinearLayout
+                    android:layout_gravity="center_horizontal"
+                    android:padding="@dimen/margin"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/ic_brain"/>
+                    <!--<TextView-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:text="Quizzes"-->
+                        <!--android:layout_gravity="center"/>-->
+                    <TextView
+                        android:text="55"
+                        android:layout_marginStart="@dimen/fab_size_mini"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/view_only_profile_quizzes"/>
+                </LinearLayout>
+                <View
+                    android:layout_marginTop="@dimen/default_stroke_width"
+                    android:layout_marginBottom="@dimen/default_background_stroke_width"
+                    android:layout_height="2dp"
+                    android:layout_width="wrap_content"
+                    android:background="@color/cyllide_grey"/>
+
+
+                <LinearLayout
+                    android:padding="@dimen/margin"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_referral"/>
+                    <!--<TextView-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:text="Referrals"-->
+                        <!--android:layout_gravity="center"/>-->
+                    <TextView
+                        android:text="45"
+                        android:layout_marginStart="@dimen/fab_size_mini"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/view_only_profile_referrals"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_marginTop="@dimen/default_stroke_width"
+                    android:layout_marginBottom="@dimen/default_background_stroke_width"
+                    android:layout_height="2dp"
+                    android:layout_width="wrap_content"
+                    android:background="@color/cyllide_grey"/>
+
+
+                <LinearLayout
+                    android:padding="@dimen/margin"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_trophy"/>
+                    <!--<TextView-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:text="Wins"-->
+                        <!--android:layout_gravity="center"/>-->
+                    <TextView
+                        android:layout_marginStart="@dimen/fab_size_mini"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="55"
+                        android:id="@+id/view_only_profile_quiz_wins"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_marginTop="@dimen/default_stroke_width"
+                    android:layout_marginBottom="@dimen/default_background_stroke_width"
+                    android:layout_height="2dp"
+                    android:layout_width="wrap_content"
+                    android:background="@color/cyllide_grey"/>
+
+                <LinearLayout
+                    android:padding="@dimen/margin"
+                   android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_like"/>
+                    <!--<TextView-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:text="Upvotes"-->
+                        <!--android:layout_gravity="center"/>-->
+                    <TextView
+                        android:layout_marginStart="@dimen/fab_size_mini"
+                        android:text="24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/view_only_profile_upvotes"/>
+                </LinearLayout>
+                <View
+                    android:layout_marginTop="@dimen/default_stroke_width"
+                    android:layout_marginBottom="@dimen/default_background_stroke_width"
+                    android:layout_height="2dp"
+                    android:layout_width="wrap_content"/>
+                <LinearLayout
+                    android:padding="@dimen/margin"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_heart_flat"
+                        />
+                    <!--<TextView-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:text="Hearts"-->
+                        <!--android:layout_gravity="center"/>-->
+                    <TextView
+                        android:text="44"
+                        android:layout_marginStart="@dimen/fab_size_mini"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/view_only_profile_num_coins"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+
+    </ScrollView>
+
+
