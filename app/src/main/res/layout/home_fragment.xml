@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fcfcfc"
-    android:orientation="vertical">
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fcfcfc"
+        android:orientation="vertical"
+        android:id="@+id/main_content"
+        >
+
+
+
 
      <RelativeLayout
          android:layout_width="match_parent"
          android:layout_height="0dp"
          android:layout_weight="2"
-         android:background="@color/colorPrimary">
+         android:background="@color/colorPrimary"
+         >
 
          <ImageView
              android:id="@+id/cyllidemainlogo"
@@ -21,14 +33,15 @@
              android:src="@drawable/icon_logo"/>
 
          <TextView
-             android:gravity="center"
-             android:textSize="@dimen/suggestion_body_text_size"
-             android:textColor="@color/white"
-             android:text="Hey Prasann!"
              android:id="@+id/home_fragment_greetings"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:layout_below="@+id/cyllidemainlogo"/>
+             android:layout_below="@+id/cyllidemainlogo"
+             android:layout_marginTop="-46dp"
+             android:gravity="center"
+             android:text="Hey Prasann!"
+             android:textColor="@color/white"
+             android:textSize="@dimen/suggestion_body_text_size" />
 
          <ImageView
              android:id="@+id/profile_pic_container"
@@ -48,17 +61,19 @@
              android:layout_height="wrap_content"
              android:minHeight="50dp">
 
-             <TextView
-                 android:id="@+id/money_won"
-                 android:layout_width="0dp"
-                 android:layout_weight="2"
-                 android:layout_height="match_parent" />
              <ImageView
                  android:src="@drawable/ic_cash"
                  android:gravity="start"
                  android:layout_width="0dp"
                  android:layout_weight="1"
                  android:layout_height="match_parent" />
+
+             <TextView
+                 android:id="@+id/money_won"
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+                 android:layout_weight="2" />
+
              <TextView
                  android:id="@+id/points_collected"
                  android:layout_width="0dp"
@@ -277,6 +292,40 @@
             </LinearLayout>
 
         </LinearLayout>
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/network_retry_layout"
+        android:visibility="gone">
+
+    <ImageView
+        android:id="@+id/network_tower"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/network_tower"
+
+        />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/retry_button_selector"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Retry"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"
 
 
-</LinearLayout>
+        android:textStyle="bold"
+        android:id="@+id/retry_button"
+
+        />
+    </FrameLayout>
+
+
+
+</RelativeLayout>
