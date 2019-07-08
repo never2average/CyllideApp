@@ -195,13 +195,11 @@
                 android:layout_height="match_parent"
                 android:textColor="@color/black" />
             <TextView
-                android:id="@+id/bal_sheet_tot_cur_assets_cur_year"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:textColor="@color/black" />
             <TextView
-                android:id="@+id/bal_sheet_tot_cur_assets_selected_year"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"

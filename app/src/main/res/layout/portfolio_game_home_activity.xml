@@ -8,7 +8,6 @@
     tools:context=".portfolio.PortfolioGameHomeActivity">
 
     <LinearLayout
-        android:id="@+id/portfolio_game_upper_tab"
         android:weightSum="3"
         android:orientation="vertical"
         android:layout_width="match_parent"

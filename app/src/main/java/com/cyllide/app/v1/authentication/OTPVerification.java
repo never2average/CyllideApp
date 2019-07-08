@@ -44,7 +44,6 @@ public class OTPVerification extends AppCompatActivity {
     RequestQueue requestQueue;
     String phoneNo,enteredOTP;
     public static String otpFromSMS;
-    String referralCode;
     Map<String,String> verificationMap = new ArrayMap<>();
 
     @Override
