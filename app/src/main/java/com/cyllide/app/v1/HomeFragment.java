@@ -230,6 +230,9 @@ public class HomeFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(response).getJSONObject("data");
                     greetingsTV.setText("Hey, "+jsonObject.getString("username")+"!");
                     winningsTV.setText("Rs. "+jsonObject.getInt("cashWon")+"  ");
+                    AppConstants.coins = jsonObject.getInt("cyllidePoints");
+                    AppConstants.money = jsonObject.getInt("cyllidePoints");
+                    //TODO shift this to profile activity if required
                     pointsTV.setText(jsonObject.getInt("cyllidePoints")+" coins  ");
                     String profileURL = jsonObject.getString("profilePicURL");
                     if(profileURL.equals(AppConstants.noProfilePicURL)){

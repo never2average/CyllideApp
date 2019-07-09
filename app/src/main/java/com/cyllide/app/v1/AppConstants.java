@@ -17,4 +17,5 @@ public class AppConstants {
     public static boolean cameraAccepted;
     public static boolean readExternalStorage;
     public static String currTicker = "RELIANCE";
+    public static int money;
 }
