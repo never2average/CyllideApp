@@ -79,24 +79,24 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
 
     private void setApplicationConstants(){
-//        SharedPreferences sharedPreferences = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE);
-//        AppConstants.token = sharedPreferences.getString("token", null);
-//        if(AppConstants.token==null){
-//            Intent authIntent = new Intent(MainActivity.this, UsernameActivity.class);
-//            startActivity(authIntent);
-//            finish();
-//        }
-//        else{
-//            AppConstants.coins = sharedPreferences.getInt("coins", 0);
-//            AppConstants.referral = sharedPreferences.getString("referralCode","ERROR");
-//            SharedPreferences sharedPreferences2 =
-//                    PreferenceManager.getDefaultSharedPreferences(this);
-//            if (!sharedPreferences2.getBoolean(
-//                    COMPLETED_TUTORIAL_PREF_NAME, false)) {
-//                startActivity(new Intent(MainActivity.this, IntroActivity.class));
-//            }
-//
-//        }
+        SharedPreferences sharedPreferences = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE);
+        AppConstants.token = sharedPreferences.getString("token", null);
+        if(AppConstants.token==null){
+            Intent authIntent = new Intent(MainActivity.this, UsernameActivity.class);
+            startActivity(authIntent);
+            finish();
+        }
+        else{
+            AppConstants.coins = sharedPreferences.getInt("coins", 0);
+            AppConstants.referral = sharedPreferences.getString("referralCode","ERROR");
+            SharedPreferences sharedPreferences2 =
+                    PreferenceManager.getDefaultSharedPreferences(this);
+            if (!sharedPreferences2.getBoolean(
+                    COMPLETED_TUTORIAL_PREF_NAME, false)) {
+                startActivity(new Intent(MainActivity.this, IntroActivity.class));
+            }
+
+        }
     }
 
 
