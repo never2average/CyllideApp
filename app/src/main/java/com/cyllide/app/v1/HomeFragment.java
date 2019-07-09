@@ -164,6 +164,17 @@ public class HomeFragment extends Fragment {
 
         });
 
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),ProfileActivity.class);
+                intent.putExtra("Editable",true);
+                getContext().startActivity(intent);
+                getActivity().finish();
+
+            }
+        });
+
 
 
 

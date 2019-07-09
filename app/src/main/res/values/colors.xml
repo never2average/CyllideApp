@@ -20,4 +20,6 @@
     <color name="blue_light">#3db1ff</color>
     <color name="hourglass_color">#f1fafe</color>
     <color name="cyllide_grey">#B1B1B1B1</color>
+    <color name="cyllide_grey_text">#9E9E9E</color>
+    <color name="progress_">#FFB444</color>
 </resources>

@@ -7,6 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".portfolio.PortfolioGameHomeActivity">
 
+<!--<<<<<<< HEAD-->
+<!--=======-->
+    <!--<LinearLayout-->
+        <!--android:weightSum="3"-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@color/colorPrimary"/>-->
+<!--&gt;>>>>>> 2f2bbd7f573b8b66e2de41263d955c89ce8f30ff-->
 
     <LinearLayout
         android:id="@+id/portfoliogametabs"

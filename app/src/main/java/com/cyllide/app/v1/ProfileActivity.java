@@ -57,11 +57,18 @@ import static com.cyllide.app.v1.MainActivity.MY_PERMISSION_REQUEST_CODE;
 public class ProfileActivity extends AppCompatActivity {
 
     ImageButton cross;
-    CircleImageView profilePic;
+//    CircleImageView profilePic;
     Uri targetUri;
     Map<String,String> uploadPicUriMap = new ArrayMap<>();
 
-    TextView username, quizzesWon, quizzesParticipated, numReferrals, numPosts, numUpvotes, numHearts;
+    TextView
+//            username,
+            quizzesWon,
+            quizzesParticipated,
+            numReferrals,
+            numPosts,
+            numUpvotes,
+            numHearts;
     AnimatedPieView contestWinPerc;
     RequestQueue requestQueue;
     RequestQueue uploadPicQueue, getPicQueue;
@@ -83,7 +90,7 @@ public class ProfileActivity extends AppCompatActivity {
         storageReference= FirebaseStorage.getInstance().getReference();
         sharedPreferences=getApplicationContext().getSharedPreferences("profileUrl", MODE_PRIVATE);
 
-//        cross=findViewById(R.id.view_only_cross_btn);
+        cross=findViewById(R.id.view_only_cross_btn);
 //        username=findViewById(R.id.view_only_profile_username);
 //        profilePic=findViewById(R.id.view_only_profile_pic);
 //        username = findViewById(R.id.view_only_profile_username);
@@ -123,64 +130,66 @@ public class ProfileActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonResponse = new JSONObject(response).getJSONObject("data");
-                    username.setText(jsonResponse.getString("userName"));
+//                    username.setText(jsonResponse.getString("userName"));
                     quizzesWon.setText(jsonResponse.getString("quizzesWon"));
                     quizzesParticipated.setText(jsonResponse.getString("quizzesWon"));
                     numReferrals.setText(jsonResponse.getString("numberReferrals"));
                     numPosts.setText(String.valueOf(jsonResponse.getInt("questionsAsked")+jsonResponse.getInt("questionsAnswered")));
                     numUpvotes.setText(jsonResponse.getString("numUpvotes"));
                     numHearts.setText(jsonResponse.getString("numCoins"));
-                    AnimatedPieViewConfig config =  new  AnimatedPieViewConfig ().drawText(true).textSize(40);
-                    double contestsPart = jsonResponse.getDouble("portfolioDays");
-                    double contestsWon = jsonResponse.getDouble("profitablePortfolioDays");
-                    double winPercent = contestsWon/contestsPart;
-                    double lostPercent = 1 - winPercent;
+                    AnimatedPieViewConfig config =  new  AnimatedPieViewConfig ().drawText(false).textSize(40);
+                    config.strokeWidth(30);
+//                    double contestsPart = jsonResponse.getDouble("portfolioDays");
+//                    double contestsWon = jsonResponse.getDouble("profitablePortfolioDays");
+//                    double winPercent = contestsWon/contestsPart;
+//                    double lostPercent = 1 - winPercent;
                     config.startAngle(-90).addData(
-                            new SimplePieInfo((float) winPercent, ContextCompat.getColor(ProfileActivity.this, R.color.progressgreen),"Win %")).addData (
-                            new SimplePieInfo( (float) lostPercent, ContextCompat.getColor(ProfileActivity.this, R.color.progressred), "Loss %" )).duration(1500);
+                            new SimplePieInfo((float) 0.5, ContextCompat.getColor(ProfileActivity.this, R.color.progress_),"")).addData (
+                            new SimplePieInfo( (float) 0.5, ContextCompat.getColor(ProfileActivity.this, R.color.transparent), "" )).duration(1500);
                     contestWinPerc.applyConfig (config);
                     contestWinPerc.start();
                     RequestOptions cropOptions = new RequestOptions().override(100,100);
                     String profilePicURL = jsonResponse.getString("profilePic");
-                    if(profilePicURL.equals(AppConstants.noProfilePicURL)){
-                        ColorGenerator generator = ColorGenerator.MATERIAL;
-                        Log.d("ProfileFragment","inside if");
-                        int color = generator.getColor(username.getText().toString());
-                        TextDrawable drawable = TextDrawable.builder()
-                                .beginConfig()
-                                .width(60)  // width in px
-                                .height(60) // height in px
-                                .endConfig()
-                                .buildRect(Character.toString(username.getText().toString().charAt(0)).toUpperCase(), color);
-
-                        profilePic.setImageDrawable(drawable);
-                    }
-                    else {
-                        Glide.with(ProfileActivity.this).load(jsonResponse.getString("profilePic")).apply(cropOptions).into(profilePic);
-                    }
-                    if(isEditable) {
-                        profilePic.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                if (!AppConstants.cameraAccepted) {
-                                    ActivityCompat.requestPermissions(ProfileActivity.this,
-                                            new String[]{Manifest.permission.CAMERA,
-                                                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                            },
-                                            MY_PERMISSION_REQUEST_CODE);
-                                } else {
-
-
-                                    Intent intent = new Intent(Intent.ACTION_PICK,
-                                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                    startActivityForResult(intent, 0);
-
-                                }
-                            }
-                        });
-                    }
+//                    if(profilePicURL.equals(AppConstants.noProfilePicURL)){
+//                        ColorGenerator generator = ColorGenerator.MATERIAL;
+//                        Log.d("ProfileFragment","inside if");
+//                        int color = generator.getColor(username.getText().toString());
+//                        TextDrawable drawable = TextDrawable.builder()
+//                                .beginConfig()
+//                                .width(60)  // width in px
+//                                .height(60) // height in px
+//                                .endConfig()
+//                                .buildRect(Character.toString(username.getText().toString().charAt(0)).toUpperCase(), color);
+//
+//                        profilePic.setImageDrawable(drawable);
+//                    }
+//                    else {
+//                        Glide.with(ProfileActivity.this).load(jsonResponse.getString("profilePic")).apply(cropOptions).into(profilePic);
+//                    }
+//
+//                    if(isEditable) {
+//                        profilePic.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//
+//                                if (!AppConstants.cameraAccepted) {
+//                                    ActivityCompat.requestPermissions(ProfileActivity.this,
+//                                            new String[]{Manifest.permission.CAMERA,
+//                                                    Manifest.permission.READ_EXTERNAL_STORAGE,
+//                                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                                            },
+//                                            MY_PERMISSION_REQUEST_CODE);
+//                                } else {
+//
+//
+//                                    Intent intent = new Intent(Intent.ACTION_PICK,
+//                                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                                    startActivityForResult(intent, 0);
+//
+//                                }
+//                            }
+//                        });
+//                    }
                 } catch (JSONException e) {
                     Log.d("ProfileActivity",e.toString());
                     e.printStackTrace();
@@ -209,27 +218,27 @@ public class ProfileActivity extends AppCompatActivity {
 
             targetUri = data.getData();
 
-            if(targetUri.equals(Uri.parse(AppConstants.noProfilePicURL))){
-                ColorGenerator generator = ColorGenerator.MATERIAL;
-                Log.d("ProfileFragment","inside if");
-                int color = generator.getColor(username.getText().toString());
-                TextDrawable drawable = TextDrawable.builder()
-                        .beginConfig()
-                        .width(60)  // width in px
-                        .height(60) // height in px
-                        .endConfig()
-                        .buildRect(Character.toString(username.getText().toString().charAt(0)).toUpperCase(), color);
-
-                profilePic.setImageDrawable(drawable);
-
-            }
-            else {
-                RequestOptions requestOptions = new RequestOptions().override(100);
-                Glide.with(getApplicationContext()).load(targetUri).apply(requestOptions).into(profilePic);
-            }
-            uploadImage(getApplicationContext());
-            Log.e("ProfilePicSet","inside on activity result");
-            Toast.makeText(getApplicationContext(),"onActivityResult",Toast.LENGTH_LONG).show();
+//            if(targetUri.equals(Uri.parse(AppConstants.noProfilePicURL))){
+//                ColorGenerator generator = ColorGenerator.MATERIAL;
+//                Log.d("ProfileFragment","inside if");
+//                int color = generator.getColor(username.getText().toString());
+//                TextDrawable drawable = TextDrawable.builder()
+//                        .beginConfig()
+//                        .width(60)  // width in px
+//                        .height(60) // height in px
+//                        .endConfig()
+//                        .buildRect(Character.toString(username.getText().toString().charAt(0)).toUpperCase(), color);
+//
+//                profilePic.setImageDrawable(drawable);
+//
+//            }
+//            else {
+//                RequestOptions requestOptions = new RequestOptions().override(100);
+//                Glide.with(getApplicationContext()).load(targetUri).apply(requestOptions).into(profilePic);
+//            }
+//            uploadImage(getApplicationContext());
+//            Log.e("ProfilePicSet","inside on activity result");
+//            Toast.makeText(getApplicationContext(),"onActivityResult",Toast.LENGTH_LONG).show();
         }
 
 
@@ -319,24 +328,24 @@ public class ProfileActivity extends AppCompatActivity {
                     Log.d("ProfileFragment","Inside get profile pic");
                     Log.d("ProfileFragment", uri);
                     Log.d("ProfileFragment",AppConstants.noProfilePicURL);
-                    if(uri.equals(AppConstants.noProfilePicURL)){
-                        ColorGenerator generator = ColorGenerator.MATERIAL;
-                        Log.d("ProfileFragment","inside if");
-                        int color = generator.getColor(username.getText().toString());
-                        TextDrawable drawable = TextDrawable.builder()
-                                .beginConfig()
-                                .width(120)  // width in px
-                                .height(120) // height in px
-                                .endConfig()
-                                .buildRect(Character.toString(username.getText().toString().charAt(0)).toUpperCase(), color);
-
-                        profilePic.setImageDrawable(drawable);
-
-                    }
-                    else {
-                        RequestOptions requestOptions = new RequestOptions().override(100);
-                        Glide.with(getApplicationContext()).load(uri).apply(requestOptions).into(profilePic);
-                    }
+//                    if(uri.equals(AppConstants.noProfilePicURL)){
+//                        ColorGenerator generator = ColorGenerator.MATERIAL;
+//                        Log.d("ProfileFragment","inside if");
+//                        int color = generator.getColor(username.getText().toString());
+//                        TextDrawable drawable = TextDrawable.builder()
+//                                .beginConfig()
+//                                .width(120)  // width in px
+//                                .height(120) // height in px
+//                                .endConfig()
+//                                .buildRect(Character.toString(username.getText().toString().charAt(0)).toUpperCase(), color);
+//
+//                        profilePic.setImageDrawable(drawable);
+//
+//                    }
+//                    else {
+//                        RequestOptions requestOptions = new RequestOptions().override(100);
+//                        Glide.with(getApplicationContext()).load(uri).apply(requestOptions).into(profilePic);
+//                    }
 
 
 //                    RequestOptions requestOptions = new RequestOptions().override(100);

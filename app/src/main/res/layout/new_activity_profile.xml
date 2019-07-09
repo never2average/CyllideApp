@@ -11,7 +11,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
+
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -20,6 +21,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
@@ -30,33 +32,54 @@
                 </LinearLayout>
             </FrameLayout>
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="150dp"
+            <RelativeLayout
+                android:id="@+id/progress_rl"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_below="@id/accuracy_tv"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
                 android:layout_centerHorizontal="true"
-                android:textAlignment="center"
-                android:text="88%"
-                android:textSize="40sp"
-                android:gravity="center"/>
+                android:gravity="center">
 
-            <com.razerdp.widget.animatedpieview.AnimatedPieView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/view_only_contest_win_perc"/>
+                <TextView
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="@dimen/margin"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_centerHorizontal="true"
+                    android:textAlignment="center"
+                    android:text="50%"
+                    android:background="@drawable/circle"
+                    android:textSize="36sp"
+                    android:gravity="center"/>
+
+                <com.razerdp.widget.animatedpieview.AnimatedPieView
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/margin"
+                    android:layout_width="145dp"
+                    android:layout_height="145dp"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/view_only_contest_win_perc"/>
+
+
+
+            </RelativeLayout>
+
+
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/profile_activity_coins_rl"
-                android:layout_marginVertical="85dp"
-                android:layout_below="@id/view_only_contest_win_perc"
+                android:layout_marginTop="@dimen/fab_size_mini"
+                android:layout_below="@id/progress_rl"
                 android:layout_width="match_parent"
                 android:layout_marginHorizontal="@dimen/fab_size_mini"
                 app:cardElevation="5dp"
                 app:cardCornerRadius="8dp"
                 android:layout_height="wrap_content">
                 <LinearLayout
-                    android:padding="30dp"
+                    android:padding="23dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="40dp">
@@ -312,7 +335,9 @@
                     android:layout_marginTop="@dimen/default_stroke_width"
                     android:layout_marginBottom="@dimen/default_background_stroke_width"
                     android:layout_height="2dp"
-                    android:layout_width="wrap_content"/>
+                    android:layout_width="wrap_content"
+                    android:background="@color/cyllide_grey"/>
+
                 <LinearLayout
                     android:padding="@dimen/margin"
                     android:layout_height="wrap_content"
@@ -342,6 +367,25 @@
 
 
             </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/view_only_cross_btn"
+                android:layout_width="50dp"
+                android:background="@color/transparent"
+                android:tint="@color/white"
+                android:layout_height="50dp"
+                android:src="@drawable/cross_icon" />
+            <TextView
+                android:layout_marginTop="@dimen/default_stroke_width"
+                android:id="@+id/accuracy_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:layout_centerHorizontal="true"
+                android:text="ACCURACY"
+                android:textSize="28sp"
+                />
 
         </RelativeLayout>
 
