@@ -44,7 +44,6 @@
                 android:gravity="center"/>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/game_portfolio_card_view"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 app:cardElevation="@dimen/default_background_stroke_width"
@@ -80,7 +79,6 @@
 
 
             <LinearLayout
-                android:id="@+id/game_portfolio_linear_layout"
                 android:layout_height="60dp"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"

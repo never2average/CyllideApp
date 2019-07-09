@@ -25,7 +25,7 @@ public class MySMSBroadcastReceiver extends BroadcastReceiver {
                     // Get SMS message contents
                     String message = (String) extras.get(SmsRetriever.EXTRA_SMS_MESSAGE);
                     int colonOccurance = message.indexOf(':');
-                    String OTP = message.substring(colonOccurance+2,colonOccurance+8);
+                    String OTP = message.substring(colonOccurance+2,colonOccurance+6);
                     OTPVerification.otpFromSMS = OTP;
                     Log.d("messsage",message);
                     OTPVerification.otpView.setText(OTP);

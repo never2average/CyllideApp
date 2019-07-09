@@ -20,5 +20,5 @@
     <color name="blue_light">#3db1ff</color>
     <color name="hourglass_color">#f1fafe</color>
     <color name="cyllide_grey">#B3B2B2</color>
-    <color name="cyllide_dark_grey">#575555</color>
+    <color name="cyllide_grey_text">#9E9E9E</color>
 </resources>
