@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     >
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -56,6 +55,124 @@
 
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fcfcfc"
+        android:orientation="vertical"
+        android:id="@+id/main_content"
+        >
+
+
+
+
+        <RelativeLayout
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:background="@color/colorPrimary"
+            >
+            <ImageView
+                android:id="@+id/cyllidemainlogo"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/icon_logo"/>
+
+            <RelativeLayout
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+
+            <TextView
+                android:layout_centerHorizontal="true"
+                android:id="@+id/home_fragment_greetings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Hey Prasann!"
+                android:textColor="@color/white"
+                android:textSize="@dimen/suggestion_body_text_size" />
+            <RelativeLayout
+                android:id="@+id/profile_pic_container_rl"
+                android:layout_marginVertical="@dimen/text_content_margin"
+                android:layout_below="@+id/home_fragment_greetings"
+                android:layout_width="110dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="110dp"
+                >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_pic_container"
+                android:layout_width="110dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="110dp"
+                />
+                <ImageView
+                    android:layout_margin="@dimen/default_background_stroke_width"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/badge"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+
+            </RelativeLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <TextView
+                android:textSize="@dimen/suggestion_body_text_size"
+                android:textColor="@color/white"
+                android:gravity="center_vertical|end"
+                android:id="@+id/money_won"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:src="@drawable/ic_cash"
+                android:gravity="center_vertical|start"
+                android:layout_width="40dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <TextView
+                android:textColor="@color/white"
+                android:gravity="center_vertical|end"
+                android:textSize="@dimen/suggestion_body_text_size"
+                android:id="@+id/points_collected"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:paddingVertical="@dimen/default_background_stroke_width"
+                android:src="@drawable/ic_coins"
+                android:layout_width="40dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
@@ -262,32 +379,29 @@
         android:id="@+id/network_retry_layout"
         android:visibility="gone">
 
-    <ImageView
-        android:id="@+id/network_tower"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/network_tower"
 
-        />
+        <ImageView
+            android:id="@+id/network_tower"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/network_tower"
+            />
 
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/retry_button_selector"
-        android:clickable="true"
-        android:gravity="center"
-        android:padding="5dp"
-        android:text="Retry"
-        android:textColor="@color/colorPrimary"
-        android:textSize="20dp"
-        android:alpha="0.8"
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/retry_button_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Retry"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:id="@+id/retry_button"
+            />
 
-
-        android:textStyle="bold"
-        android:id="@+id/retry_button"
-
-        />
     </FrameLayout>
 
 

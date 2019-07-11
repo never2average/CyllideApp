@@ -1,27 +1,49 @@
 package com.cyllide.app.v1.portfolio;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.util.ArrayMap;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import com.cyllide.app.v1.AppConstants;
+import com.cyllide.app.v1.ConnectionStatus;
 import com.cyllide.app.v1.MainActivity;
 import com.cyllide.app.v1.R;
+import com.daprlabs.aaron.swipedeck.SwipeDeck;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
-import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
-import com.yuyakaido.android.cardstackview.CardStackListener;
-import com.yuyakaido.android.cardstackview.CardStackView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import link.fls.swipestack.SwipeStack;
 
 
 public class PortfolioGameHomeActivity extends AppCompatActivity {
 
-    CardStackView cardStack;
+    SwipeStack cardStack;
     List<String> testData;
     ImageView backBtn;
     PortfolioGameCardAdapter adapter;
@@ -58,19 +80,59 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
             testData.add(String.valueOf(i));
         }
 
+        adapter = new PortfolioGameCardAdapter(testData, PortfolioGameHomeActivity.this);
+        if(cardStack != null){
+            cardStack.setAdapter(adapter);
+        }
+
+
+        cardStack.setListener(new SwipeStack.SwipeStackListener() {
+            @Override
+            public void onViewSwipedToLeft(int position) {
+                Log.i("MainActivity", "card was swiped left, position in adapter: " + position);
+            }
+
+            @Override
+            public void onViewSwipedToRight(int position) {
+                Log.i("MainActivity", "card was swiped right, position in adapter: " + position);
+            }
+
+            @Override
+            public void onStackEmpty() {
+
+            }
+        });
+
+
+//        cardStack.setCallback(new SwipeDeck.SwipeDeckCallback() {
+//            @Override
+//            public void cardSwipedLeft(long positionInAdapter) {
+//                Log.i("MainActivity", "card was swiped left, position in adapter: " + positionInAdapter);
+//            }
+//
+//            @Override
+//            public void cardSwipedRight(long positionInAdapter) {
+//                Log.i("MainActivity", "card was swiped right, position in adapter: " + positionInAdapter);
+//
+//            }
+//        });
+
+//        cardStack.setLeftImage(R.id.left_image);
+//        cardStack.setRightImage(R.id.right_image);
+
+        //example of buttons triggering events on the deck
         MaterialCardView dontChooseStockBtn = findViewById(R.id.portfolio_game_cross);
         dontChooseStockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                cardStack.swipeTopViewToLeft();
-                cardStack.swipe();
+                cardStack.swipeTopViewToLeft();
             }
         });
         MaterialCardView chooseStockDoubleQuantity = findViewById(R.id.portfolio_game_diamond);
         chooseStockDoubleQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                cardStack.swipeTopViewToRight();
+                cardStack.swipeTopViewToRight();
             }
         });
 
@@ -91,14 +153,10 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
                 finish();
             }
         });
-        ArrayList<String> lol = new ArrayList<>(4);
-
-
-//        CardStackListener.onCardDragging
-//        cardStack.onInterceptTouchEvent(MotionEvent.obtain(new I))
-
-        cardStack.setLayoutManager( new CardStackLayoutManager(this));
-        cardStack.setAdapter(new CardSwipeRecyclerAdapter(testData,this));
+        cardStack.setAdapter(adapter);
+        cardStack.forceLayout();
+        cardStack.invalidate();
+        cardStack.refreshDrawableState();
     }
 
     @Override
@@ -107,5 +165,5 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
         startActivity(returnHome);
         finish();
     }
-}
 
+}

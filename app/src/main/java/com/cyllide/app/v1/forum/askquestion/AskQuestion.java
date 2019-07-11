@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
@@ -24,10 +27,14 @@ import com.cyllide.app.v1.forum.questionlist.questionPage.QuestionAnswerActivity
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.JsonArray;
+import com.nex3z.togglebuttongroup.MultiSelectToggleGroup;
+import com.nex3z.togglebuttongroup.button.LabelToggle;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class AskQuestion extends AppCompatActivity {
@@ -37,96 +44,23 @@ public class AskQuestion extends AppCompatActivity {
     TextInputEditText questionText;
     private RequestQueue askQuestionQueue;
     private Map<String, String> requestHeaders = new ArrayMap<String, String>();
+    ArrayList<String> forumTags = new ArrayList<>();
+    MultiSelectToggleGroup toggleTags;
+    JsonArray tags = new JsonArray();
+    ArrayList<String > selectedTags = new ArrayList<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ask_question);
 
-        btn1=findViewById(R.id.btntag1);
-        btn2=findViewById(R.id.btntag2);
-        btn3=findViewById(R.id.btntag3);
-        btn4=findViewById(R.id.btntag4);
+
         askQuestionBtn = findViewById(R.id.proceedtoask);
         questionText = findViewById(R.id.question_text);
         closeButton = findViewById(R.id.close_ask_question);
 
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(btn1.getTag().equals("pressed"))
-                {
-                    btn1.setStrokeColorResource(R.color.colorPrimary);
-                    btn1.setBackgroundColor(getColor(R.color.white));
-                    btn1.setTextColor(getColor(R.color.colorPrimary));
-                    btn1.setTag("released");
-                }
-                else
-                {
-                    btn1.setStrokeColorResource(R.color.white);
-                    btn1.setBackgroundColor(getColor(R.color.colorPrimary));
-                    btn1.setTextColor(getColor(R.color.white));
-                    btn1.setTag("pressed");
-                }
-            }
-        });
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(btn2.getTag().equals("pressed"))
-                {
-                    btn2.setStrokeColorResource(R.color.colorPrimary);
-                    btn2.setBackgroundColor(getColor(R.color.white));
-                    btn2.setTextColor(getColor(R.color.colorPrimary));
-                    btn2.setTag("released");
-                }
-                else
-                {
-                    btn2.setStrokeColorResource(R.color.white);
-                    btn2.setBackgroundColor(getColor(R.color.colorPrimary));
-                    btn2.setTextColor(getColor(R.color.white));
-                    btn2.setTag("pressed");
-                }
-            }
-        });
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(btn3.getTag().equals("pressed"))
-                {
-                    btn3.setStrokeColorResource(R.color.colorPrimary);
-                    btn3.setBackgroundColor(getColor(R.color.white));
-                    btn3.setTextColor(getColor(R.color.colorPrimary));
-                    btn3.setTag("released");
-                }
-                else
-                {
-                    btn3.setStrokeColorResource(R.color.white);
-                    btn3.setBackgroundColor(getColor(R.color.colorPrimary));
-                    btn3.setTextColor(getColor(R.color.white));
-                    btn3.setTag("pressed");
-                }
-            }
-        });
-        btn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(btn4.getTag().equals("pressed"))
-                {
-                    btn4.setStrokeColorResource(R.color.colorPrimary);
-                    btn4.setBackgroundColor(getColor(R.color.white));
-                    btn4.setTextColor(getColor(R.color.colorPrimary));
-                    btn4.setTag("released");
-                }
-                else
-                {
-                    btn4.setStrokeColorResource(R.color.white);
-                    btn4.setBackgroundColor(getColor(R.color.colorPrimary));
-                    btn4.setTextColor(getColor(R.color.white));
-                    btn4.setTag("pressed");
-                }
-            }
-        });
 
         askQuestionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,26 +78,29 @@ public class AskQuestion extends AppCompatActivity {
                 finish();
             }
         });
+        forumTagsVolley();
     }
 
     private void askQuestionVolley() {
         askQuestionQueue = Volley.newRequestQueue(this);
         requestHeaders.put("token", AppConstants.token);
         requestHeaders.put("body",questionText.getText().toString());
-        JsonArray tags = new JsonArray();
-        if(btn1.getTag().toString()=="pressed"){
-            tags.add(btn1.getText().toString());
+//        if(btn1.getTag().toString()=="pressed"){
+//            tags.add(btn1.getText().toString());
+//        }
+//        if(btn2.getTag().toString()=="pressed"){
+//            tags.add(btn2.getText().toString());
+//        }
+//        if(btn3.getTag().toString()=="pressed"){
+//            tags.add(btn3.getText().toString());
+//        }
+//        if(btn4.getTag().toString()=="pressed"){
+//            tags.add(btn4.getText().toString());
+//        }
+        for(String tag: selectedTags){
+            tags.add(tag);
         }
-        if(btn2.getTag().toString()=="pressed"){
-            tags.add(btn2.getText().toString());
-        }
-        if(btn3.getTag().toString()=="pressed"){
-            tags.add(btn3.getText().toString());
-        }
-        if(btn4.getTag().toString()=="pressed"){
-            tags.add(btn4.getText().toString());
-        }
-
+        Log.d("Tags",tags.toString());
         requestHeaders.put("tags",tags.toString());
 
         String requestEndpoint = getResources().getString(R.string.apiBaseURL)+"query/add";
@@ -205,5 +142,71 @@ public class AskQuestion extends AppCompatActivity {
         };
         askQuestionQueue.add(stringRequest);
 
+    }
+
+    void forumTagsVolley(){
+        final RequestQueue forumTagsQueue = Volley.newRequestQueue(AskQuestion.this);
+        String url = getString(R.string.apiBaseURL) + "forum/tags";
+        StringRequest forumRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    toggleTags = findViewById(R.id.tags);
+
+                    JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+                    for(int i=0;i<jsonArray.length();i++){
+                        forumTags.add(jsonArray.getString(i));
+                    }
+                    Log.d("ForumActivity", String.valueOf(forumTags.size()));
+                    for(int i = 0; i<forumTags.size(); i++) {
+                        int pixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+
+                        LabelToggle lt = new LabelToggle(AskQuestion.this);
+                        lt.setId(i);
+                        final int id_ = lt.getId();
+                        lt.setText(forumTags.get(i));
+                        LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        buttonLayoutParams.setMargins(pixels,pixels,pixels,pixels);
+                        lt.setPadding(pixels,pixels,pixels,pixels);
+                        lt.setLayoutParams(buttonLayoutParams);
+                        lt.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,6, getResources().getDisplayMetrics()));
+
+//            lt.setMargin
+                        toggleTags.addView(lt);
+
+
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                toggleTags.setOnCheckedChangeListener(new MultiSelectToggleGroup.OnCheckedStateChangeListener() {
+                    @Override
+                    public void onCheckedStateChanged(MultiSelectToggleGroup group, int checkedId, boolean isChecked) {
+                        Log.d("CheckedID",Integer.toString(checkedId));
+
+
+                        if(!selectedTags.contains(forumTags.get(checkedId))){
+                            selectedTags.add(forumTags.get(checkedId));
+                        }
+                        else{
+                            selectedTags.remove(forumTags.get(checkedId));
+                        }
+
+                        Log.d("ForumActivity",Integer.toString(selectedTags.size()));
+
+                    }
+                });
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        forumTagsQueue.add(forumRequest);
     }
 }

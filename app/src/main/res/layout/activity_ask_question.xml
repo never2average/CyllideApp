@@ -76,7 +76,7 @@
         app:layout_constraintVertical_bias="0.655" />
 
     <LinearLayout
-        android:layout_width="315dp"
+        android:layout_width="wrap_content"
         android:layout_height="56dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -89,68 +89,30 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.752">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btntag1"
-            android:layout_width="150dp"
+        <com.nex3z.togglebuttongroup.MultiSelectToggleGroup
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:elevation="10dp"
-            android:tag="released"
-            android:text="Finance"
-            android:textColor="@color/colorPrimary"
-            app:backgroundTint="@color/white"
-            app:cornerRadius="7dp" />
+            android:id="@+id/tags"
+            >
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btntag2"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:elevation="10dp"
-            android:tag="released"
-            android:layout_marginLeft="15dp"
-            android:text="Stock Markets"
-            android:textColor="@color/colorPrimary"
-            app:backgroundTint="@color/white"
-            app:cornerRadius="7dp" />
+            <com.nex3z.togglebuttongroup.button.LabelToggle
+                android:id="@+id/tb_finance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="6dp"
+                android:text="Finance"
+                android:textOn="Finance"
+                android:textSize="12sp"
+
+
+                />
+
+
+        </com.nex3z.togglebuttongroup.MultiSelectToggleGroup>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="322dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.874">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btntag3"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:elevation="10dp"
-            android:tag="released"
-            android:text="Business"
-            android:textColor="@color/colorPrimary"
-            app:backgroundTint="@color/white"
-            app:cornerRadius="7dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btntag4"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:elevation="10dp"
-            android:tag="released"
-            android:text="Macro Economics"
-            android:layout_marginLeft="15dp"
-            android:textColor="@color/colorPrimary"
-            android:textSize="11.5sp"
-            app:backgroundTint="@color/white"
-            app:cornerRadius="7dp" />
-    </LinearLayout>
     <com.google.android.material.button.MaterialButton
         android:id="@+id/proceedtoask"
         android:layout_width="250dp"

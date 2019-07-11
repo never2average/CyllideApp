@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".portfolio.PortfolioGameHomeActivity">
 
+
     <LinearLayout
         android:weightSum="3"
         android:orientation="vertical"
@@ -67,10 +68,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false">
-        <com.yuyakaido.android.cardstackview.CardStackView
+        <!--<com.yuyakaido.android.cardstackview.CardStackView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:id="@+id/swipe_deck" />-->
+        <link.fls.swipestack.SwipeStack
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/swipe_deck" />
+            android:layout_height="wrap_content"
+            android:id="@+id/swipe_deck"></link.fls.swipestack.SwipeStack>
     </FrameLayout>
 
     <LinearLayout

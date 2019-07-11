@@ -79,48 +79,7 @@
 
                         >
 
-                    <com.nex3z.togglebuttongroup.button.LabelToggle
-                        android:id="@+id/tb_finance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:padding="6dp"
-                        android:text="Finance"
-                        android:textOn="Finance"
-                        android:textSize="12sp"
 
-
-                        />
-
-                    <com.nex3z.togglebuttongroup.button.LabelToggle
-                        android:id="@+id/tb_capital_markets"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:padding="6dp"
-                        android:text="Capital Markets"
-                        android:textOn="Capital Markets"
-                        android:textSize="12sp" />
-
-                    <com.nex3z.togglebuttongroup.button.LabelToggle
-                        android:id="@+id/tb_macro_economics"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:padding="6dp"
-                        android:text="Macro Economics"
-                        android:textOn="Macro Economics"
-                        android:textSize="12sp" />
-
-                    <com.nex3z.togglebuttongroup.button.LabelToggle
-                        android:id="@+id/tb_business"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:padding="6dp"
-                        android:text="Business"
-                        android:textOn="Business"
-                        android:textSize="12sp" />
 
                     </com.nex3z.togglebuttongroup.MultiSelectToggleGroup>
                 </LinearLayout>

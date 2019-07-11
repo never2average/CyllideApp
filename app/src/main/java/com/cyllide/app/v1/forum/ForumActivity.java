@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +32,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.nex3z.togglebuttongroup.MultiSelectToggleGroup;
 import com.nex3z.togglebuttongroup.SingleSelectToggleGroup;
+import com.nex3z.togglebuttongroup.button.LabelToggle;
 import com.nex3z.togglebuttongroup.button.ToggleButton;
 
 import org.json.JSONArray;
@@ -65,6 +68,7 @@ public class ForumActivity extends AppCompatActivity {
     MaterialCardView askAQuestionCV;
     TextView askAQuestionTV;
     boolean flag;
+
     ArrayList<String> forumTags= new ArrayList<>();
 
     private void displayQuestions(JSONArray responseData) {
@@ -175,56 +179,43 @@ public class ForumActivity extends AppCompatActivity {
             }
         });
         tags=findViewById(R.id.tags);
+        for(int i = 0; i<forumTags.size(); i++) {
+            int pixels = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+
+            LabelToggle lt = new LabelToggle(ForumActivity.this);
+            lt.setId(i);
+            final int id_ = lt.getId();
+            lt.setText(forumTags.get(i));
+            LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            buttonLayoutParams.setMargins(pixels,pixels,pixels,pixels);
+            lt.setPadding(pixels,pixels,pixels,pixels);
+            lt.setLayoutParams(buttonLayoutParams);
+            lt.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,6, getResources().getDisplayMetrics()));
+
+//            lt.setMargin
+            tags.addView(lt);
+
+
+
+        }
+
+
 
 
 
         tags.setOnCheckedChangeListener(new MultiSelectToggleGroup.OnCheckedStateChangeListener() {
             @Override
             public void onCheckedStateChanged(MultiSelectToggleGroup group, int checkedId, boolean isChecked) {
-
-                switch (checkedId){
-
-                    case R.id.tb_finance:
+                Log.d("CheckedID",Integer.toString(checkedId));
 
 
-                            if(!selectedTags.contains("Finance")){
-                                selectedTags.add("Finance");
+                            if(!selectedTags.contains(forumTags.get(checkedId))){
+                                selectedTags.add(forumTags.get(checkedId));
                             }
                             else{
-                                selectedTags.remove("Finance");
+                                selectedTags.remove(forumTags.get(checkedId));
                             }
 
-
-                        break;
-                    case R.id.tb_capital_markets:
-                            if(!selectedTags.contains("Stock Markets")){
-                                selectedTags.add("Stock Markets");
-                            }
-                            else{
-                                selectedTags.remove("Stock Markets");
-                            }
-                        break;
-                    case R.id.tb_macro_economics:
-                            if(!selectedTags.contains("Macro-Economics")){
-                                selectedTags.add("Macro-Economics");
-                            }
-                            else{
-                                selectedTags.remove("Macro-Economics");
-                            }
-                        break;
-                    case R.id.tb_business:
-                            if(!selectedTags.contains("Business")){
-                                selectedTags.add("Business");
-                            }
-                            else {
-                                selectedTags.remove("Business");
-
-                            }
-                            break;
-
-
-
-                }
                 Log.d("ForumActivity",Integer.toString(selectedTags.size()));
                 if(responseData==null){
                     getQuestions();
@@ -270,10 +261,10 @@ public class ForumActivity extends AppCompatActivity {
             }
         });
 
-        finance = findViewById(R.id.tb_finance);
-        capitalMarkets = findViewById(R.id.tb_capital_markets);
-        macroEconimics = findViewById(R.id.tb_macro_economics);
-        business = findViewById(R.id.tb_business);
+//        finance = findViewById(R.id.tb_finance);
+//        capitalMarkets = findViewById(R.id.tb_capital_markets);
+//        macroEconimics = findViewById(R.id.tb_macro_economics);
+//        business = findViewById(R.id.tb_business);
         forumTagsVolley();
 
 
@@ -349,6 +340,26 @@ public class ForumActivity extends AppCompatActivity {
                         forumTags.add(jsonArray.getString(i));
                     }
                     Log.d("ForumActivity", String.valueOf(forumTags.size()));
+                    for(int i = 0; i<forumTags.size(); i++) {
+                        int pixels = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+
+                        LabelToggle lt = new LabelToggle(ForumActivity.this);
+                        lt.setId(i);
+                        final int id_ = lt.getId();
+                        lt.setText(forumTags.get(i));
+                        LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        buttonLayoutParams.setMargins(pixels,pixels,pixels,pixels);
+                        lt.setPadding(pixels,pixels,pixels,pixels);
+                        lt.setLayoutParams(buttonLayoutParams);
+                        lt.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,6, getResources().getDisplayMetrics()));
+
+//            lt.setMargin
+                        tags.addView(lt);
+
+
+
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
