@@ -280,19 +280,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     }
 
 
-    private void swapProfileFragment(){
-
-        ProfileFragment fragment = new ProfileFragment();
-
-        if (fragment != null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .commit();
-         }
-
-    }
-
 
     @Override
     public void onInternetConnectivityChanged(boolean isConnected) {

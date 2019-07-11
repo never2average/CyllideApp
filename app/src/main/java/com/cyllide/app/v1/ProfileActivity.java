@@ -48,7 +48,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Fresco.initialize(this);
-
         cross=findViewById(R.id.view_only_cross_btn);
         username=findViewById(R.id.view_only_profile_username);
         profilePic=findViewById(R.id.view_only_profile_pic);
@@ -103,7 +102,6 @@ public class ProfileActivity extends AppCompatActivity {
                     String profilePicURL = jsonResponse.getString("profilePic");
                     if(profilePicURL.equals(AppConstants.noProfilePicURL)){
                         ColorGenerator generator = ColorGenerator.MATERIAL;
-                        Log.d("ProfileFragment","inside if");
                         int color = generator.getColor(username.getText().toString());
                         TextDrawable drawable = TextDrawable.builder()
                                 .beginConfig()

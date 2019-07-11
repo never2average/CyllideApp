@@ -29,7 +29,6 @@ public class PortfolioGameLeaderboardRVViewHolder extends RecyclerView.ViewHolde
 
         if(leaderboardModel.getPlayerProfileURL().equals(AppConstants.noProfilePicURL)){
             ColorGenerator generator = ColorGenerator.MATERIAL;
-            Log.d("ProfileFragment","inside if");
             int color = generator.getColor(leaderboardModel.getPlayerName());
             TextDrawable drawable = TextDrawable.builder()
                     .beginConfig()

@@ -73,7 +73,6 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 
 		if(answers.getProfileURL().equals(AppConstants.noProfilePicURL)){
 			ColorGenerator generator = ColorGenerator.MATERIAL;
-			Log.d("ProfileFragment","inside if");
 			int color = generator.getColor(answeredBy);
 			TextDrawable drawable = TextDrawable.builder()
 					.beginConfig()
