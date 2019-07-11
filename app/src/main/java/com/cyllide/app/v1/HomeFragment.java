@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
     View content;
     TextView retry_button;
 
-    TextView greetingsTV, winningsTV, pointsTV;
+    TextView greetingsTV;
     de.hdodenhof.circleimageview.CircleImageView profilePic;
     Map<String,String> homepageDataHeaders = new ArrayMap<>();
     RequestQueue homepageQueue;
@@ -94,8 +94,6 @@ public class HomeFragment extends Fragment {
         retry_button=view.findViewById(R.id.retry_button);
         content=view;
         greetingsTV = view.findViewById(R.id.home_fragment_greetings);
-        winningsTV = view.findViewById(R.id.money_won);
-        pointsTV = view.findViewById(R.id.points_collected);
         profilePic = view.findViewById(R.id.profile_pic_container);
 
 
@@ -229,11 +227,6 @@ public class HomeFragment extends Fragment {
                     Log.d("HomeFragment", response);
                     JSONObject jsonObject = new JSONObject(response).getJSONObject("data");
                     greetingsTV.setText("Hey, "+jsonObject.getString("username")+"!");
-                    winningsTV.setText("Rs. "+jsonObject.getInt("cashWon")+"  ");
-                    AppConstants.coins = jsonObject.getInt("cyllidePoints");
-                    AppConstants.money = jsonObject.getInt("cyllidePoints");
-                    //TODO shift this to profile activity if required
-                    pointsTV.setText(jsonObject.getInt("cyllidePoints")+" coins  ");
                     String profileURL = jsonObject.getString("profilePicURL");
                     if(profileURL.equals(AppConstants.noProfilePicURL)){
                         ColorGenerator generator = ColorGenerator.MATERIAL;
