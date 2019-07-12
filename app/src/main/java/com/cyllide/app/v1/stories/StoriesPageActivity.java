@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 
@@ -18,13 +19,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Map;
 
 public class StoriesPageActivity extends AppCompatActivity {
     private String url;
     private WebView mWebview;
-    ImageView imageView;
+    FloatingActionButton closeArticle;
     Long startTime,endTime;
     RequestQueue timeSpentRequestQueue;
     String mongoID;
@@ -34,15 +36,18 @@ public class StoriesPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview_screen);
-        imageView = findViewById(R.id.close_article);
+        closeArticle = findViewById(R.id.close_article);
         startTime = System.currentTimeMillis();
         Log.d("NewsPageActivity","oncreate");
         mWebview = findViewById(R.id.fullpage_webview);
         url=getIntent().getStringExtra("url");
         mongoID = getIntent().getStringExtra("mongoID");
 
+
+        WebSettings settings = mWebview.getSettings();
+        settings.setJavaScriptEnabled(true);
         mWebview.loadUrl(url);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        closeArticle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 endTime = System.currentTimeMillis();
@@ -60,9 +65,9 @@ public class StoriesPageActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.d("NewsPageActivity",response);
-//                        Intent intent = new Intent(StoriesPageActivity.this, StoriesMainActivity.class);
-//                        startActivity(intent);
-//                        finish();
+                        Intent intent = new Intent(StoriesPageActivity.this, StoriesMainActivity.class);
+                        startActivity(intent);
+                        finish();
                         onBackPressed();
 
                     }
@@ -83,10 +88,8 @@ public class StoriesPageActivity extends AppCompatActivity {
 
                 };
                 timeSpentRequestQueue.add(stringRequest);
-
             }
         });
-
     }
 
     @Override

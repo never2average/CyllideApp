@@ -8,7 +8,8 @@ public class AppConstants {
     public static String contestID = "currentContest";
     public static String portfolioID;
     public static String token;
-    public static int coins;
+    //    public static String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU5NDIzMDcwNn0.Vi9edjRLRHDBOuP34Ihk3ABOSOnzgimzzKfRZeykurw";
+    public static int coins = 300;
     public static String viewUsername;
     public static String referral;
     public static ArrayList<String> myPortfolioList = new ArrayList<String>();
@@ -17,4 +18,5 @@ public class AppConstants {
     public static boolean cameraAccepted;
     public static boolean readExternalStorage;
     public static String currTicker = "RELIANCE";
+    public static int money;
 }
