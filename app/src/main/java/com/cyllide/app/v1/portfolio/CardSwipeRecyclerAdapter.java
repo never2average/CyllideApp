@@ -13,6 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -22,8 +28,12 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.button.MaterialButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CardSwipeRecyclerAdapter extends
         RecyclerView.Adapter<CardSwipeRecyclerAdapter.ViewHolder> {
@@ -108,4 +118,6 @@ public class CardSwipeRecyclerAdapter extends
         }
 
     }
+
+
 }
