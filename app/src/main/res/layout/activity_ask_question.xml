@@ -88,28 +88,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.752">
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <com.nex3z.togglebuttongroup.MultiSelectToggleGroup
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/tags"
             >
 
-            <com.nex3z.togglebuttongroup.button.LabelToggle
-                android:id="@+id/tb_finance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:padding="6dp"
-                android:text="Finance"
-                android:textOn="Finance"
-                android:textSize="12sp"
-
-
-                />
 
 
         </com.nex3z.togglebuttongroup.MultiSelectToggleGroup>
+        </HorizontalScrollView>
     </LinearLayout>
 
 

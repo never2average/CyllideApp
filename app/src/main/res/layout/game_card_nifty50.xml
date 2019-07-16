@@ -1,57 +1,294 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:cardCornerRadius="12dp"
-    android:outlineAmbientShadowColor="@android:color/black"
+    android:layout_gravity="center"
     android:layout_margin="6dp"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    app:cardCornerRadius="12dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
+            android:id="@+id/chart_ll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:weightSum="2"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="2">
+
             <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/portfolio_game_home_chart"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                android:id="@+id/portfolio_game_home_chart"/>
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@id/chart_ll"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:visibility="visible"
+                android:weightSum="5">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/chart_button_one_day"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:onClick="onFrequencyClick"
+                    android:text="1D"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/chart_button_five_days"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:onClick="onFrequencyClick"
+                    android:text="5D"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/chart_button_one_month"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:onClick="onFrequencyClick"
+                    android:text="1M"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/chart_button_six_months"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:onClick="onFrequencyClick"
+                    android:text="6M"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/chart_button_one_year"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:onClick="onFrequencyClick"
+                    android:text="1Y"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/default_background_stroke_width">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/default_background_stroke_width"
+                            android:gravity="end"
+                            android:text="Sector:"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/companysector"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/default_background_stroke_width" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/default_background_stroke_width">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/default_background_stroke_width"
+                            android:gravity="end"
+                            android:text="Industry:"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/companyindustry"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/default_background_stroke_width" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/default_background_stroke_width"
+                            android:gravity="end"
+                            android:text="Open:"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/dtgc_open"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/default_background_stroke_width" />
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/default_background_stroke_width"
+                            android:gravity="end"
+                            android:text="Ask:"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/dtgc_ask"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/default_background_stroke_width" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/default_background_stroke_width"
+                            android:gravity="end"
+                            android:text="Market Cap:"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/dtgc_marketcap"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/default_background_stroke_width" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/default_background_stroke_width"
+                            android:gravity="end"
+                            android:text="PE ratio:"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/dtgc_peratio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/default_background_stroke_width" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/default_background_stroke_width"
+                            android:gravity="end"
+                            android:text="Previous close:"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/dtgc_previousclose"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/default_background_stroke_width" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
         </LinearLayout>
-        <FrameLayout
-            android:background="#66f20000"
-            android:id="@+id/left_overlay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/left_arrow"
-            android:layout_centerHorizontal="true" />
-        <FrameLayout
-            android:background="#6600f200"
-            android:layout_width="match_parent"
-            android:id="@+id/right_overlay"
-            android:layout_height="match_parent"
-            android:src="@drawable/right_arrow"
-            android:layout_centerHorizontal="true" />
-        <FrameLayout
-            android:id="@+id/top_overlay"
-            android:background="@color/dark_gray"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+
+        <!--<FrameLayout-->
+        <!--android:background="#66f20000"-->
+        <!--android:id="@+id/left_overlay"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:src="@drawable/left_arrow"-->
+        <!--android:layout_centerHorizontal="true" />-->
+        <!--<FrameLayout-->
+        <!--android:background="#6600f200"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:id="@+id/right_overlay"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:src="@drawable/right_arrow"-->
+        <!--android:layout_centerHorizontal="true" />-->
+        <!--<FrameLayout-->
+        <!--android:id="@+id/top_overlay"-->
+        <!--android:background="@color/dark_gray"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
         <ImageView
-            android:tint="@color/colorPrimary"
+            android:id="@+id/game_card_info_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/ic_info_black_24dp"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/default_background_stroke_width"
-            android:id="@+id/game_card_info_button"/>
+            android:src="@drawable/ic_info_black_24dp"
+            android:tint="@color/colorPrimary" />
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

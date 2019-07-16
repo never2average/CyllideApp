@@ -50,9 +50,10 @@
                     android:layout_height="125dp"
                     android:layout_centerHorizontal="true"
                     android:textAlignment="center"
-                    android:text="50%"
+                    android:text="550.0%"
+                    android:id="@+id/per_days_profitable"
                     android:background="@drawable/circle"
-                    android:textSize="36sp"
+                    android:textSize="30sp"
                     android:gravity="center"/>
 
                 <com.razerdp.widget.animatedpieview.AnimatedPieView

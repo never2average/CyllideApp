@@ -83,7 +83,7 @@ public class UsernameActivity extends AppCompatActivity {
         signUpMap.put("username", usernameEditText.getText().toString());
         signUpMap.put("referral", referralCodeEditText.getText().toString());
         String url = getString(R.string.apiBaseURL)+"auth/otp/send/new";
-        StringRequest signUpRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        StringRequest signUpRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {

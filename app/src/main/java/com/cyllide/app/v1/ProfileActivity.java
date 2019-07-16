@@ -60,6 +60,8 @@ public class ProfileActivity extends AppCompatActivity {
     ImageButton cross;
     Uri targetUri;
     Map<String, String> uploadPicUriMap = new ArrayMap<>();
+    String cashValue;
+    String coinsValue;
 
     TextView
             username,
@@ -69,6 +71,8 @@ public class ProfileActivity extends AppCompatActivity {
             numPosts,
             coins,
             money,
+            percentageDaysProfitable,
+            prizes,
             numUpvotes,
             numHearts;
 
@@ -104,7 +108,9 @@ public class ProfileActivity extends AppCompatActivity {
         contestWinPerc = findViewById(R.id.view_only_contest_win_perc);
         numHearts = findViewById(R.id.view_only_profile_num_coins);
         coins = findViewById(R.id.points_collected);
+        prizes = findViewById(R.id.view_only_profile_prizes);
         money = findViewById(R.id.money_won);
+        percentageDaysProfitable = findViewById(R.id.per_days_profitable);
         try {
             coins.setText(AppConstants.coins);
             money.setText(AppConstants.money);
@@ -113,20 +119,20 @@ public class ProfileActivity extends AppCompatActivity {
             Log.d("ProfileActivity","Coins and money are not loaded");
         }
 
-        if(Integer.parseInt(coins.getText().toString())>20){
-            coins.setTextColor(ContextCompat.getColor(this,R.color.progressgreen));
-            coins.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Dialog d = new Dialog(ProfileActivity.this);
-//                    d.setContentView();
-//                    TODO ADD DIALOG
-                }
-            });
-        }
-        else{
-            coins.setTextColor(ContextCompat.getColor(this,R.color.progressred));
-        }
+//        if(Integer.parseInt(coins.getText().toString())>20){
+//            coins.setTextColor(ContextCompat.getColor(this,R.color.progressgreen));
+//            coins.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Dialog d = new Dialog(ProfileActivity.this);
+////                    d.setContentView();
+////                    TODO ADD DIALOG
+//                }
+//            });
+//        }
+//        else{
+////            coins.setTextColor(ContextCompat.getColor(this,R.color.progressred));
+//        }
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -165,13 +171,32 @@ public class ProfileActivity extends AppCompatActivity {
                     numHearts.setText(jsonResponse.getString("numCoins"));
                     AnimatedPieViewConfig config = new AnimatedPieViewConfig().drawText(false).textSize(40);
                     config.strokeWidth(30);
-//                    double contestsPart = jsonResponse.getDouble("portfolioDays");
-//                    double contestsWon = jsonResponse.getDouble("profitablePortfolioDays");
-//                    double winPercent = contestsWon/contestsPart;
-//                    double lostPercent = 1 - winPercent;
+                    coins.setText(jsonResponse.getString("points_collected"));
+                    money.setText(jsonResponse.getString("money_won"));
+                    money.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.cyllide_grey));
+                    if(Integer.parseInt(money.getText().toString())>20){
+                        money.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.green));
+                    }
+
+                    double contestsPart = jsonResponse.getDouble("portfolioDays");
+                    prizes.setText(contestsPart+"");
+                    double contestsWon = jsonResponse.getDouble("profitablePortfolioDays");
+                    double winPercent;
+
+                    try {
+                        winPercent = contestsWon / contestsPart;
+                        if(contestsPart == 0){
+                            throw new Exception();
+                        }
+                    }
+                    catch (Exception e){
+                        winPercent = 0;
+                    }
+                    double lostPercent = 1 - winPercent;
+                    percentageDaysProfitable.setText(winPercent*100+"%");
                     config.startAngle(-90).addData(
-                            new SimplePieInfo((float) 0.5, ContextCompat.getColor(ProfileActivity.this, R.color.progress_), "")).addData(
-                            new SimplePieInfo((float) 0.5, ContextCompat.getColor(ProfileActivity.this, R.color.transparent), "")).duration(1500);
+                            new SimplePieInfo((float) winPercent, ContextCompat.getColor(ProfileActivity.this, R.color.progress_), "")).addData(
+                            new SimplePieInfo((float) lostPercent, ContextCompat.getColor(ProfileActivity.this, R.color.transparent), "")).duration(1500);
                     contestWinPerc.applyConfig(config);
                     contestWinPerc.start();
                     RequestOptions cropOptions = new RequestOptions().override(100, 100);
