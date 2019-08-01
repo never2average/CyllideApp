@@ -71,9 +71,14 @@ public class UsernameActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signUp();
+
+                if(checkPhoneNoValidity(phoneNumberEditText.getText().toString()) && checkUsernameValidity(usernameEditText.getText().toString())) {
+                    signUp();
+                }
+
             }
         });
+        registerButton.setEnabled(false);
     }
 
 
@@ -88,6 +93,8 @@ public class UsernameActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
+                    Log.d("MESSAGE",jsonObject.toString());
+                    Log.d("MESSAGE",response);
                     String message = jsonObject.getString("message");
                     if(message.equals("MessageSendingSuccessful")){
                         Intent intent = new Intent(UsernameActivity.this, OTPVerification.class);
@@ -116,9 +123,32 @@ public class UsernameActivity extends AppCompatActivity {
         };
         signUpQueue.add(signUpRequest);
     }
+    boolean checkPhoneNoValidity(final String username) {
+        int l = username.length();
+        for (int i = 0; i < l; i++) {
+            char c = username.charAt(i);
+            if (c >= '0' && c <= '9') {
+                continue;
+            }
+            phoneNumberEditText.setError("Invalid Phone Number");
+            registerButton.setEnabled(false);
+            return false;
+        }
+        if(l != 10) {
+            phoneNumberEditText.setError("Invalid Phone Number");
+            registerButton.setEnabled(false);
 
 
-    void checkUsernameValidity(final String username) {
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+
+
+    boolean checkUsernameValidity(final String username) {
         int l = username.length();
         for(int i = 0; i<l;i++){
             char c = username.charAt(i);
@@ -126,7 +156,9 @@ public class UsernameActivity extends AppCompatActivity {
                 continue;
             }
             usernameEditText.setError("Username must be alpha numeric");
-            return;
+            registerButton.setEnabled(false);
+
+            return false;
         }
 
         validityMap.put("username",username);
@@ -139,9 +171,14 @@ public class UsernameActivity extends AppCompatActivity {
                     String status = new JSONObject(response).getString("status");
                     if(status.equals("taken")){
                         usernameEditText.setError("username already taken");
+                        registerButton.setEnabled(false);
+
                     }
                     else{
                         usernameEditText.setError(null);
+                        if(checkPhoneNoValidity(phoneNumberEditText.getText().toString())) {
+                            registerButton.setEnabled(true);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -159,5 +196,8 @@ public class UsernameActivity extends AppCompatActivity {
             }
         };
         validityQueue.add(validityRequest);
+    return true;
+    //TODO FIGURE THIS SHIT OUT
     }
+
 }
