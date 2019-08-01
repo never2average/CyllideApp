@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,6 +16,7 @@ import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +34,7 @@ import com.cyllide.app.v1.forum.ForumActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -62,6 +66,8 @@ public class ProfileActivity extends AppCompatActivity {
     Map<String, String> uploadPicUriMap = new ArrayMap<>();
     String cashValue;
     String coinsValue;
+    Dialog quizWinPopup;
+
 
     TextView
             username,
@@ -111,6 +117,8 @@ public class ProfileActivity extends AppCompatActivity {
         prizes = findViewById(R.id.view_only_profile_prizes);
         money = findViewById(R.id.money_won);
         percentageDaysProfitable = findViewById(R.id.per_days_profitable);
+        Context context;
+        quizWinPopup = new Dialog(this);
         try {
             coins.setText(AppConstants.coins);
             money.setText(AppConstants.money);
@@ -151,6 +159,43 @@ public class ProfileActivity extends AppCompatActivity {
         });
         fillAllViewsVolley();
     }
+    RequestQueue winPaytmRequestQueue;
+    Map<String,String> winPaytmRequestHeader = new ArrayMap<>();
+
+    void winnersMoney(String upiID){
+        winPaytmRequestQueue = Volley.newRequestQueue(ProfileActivity.this);
+//        winPaytmRequestHeader.put("quizID",quizID);
+        winPaytmRequestHeader.put("token",AppConstants.token);
+        winPaytmRequestHeader.put("upiID",upiID);
+        String url = getResources().getString(R.string.apiBaseURL)+"quiz/reward";
+        StringRequest sr = new StringRequest(Request.Method.POST,url,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("moneyResponse", response);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+//                Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
+//                Toast.makeText(QuizActivity.this,"Poor Internet Connection, please try again later",Toast.LENGTH_LONG).show();
+//                startActivity(new Intent(QuizActivity.this, MainActivity.class));
+//                finish();
+
+
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders(){
+
+                return winPaytmRequestHeader;
+            }
+        };
+
+        winPaytmRequestQueue.add(sr);
+    }
+
 
     void fillAllViewsVolley() {
         requestQueue = Volley.newRequestQueue(ProfileActivity.this);
@@ -176,6 +221,34 @@ public class ProfileActivity extends AppCompatActivity {
                     money.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.cyllide_grey));
                     if(Integer.parseInt(money.getText().toString())>20){
                         money.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.green));
+//                        money.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                TextView quizMoney = quizWinPopup.findViewById(R.id.quiz_winning_prize_money);
+//                                final TextInputEditText upiID = quizWinPopup.findViewById(R.id.upi_id);
+//
+//                                quizWinPopup.show();
+////                                quizMoney.setText("₹ "+money.getText().toString());
+//                                ImageView closePrizePopup = quizWinPopup.findViewById(R.id.close_prize_popup);
+//                                closePrizePopup.setOnClickListener(new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                        quizWinPopup.dismiss();
+//                                    }
+//                                });
+//                                ImageView sendUPI = quizWinPopup.findViewById(R.id.upi_id_button);
+//                                sendUPI.setOnClickListener(new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                        quizWinPopup.dismiss();
+//                                        final String string = upiID.getText().toString();
+//                                        Toast.makeText(ProfileActivity.this,"Money will be sent",Toast.LENGTH_LONG).show();
+//                                        winnersMoney(string);
+//                                    }
+//                                });
+//
+//                            }
+//                        });
                     }
 
                     double contestsPart = jsonResponse.getDouble("portfolioDays");
