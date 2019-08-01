@@ -52,6 +52,7 @@ public class OTPVerification extends AppCompatActivity {
         phoneNo = getIntent().getStringExtra("phone");
         firstuser = getIntent().getBooleanExtra("firstuser",false);
         setContentView(R.layout.activity_otpverification);
+
         verifyBtn = findViewById(R.id.validate_otp_button);
         otpFromSMS = null;
         otpView = findViewById(R.id.otp_view);
@@ -102,6 +103,7 @@ public class OTPVerification extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.d("MESSAGE",response);
                     JSONObject jsonObject = new JSONObject(response);
                     if(jsonObject.getString("message").equals("InvalidOTPEntered")){
                         Toast.makeText(OTPVerification.this,"Invalid OTP Entered",Toast.LENGTH_LONG).show();
