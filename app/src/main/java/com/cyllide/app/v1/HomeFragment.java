@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.ArrayMap;
@@ -62,6 +63,7 @@ public class HomeFragment extends Fragment {
     de.hdodenhof.circleimageview.CircleImageView profilePic;
     Map<String,String> homepageDataHeaders = new ArrayMap<>();
     RequestQueue homepageQueue;
+    ImageView profileMedal;
 
 
     @Override
@@ -95,6 +97,7 @@ public class HomeFragment extends Fragment {
         content=view;
         greetingsTV = view.findViewById(R.id.home_fragment_greetings);
         profilePic = view.findViewById(R.id.profile_pic_container);
+        profileMedal = view.findViewById(R.id.profile_medal);
 
 
     }
@@ -244,6 +247,16 @@ public class HomeFragment extends Fragment {
                         RequestOptions requestOptions = new RequestOptions().override(100);
                         Glide.with(getContext()).load(profileURL).apply(requestOptions).into(profilePic);
                     }
+                    String level = jsonObject.getString("level");
+                    if(level.equals("Gold")){
+                        profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_gold_medal));
+                    }else{
+                        if(level.equals("Silver")){
+                            profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_silver_medal));
+                        }else{
+                            profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_bronze_medal));
+                        }
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -261,6 +274,4 @@ public class HomeFragment extends Fragment {
         };
         homepageQueue.add(homepageRequest); 
     }
-
-
 }
