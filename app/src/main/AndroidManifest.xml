@@ -22,7 +22,8 @@
         android:roundIcon="@drawable/app_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".portfolio.PortfolioGameLeaderboardActivity"></activity>
+        <activity android:name=".portfolio.VersionControlActivity"></activity>
+        <activity android:name=".portfolio.PortfolioGameLeaderboardActivity" />
         <activity android:name=".portfolio.PortfolioGamePortfolioActivity" />
         <activity android:name=".authentication.UsernameActivity" />
         <activity android:name=".intro.IntroActivity" />
@@ -121,23 +122,21 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".background.services.GetLatestQuizIDService" />
-
-        <!--<receiver-->
-            <!--android:name=".NetworkConnectionBroadcastReveiver"-->
-            <!--android:enabled="true"-->
-            <!--android:exported="true">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />-->
-            <!--</intent-filter>-->
-        <!--</receiver>-->
-
-        <receiver android:name=".background.services.MySMSBroadcastReceiver" android:exported="true">
+        <service android:name=".background.services.GetLatestQuizIDService" /> <!-- <receiver -->
+        <!-- android:name=".NetworkConnectionBroadcastReveiver" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.net.conn.CONNECTIVITY_CHANGE" /> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
+        <receiver
+            android:name=".background.services.MySMSBroadcastReceiver"
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED"/>
-
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
             </intent-filter>
-            <intent-filter android:priority="5822" >
+            <intent-filter android:priority="5822">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>

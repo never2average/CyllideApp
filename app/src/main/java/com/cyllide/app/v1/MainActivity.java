@@ -6,6 +6,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -19,6 +20,12 @@ import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.authentication.PhoneAuth;
 import com.cyllide.app.v1.authentication.UsernameActivity;
 import com.cyllide.app.v1.background.services.AppSignatureHelper;
@@ -28,6 +35,7 @@ import com.cyllide.app.v1.intro.IntroActivity;
 import com.cyllide.app.v1.notification.NotificationActivity;
 
 
+import com.cyllide.app.v1.portfolio.VersionControlActivity;
 import com.github.clans.fab.FloatingActionMenu;
 import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker;
 import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
@@ -38,6 +46,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -115,17 +130,70 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     }
 
 
+    RequestQueue vcRequestQueue;
 
 
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppTheme_NoActionBar);
+
+        Context context;
+        Log.d("ERROR","INSIDE ONCREATE");
+        vcRequestQueue = Volley.newRequestQueue(MainActivity.this);
+        String url =getBaseContext().getResources().getString(R.string.apiBaseURL)+"forced/update";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    Log.d("Summary",jsonObject.toString());
+                    int versionCode = BuildConfig.VERSION_CODE;
+                    String versionName = BuildConfig.VERSION_NAME;
+                    int minVersionCOde = jsonObject.getInt("version");
+                    String playURL = jsonObject.getString("playurl");
+                    if(versionCode>minVersionCOde){
+                        setUpActivity();
+                    }
+                    else{
+                        setTheme(R.style.AppTheme_NoActionBar);
+                        finish();
+                        Intent intent = new Intent(MainActivity.this, VersionControlActivity.class);
+                        intent.putExtra("playurl",playURL);
+                        startActivity(intent);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR",error.toString());
+
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders(){
+                Map<String,String> lol = new HashMap<>();
+                lol.put("NOICE","NOICE");
+                return lol;
+            }
+        };
+        vcRequestQueue.add(stringRequest);
+
+
+
+    }
+
+    void setUpActivity(){
+
         setTheme(R.style.AppTheme_NoActionBar);
         setContentView(R.layout.activity_main);
         setApplicationConstants();
-
         InternetAvailabilityChecker.init(this);
         internetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
         internetAvailabilityChecker.addInternetConnectivityListener(this);
@@ -145,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                         new String[]{Manifest.permission.CAMERA,
                                 Manifest.permission.READ_EXTERNAL_STORAGE,
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                },
+                        },
                         MY_PERMISSION_REQUEST_CODE);
 
                 Log.d("Permissions","NOt granted");
@@ -193,7 +261,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             }
         });
 
-       help.setOnClickListener(new View.OnClickListener()  {
+        help.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
 
@@ -202,18 +270,18 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                 startActivity(faqIntent);
                 finish();
             }
-       });
+        });
 
 
-       feedback.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               fabMenu.close(true);
-               Intent feedbackIntent = new Intent(MainActivity.this,FeedbackActivity.class);
-               startActivity(feedbackIntent);
-               finish();
-           }
-       });
+        feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fabMenu.close(true);
+                Intent feedbackIntent = new Intent(MainActivity.this,FeedbackActivity.class);
+                startActivity(feedbackIntent);
+                finish();
+            }
+        });
 
         AnimatorSet set = new AnimatorSet();
 

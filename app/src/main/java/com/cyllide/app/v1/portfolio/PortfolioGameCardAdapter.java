@@ -102,17 +102,21 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
         lineDataSet.setDrawCircles(false);
         lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.colorPrimary));
 
+
         lineDataSets.add(lineDataSet);
 
         lineChart.setData(new LineData(lineDataSets));
         lineChart.getXAxis().setDrawLabels(false);
+        Description d = new Description();
+        d.setText("");
+        lineChart.setDescription(d);
         lineChart.getAxisLeft().setDrawGridLines(false);
         lineDataSet.setDrawFilled(true);
         lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_gradient));
         lineChart.getLegend().setEnabled(false);
-        Description d = new Description();
-        d.setText("");
-        lineChart.setDescription(d);
+//        Description dddd = new Description();
+//        d.setText("");
+//        lineChart.setDescription(dddd);
         lineChart.invalidate();
 
         v.setOnClickListener(new View.OnClickListener() {
