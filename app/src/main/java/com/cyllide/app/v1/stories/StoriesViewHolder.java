@@ -1,6 +1,7 @@
 package com.cyllide.app.v1.stories;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.material.button.MaterialButton;
 
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -37,6 +39,8 @@ public class StoriesViewHolder extends RecyclerView.ViewHolder {
     public void populate(final StoriesModel stories)
     {
         storyTag.setText(" "+stories.getContentType());
+        storyTag.setBackgroundColor(Color.parseColor(stories.getContentColor()));
+        storyTag.setTextColor(ContextCompat.getColor(itemView.getContext(),R.color.black));
         titleTV.setText(stories.getStoryName());
         authorTV.setText("By: "+stories.getContentAuthor());
         summaryTV.setText(stories.getStoryDescription());

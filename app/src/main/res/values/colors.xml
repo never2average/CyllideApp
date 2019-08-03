@@ -21,4 +21,5 @@
     <color name="cyllide_grey">#B1B1B1B1</color>
     <color name="cyllide_grey_text">#9E9E9E</color>
     <color name="progress_">#FFB444</color>
+    <color name="quiz_card">#B309FB</color>
 </resources>

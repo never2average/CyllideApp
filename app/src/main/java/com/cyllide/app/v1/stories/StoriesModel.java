@@ -4,6 +4,16 @@ public class StoriesModel {
     private String storyName,storyDescription,storyImageURL, contentAuthor,contentType, contentMarkdownLink;
     public String mongoID;
 
+    public String getContentColor() {
+        return contentColor;
+    }
+
+    public void setContentColor(String contentColor) {
+        this.contentColor = contentColor;
+    }
+
+    public String contentColor;
+
     public String getMongoID() {
         return mongoID;
     }
@@ -37,7 +47,8 @@ public class StoriesModel {
     }
 
     public StoriesModel(String mongoID, String storyName, String storyImageURL,
-                        String storyDescription, String contentAuthor, String contentType, String contentMarkdownLink)
+                        String storyDescription, String contentAuthor, String contentType,
+                        String contentColor, String contentMarkdownLink)
     {
         this.storyDescription=storyDescription;
         this.storyImageURL=storyImageURL;
@@ -45,6 +56,7 @@ public class StoriesModel {
         this.contentAuthor = contentAuthor;
         this.contentType = contentType;
         this.contentMarkdownLink = contentMarkdownLink;
+        this.contentColor = contentColor;
         this.mongoID = mongoID;
 
     }
