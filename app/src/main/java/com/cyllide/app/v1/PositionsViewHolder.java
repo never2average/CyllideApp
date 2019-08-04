@@ -7,9 +7,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cyllide.app.v1.portfolio.PortfolioPositionsRV.PositionsModel;
+
 public class PositionsViewHolder extends RecyclerView.ViewHolder {
-    TextView quantityTV,nameTV,avgPrice,ltp;
-    ImageView buy;
+    TextView quantityTV,nameTV,avgPrice,ltp, cost;
 
     public PositionsViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -17,6 +18,12 @@ public class PositionsViewHolder extends RecyclerView.ViewHolder {
         nameTV = itemView.findViewById(R.id.position_name);
         avgPrice = itemView.findViewById(R.id.position_average_price);
         ltp = itemView.findViewById(R.id.position_ltp);
-        buy = itemView.findViewById(R.id.position_buy_button) ;
+        cost = itemView.findViewById(R.id.position_cost);
+    }
+    public void populate(PositionsModel positionsModel){
+        quantityTV.setText(positionsModel.getPositionQuantity());
+        nameTV.setText(positionsModel.getPositionTicker());
+        ltp.setText(positionsModel.getPositionCurrPrice());
+        cost.setText(positionsModel.getPositionCost());
     }
 }

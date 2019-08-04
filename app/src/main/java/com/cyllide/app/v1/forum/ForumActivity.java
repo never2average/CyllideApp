@@ -34,6 +34,7 @@ import com.nex3z.togglebuttongroup.MultiSelectToggleGroup;
 import com.nex3z.togglebuttongroup.SingleSelectToggleGroup;
 import com.nex3z.togglebuttongroup.button.LabelToggle;
 import com.nex3z.togglebuttongroup.button.ToggleButton;
+import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -18,6 +18,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:weightSum="2">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="TICKER"
+                android:textSize="23sp"
+                android:id="@+id/ticker_title"/>
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/portfolio_game_home_chart"
