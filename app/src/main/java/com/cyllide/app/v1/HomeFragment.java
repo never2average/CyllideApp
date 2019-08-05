@@ -217,26 +217,17 @@ public class HomeFragment extends Fragment {
     }
 
     void fetchDataVolley() {
-        String url = getResources().getString(R.string.apiBaseURL)+"info/homepage";
-        homepageQueue = Volley.newRequestQueue(getContext());
-        homepageDataHeaders.put("token", AppConstants.token);
-        StringRequest homepageRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    Log.d("HomeFragment", response);
-                    JSONObject jsonObject = new JSONObject(response).getJSONObject("data");
-                    greetingsTV.setText("Hey, "+jsonObject.getString("username")+"!");
-                    String profileURL = jsonObject.getString("profilePicURL");
+                    greetingsTV.setText("Hey, "+AppConstants.username+"!");
+                    String profileURL = AppConstants.profilePic;
                     if(profileURL.equals(AppConstants.noProfilePicURL)){
                         ColorGenerator generator = ColorGenerator.MATERIAL;
-                        int color = generator.getColor(jsonObject.getString("username"));
+                        int color = generator.getColor(AppConstants.username);
                         TextDrawable drawable = TextDrawable.builder()
                                 .beginConfig()
                                 .width(100)
                                 .height(100)
                                 .endConfig()
-                                .buildRect(Character.toString(jsonObject.getString("username").charAt(0)).toUpperCase(), color);
+                                .buildRect(Character.toString(AppConstants.username.charAt(0)).toUpperCase(), color);
                         profilePic.setImageDrawable(drawable);
 
                     }
@@ -244,22 +235,7 @@ public class HomeFragment extends Fragment {
                         RequestOptions requestOptions = new RequestOptions().override(100);
                         Glide.with(getContext()).load(profileURL).apply(requestOptions).into(profilePic);
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
-            }
-        }){
-            @Override
-            public Map<String,String> getHeaders(){
-                return homepageDataHeaders;
-            }
-        };
-        homepageQueue.add(homepageRequest); 
     }
 
 
