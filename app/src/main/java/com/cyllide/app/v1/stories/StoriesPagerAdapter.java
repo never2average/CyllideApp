@@ -28,11 +28,15 @@ public class StoriesPagerAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
+                ShortsFragment shortsFragment = new ShortsFragment();
+                return shortsFragment;
+            case 1:
                 NewsFragment newsFragment = new NewsFragment();
                 return newsFragment;
-            case 1:
+            case 2:
                 StoriesFragment storiesFragment = new StoriesFragment();
                 return storiesFragment;
+
             default:
                 return null;
         }

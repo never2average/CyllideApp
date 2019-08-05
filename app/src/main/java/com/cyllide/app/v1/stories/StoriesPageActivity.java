@@ -65,7 +65,7 @@ public class StoriesPageActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.d("NewsPageActivity",response);
-                        Intent intent = new Intent(StoriesPageActivity.this, StoriesMainActivity.class);
+                        Intent intent = new Intent(StoriesPageActivity.this, ArticlesMainActivity.class);
                         startActivity(intent);
                         finish();
                         onBackPressed();
@@ -75,7 +75,7 @@ public class StoriesPageActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("NewsPageActivity?", error.toString());
-                        Intent intent = new Intent(StoriesPageActivity.this, StoriesMainActivity.class);
+                        Intent intent = new Intent(StoriesPageActivity.this, ArticlesMainActivity.class);
                         startActivity(intent);
                         finish();
                     }

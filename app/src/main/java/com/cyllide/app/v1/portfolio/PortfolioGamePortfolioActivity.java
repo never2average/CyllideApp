@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.cyllide.app.v1.MainActivity;
 import com.cyllide.app.v1.R;
@@ -46,5 +47,13 @@ public class PortfolioGamePortfolioActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Toast.makeText(PortfolioGamePortfolioActivity.this,"onNewIntentcalled",Toast.LENGTH_SHORT).show();
     }
 }
