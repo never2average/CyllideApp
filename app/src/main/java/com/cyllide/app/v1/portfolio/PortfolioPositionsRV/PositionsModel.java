@@ -2,8 +2,39 @@ package com.cyllide.app.v1.portfolio.PortfolioPositionsRV;
 
 public class PositionsModel {
     private String positionTicker,positionQuantity,positionCurrPrice,positionType,positionValue;
+    String positionltp;
+    String positionCost;
 
-    public PositionsModel(String positionTicker, int positionQuantity, String positionCurrPrice, Boolean positionType, Double positionValue) {
+    public String getPositionltp() {
+        return positionltp;
+    }
+
+    public void setPositionltp(String positionltp) {
+        this.positionltp = positionltp;
+    }
+
+    public String getPositionCost() {
+        return positionCost;
+    }
+
+    public void setPositionCost(String positionCost) {
+        this.positionCost = positionCost;
+    }
+
+    public PositionsModel(String positionTicker, int positionQuantity, String positionCurrPrice, Boolean positionType, Double positionValue, double positionltp, double positionCost ) {
+        this.positionTicker = positionTicker;
+        this.positionQuantity = String.valueOf(positionQuantity);
+        this.positionCurrPrice = positionCurrPrice;
+        this.positionltp = Double.toString(positionltp);
+        this.positionCost = Double.toString(positionCost);
+        if(positionType){
+            this.positionType = "LONG";
+        }
+        else{
+            this.positionType = "SHORT";
+        }
+        this.positionValue = String.valueOf(positionValue);
+    } public PositionsModel(String positionTicker, int positionQuantity, String positionCurrPrice, Boolean positionType, Double positionValue ) {
         this.positionTicker = positionTicker;
         this.positionQuantity = String.valueOf(positionQuantity);
         this.positionCurrPrice = positionCurrPrice;

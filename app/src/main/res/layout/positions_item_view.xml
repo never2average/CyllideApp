@@ -47,6 +47,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/default_stack_spacing"
             android:layout_weight="1"
+            android:id="@+id/position_cost"
             android:gravity="right|center_vertical"
             android:text="50.00" />
     </LinearLayout>
@@ -63,6 +64,7 @@
             android:layout_weight="1">
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/position_buy_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_background_stroke_width"
@@ -76,6 +78,7 @@
             android:layout_weight="1">
 
             <LinearLayout
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true">

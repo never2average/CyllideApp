@@ -2,23 +2,18 @@ package com.cyllide.app.v1;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,29 +36,18 @@ import com.cyllide.app.v1.quiz.QuizRulesActivity;
 import com.cyllide.app.v1.stories.StoriesMainActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.card.MaterialCardView;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.Map;
-import java.util.UUID;
-
-import static android.app.Activity.RESULT_OK;
 
 public class HomeFragment extends Fragment {
     Calendar startTime = Calendar.getInstance();
@@ -78,15 +62,6 @@ public class HomeFragment extends Fragment {
     de.hdodenhof.circleimageview.CircleImageView profilePic;
     Map<String,String> homepageDataHeaders = new ArrayMap<>();
     RequestQueue homepageQueue;
-    ImageView profileMedal;
-    Uri targetUri;
-    StorageReference storageReference;
-    SharedPreferences sharedPreferences;
-    TextDrawable drawable;
-    ImageView cyllideLogo;
-
-
-
 
 
     @Override
@@ -120,27 +95,6 @@ public class HomeFragment extends Fragment {
         content=view;
         greetingsTV = view.findViewById(R.id.home_fragment_greetings);
         profilePic = view.findViewById(R.id.profile_pic_container);
-        profileMedal = view.findViewById(R.id.profile_medal);
-        cyllideLogo=view.findViewById(R.id.cyllidemainlogo);
-        storageReference= FirebaseStorage.getInstance().getReference();
-        sharedPreferences=view.getContext().getSharedPreferences("profileUrl",Context.MODE_PRIVATE);
-
-
-        if(sharedPreferences.getString("profileUri",null)==null)
-        {
-           // getProfilePicVolley();
-            profilePic.setImageDrawable(drawable);
-
-            Toast.makeText(getContext(),"please choose your profile pic",Toast.LENGTH_SHORT).show();
-        }else{
-            String ur=sharedPreferences.getString("profileUri",null);
-            Uri uri=Uri.parse(ur);
-            Log.d("imageuri",ur);
-            RequestOptions requestOptions = new RequestOptions().override(100);
-            Glide.with(getContext()).load(uri).apply(requestOptions).into(profilePic);
-        }
-
-
 
 
     }
@@ -207,28 +161,17 @@ public class HomeFragment extends Fragment {
             }
 
         });
- cyllideLogo.setOnClickListener(new View.OnClickListener() {
-     @Override
-     public void onClick(View view) {
-                         Intent intent = new Intent(getContext(),ProfileActivity.class);
-                intent.putExtra("Editable",true);
-                getContext().startActivity(intent);
-                getActivity().finish();
-     }
- });
+
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 0);
+                Intent intent = new Intent(getContext(),ProfileActivity.class);
+                intent.putExtra("Editable",true);
+                getContext().startActivity(intent);
+                getActivity().finish();
 
             }
         });
-
-
 
 
 
@@ -274,126 +217,26 @@ public class HomeFragment extends Fragment {
     }
 
     void fetchDataVolley() {
-        String url = getResources().getString(R.string.apiBaseURL)+"info/homepage";
-        homepageQueue = Volley.newRequestQueue(getContext());
-        homepageDataHeaders.put("token", AppConstants.token);
-        StringRequest homepageRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    Log.d("HomeFragment", response);
-                    JSONObject jsonObject = new JSONObject(response).getJSONObject("data");
-                    greetingsTV.setText("Hey, "+jsonObject.getString("username")+"!");
-                    String profileURL = jsonObject.getString("profilePicURL");
+                    greetingsTV.setText("Hey, "+AppConstants.username+"!");
+                    String profileURL = AppConstants.profilePic;
                     if(profileURL.equals(AppConstants.noProfilePicURL)){
                         ColorGenerator generator = ColorGenerator.MATERIAL;
-                        int color = generator.getColor(jsonObject.getString("username"));
-                         drawable = TextDrawable.builder()
+                        int color = generator.getColor(AppConstants.username);
+                        TextDrawable drawable = TextDrawable.builder()
                                 .beginConfig()
                                 .width(100)
                                 .height(100)
                                 .endConfig()
-                                .buildRect(Character.toString(jsonObject.getString("username").charAt(0)).toUpperCase(), color);
+                                .buildRect(Character.toString(AppConstants.username.charAt(0)).toUpperCase(), color);
+                        profilePic.setImageDrawable(drawable);
 
                     }
                     else {
                         RequestOptions requestOptions = new RequestOptions().override(100);
                         Glide.with(getContext()).load(profileURL).apply(requestOptions).into(profilePic);
                     }
-                    String level = jsonObject.getString("level");
-                    if(level.equals("Gold")){
-                        profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_gold_medal));
-                    }else{
-                        if(level.equals("Silver")){
-                            profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_silver_medal));
-                        }else{
-                            profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_bronze_medal));
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
-            @Override
-            public Map<String,String> getHeaders(){
-                return homepageDataHeaders;
-            }
-        };
-        homepageQueue.add(homepageRequest); 
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK){
-
-            targetUri = data.getData();
-
-            RequestOptions requestOptions = new RequestOptions().override(100);
-
-            Glide.with(getContext()).load(targetUri).apply(requestOptions).into(profilePic);
-            uploadImage(getContext());
-            Log.e("ProfilePicSet","inside on activity result");
-            Toast.makeText(getContext(),"onActivityResult",Toast.LENGTH_LONG).show();
-        }
-
-
 
     }
-    private void uploadImage(final Context context) {
-
-        if(targetUri != null)
-        {
-            final ProgressDialog progressDialog = new ProgressDialog(context);
-            progressDialog.setTitle("Uploading...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-
-            final StorageReference ref = storageReference.child(UUID.randomUUID().toString());
-            ref.putFile(targetUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    SharedPreferences.Editor editor=sharedPreferences.edit();
-                                    editor.putString("profileUri",uri.toString());
-                                    editor.commit();
-                                }
-                            });
-                            Toast.makeText(context, "Uploaded", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(context, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                        }
-                    });
-        }
-    }
-
-
-
 
 
 }

@@ -17,7 +17,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.cyllide.app.v1.MainActivity;
 import com.cyllide.app.v1.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -66,9 +65,9 @@ public class PhoneAuth extends AppCompatActivity {
                                     if(success.equals("MessageSendingSuccessful")){
                                         firstUser = false;
                                         Toast.makeText(PhoneAuth.this,"Message Sending Successful",Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(PhoneAuth.this, MainActivity.class);
-//                                        intent.putExtra("phone",input_phoneNo);
-//                                        intent.putExtra("firstuser",firstUser);
+                                        Intent intent = new Intent(PhoneAuth.this,OTPVerification.class);
+                                        intent.putExtra("phone",input_phoneNo);
+                                        intent.putExtra("firstuser",firstUser);
                                         startActivity(intent);
                                         finish();
                                     }

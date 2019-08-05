@@ -46,7 +46,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
     Map<String, String> statsMap = new ArrayMap<>();
     TextView companyIndustry;
     TextView companySector;
-    TextView previousClose, open, ask, marketCap, peRatio;
+    TextView previousClose, open, ask, marketCap,ticker, peRatio;
 
 
 
@@ -86,6 +86,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
             open=v.findViewById(R.id.dtgc_open);
             ask=v.findViewById(R.id.dtgc_ask);
             marketCap=v.findViewById(R.id.dtgc_marketcap);
+            ticker = v.findViewById(R.id.ticker_title);
 
 
         }
@@ -102,17 +103,21 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
         lineDataSet.setDrawCircles(false);
         lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.colorPrimary));
 
+
         lineDataSets.add(lineDataSet);
 
         lineChart.setData(new LineData(lineDataSets));
         lineChart.getXAxis().setDrawLabels(false);
+        Description d = new Description();
+        d.setText("");
+        lineChart.setDescription(d);
         lineChart.getAxisLeft().setDrawGridLines(false);
         lineDataSet.setDrawFilled(true);
         lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_gradient));
         lineChart.getLegend().setEnabled(false);
-        Description d = new Description();
-        d.setText("");
-        lineChart.setDescription(d);
+//        Description dddd = new Description();
+//        d.setText("");
+//        lineChart.setDescription(dddd);
         lineChart.invalidate();
 
         v.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +135,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
     void summaryVolley(){
         String url = context.getResources().getString(R.string.dataApiBaseURL)+"stocks/details";
         summaryHeaders.put("ticker", AppConstants.currTicker);
+        ticker.setText(AppConstants.currTicker);
         summaryQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
