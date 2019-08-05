@@ -93,6 +93,7 @@ public class StoriesFragment extends Fragment {
                                 storiesJSONArray.getJSONObject(i).getString("contentSummary"),
                                 storiesJSONArray.getJSONObject(i).getString("contentAuthor"),
                                 storiesJSONArray.getJSONObject(i).getString("contentType"),
+                                storiesJSONArray.getJSONObject(i).getString("contentColor"),
                                 storiesJSONArray.getJSONObject(i).getString("contentMarkdownLink")
                         ));
 

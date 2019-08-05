@@ -6,12 +6,14 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
@@ -19,6 +21,18 @@ import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.cyllide.app.v1.authentication.PhoneAuth;
 import com.cyllide.app.v1.authentication.UsernameActivity;
 import com.cyllide.app.v1.background.services.AppSignatureHelper;
 import com.cyllide.app.v1.background.services.GetLatestQuizIDService;
@@ -26,6 +40,7 @@ import com.cyllide.app.v1.faq_view.FAQActivity;
 import com.cyllide.app.v1.notification.NotificationActivity;
 
 
+import com.cyllide.app.v1.portfolio.VersionControlActivity;
 import com.github.clans.fab.FloatingActionMenu;
 import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker;
 import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
@@ -36,6 +51,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -50,7 +72,8 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
     NotificationManager notificationManager;
     RemoteViews contentView;
-
+    Map<String,String> homepageDataHeaders = new ArrayMap<>();
+    RequestQueue homepageQueue;
     boolean doubleBackToExitPressedOnce = false;
 
 
@@ -76,13 +99,14 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     }
 
 
-    private void setApplicationConstants(){
+    private boolean setApplicationConstants(){
         SharedPreferences sharedPreferences = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE);
         AppConstants.token = sharedPreferences.getString("token", null);
         if(AppConstants.token==null){
             Intent authIntent = new Intent(MainActivity.this, UsernameActivity.class);
             startActivity(authIntent);
             finish();
+            return false;
         }
         else{
             AppConstants.coins = sharedPreferences.getInt("coins", 0);
@@ -95,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             }
 
         }
+        return true;
     }
 
 
@@ -113,17 +138,92 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     }
 
 
+    RequestQueue vcRequestQueue;
 
 
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        try{
+        getSupportActionBar().hide();}
+        catch (Exception e){
+            Log.e("ERRIRR",e.toString());
+        }
+
+
+        if(!setApplicationConstants()){
+            return;
+        };
+
+        Context context;
+        homepageDataHeaders.put("token", AppConstants.token);
+        Log.d("ERROR","INSIDE ONCREATE");
+        vcRequestQueue = Volley.newRequestQueue(MainActivity.this);
+//        String url =getBaseContext().getResources().getString(R.string.apiBaseURL)+"forced/update";
+        String url = getResources().getString(R.string.apiBaseURL)+"info/homepage";
+        Log.e("TOKKKEN",AppConstants.token);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = (new JSONObject(response)).getJSONObject("data");
+                    Log.d("Summary",jsonObject.toString());
+                    int versionCode = BuildConfig.VERSION_CODE;
+                    String versionName = BuildConfig.VERSION_NAME;
+                    Log.d("RESPONSE",response);
+
+                    int minVersionCOde = jsonObject.getInt("version");
+                    String playURL = jsonObject.getString("playurl");
+                    AppConstants.username = jsonObject.getString("username");
+                    AppConstants.profilePic = jsonObject.getString("profilePicURL");
+
+                    if(versionCode>minVersionCOde){
+                        setTheme(R.style.AppTheme_NoActionBar);
+
+                        setUpActivity();
+//                        fetchDataVolley();
+
+                    }
+                    else{
+                        setTheme(R.style.AppTheme_NoActionBar);
+                        finish();
+                        Intent intent = new Intent(MainActivity.this, VersionControlActivity.class);
+                        intent.putExtra("playurl",playURL);
+                        startActivity(intent);
+                    }
+
+                } catch (JSONException e) {
+                    Log.e("ERROR",e.toString());
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR",error.toString());
+
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders(){
+
+                return homepageDataHeaders;            }
+        };
+        vcRequestQueue.add(stringRequest);
+
+
+
+    }
+
+    void setUpActivity(){
+
         setTheme(R.style.AppTheme_NoActionBar);
         setContentView(R.layout.activity_main);
-        setApplicationConstants();
-
+//        setApplicationConstants();
         InternetAvailabilityChecker.init(this);
         internetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
         internetAvailabilityChecker.addInternetConnectivityListener(this);
@@ -143,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                         new String[]{Manifest.permission.CAMERA,
                                 Manifest.permission.READ_EXTERNAL_STORAGE,
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                },
+                        },
                         MY_PERMISSION_REQUEST_CODE);
 
                 Log.d("Permissions","NOt granted");
@@ -151,9 +251,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             }
         }
 
-        Intent intent = new Intent(MainActivity.this,ProfileActivity.class);
-        intent.putExtra("Editable",true);
-//        startActivity(intent);
 
         notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
 
@@ -191,7 +288,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             }
         });
 
-       help.setOnClickListener(new View.OnClickListener()  {
+        help.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
 
@@ -200,18 +297,18 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                 startActivity(faqIntent);
                 finish();
             }
-       });
+        });
 
 
-       feedback.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               fabMenu.close(true);
-               Intent feedbackIntent = new Intent(MainActivity.this,FeedbackActivity.class);
-               startActivity(feedbackIntent);
-               finish();
-           }
-       });
+        feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fabMenu.close(true);
+                Intent feedbackIntent = new Intent(MainActivity.this,FeedbackActivity.class);
+                startActivity(feedbackIntent);
+                finish();
+            }
+        });
 
         AnimatorSet set = new AnimatorSet();
 
@@ -285,4 +382,43 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     public void onInternetConnectivityChanged(boolean isConnected) {
         ConnectionStatus.connectionstatus=isConnected;
     }
+
+    void fetchDataVolley() {
+        String url = getResources().getString(R.string.apiBaseURL)+"info/homepage";
+        homepageQueue = Volley.newRequestQueue(MainActivity.this);
+        homepageDataHeaders.put("token", AppConstants.token);
+        StringRequest homepageRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.d("HomeFragment", response);
+                    JSONObject jsonObject = new JSONObject(response).getJSONObject("data");
+//                    String profileURL = jsonObject.getString("profilePicURL");
+                    loadfragment(new HomeFragment());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders(){
+                return homepageDataHeaders;
+            }
+        };
+        homepageQueue.add(homepageRequest);
+    }
+
 }
+
+//TODO Integrate bulk API with cards
+//TODO Integrate it with portfolio positions
+//TODO test with 2 portfolios LEADERBOARD
+//TODO CHECK POINTS
+//TODO change workflow and ui of authentication
+//TODO change splash screen
+//TODO add tutorial and remove screenshots

@@ -73,6 +73,7 @@
             <!--android:layout_height="match_parent"-->
             <!--android:id="@+id/swipe_deck" />-->
         <link.fls.swipestack.SwipeStack
+            swipedeck:stack_rotation="0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/swipe_deck"></link.fls.swipestack.SwipeStack>
