@@ -19,12 +19,10 @@ import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.cyllide.app.v1.authentication.PhoneAuth;
 import com.cyllide.app.v1.authentication.UsernameActivity;
 import com.cyllide.app.v1.background.services.AppSignatureHelper;
 import com.cyllide.app.v1.background.services.GetLatestQuizIDService;
 import com.cyllide.app.v1.faq_view.FAQActivity;
-import com.cyllide.app.v1.intro.IntroActivity;
 import com.cyllide.app.v1.notification.NotificationActivity;
 
 
@@ -93,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                     PreferenceManager.getDefaultSharedPreferences(this);
             if (!sharedPreferences2.getBoolean(
                     COMPLETED_TUTORIAL_PREF_NAME, false)) {
-                startActivity(new Intent(MainActivity.this, IntroActivity.class));
+               // startActivity(new Intent(MainActivity.this, IntroActivity.class));
             }
 
         }

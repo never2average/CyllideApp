@@ -38,7 +38,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.cyllide.app.v1.portfolio.PortfolioGameHomeActivity;
 import com.cyllide.app.v1.forum.ForumActivity;
 import com.cyllide.app.v1.quiz.QuizRulesActivity;
-import com.cyllide.app.v1.stories.StoriesMainActivity;
+import com.cyllide.app.v1.stories.ArticlesMainActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -129,9 +129,9 @@ public class HomeFragment extends Fragment {
         if(sharedPreferences.getString("profileUri",null)==null)
         {
            // getProfilePicVolley();
-            profilePic.setImageDrawable(drawable);
+         //   profilePic.setImageDrawable(drawable);
 
-            Toast.makeText(getContext(),"please choose your profile pic",Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(getContext(),"please choose your profile pic",Toast.LENGTH_SHORT).show();
         }else{
             String ur=sharedPreferences.getString("profileUri",null);
             Uri uri=Uri.parse(ur);
@@ -155,7 +155,7 @@ public class HomeFragment extends Fragment {
         stories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), StoriesMainActivity.class);
+                Intent intent = new Intent(getContext(), ArticlesMainActivity.class);
                 getContext().startActivity(intent);
                 getActivity().finish();
             }
@@ -270,7 +270,22 @@ public class HomeFragment extends Fragment {
             }
         });
 
+//        if(sharedPreferences.getString("profileUri",null)==null)
+//        {
+//            // getProfilePicVolley();
+//            profilePic.setImageDrawable(drawable);
+//
+//            Toast.makeText(getContext(),"please choose your profile pic",Toast.LENGTH_SHORT).show();
+//        }else{
+//            String ur=sharedPreferences.getString("profileUri",null);
+//            Uri uri=Uri.parse(ur);
+//            Log.d("imageuri",ur);
+//            RequestOptions requestOptions = new RequestOptions().override(100);
+//            Glide.with(getContext()).load(uri).apply(requestOptions).into(profilePic);
+//        }
+
         fetchDataVolley();
+
     }
 
     void fetchDataVolley() {
@@ -294,6 +309,21 @@ public class HomeFragment extends Fragment {
                                 .height(100)
                                 .endConfig()
                                 .buildRect(Character.toString(jsonObject.getString("username").charAt(0)).toUpperCase(), color);
+
+                        if(sharedPreferences.getString("profileUri",null)==null)
+                        {
+                            // getProfilePicVolley();
+                            profilePic.setImageDrawable(drawable);
+
+                            //Toast.makeText(getContext(),"please choose your profile pic",Toast.LENGTH_SHORT).show();
+                        }else{
+                            String ur=sharedPreferences.getString("profileUri",null);
+                            Uri uri=Uri.parse(ur);
+                            Log.d("imageuri",ur);
+                            RequestOptions requestOptions = new RequestOptions().override(100);
+                            Glide.with(getContext()).load(uri).apply(requestOptions).into(profilePic);
+                        }
+
 
                     }
                     else {

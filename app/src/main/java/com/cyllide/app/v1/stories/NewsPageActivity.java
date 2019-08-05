@@ -42,7 +42,7 @@ public class NewsPageActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(NewsPageActivity.this, StoriesMainActivity.class));
+                startActivity(new Intent(NewsPageActivity.this, ArticlesMainActivity.class));
                 finish();
             }
         });

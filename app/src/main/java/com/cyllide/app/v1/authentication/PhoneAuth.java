@@ -67,8 +67,8 @@ public class PhoneAuth extends AppCompatActivity {
                                         firstUser = false;
                                         Toast.makeText(PhoneAuth.this,"Message Sending Successful",Toast.LENGTH_LONG).show();
                                         Intent intent = new Intent(PhoneAuth.this, MainActivity.class);
-//                                        intent.putExtra("phone",input_phoneNo);
-//                                        intent.putExtra("firstuser",firstUser);
+                            intent.putExtra("phone",input_phoneNo);
+                                        intent.putExtra("firstuser",firstUser);
                                         startActivity(intent);
                                         finish();
                                     }

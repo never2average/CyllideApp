@@ -2,7 +2,6 @@ package com.cyllide.app.v1.stories;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,27 +10,26 @@ import com.cyllide.app.v1.R;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.PagerAdapter;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
-
-
-public class StoriesMainActivity extends AppCompatActivity {
+public class ArticlesMainActivity extends AppCompatActivity {
 
     ImageView back;
     LinearLayout loading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stories);
+        setContentView(R.layout.activity_articles_main);
         loading = findViewById(R.id.activity_stories_loading_layout);
 
 
         TabLayout tabLayout =
                 (TabLayout) findViewById(R.id.tab_layout);
         back=findViewById(R.id.newsbackbutton);
+        tabLayout.addTab(tabLayout.newTab().setText("Shorts"));
+
         tabLayout.addTab(tabLayout.newTab().setText("News"));
         tabLayout.addTab(tabLayout.newTab().setText("Stories"));
 
@@ -66,7 +64,7 @@ public class StoriesMainActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(StoriesMainActivity.this,MainActivity.class);
+                Intent intent=new Intent(ArticlesMainActivity.this,MainActivity.class);
                 startActivity(intent);
                 finish();
             }
