@@ -420,5 +420,3 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 //TODO test with 2 portfolios LEADERBOARD
 //TODO CHECK POINTS
 //TODO change workflow and ui of authentication
-//TODO change splash screen
-//TODO add tutorial and remove screenshots
