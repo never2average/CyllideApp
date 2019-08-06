@@ -21,6 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,9 +31,9 @@ import java.util.Map;
 
 public class ShortsFragment extends Fragment {
 
-private RecyclerView shortsRV;
-ArrayList<ShortsModel> list =new ArrayList<ShortsModel>();
-    ShortsAdapter  adapter=new ShortsAdapter(list);
+    private RecyclerView shortsRV;
+    ArrayList<ShortsModel> list =new ArrayList<ShortsModel>();
+    ShortsAdapter  adapter;
     RequestQueue requestQueue;
     String requestURL;
     Map<String,String> articleDataMap = new HashMap<>();
@@ -41,15 +42,11 @@ ArrayList<ShortsModel> list =new ArrayList<ShortsModel>();
     public ShortsFragment() {
         // Required empty public constructor
     }
-    String name[]={"kartik","anshuman","priyesh","rohit","aditya","prasanna"};
-    String descrip[]={"fghkdfjgkfgj","kskfksjhgdffdj","sfsdjsafjsf","kkgfslfghskfjg","kkfgkfjgsakfgj","slkdfskdfljsfdkgkj"};
-    String descrip1[]={"fghkdfjgkfgj","kskfksjhgdffdj","sfsdjsafjsf","kkgfslfghskfjg","kkfgkfjgsakfgj","slkdfskdfljsfdkgkj"};
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
 
     }
@@ -60,17 +57,11 @@ ArrayList<ShortsModel> list =new ArrayList<ShortsModel>();
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_shorts, container, false);
         shortsRV=view.findViewById(R.id.shorts_rv);
-        for(int i=0;i<6;i++){
-            list.add(new ShortsModel(name[i],descrip[i],descrip1[1]));
-
-        }
         LinearSnapHelper linearSnapHelper = new SnapHelperOneByOne();
         linearSnapHelper.attachToRecyclerView(shortsRV);
-        shortsRV.setAdapter(adapter);
-        fetchArticleData();
         shortsRV.setHasFixedSize(true);
         shortsRV.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
-
+        fetchArticleData();
         return view;
     }
 
@@ -82,8 +73,20 @@ ArrayList<ShortsModel> list =new ArrayList<ShortsModel>();
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.d("RESPONSE",response);
-                } catch (Exception e) {
+                    JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+                    ArrayList<ShortsModel> shortsModels = new ArrayList<>();
+                    for(int i=0;i<jsonArray.length();i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        shortsModels.add(new ShortsModel(
+                                jsonObject.getString("description"),
+                                jsonObject.getString("title"),
+                                jsonObject.getString("imageURL")
+                        ));
+                    }
+                    ShortsAdapter shortsAdapter = new ShortsAdapter(shortsModels);
+                    shortsRV.setAdapter(shortsAdapter);
+
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }

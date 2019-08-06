@@ -20,6 +20,6 @@
         android:layout_height="0dp"
         android:text="description"
         android:layout_weight="4"
-        android:id="@+id/shorts_descrip"/>
+        android:id="@+id/shorts_description"/>
 
 </LinearLayout>
