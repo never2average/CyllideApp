@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.cyllide.app.v1.R;
 
 public class ShortsViewHolder extends RecyclerView.ViewHolder {
@@ -26,10 +25,10 @@ public class ShortsViewHolder extends RecyclerView.ViewHolder {
         viewContext=itemView.getContext();
     }
 
-    public void populate( ShortsModal modal)
+    public void populate( ShortsModel modal)
     {
         shortsDescrip.setText(modal.getShortsDescription());
-        shortsName.setText(modal.getShortsName());
+        shortsName.setText(modal.getShortsTitle());
         //uncomment when needed
        // Glide.with(viewContext).load(modal.getShortsImageUrl()).into(shortsImage);
     }

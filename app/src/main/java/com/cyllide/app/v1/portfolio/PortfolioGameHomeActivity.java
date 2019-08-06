@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -35,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +50,35 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
     ImageView backBtn;
     PortfolioGameCardAdapter adapter;
     ImageView tab1, tab2, tab3;
+    Map<String,String> cardsHeader = new HashMap<>();
+    RequestQueue cardsRequestQueue;
+
+    void fetchCards(int i){
+        Context context;
+        cardsRequestQueue = Volley.newRequestQueue(PortfolioGameHomeActivity.this);
+        String url =(PortfolioGameHomeActivity.this).getResources().getString(R.string.dataApiBaseURL)+"stocks/gamebulkdata";
+        cardsHeader.put("page",Integer.toString(i));
+        StringRequest cardRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("RESPONSE",response);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR",error.toString());
+
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders(){
+                return cardsHeader;
+            }
+        };
+        cardsRequestQueue.add(cardRequest);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +105,7 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
                 finish();
             }
         });
+        fetchCards(1);
 
         testData = new ArrayList<>();
         for(int i=0;i<5; i++){
