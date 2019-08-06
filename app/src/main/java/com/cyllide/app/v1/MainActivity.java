@@ -262,7 +262,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         startService(serviceIntent);
 
 
-        loadfragment(new HomeFragment());
         InternetAvailabilityChecker.init(this);
         internetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
         internetAvailabilityChecker.addInternetConnectivityListener(this);
@@ -337,6 +336,8 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         set.setInterpolator(new OvershootInterpolator(2));
 
         fabMenu.setIconToggleAnimatorSet(set);
+        loadfragment(new HomeFragment());
+
 
 
 

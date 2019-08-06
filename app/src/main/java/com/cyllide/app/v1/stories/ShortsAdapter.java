@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class ShortsAdapter extends RecyclerView.Adapter<ShortsViewHolder> {
 
-    ArrayList<ShortsModal> data ;
+    ArrayList<ShortsModel> data ;
     @NonNull
     @Override
     public ShortsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -25,12 +25,12 @@ public class ShortsAdapter extends RecyclerView.Adapter<ShortsViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ShortsViewHolder holder, int position) {
-        ShortsModal item =data.get(position);
+        ShortsModel item =data.get(position);
         holder.populate(item);
 
     }
 
-    public ShortsAdapter(ArrayList<ShortsModal> data) {
+    public ShortsAdapter(ArrayList<ShortsModel> data) {
         this.data = data;
     }
 

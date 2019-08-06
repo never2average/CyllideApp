@@ -1,12 +1,12 @@
 package com.cyllide.app.v1.stories;
 
-public class ShortsModal {
+public class ShortsModel {
 
-    private String shortsDescription,ShortsName,ShortsImageUrl;
+    private String shortsDescription, ShortsTitle,ShortsImageUrl;
 
-    public ShortsModal(String shortsDescription, String shortsName, String shortsImageUrl) {
+    public ShortsModel(String shortsDescription, String shortsTitle, String shortsImageUrl) {
         this.shortsDescription = shortsDescription;
-        ShortsName = shortsName;
+        ShortsTitle = shortsTitle;
         ShortsImageUrl = shortsImageUrl;
     }
 
@@ -18,12 +18,12 @@ public class ShortsModal {
         this.shortsDescription = shortsDescription;
     }
 
-    public String getShortsName() {
-        return ShortsName;
+    public String getShortsTitle() {
+        return ShortsTitle;
     }
 
-    public void setShortsName(String shortsName) {
-        ShortsName = shortsName;
+    public void setShortsTitle(String shortsTitle) {
+        ShortsTitle = shortsTitle;
     }
 
     public String getShortsImageUrl() {
