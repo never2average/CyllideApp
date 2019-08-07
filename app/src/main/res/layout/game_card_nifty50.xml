@@ -152,7 +152,6 @@
 
                         <TextView
                             android:id="@+id/companyindustry"
-                            android:text="LOOL"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/default_background_stroke_width" />
@@ -184,24 +183,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_margin="@dimen/default_background_stroke_width"
-                            android:gravity="end"
-                            android:text="Ask:"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:id="@+id/dtgc_ask"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_margin="@dimen/default_background_stroke_width" />
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"

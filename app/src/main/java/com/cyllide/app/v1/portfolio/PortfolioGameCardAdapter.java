@@ -46,7 +46,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
     Map<String, String> statsMap = new ArrayMap<>();
     TextView companyIndustry;
     TextView companySector;
-    TextView previousClose, open, ask, marketCap,ticker, peRatio;
+    TextView previousClose, open, marketCap,ticker, peRatio;
 
 
 
@@ -84,7 +84,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
             peRatio=v.findViewById(R.id.dtgc_peratio);
             previousClose=v.findViewById(R.id.dtgc_previousclose);
             open=v.findViewById(R.id.dtgc_open);
-            ask=v.findViewById(R.id.dtgc_ask);
+            //ask=v.findViewById(R.id.dtgc_ask);
             marketCap=v.findViewById(R.id.dtgc_marketcap);
             ticker = v.findViewById(R.id.ticker_title);
 
@@ -172,7 +172,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
                     JSONObject jsonObject = new JSONObject(response);
                     previousClose.setText("₹ "+jsonObject.getString("Previous close"));
                     open.setText("₹ "+jsonObject.getString("Open"));
-                    ask.setText(jsonObject.getString("Ask"));
+                    //ask.setText(jsonObject.getString("Ask"));
                     marketCap.setText("₹ "+jsonObject.getString("Market cap"));
                     peRatio.setText(jsonObject.getString("PE ratio (TTM)"));
 

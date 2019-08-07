@@ -13,6 +13,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.ArrayMap;
@@ -69,6 +70,9 @@ public class HomeFragment extends Fragment {
     SharedPreferences sharedPreferences;
     ImageView cyllideLogo;
     StorageReference storageReference;
+    ImageView profileMedal;
+    String level;
+
 
     @Override
     public void onResume() {
@@ -103,6 +107,8 @@ public class HomeFragment extends Fragment {
         profilePic = view.findViewById(R.id.profile_pic_container);
        // profileMedal = view.findViewById(R.id.profile_medal);
         cyllideLogo=view.findViewById(R.id.cyllidemainlogo);
+        profileMedal = view.findViewById(R.id.profile_medal);
+
         storageReference= FirebaseStorage.getInstance().getReference();
         sharedPreferences=view.getContext().getSharedPreferences("profileUrl",Context.MODE_PRIVATE);
 
@@ -120,6 +126,18 @@ public class HomeFragment extends Fragment {
             RequestOptions requestOptions = new RequestOptions().override(100);
             Glide.with(getContext()).load(uri).apply(requestOptions).into(profilePic);
         }
+
+        level=AppConstants.userLevel;
+        if(level.equals("Gold")){
+            profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_gold_medal));
+        }else{
+            if(level.equals("Silver")){
+                profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_silver_medal));
+            }else{
+                profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_bronze_medal));
+            }
+        }
+
 
 
 
