@@ -162,31 +162,27 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         homepageDataHeaders.put("token", AppConstants.token);
         Log.d("ERROR","INSIDE ONCREATE");
         vcRequestQueue = Volley.newRequestQueue(MainActivity.this);
-//        String url =getBaseContext().getResources().getString(R.string.apiBaseURL)+"forced/update";
         String url = getResources().getString(R.string.apiBaseURL)+"info/homepage";
-        Log.e("TOKKKEN",AppConstants.token);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONObject jsonObject = (new JSONObject(response)).getJSONObject("data");
+                    JSONObject jsonObject = new JSONObject(response).getJSONObject("data");
                     Log.d("Summary",jsonObject.toString());
                     int versionCode = BuildConfig.VERSION_CODE;
                     String versionName = BuildConfig.VERSION_NAME;
                     Log.d("RESPONSE",response);
 
-                    int minVersionCOde = jsonObject.getInt("version");
+                    int minVersionCode = jsonObject.getInt("version");
                     String playURL = jsonObject.getString("playurl");
                     AppConstants.username = jsonObject.getString("username");
                     AppConstants.profilePic = jsonObject.getString("profilePicURL");
+                    AppConstants.userLevel = jsonObject.getString("level");
 
-                    if(versionCode>minVersionCOde){
+                    if(versionCode>minVersionCode){
                         setTheme(R.style.AppTheme_NoActionBar);
-
                         setUpActivity();
-//                        fetchDataVolley();
-
                     }
                     else{
                         setTheme(R.style.AppTheme_NoActionBar);
@@ -198,7 +194,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
                 } catch (JSONException e) {
                     Log.e("ERROR",e.toString());
-                    e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {

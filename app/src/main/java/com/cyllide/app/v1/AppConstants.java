@@ -24,5 +24,6 @@ public class AppConstants {
     public static String viewUsername;
     public static String username;
     public static String profilePic;
+    public static String userLevel;
 
 }

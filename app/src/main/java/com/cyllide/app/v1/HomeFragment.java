@@ -141,6 +141,7 @@ public class HomeFragment extends Fragment {
                 getActivity().finish();
             }
         });
+
         portfolios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,8 +183,6 @@ public class HomeFragment extends Fragment {
                     content.findViewById(R.id.main_content).setVisibility(View.GONE);
                     content.findViewById(R.id.network_retry_layout).setVisibility(View.VISIBLE);
                     Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
-
-
                 }
             }
 
