@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
+import com.cyllide.app.v1.PortfolioGameCardModel;
 import com.cyllide.app.v1.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -38,7 +39,7 @@ import java.util.Map;
 
 public class PortfolioGameCardAdapter extends BaseAdapter {
 
-    private List<String> data;
+    private ArrayList<PortfolioGameCardModel> data;
     private Context context;
     RequestQueue summaryQueue;
     Map<String, String> summaryHeaders = new ArrayMap<>();
@@ -51,7 +52,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
 
 
 
-    public PortfolioGameCardAdapter(List<String> data, Context context) {
+    public PortfolioGameCardAdapter(ArrayList<PortfolioGameCardModel> data, Context context) {
         this.data = data;
         this.context = context;
     }
@@ -95,8 +96,15 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
             yAxisValues.add(new Entry((float)i,(float)(2*i+1)));
         }
         LineChart lineChart = v.findViewById(R.id.portfolio_game_home_chart);
-        summaryVolley();
-        statsVolley();
+//        summaryVolley();
+//        statsVolley();
+        companyIndustry.setText(data.get(position).getCompanyIndustry());
+        companySector.setText(data.get(position).getCompanySector());
+        peRatio.setText(data.get(position).getPeRatio());
+        previousClose.setText(data.get(position).getPreviousClose());
+        open.setText(data.get(position).getOpen());
+        marketCap.setText(data.get(position).getMarketCap());
+        ticker.setText(data.get(position).getTicker());
 
         ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
         LineDataSet lineDataSet = new LineDataSet(yAxisValues,"Test");
@@ -127,6 +135,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
                 Log.i("Hardware Accel type:", Integer.toString(View.LAYER_TYPE_HARDWARE));
             }
         });
+        Log.d("RETURNINGV","YES");
         return v;
     }
 

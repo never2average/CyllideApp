@@ -70,11 +70,11 @@ public class ArticlesMainActivity extends AppCompatActivity {
             }
         });
     }
-    @Override
-    public void onBackPressed(){
-        Intent returnHome = new Intent(this,MainActivity.class);
-        startActivity(returnHome);
-        finish();
-    }
+//    @Override
+//    public void onBackPressed(){
+//        Intent returnHome = new Intent(this,MainActivity.class);
+//        startActivity(returnHome);
+//        finish();
+//    }
 }
 

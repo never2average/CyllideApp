@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     RequestQueue vcRequestQueue;
 
 
-
+    int minVersionCOde = -1;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -157,6 +157,12 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         if(!setApplicationConstants()){
             return;
         };
+
+        if(minVersionCOde != -1){
+            setTheme(R.style.AppTheme_NoActionBar);
+            setUpActivity();
+            return;
+        }
 
         Context context;
         homepageDataHeaders.put("token", AppConstants.token);
@@ -176,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                     String versionName = BuildConfig.VERSION_NAME;
                     Log.d("RESPONSE",response);
 
-                    int minVersionCOde = jsonObject.getInt("version");
+                    minVersionCOde = jsonObject.getInt("version");
                     String playURL = jsonObject.getString("playurl");
                     AppConstants.username = jsonObject.getString("username");
                     AppConstants.profilePic = jsonObject.getString("profilePicURL");

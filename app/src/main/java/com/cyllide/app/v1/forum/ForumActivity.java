@@ -173,9 +173,9 @@ public class ForumActivity extends AppCompatActivity {
                     InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
                 }
-
-                startActivity(new Intent(ForumActivity.this, MainActivity.class));
-                finish();
+                onBackPressed();
+//                startActivity(new Intent(ForumActivity.this, MainActivity.class));
+//                finish();
 
             }
         });
@@ -272,12 +272,7 @@ public class ForumActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed(){
-        Intent returnHome = new Intent(this,MainActivity.class);
-        startActivity(returnHome);
-        finish();
-    }
+//
 
     private void applyFilter(String newQuery, List<QuestionListModel> questionList) {
         filterList = new ArrayList<>();

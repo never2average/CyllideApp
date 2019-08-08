@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.ConnectionStatus;
 import com.cyllide.app.v1.MainActivity;
+import com.cyllide.app.v1.PortfolioGameCardModel;
 import com.cyllide.app.v1.R;
 import com.daprlabs.aaron.swipedeck.SwipeDeck;
 import com.google.android.material.button.MaterialButton;
@@ -37,6 +39,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -56,18 +59,45 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
     void fetchCards(int i){
         Context context;
         cardsRequestQueue = Volley.newRequestQueue(PortfolioGameHomeActivity.this);
-        String url =(PortfolioGameHomeActivity.this).getResources().getString(R.string.dataApiBaseURL)+"stocks/gamebulkdata";
+        String url = "https://api.cyllide.com/api/client/bulkdata/fetch";
         cardsHeader.put("page",Integer.toString(i));
         StringRequest cardRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("RESPONSE",response);
+                try {
+                    JSONObject responseObject = new JSONObject(response);
+                    JSONObject detailsObject = responseObject.getJSONObject("details");
+                    JSONObject summaryObject = responseObject.getJSONObject("summary");
+                    ArrayList<PortfolioGameCardModel> portfolioGameCardModels = new ArrayList<>();
+                    for(Iterator<String> iter = detailsObject.keys(); iter.hasNext();) {
+                        String key = iter.next();
+                        PortfolioGameCardModel model = new PortfolioGameCardModel();
+                        model.setTicker(key);
+                        model.setCompanySector(detailsObject.getJSONObject(key).getString("Sector"));
+                        model.setCompanyIndustry(detailsObject.getJSONObject(key).getString("Industry"));
+                        model.setPreviousClose(summaryObject.getJSONObject(key).getString("Previous close"));
+                        model.setOpen(summaryObject.getJSONObject(key).getString("Open"));
+                        model.setMarketCap(summaryObject.getJSONObject(key).getString("Market cap"));
+                        model.setPeRatio(summaryObject.getJSONObject(key).getString("PE ratio (TTM)"));
+                        portfolioGameCardModels.add(model);
+                    }
+                    adapter = new PortfolioGameCardAdapter(portfolioGameCardModels, PortfolioGameHomeActivity.this);
+                        cardStack.setAdapter(adapter);
+                        cardStack.forceLayout();
+                        cardStack.invalidate();
+                        cardStack.refreshDrawableState();
+                        adapter.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR",error.toString());
+                Log.d("ERRORHEAR",error.toString());
 
             }
         }){
@@ -76,6 +106,11 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
                 return cardsHeader;
             }
         };
+
+        cardRequest.setRetryPolicy(new DefaultRetryPolicy(
+                20000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         cardsRequestQueue.add(cardRequest);
 
     }
@@ -105,17 +140,13 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
                 finish();
             }
         });
-        fetchCards(1);
 
         testData = new ArrayList<>();
         for(int i=0;i<5; i++){
             testData.add(String.valueOf(i));
         }
 
-        adapter = new PortfolioGameCardAdapter(testData, PortfolioGameHomeActivity.this);
-        if(cardStack != null){
-            cardStack.setAdapter(adapter);
-        }
+
 
 
         cardStack.setListener(new SwipeStack.SwipeStackListener() {
@@ -180,22 +211,24 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent returnHome = new Intent(PortfolioGameHomeActivity.this,MainActivity.class);
-                startActivity(returnHome);
-                finish();
+//                Intent returnHome = new Intent(PortfolioGameHomeActivity.this,MainActivity.class);
+//                startActivity(returnHome);
+//                finish();
+                onBackPressed();
             }
         });
-        cardStack.setAdapter(adapter);
         cardStack.forceLayout();
         cardStack.invalidate();
         cardStack.refreshDrawableState();
+        fetchCards(1);
+
     }
 
-    @Override
-    public void onBackPressed(){
-        Intent returnHome = new Intent(this,MainActivity.class);
-        startActivity(returnHome);
-        finish();
-    }
+//    @Override
+//    public void onBackPressed(){
+//        Intent returnHome = new Intent(this,MainActivity.class);
+//        startActivity(returnHome);
+//        finish();
+//    }
 
 }
