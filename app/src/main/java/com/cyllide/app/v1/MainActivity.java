@@ -186,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                     String playURL = jsonObject.getString("playurl");
                     AppConstants.username = jsonObject.getString("username");
                     AppConstants.profilePic = jsonObject.getString("profilePicURL");
+                    AppConstants.userLevel = jsonObject.getString("level");
 
                     if(versionCode>minVersionCOde){
                         setTheme(R.style.AppTheme_NoActionBar);
