@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MainApplication"
@@ -21,7 +22,10 @@
         android:logo="@drawable/app_logo"
         android:roundIcon="@drawable/app_logo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
+        android:theme="@style/AppTheme.NoActionBar"
+        >
+
+
 
         <activity android:name=".portfolio.VersionControlActivity"></activity>
         <activity android:name=".portfolio.PortfolioGameLeaderboardActivity" />
@@ -59,6 +63,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             />
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".forum.askquestion.AskQuestion"
             android:parentActivityName=".forum.ForumActivity"
@@ -146,6 +154,9 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
+
+
     </application>
 
 </manifest>

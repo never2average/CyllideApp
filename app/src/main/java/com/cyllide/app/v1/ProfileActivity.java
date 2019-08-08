@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -47,7 +48,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
@@ -55,6 +59,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -98,6 +103,11 @@ public class ProfileActivity extends AppCompatActivity {
     TextDrawable drawable;
     ImageView cyllideLogo;
     ImageView profilePic;
+
+
+    String currentPhotoPath;
+    static final int REQUEST_TAKE_PHOTO = 1;
+
 
 
     @Override
@@ -171,16 +181,18 @@ public class ProfileActivity extends AppCompatActivity {
             Glide.with(ProfileActivity.this).load(uri).into(profilePic);
             Toast.makeText(ProfileActivity.this," not null",Toast.LENGTH_SHORT).show();
 
+
         }
 
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
-                Intent intent = new Intent(Intent.ACTION_PICK,
+                int REQUEST_IMAGE_CAPTURE = 1;
+               Intent intent = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, 0);
+
 
 
             }	            });
@@ -359,7 +371,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK ) {
 
             targetUri = data.getData();
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -367,6 +379,15 @@ public class ProfileActivity extends AppCompatActivity {
 
                                     editor.commit();
             uploadImage(ProfileActivity.this);
+
+
+
+
+
+
+        }
+
+
 
 //            if(targetUri.equals(Uri.parse(AppConstants.noProfilePicURL))){
 //                ColorGenerator generator = ColorGenerator.MATERIAL;
@@ -389,7 +410,7 @@ public class ProfileActivity extends AppCompatActivity {
 //            uploadImage(getApplicationContext());
 //            Log.e("ProfilePicSet","inside on activity result");
 //            Toast.makeText(getApplicationContext(),"onActivityResult",Toast.LENGTH_LONG).show();
-        }
+
 
 
     }

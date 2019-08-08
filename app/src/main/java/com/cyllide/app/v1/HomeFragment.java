@@ -72,6 +72,7 @@ public class HomeFragment extends Fragment {
     StorageReference storageReference;
     ImageView profileMedal;
     String level;
+    TextDrawable drawable;
 
 
     @Override
@@ -116,7 +117,7 @@ public class HomeFragment extends Fragment {
         if(sharedPreferences.getString("profileUri",null)==null)
         {
            // getProfilePicVolley();
-         //   profilePic.setImageDrawable(drawable);
+            profilePic.setImageDrawable(drawable);
 
           //  Toast.makeText(getContext(),"please choose your profile pic",Toast.LENGTH_SHORT).show();
         }else{
@@ -282,13 +283,13 @@ public class HomeFragment extends Fragment {
                     if(profileURL.equals(AppConstants.noProfilePicURL)){
                         ColorGenerator generator = ColorGenerator.MATERIAL;
                         int color = generator.getColor(AppConstants.username);
-                        TextDrawable drawable = TextDrawable.builder()
+                         drawable = TextDrawable.builder()
                                 .beginConfig()
                                 .width(100)
                                 .height(100)
                                 .endConfig()
                                 .buildRect(Character.toString(AppConstants.username.charAt(0)).toUpperCase(), color);
-                        profilePic.setImageDrawable(drawable);
+                       // profilePic.setImageDrawable(drawable);
 
                         if(sharedPreferences.getString("profileUri",null)==null)
                         {
@@ -307,6 +308,10 @@ public class HomeFragment extends Fragment {
 
                     }
                     else {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("profileUri", profileURL.toString());
+
+                                    editor.commit();
                         RequestOptions requestOptions = new RequestOptions().override(100);
                         Glide.with(getContext()).load(profileURL).apply(requestOptions).into(profilePic);
                     }

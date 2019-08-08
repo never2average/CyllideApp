@@ -2,6 +2,11 @@ package com.cyllide.app.v1.portfolio;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.net.Uri;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -92,7 +97,10 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
         }
         ArrayList<Entry> yAxisValues = new ArrayList<>();
         for(int i=0;i<100;i++){
+
             yAxisValues.add(new Entry((float)i,(float)(2*i+1)));
+
+
         }
         LineChart lineChart = v.findViewById(R.id.portfolio_game_home_chart);
         summaryVolley();
@@ -102,18 +110,23 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
         LineDataSet lineDataSet = new LineDataSet(yAxisValues,"Test");
         lineDataSet.setDrawCircles(false);
         lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.colorPrimary));
-
-
+        lineChart.getRenderer().getPaintRender().setShader(new LinearGradient(0, 0, lineChart.getMeasuredWidth(), 0, ContextCompat.getColor(context,R.color.colorPrimary),ContextCompat.getColor(context,R.color.colorPrimary), Shader.TileMode.CLAMP));
         lineDataSets.add(lineDataSet);
+
+
 
         lineChart.setData(new LineData(lineDataSets));
         lineChart.getXAxis().setDrawLabels(false);
+
         Description d = new Description();
         d.setText("");
         lineChart.setDescription(d);
         lineChart.getAxisLeft().setDrawGridLines(false);
+        lineChart.getXAxis().setEnabled(false);
+
         lineDataSet.setDrawFilled(true);
         lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_gradient));
+
         lineChart.getLegend().setEnabled(false);
 //        Description dddd = new Description();
 //        d.setText("");
