@@ -192,6 +192,14 @@ public class HomeFragment extends Fragment {
                     SharedPreferences sharedPreferences = getContext().getSharedPreferences("AUTHENTICATION", Context.MODE_PRIVATE);
                     String token = sharedPreferences.getString("token", "Not found!");
                     Intent intent;
+                    try {
+                        getActivity().findViewById(R.id.fabMenu).setVisibility(View.VISIBLE);
+                        getActivity().findViewById(R.id.fab_label).setVisibility(View.VISIBLE);
+                    }
+                    catch (Exception e){
+                        Log.d("ERROR",e.toString());
+                    }
+
                     intent = new Intent(getContext(), QuizRulesActivity.class);
 
                     getContext().startActivity(intent);
@@ -200,6 +208,13 @@ public class HomeFragment extends Fragment {
                     Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
                     content.findViewById(R.id.main_content).setVisibility(View.GONE);
                     content.findViewById(R.id.network_retry_layout).setVisibility(View.VISIBLE);
+                    try{
+                    getActivity().findViewById(R.id.fabMenu).setVisibility(View.GONE);
+                    getActivity().findViewById(R.id.fab_label).setVisibility(View.GONE);
+                    }
+                    catch (Exception e){
+                        Log.d("ERROR",e.toString());
+                    }
                     Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
 
 

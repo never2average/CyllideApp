@@ -54,6 +54,7 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
     ImageView tab1, tab2, tab3;
     Map<String,String> cardsHeader = new HashMap<>();
     RequestQueue cardsRequestQueue;
+    int i = 0;
 
     void fetchCards(int i){
         Context context;
@@ -87,6 +88,7 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
                         cardStack.invalidate();
                         cardStack.refreshDrawableState();
                         adapter.notifyDataSetChanged();
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -161,7 +163,8 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
 
             @Override
             public void onStackEmpty() {
-
+                fetchCards(i);
+                i++;
             }
         });
 
@@ -219,7 +222,10 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
         cardStack.forceLayout();
         cardStack.invalidate();
         cardStack.refreshDrawableState();
-        fetchCards(1);
+        fetchCards(i);
+        i++;
+
+
 
     }
 

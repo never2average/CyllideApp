@@ -172,6 +172,9 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         String url = getResources().getString(R.string.apiBaseURL)+"info/homepage";
         Log.e("TOKKKEN",AppConstants.token);
 
+//        setUpActivity();
+
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -423,8 +426,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
 }
 
-//TODO Integrate bulk API with cards
 //TODO Integrate it with portfolio positions
 //TODO test with 2 portfolios LEADERBOARD
 //TODO CHECK POINTS
-//TODO change workflow and ui of authentication
