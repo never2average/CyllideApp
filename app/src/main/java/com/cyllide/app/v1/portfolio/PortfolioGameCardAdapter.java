@@ -8,6 +8,7 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.net.Uri;
+import android.service.autofill.Dataset;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,6 +53,8 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
     TextView companyIndustry;
     TextView companySector;
     TextView previousClose, open, marketCap,ticker, peRatio;
+    View v;
+    int lastIndex=60;
 
 
 
@@ -80,7 +83,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        View v = convertView;
+        v = convertView;
         if (v == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
             v = inflater.inflate(R.layout.game_card_nifty50, parent, false);
@@ -97,25 +100,47 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
         }
         ArrayList<Entry> yAxisValues = new ArrayList<>();
         for(int i=0;i<100;i++){
+            if(i<60){
 
-            yAxisValues.add(new Entry((float)i,(float)(2*i+1)));
+
+            yAxisValues.add(new Entry((float)i,(float)(2*i+1)));}
 
 
         }
+
+
+
         LineChart lineChart = v.findViewById(R.id.portfolio_game_home_chart);
         summaryVolley();
         statsVolley();
 
+
         ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
         LineDataSet lineDataSet = new LineDataSet(yAxisValues,"Test");
         lineDataSet.setDrawCircles(false);
-        lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.colorPrimary));
-        lineChart.getRenderer().getPaintRender().setShader(new LinearGradient(0, 0, lineChart.getMeasuredWidth(), 0, ContextCompat.getColor(context,R.color.colorPrimary),ContextCompat.getColor(context,R.color.colorPrimary), Shader.TileMode.CLAMP));
+
+        if(yAxisValues.get(lastIndex-1).getY()>=getMean(yAxisValues))
+        {
+            lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.progressgreen));
+            lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_gradient));
+
+
+        }
+        else {
+            lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.red));
+            lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_red_drawable));
+
+
+        }
+        //lineChart.getRenderer().getPaintRender().setShader(new LinearGradient(0, 0, lineChart.getMeasuredWidth(), 0, ContextCompat.getColor(context,R.color.colorPrimary),ContextCompat.getColor(context,R.color.colorPrimary), Shader.TileMode.CLAMP));
         lineDataSets.add(lineDataSet);
+
+       // lineDataSets.add(whiteLinedataset);
 
 
 
         lineChart.setData(new LineData(lineDataSets));
+       // lineChart.setScaleEnabled(false);
         lineChart.getXAxis().setDrawLabels(false);
 
         Description d = new Description();
@@ -125,12 +150,11 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
         lineChart.getXAxis().setEnabled(false);
 
         lineDataSet.setDrawFilled(true);
-        lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_gradient));
 
         lineChart.getLegend().setEnabled(false);
-//        Description dddd = new Description();
-//        d.setText("");
-//        lineChart.setDescription(dddd);
+
+       plotMean(lineChart,yAxisValues,lineDataSets);
+
         lineChart.invalidate();
 
         v.setOnClickListener(new View.OnClickListener() {
@@ -205,5 +229,43 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
         };
         statsQueue.add(statsRequest);
     }
+
+    float getMean(ArrayList<Entry> list){
+        int mean;
+        int sum=0;
+        for(int i= 0;i<list.size();i++) {
+
+            sum+=list.get(i).getX();
+
+        }
+        mean=sum/list.size();
+        return mean;
+
+    }
+
+    void plotMean( LineChart lineChart, ArrayList<Entry> yAxisValues,ArrayList<ILineDataSet> lineDataSets ){
+
+        ArrayList<Entry> meanline =new ArrayList<>();
+        for (int i=0;i<100;i++)
+        {
+
+            meanline.add(new Entry((float)i,getMean(yAxisValues)));
+        }
+        LineDataSet meanDataSet = new LineDataSet(meanline,"mean");
+        meanDataSet.setDrawCircles(false);
+
+        lineDataSets.add(meanDataSet);
+        meanDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.colorPrimary));
+
+
+        lineChart.setData(new LineData(lineDataSets));
+        lineChart.invalidate();
+
+
+
+
+    }
+
+
 
 }
