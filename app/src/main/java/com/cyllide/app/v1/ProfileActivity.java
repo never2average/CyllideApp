@@ -43,6 +43,7 @@ import com.google.firebase.storage.UploadTask;
 import com.razerdp.widget.animatedpieview.AnimatedPieView;
 import com.razerdp.widget.animatedpieview.AnimatedPieViewConfig;
 import com.razerdp.widget.animatedpieview.data.SimplePieInfo;
+import com.yalantis.ucrop.UCrop;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -104,9 +105,9 @@ public class ProfileActivity extends AppCompatActivity {
     ImageView cyllideLogo;
     ImageView profilePic;
 
+    Uri photoURI;
 
-    String currentPhotoPath;
-    static final int REQUEST_TAKE_PHOTO = 1;
+
 
 
 
@@ -151,15 +152,15 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         level=AppConstants.userLevel;
-        if(level.equals("Gold")){
-            profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_gold_medal));
-        }else{
-            if(level.equals("Silver")){
-                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_silver_medal));
-            }else{
-                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_bronze_medal));
-            }
-        }
+//        if(level.equals("Gold")){
+//            profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_gold_medal));
+//        }else{
+//            if(level.equals("Silver")){
+//                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_silver_medal));
+//            }else{
+//                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_bronze_medal));
+//            }
+//        }
         if(sharedPreferences.getString("profileUri",null)==null)
         {
             // getProfilePicVolley();
@@ -188,10 +189,11 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                int REQUEST_IMAGE_CAPTURE = 1;
-               Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 0);
+//                int REQUEST_IMAGE_CAPTURE = 1;
+//               Intent intent = new Intent(Intent.ACTION_PICK,
+//                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(intent, 0);
+                dispatchTakePictureIntent();
 
 
 
@@ -370,22 +372,38 @@ public class ProfileActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==REQUEST_TAKE_PHOTO&&resultCode==RESULT_OK){
 
-        if (resultCode == RESULT_OK ) {
 
-            targetUri = data.getData();
+            UCrop.of(photoURI,photoURI)
+                    .start(ProfileActivity.this);
+        }
+
+        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+            final Uri resultUri = UCrop.getOutput(data);
+            Glide.with(ProfileActivity.this).load(photoURI).into(profilePic);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-                                   editor.putString("profileUri", targetUri.toString());
+            editor.putString("profileUri", targetUri.toString());
 
-                                    editor.commit();
+            editor.commit();
+            targetUri = photoURI;
             uploadImage(ProfileActivity.this);
 
 
-
-
-
-
+        } else if (resultCode == UCrop.RESULT_ERROR) {
+            final Throwable cropError = UCrop.getError(data);
         }
+//        if (resultCode == RESULT_OK ) {
+//
+
+
+
+
+
+
+
+
+     //   }
 
 
 
@@ -560,6 +578,50 @@ public class ProfileActivity extends AppCompatActivity {
             }
         };
         uploadPicQueue.add(stringRequest);
+    }
+
+
+    String currentPhotoPath;
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    static final int REQUEST_TAKE_PHOTO = 1;
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                photoURI = FileProvider.getUriForFile(this,
+                        "com.cyllide.app.v1.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
     }
 
 

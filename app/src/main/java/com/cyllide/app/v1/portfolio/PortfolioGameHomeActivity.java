@@ -24,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.ConnectionStatus;
 import com.cyllide.app.v1.MainActivity;
 import com.cyllide.app.v1.PortfolioGameCardModel;
@@ -54,7 +55,9 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
     ImageView tab1, tab2, tab3;
     Map<String,String> cardsHeader = new HashMap<>();
     RequestQueue cardsRequestQueue;
+    ArrayList<PortfolioGameCardModel> portfolioGameCardModels = new ArrayList<>();
     int i = 0;
+    boolean isSuper = false;
 
     void fetchCards(int i){
         Context context;
@@ -69,7 +72,7 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
                     JSONObject responseObject = new JSONObject(response);
                     JSONObject detailsObject = responseObject.getJSONObject("details");
                     JSONObject summaryObject = responseObject.getJSONObject("summary");
-                    ArrayList<PortfolioGameCardModel> portfolioGameCardModels = new ArrayList<>();
+                    portfolioGameCardModels = new ArrayList<>();
                     for(Iterator<String> iter = detailsObject.keys(); iter.hasNext();) {
                         String key = iter.next();
                         PortfolioGameCardModel model = new PortfolioGameCardModel();
@@ -159,6 +162,15 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
             @Override
             public void onViewSwipedToRight(int position) {
                 Log.i("MainActivity", "card was swiped right, position in adapter: " + position);
+                if(isSuper) {
+                    sendSwipeCard(portfolioGameCardModels.get(position),200);
+                    isSuper = false;
+                }
+                else{
+                    sendSwipeCard(portfolioGameCardModels.get(position),100);
+
+                }
+
             }
 
             @Override
@@ -198,6 +210,8 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 cardStack.swipeTopViewToRight();
+                isSuper = true;
+
             }
         });
 
@@ -205,6 +219,10 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
         chooseStockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cardStack.swipeTopViewToRight();
+
+
+
 //                adapter.notifyDataSetChanged();
 //                cardStack.swipeTopCardRight(300);
             }
@@ -225,6 +243,36 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
         fetchCards(i);
         i++;
 
+
+
+    }
+    RequestQueue requestQueue;
+    Map<String,String> getCardsHeader = new HashMap<>();
+    private void sendSwipeCard(PortfolioGameCardModel portfolioGameCardModel, int i) {
+        Context context;
+        requestQueue = Volley.newRequestQueue(PortfolioGameHomeActivity.this);
+        getCardsHeader.put("token", AppConstants.token);
+        getCardsHeader.put("ticker",portfolioGameCardModel.getTicker());
+        getCardsHeader.put("quantity",Integer.toString(i));
+        String url = "";
+        StringRequest stringRequest =  new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("RESPONSE",response);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERRORHEAR",error.toString());
+
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders(){
+                return getCardsHeader;
+            }
+        };
 
 
     }
