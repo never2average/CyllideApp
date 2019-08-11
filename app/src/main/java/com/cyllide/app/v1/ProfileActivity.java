@@ -152,15 +152,15 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         level=AppConstants.userLevel;
-//        if(level.equals("Gold")){
-//            profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_gold_medal));
-//        }else{
-//            if(level.equals("Silver")){
-//                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_silver_medal));
-//            }else{
-//                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_bronze_medal));
-//            }
-//        }
+        if(level.equals("Gold")){
+            profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_gold_medal));
+        }else{
+            if(level.equals("Silver")){
+                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_silver_medal));
+            }else{
+                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_bronze_medal));
+            }
+        }
         if(sharedPreferences.getString("profileUri",null)==null)
         {
             // getProfilePicVolley();
@@ -294,7 +294,7 @@ public class ProfileActivity extends AppCompatActivity {
                     coins.setText(jsonResponse.getString("points_collected"));
                     money.setText(jsonResponse.getString("money_won"));
                     money.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.cyllide_grey));
-                    if(Integer.parseInt(money.getText().toString())<20){
+                    if(Integer.parseInt(money.getText().toString())>AppConstants.minWithdrawable){
                         money.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.green));
                         money.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -382,11 +382,12 @@ public class ProfileActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
             final Uri resultUri = UCrop.getOutput(data);
             Glide.with(ProfileActivity.this).load(photoURI).into(profilePic);
+            targetUri = photoURI;
+
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("profileUri", targetUri.toString());
 
             editor.commit();
-            targetUri = photoURI;
             uploadImage(ProfileActivity.this);
 
 

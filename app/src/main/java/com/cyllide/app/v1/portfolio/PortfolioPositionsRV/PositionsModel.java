@@ -4,6 +4,22 @@ public class PositionsModel {
     private String positionTicker,positionQuantity,positionCurrPrice,positionType,positionValue;
     String positionltp;
     String positionCost;
+    boolean isProfit;
+
+    public PositionsModel(String positionTicker, String positionQuantity, String positionCurrPrice, String positionltp) {
+        this.positionTicker = positionTicker;
+        this.positionQuantity = positionQuantity;
+        this.positionCurrPrice = positionCurrPrice;
+        this.positionltp = positionltp;
+    }
+
+    public boolean isProfit() {
+        return isProfit;
+    }
+
+    public void setProfit(boolean profit) {
+        isProfit = profit;
+    }
 
     public String getPositionltp() {
         return positionltp;

@@ -53,27 +53,27 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
     ImageView backBtn;
     PortfolioGameCardAdapter adapter;
     ImageView tab1, tab2, tab3;
-    Map<String,String> cardsHeader = new HashMap<>();
+    Map<String, String> cardsHeader = new HashMap<>();
     RequestQueue cardsRequestQueue;
     ArrayList<PortfolioGameCardModel> portfolioGameCardModels = new ArrayList<>();
-    int i = 0;
+    int i = 1;
     boolean isSuper = false;
 
-    void fetchCards(int i){
+    void fetchCards(int i) {
         Context context;
         cardsRequestQueue = Volley.newRequestQueue(PortfolioGameHomeActivity.this);
         String url = "https://api.cyllide.com/api/client/bulkdata/fetch";
-        cardsHeader.put("page",Integer.toString(i));
+        cardsHeader.put("page", Integer.toString(i));
         StringRequest cardRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("RESPONSE",response);
+                Log.d("RESPONSE", response);
                 try {
                     JSONObject responseObject = new JSONObject(response);
                     JSONObject detailsObject = responseObject.getJSONObject("details");
                     JSONObject summaryObject = responseObject.getJSONObject("summary");
                     portfolioGameCardModels = new ArrayList<>();
-                    for(Iterator<String> iter = detailsObject.keys(); iter.hasNext();) {
+                    for (Iterator<String> iter = detailsObject.keys(); iter.hasNext(); ) {
                         String key = iter.next();
                         PortfolioGameCardModel model = new PortfolioGameCardModel();
                         model.setTicker(key);
@@ -86,14 +86,14 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
                         portfolioGameCardModels.add(model);
                     }
                     adapter = new PortfolioGameCardAdapter(portfolioGameCardModels, PortfolioGameHomeActivity.this);
-                        cardStack.setAdapter(adapter);
-                        cardStack.forceLayout();
-                        cardStack.invalidate();
-                        cardStack.refreshDrawableState();
-                        adapter.notifyDataSetChanged();
+                    cardStack.setAdapter(adapter);
 
-
+                    cardStack.forceLayout();
+                    cardStack.invalidate();
+                    cardStack.refreshDrawableState();
+                    adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
+                    Log.d("ERROR", e.toString());
                     e.printStackTrace();
                 }
 
@@ -101,12 +101,12 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERRORHEAR",error.toString());
+                Log.d("ERRORHEAR", error.toString());
 
             }
-        }){
+        }) {
             @Override
-            public Map<String,String> getHeaders(){
+            public Map<String, String> getHeaders() {
                 return cardsHeader;
             }
         };
@@ -131,7 +131,7 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
         tab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent returnHome = new Intent(PortfolioGameHomeActivity.this,PortfolioGamePortfolioActivity.class);
+                Intent returnHome = new Intent(PortfolioGameHomeActivity.this, PortfolioGamePortfolioActivity.class);
                 startActivity(returnHome);
                 finish();
             }
@@ -139,18 +139,16 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
         tab3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent returnHome = new Intent(PortfolioGameHomeActivity.this,PortfolioGameLeaderboardActivity.class);
+                Intent returnHome = new Intent(PortfolioGameHomeActivity.this, PortfolioGameLeaderboardActivity.class);
                 startActivity(returnHome);
                 finish();
             }
         });
 
         testData = new ArrayList<>();
-        for(int i=0;i<5; i++){
+        for (int i = 0; i < 5; i++) {
             testData.add(String.valueOf(i));
         }
-
-
 
 
         cardStack.setListener(new SwipeStack.SwipeStackListener() {
@@ -222,7 +220,6 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
                 cardStack.swipeTopViewToRight();
 
 
-
 //                adapter.notifyDataSetChanged();
 //                cardStack.swipeTopCardRight(300);
             }
@@ -244,32 +241,33 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
         i++;
 
 
-
     }
+
     RequestQueue requestQueue;
-    Map<String,String> getCardsHeader = new HashMap<>();
+    Map<String, String> getCardsHeader = new HashMap<>();
+
     private void sendSwipeCard(PortfolioGameCardModel portfolioGameCardModel, int i) {
         Context context;
         requestQueue = Volley.newRequestQueue(PortfolioGameHomeActivity.this);
         getCardsHeader.put("token", AppConstants.token);
-        getCardsHeader.put("ticker",portfolioGameCardModel.getTicker());
-        getCardsHeader.put("quantity",Integer.toString(i));
+        getCardsHeader.put("ticker", portfolioGameCardModel.getTicker());
+        getCardsHeader.put("quantity", Integer.toString(i));
         String url = "";
-        StringRequest stringRequest =  new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("RESPONSE",response);
+                Log.d("RESPONSE", response);
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERRORHEAR",error.toString());
+                Log.d("ERRORHEAR", error.toString());
 
             }
-        }){
+        }) {
             @Override
-            public Map<String,String> getHeaders(){
+            public Map<String, String> getHeaders() {
                 return getCardsHeader;
             }
         };
