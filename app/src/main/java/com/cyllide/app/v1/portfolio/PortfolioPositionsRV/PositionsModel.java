@@ -6,6 +6,9 @@ public class PositionsModel {
     String positionCost;
     boolean isProfit;
 
+    public PositionsModel() {
+    }
+
     public PositionsModel(String positionTicker, String positionQuantity, String positionCurrPrice, String positionltp) {
         this.positionTicker = positionTicker;
         this.positionQuantity = positionQuantity;

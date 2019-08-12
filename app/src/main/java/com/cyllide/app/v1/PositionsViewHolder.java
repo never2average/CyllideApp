@@ -21,9 +21,10 @@ public class PositionsViewHolder extends RecyclerView.ViewHolder {
         cost = itemView.findViewById(R.id.position_cost);
     }
     public void populate(PositionsModel positionsModel){
+        //TODO MESSED UP CLEAN HERE
         quantityTV.setText(positionsModel.getPositionQuantity());
         nameTV.setText(positionsModel.getPositionTicker());
-        ltp.setText(positionsModel.getPositionCurrPrice());
-        cost.setText(positionsModel.getPositionCost());
+        ltp.setText(positionsModel.getPositionltp());
+//        cost.setText(positionsModel.getPositionCost());
     }
 }

@@ -1,8 +1,10 @@
 package com.cyllide.app.v1.portfolio;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
@@ -19,16 +21,25 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.MainActivity;
+import com.cyllide.app.v1.PositionsAdapter;
 import com.cyllide.app.v1.R;
+import com.cyllide.app.v1.portfolio.PortfolioPositionsRV.PositionsModel;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class PortfolioGamePortfolioActivity extends AppCompatActivity {
     ImageView tab1, tab2, tab3;
     RecyclerView positionsRV;
     private ImageView backBtn;
-    Map<String, String> positionsHeader;
+    Map<String, String> positionsHeader = new HashMap<>();
     RequestQueue positionsQueue;
+//    ArrayList<PositionsModel = [;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,18 +74,83 @@ public class PortfolioGamePortfolioActivity extends AppCompatActivity {
                 finish();
             }
         });
-        getPositionsVolley();
+        getPositionsLTPVolley();
+//        getPositionsVolley();
     }
 
-    void getPositionsVolley() {
-        positionsHeader = new ArrayMap<>();
-        String url = getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
-        positionsQueue = Volley.newRequestQueue(PortfolioGamePortfolioActivity.this);
-        positionsHeader.put("token", AppConstants.token);
+    private void getPositionsLTPVolley() {
+        String url = "https://api.cyllide.com/api/client/ohlc";
+        Context context;
+        RequestQueue positionsRequestQueue = Volley.newRequestQueue(PortfolioGamePortfolioActivity.this);
         StringRequest positionRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("DONE", response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    getPositionsVolley(jsonObject);
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders(){
+
+                return positionsHeader;
+            }
+        };
+        positionsRequestQueue.add(positionRequest);
+
+    }
+
+    ArrayList<PositionsModel> positionsModels = new ArrayList<>();
+
+    void getPositionsVolley(final JSONObject ltp) {
+        positionsHeader = new ArrayMap<>();
+        String url = getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
+        positionsQueue = Volley.newRequestQueue(PortfolioGamePortfolioActivity.this);
+        positionsHeader.put("token", AppConstants.token);
+        final PositionsAdapter positionsAdapter = new PositionsAdapter(positionsModels);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(PortfolioGamePortfolioActivity.this);
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        positionsRV.setLayoutManager(layoutManager);
+
+//        positionsRV.setLayoutManager(new LinearLayoutManager(PortfolioGamePortfolioActivity.this));
+
+        StringRequest positionRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("DONE", response);
+                try {
+                    positionsModels = new ArrayList<>();
+                    JSONArray responseList = (new JSONObject(response).getJSONArray("data"));
+                    for(int i = 0; i<responseList.length();i++){
+                        PositionsModel pm = new PositionsModel();
+                        pm.setPositionTicker(responseList.getJSONObject(i).getString("ticker"));
+                        pm.setPositionQuantity(Integer.toString(responseList.getJSONObject(i).getInt("quantity")));
+                        pm.setPositionCurrPrice(Double.toString(responseList.getJSONObject(i).getDouble("entryPrice")));
+                        pm.setPositionltp(ltp.getString(responseList.getJSONObject(i).getString("ticker").toUpperCase()));
+                        positionsModels.add(pm);
+
+
+                    }
+                    final PositionsAdapter positionsAdapter = new PositionsAdapter(positionsModels);
+                    positionsRV.setAdapter(positionsAdapter);
+                    positionsAdapter.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         }, new Response.ErrorListener() {
             @Override
