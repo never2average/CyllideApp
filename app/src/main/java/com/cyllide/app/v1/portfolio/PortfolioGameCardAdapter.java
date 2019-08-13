@@ -65,6 +65,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
 
 
     public PortfolioGameCardAdapter(ArrayList<PortfolioGameCardModel> data, Context context) {
+        Log.d("ADAPTER BANA","YES");
         this.data = data;
         this.context = context;
     }
@@ -357,6 +358,38 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
                     d.setText("");
                     lineChart.setDescription(d);
                     lineChart.invalidate();
+
+                    if(yAxisValues.get(lastIndex-1).getY()>=getMean(yAxisValues))
+                    {
+                        lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.progressgreen));
+                        lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_gradient));
+
+
+                    }
+                    else {
+                        lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.red));
+                        lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_red_drawable));
+
+                    }
+                    //lineChart.getRenderer().getPaintRender().setShader(new LinearGradient(0, 0, lineChart.getMeasuredWidth(), 0, ContextCompat.getColor(context,R.color.colorPrimary),ContextCompat.getColor(context,R.color.colorPrimary), Shader.TileMode.CLAMP));
+                    lineDataSets.add(lineDataSet);
+
+                    // lineDataSets.add(whiteLinedataset);
+
+
+
+                    lineChart.setData(new LineData(lineDataSets));
+                    // lineChart.setScaleEnabled(false);
+                    lineChart.getXAxis().setDrawLabels(false);
+
+                    lineChart.setDescription(d);
+                    lineChart.getAxisLeft().setDrawGridLines(false);
+                    lineChart.getXAxis().setEnabled(false);
+
+                    lineDataSet.setDrawFilled(true);
+
+                    lineChart.getLegend().setEnabled(false);
+
 
 
                     Log.d("PortfolioActivity","FInished setting data");

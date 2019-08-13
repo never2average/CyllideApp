@@ -79,7 +79,7 @@ public class PortfolioGamePortfolioActivity extends AppCompatActivity {
     }
 
     private void getPositionsLTPVolley() {
-        String url = "https://api.cyllide.com/api/client/ohlc";
+        String url = getResources().getString(R.string.apiBaseURL)+"ohlc";
         Context context;
         RequestQueue positionsRequestQueue = Volley.newRequestQueue(PortfolioGamePortfolioActivity.this);
         StringRequest positionRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {

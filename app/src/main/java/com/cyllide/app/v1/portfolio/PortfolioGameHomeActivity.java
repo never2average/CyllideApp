@@ -92,6 +92,7 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
                     cardStack.invalidate();
                     cardStack.refreshDrawableState();
                     adapter.notifyDataSetChanged();
+                    cardStack.resetStack();
                 } catch (JSONException e) {
                     Log.d("ERROR", e.toString());
                     e.printStackTrace();
@@ -252,7 +253,7 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
         getCardsHeader.put("token", AppConstants.token);
         getCardsHeader.put("ticker", portfolioGameCardModel.getTicker());
         getCardsHeader.put("quantity", Integer.toString(i));
-        String url = "";
+        String url = getResources().getString(R.string.apiBaseURL) + "portfolio/order";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -271,6 +272,8 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
                 return getCardsHeader;
             }
         };
+
+        requestQueue.add(stringRequest);
 
 
     }
