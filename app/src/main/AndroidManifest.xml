@@ -42,7 +42,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".authentication.OTPVerification"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".quiz.QuizRulesActivity"
             android:parentActivityName=".MainActivity"

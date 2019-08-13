@@ -116,7 +116,7 @@ public class OTPVerification extends AppCompatActivity {
                         editor.putInt("coins", jsonObject.getInt("coins"));
                         editor.putString("referralCode", jsonObject.getString("referralCode"));
                         editor.apply();
-                        Intent intent = new Intent(OTPVerification.this, MainActivity.class);
+                        Intent intent = new Intent(OTPVerification.this, UsernameActivity.class);
                         startActivity(intent);
                         finish();
                     } catch (JSONException e1) {
