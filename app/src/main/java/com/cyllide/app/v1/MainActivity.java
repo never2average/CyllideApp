@@ -17,27 +17,20 @@ import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
-import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
 
-import com.amulyakhare.textdrawable.TextDrawable;
-import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.cyllide.app.v1.authentication.PhoneAuth;
-import com.cyllide.app.v1.authentication.UsernameActivity;
 import com.cyllide.app.v1.background.services.AppSignatureHelper;
 import com.cyllide.app.v1.background.services.GetLatestQuizIDService;
 import com.cyllide.app.v1.faq_view.FAQActivity;
-import com.cyllide.app.v1.notification.NotificationActivity;
 
 
 import com.cyllide.app.v1.portfolio.VersionControlActivity;
@@ -47,7 +40,6 @@ import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -55,10 +47,7 @@ import androidx.fragment.app.Fragment;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class MainActivity extends AppCompatActivity implements InternetConnectivityListener {
@@ -101,11 +90,10 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
     private boolean setApplicationConstants(){
         SharedPreferences sharedPreferences = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE);
-//        AppConstants.token = sharedPreferences.getString("token", null);
+        AppConstants.token = sharedPreferences.getString("token", null);
 //        AppConstants.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiQW5zaHVtYW4iLCJleHAiOjE1OTcwNDY2NTN9.PINL7V39ivJXomf6NQMFNnkhVM2A2ZxlXfiISGNZuGc";
-        AppConstants.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiQW5zaHVtYW4iLCJleHAiOjE1OTcxNTg1Mzd9.c_WhdJtn1S_EuED4IwO41SNFSBW68xE8vRgvZDNquSE";
         if(AppConstants.token==null){
-            Intent authIntent = new Intent(MainActivity.this, UsernameActivity.class);
+            Intent authIntent = new Intent(MainActivity.this, PhoneAuth.class);
             startActivity(authIntent);
             finish();
             return false;

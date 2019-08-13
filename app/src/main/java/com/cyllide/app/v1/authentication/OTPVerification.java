@@ -96,6 +96,7 @@ public class OTPVerification extends AppCompatActivity {
     void verifyMyOTP() {
         verificationMap.put("phone",phoneNo);
         verificationMap.put("otp",enteredOTP);
+        verificationMap.put("first",AppConstants.tempUsername);
 
         requestQueue = Volley.newRequestQueue(OTPVerification.this);
         String url = getResources().getString(R.string.apiBaseURL)+"auth/otp/verify";
@@ -103,22 +104,29 @@ public class OTPVerification extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.d("MESSAGE",response);
                     JSONObject jsonObject = new JSONObject(response);
                     if(jsonObject.getString("message").equals("InvalidOTPEntered")){
                         Toast.makeText(OTPVerification.this,"Invalid OTP Entered",Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        SharedPreferences.Editor editor = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE).edit();
-                        editor.putString("token", jsonObject.getString("token"));
-                        editor.putInt("coins", jsonObject.getInt("coins"));
-                        editor.putString("referralCode", jsonObject.getString("referralCode"));
-                        editor.apply();
-                        Intent intent = new Intent(OTPVerification.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                        if(AppConstants.tempUsername.equals("redirect")){
+                            Intent intent = new Intent(OTPVerification.this, SignupPage.class);
+                            intent.putExtra("phone", phoneNo);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else{
+                            JSONObject jsonObject = new JSONObject(response);
+                            SharedPreferences.Editor editor = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE).edit();
+                            editor.putString("token", jsonObject.getString("token"));
+                            editor.putInt("coins", jsonObject.getInt("coins"));
+                            editor.putString("referralCode", jsonObject.getString("referralCode"));
+                            editor.apply();
+                            Intent intent = new Intent(OTPVerification.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
                     } catch (JSONException e1) {
                         e1.printStackTrace();
                     }

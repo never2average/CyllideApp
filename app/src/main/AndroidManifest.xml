@@ -30,7 +30,7 @@
         <activity android:name=".portfolio.VersionControlActivity"></activity>
         <activity android:name=".portfolio.PortfolioGameLeaderboardActivity" />
         <activity android:name=".portfolio.PortfolioGamePortfolioActivity" />
-        <activity android:name=".authentication.UsernameActivity" />
+        <activity android:name=".authentication.PhoneAuth" />
         <activity android:name=".FeedbackActivity" />
         <activity
             android:name=".contests.portfolioRV.LeaderboardsActivity"
@@ -122,7 +122,7 @@
         <activity
             android:name=".portfolio.PortfolioGameDetailedChartActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".authentication.PhoneAuth" />
+        <activity android:name=".authentication.SignupPage" />
         <activity
             android:name=".quiz.SocketQuizActivity"
             android:screenOrientation="portrait" />
