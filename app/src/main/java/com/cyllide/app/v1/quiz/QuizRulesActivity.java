@@ -175,9 +175,10 @@ public class QuizRulesActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(QuizRulesActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+//                Intent intent = new Intent(QuizRulesActivity.this, MainActivity.class);
+//                startActivity(intent);
+//                finish();
+                onBackPressed();
             }
         });
 
@@ -333,12 +334,12 @@ public class QuizRulesActivity extends AppCompatActivity {
         requestQueue.add(questionRequest);
     }
 
-    @Override
-    public void onBackPressed(){
-        Intent returnHome = new Intent(this,MainActivity.class);
-        startActivity(returnHome);
-        finish();
-    }
+//    @Override
+//    public void onBackPressed(){
+//        Intent returnHome = new Intent(this,MainActivity.class);
+//        startActivity(returnHome);
+//        finish();
+//    }
 
 }
 

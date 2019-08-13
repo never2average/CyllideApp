@@ -157,7 +157,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ArticlesMainActivity.class);
                 getContext().startActivity(intent);
-                getActivity().finish();
+//                getActivity().finish();
             }
         });
         portfolios.setOnClickListener(new View.OnClickListener() {
@@ -176,7 +176,7 @@ public class HomeFragment extends Fragment {
                 } else {
                     Intent portfolioIntent = new Intent(getContext(), PortfolioGameHomeActivity.class);
                     startActivity(portfolioIntent);
-                    getActivity().finish();
+//                    getActivity().finish();
                 }
             }
 
@@ -192,14 +192,29 @@ public class HomeFragment extends Fragment {
                     SharedPreferences sharedPreferences = getContext().getSharedPreferences("AUTHENTICATION", Context.MODE_PRIVATE);
                     String token = sharedPreferences.getString("token", "Not found!");
                     Intent intent;
+                    try {
+                        getActivity().findViewById(R.id.fabMenu).setVisibility(View.VISIBLE);
+                        getActivity().findViewById(R.id.fab_label).setVisibility(View.VISIBLE);
+                    }
+                    catch (Exception e){
+                        Log.d("ERROR",e.toString());
+                    }
+
                     intent = new Intent(getContext(), QuizRulesActivity.class);
 
                     getContext().startActivity(intent);
-                    getActivity().finish();
+//                    getActivity().finish();
                 } else {
                     Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
                     content.findViewById(R.id.main_content).setVisibility(View.GONE);
                     content.findViewById(R.id.network_retry_layout).setVisibility(View.VISIBLE);
+                    try{
+                    getActivity().findViewById(R.id.fabMenu).setVisibility(View.GONE);
+                    getActivity().findViewById(R.id.fab_label).setVisibility(View.GONE);
+                    }
+                    catch (Exception e){
+                        Log.d("ERROR",e.toString());
+                    }
                     Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
 
 
@@ -214,7 +229,7 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(getContext(),ProfileActivity.class);
                 intent.putExtra("Editable",true);
                 getContext().startActivity(intent);
-                getActivity().finish();
+//                getActivity().finish();
 
             }
         });
@@ -228,7 +243,7 @@ public class HomeFragment extends Fragment {
                 if (ConnectionStatus.connectionstatus) {
                     Intent intent = new Intent(getContext(), ForumActivity.class);
                     getContext().startActivity(intent);
-                    getActivity().finish();
+//                    getActivity().finish();
                 } else {
 
 

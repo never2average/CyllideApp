@@ -26,15 +26,20 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
+import com.cyllide.app.v1.PortfolioGameCardModel;
 import com.cyllide.app.v1.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.google.android.material.card.MaterialCardView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,7 +49,7 @@ import java.util.Map;
 
 public class PortfolioGameCardAdapter extends BaseAdapter {
 
-    private List<String> data;
+    private ArrayList<PortfolioGameCardModel> data;
     private Context context;
     RequestQueue summaryQueue;
     Map<String, String> summaryHeaders = new ArrayMap<>();
@@ -59,7 +64,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
 
 
 
-    public PortfolioGameCardAdapter(List<String> data, Context context) {
+    public PortfolioGameCardAdapter(ArrayList<PortfolioGameCardModel> data, Context context) {
         this.data = data;
         this.context = context;
     }
@@ -111,6 +116,44 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
 
 
         LineChart lineChart = v.findViewById(R.id.portfolio_game_home_chart);
+//        summaryVolley();
+//        statsVolley();
+        companyIndustry.setText(data.get(position).getCompanyIndustry());
+        companySector.setText(data.get(position).getCompanySector());
+        peRatio.setText(data.get(position).getPeRatio());
+        previousClose.setText(data.get(position).getPreviousClose());
+        open.setText(data.get(position).getOpen());
+        marketCap.setText(data.get(position).getMarketCap());
+        ticker.setText(data.get(position).getTicker());
+
+//        ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
+//        LineDataSet lineDataSet = new LineDataSet(yAxisValues,"Test");
+//        lineDataSet.setDrawCircles(false);
+//        lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.colorPrimary));
+//        lineChart.getRenderer().getPaintRender().setShader(new LinearGradient(0, 0, lineChart.getMeasuredWidth(), 0, ContextCompat.getColor(context,R.color.colorPrimary),ContextCompat.getColor(context,R.color.colorPrimary), Shader.TileMode.CLAMP));
+//        lineDataSets.add(lineDataSet);
+//
+//
+//
+//        lineChart.setData(new LineData(lineDataSets));
+//        lineChart.getXAxis().setDrawLabels(false);
+//
+//        Description d = new Description();
+//        d.setText("");
+//        lineChart.setDescription(d);
+//        lineChart.getAxisLeft().setDrawGridLines(false);
+//        lineChart.getXAxis().setEnabled(false);
+//
+//        lineDataSet.setDrawFilled(true);
+//        lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_gradient));
+//
+//        lineChart.getLegend().setEnabled(false);
+////        Description dddd = new Description();
+////        d.setText("");
+////        lineChart.setDescription(dddd);
+//
+//        lineChart.invalidate();
+        getChartData(data.get(position).getTicker(),"1D",v.getContext(),lineChart);
         summaryVolley();
         statsVolley();
 
@@ -129,7 +172,6 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
         else {
             lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.red));
             lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_red_drawable));
-
 
         }
         //lineChart.getRenderer().getPaintRender().setShader(new LinearGradient(0, 0, lineChart.getMeasuredWidth(), 0, ContextCompat.getColor(context,R.color.colorPrimary),ContextCompat.getColor(context,R.color.colorPrimary), Shader.TileMode.CLAMP));
@@ -164,6 +206,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
                 Log.i("Hardware Accel type:", Integer.toString(View.LAYER_TYPE_HARDWARE));
             }
         });
+        Log.d("RETURNINGV","YES");
         return v;
     }
 
@@ -228,6 +271,118 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
             public Map<String,String> getHeaders(){return statsMap;}
         };
         statsQueue.add(statsRequest);
+    }
+
+
+    void getChartData(String ticker, String value, final Context context, final LineChart lineChart){
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        final Map stringMap = new ArrayMap();
+        String url = context.getResources().getString(R.string.dataApiBaseURL)+"stocks/close";
+        stringMap.put("value",value);
+        stringMap.put("ticker",ticker);
+        stringMap.put("singleval","False");
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray responseArray = new JSONObject(response).getJSONArray("data");
+                    Log.d("PortfolioGameChart",response);
+
+                    int length = responseArray.length();
+                    ArrayList<Entry> yAxisValues = new ArrayList<>();
+                    ArrayList<String> xAxisValues = new ArrayList<>();
+                    int c=0;
+                    for(int i=0; i<length;i++){
+
+                        try {
+                            Double yValue = responseArray.getDouble(i);
+                            float y = Float.parseFloat(Double.toString(yValue));
+                            float x =  Float.parseFloat(Integer.toString(i));
+                            yAxisValues.add(new Entry(x,y));
+                            xAxisValues.add(c, Float.toString(x));
+                            c++;
+                        }
+                        catch(JSONException e){
+                            continue;
+                        }
+                    }
+                    String[] xaxes = new String[xAxisValues.size()];
+                    for(int i=0;i<xAxisValues.size();i++){
+                        xaxes[i] = xAxisValues.get(i);
+                    }
+
+                    ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
+                    LineDataSet lineDataSet = new LineDataSet(yAxisValues,"Test");
+                    lineDataSet.setDrawCircles(false);
+                    lineDataSet.setColor(ContextCompat.getColor(context,R.color.colorPrimary));
+
+                    lineDataSets.add(lineDataSet);
+                    Log.d("PortfolioActivity","FInished making array lists");
+
+                    lineChart.setData(new LineData(lineDataSets));
+                    lineChart.getXAxis().setDrawLabels(false);
+                    lineChart.getXAxis().setDrawGridLines(false);
+                    lineChart.getAxisRight().setEnabled(false);
+                    lineChart.getAxisLeft().setTextColor(ContextCompat.getColor(context,R.color.white));
+                    lineChart.getAxisLeft().setGridColor(ContextCompat.getColor(context,R.color.white));
+                    lineChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+                        @Override
+                        public void onValueSelected(Entry e, Highlight h) {
+
+                            Highlight highlight[] = new Highlight[lineChart.getData().getDataSets().size()];
+                            for (int j = 0; j < lineChart.getData().getDataSets().size(); j++) {
+
+                                IDataSet iDataSet = lineChart.getData().getDataSets().get(j);
+
+                                for (int i = 0; i < ((LineDataSet) iDataSet).getValues().size(); i++) {
+                                    if (((LineDataSet) iDataSet).getValues().get(i).getX() == e.getX()) {
+                                        highlight[j] = new Highlight(e.getX(), e.getY(), j);
+                                    }
+                                }
+
+                            }
+                            lineChart.highlightValues(highlight);
+                        }
+
+                        @Override
+                        public void onNothingSelected() {
+                        }
+                    });
+
+                    lineDataSet.setLineWidth(3);
+                    lineDataSet.setCircleRadius(5);
+                    lineDataSet.setColor(ContextCompat.getColor(context,R.color.white));
+                    lineChart.getLegend().setEnabled(false);
+                    Description d = new Description();
+                    d.setText("");
+                    lineChart.setDescription(d);
+                    lineChart.invalidate();
+
+
+                    Log.d("PortfolioActivity","FInished setting data");
+
+
+
+
+                }
+                catch (JSONException e){
+                    Log.d("PortfolioGameChart",e.toString());
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("resp", error.toString());
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders(){
+                return stringMap;
+            }
+        };
+        stringRequest.setShouldCache(false);
+        requestQueue.add(stringRequest);
     }
 
     float getMean(ArrayList<Entry> list){

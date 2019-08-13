@@ -28,90 +28,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class PositionsViewHolder extends RecyclerView.ViewHolder {
-
-    TextView positionTickerTV;
-    TextView positionQuantityTV,positionCurrPriceTV,positionTypeTV,positionValueTV;
-    MaterialCardView positionsCV;
-    Dialog dialog;
-    RequestQueue requestQueue;
-    public Map<String,String> exitHoldingPosition = new ArrayMap<>();
-
-
+    TextView quantityTV,nameTV,avgPrice,ltp, cost;
 
     public PositionsViewHolder(@NonNull View itemView) {
         super(itemView);
-        positionCurrPriceTV=itemView.findViewById(R.id.tv_pos_curr_price);
-        positionQuantityTV=itemView.findViewById(R.id.tv_pos_quantity);
-        positionTickerTV=itemView.findViewById(R.id.tv_pos_ticker);
-        positionTypeTV=itemView.findViewById(R.id.pos_type);
-        positionValueTV=itemView.findViewById(R.id.pos_total_amt);
-        positionsCV = itemView.findViewById(R.id.position_cv);
-        dialog = new Dialog(itemView.getContext());
-        dialog.setContentView(R.layout.portfolio_conformation_dialog);
-
+        quantityTV = itemView.findViewById(R.id.position_quantity);
+        nameTV = itemView.findViewById(R.id.position_name);
+        avgPrice = itemView.findViewById(R.id.position_average_price);
+        ltp = itemView.findViewById(R.id.position_ltp);
+        cost = itemView.findViewById(R.id.position_cost);
     }
-
-    private void exitPositionVolley(PositionsModel positionsModel) {
-        exitHoldingPosition.put("token",AppConstants.token);
-        exitHoldingPosition.put("portfolioID",AppConstants.portfolioID);
-        exitHoldingPosition.put("state","Holding");
-        exitHoldingPosition.put("ticker",positionsModel.getPositionTicker());
-        exitHoldingPosition.put("quantity",positionsModel.getPositionQuantity());
-        exitHoldingPosition.put("isLong",positionsModel.getPositionType());
-
-        requestQueue = Volley.newRequestQueue(itemView.getContext());
-        String url = itemView.getResources().getString(R.string.apiBaseURL)+"portfolio/order";
-        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                AppCompatActivity activity = (AppCompatActivity) itemView.getContext();
-                Fragment myFragment = new PortfolioPositionsFragment();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.portfolio_container, myFragment).addToBackStack(null).commit();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("exitError",error.toString());
-            }
-        }){
-            @Override
-            public Map<String,String> getHeaders(){
-                return exitHoldingPosition;
-            }
-        };
-        requestQueue.add(stringRequest);
-    }
-
-
-    public void populate(final PositionsModel item){
-        positionValueTV.setText("₹ "+item.getPositionValue());
-        positionTypeTV.setText(item.getPositionType());
-        positionTickerTV.setText(item.getPositionTicker());
-        positionCurrPriceTV.setText(item.getPositionCurrPrice());
-        positionQuantityTV.setText("X"+item.getPositionQuantity());
-        positionsCV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.show();
-            }
-        });
-
-        Button buttonYes = dialog.findViewById(R.id.portfolio_dialog_yes_button);
-        buttonYes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-                exitPositionVolley(item);
-            }
-        });
-
-        Button buttonNo = dialog.findViewById(R.id.portfolio_dialog_no_button);
-        buttonNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-
+    public void populate(PositionsModel positionsModel){
+        quantityTV.setText(positionsModel.getPositionQuantity());
+        nameTV.setText(positionsModel.getPositionTicker());
+        ltp.setText(positionsModel.getPositionCurrPrice());
+        cost.setText(positionsModel.getPositionCost());
     }
 }
