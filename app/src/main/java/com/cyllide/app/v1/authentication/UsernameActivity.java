@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cyllide.app.v1.MainActivity;
 import com.cyllide.app.v1.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -32,9 +33,8 @@ public class UsernameActivity extends AppCompatActivity {
 
     RequestQueue validityQueue;
     Map<String,String> validityMap = new ArrayMap<>();
-    TextInputEditText usernameEditText, phoneNumberEditText, referralCodeEditText;
+    TextInputEditText usernameEditText,  referralCodeEditText;
     MaterialButton registerButton;
-    TextView loginRedirect;
     Map<String, String> signUpMap = new ArrayMap<>();
     RequestQueue signUpQueue;
 
@@ -44,18 +44,9 @@ public class UsernameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_username);
         usernameEditText = findViewById(R.id.input_scName_signup);
-        phoneNumberEditText = findViewById(R.id.input_phoneNo_signup);
         referralCodeEditText = findViewById(R.id.input_referral_signup);
         registerButton = findViewById(R.id.signup_btn);
-        loginRedirect = findViewById(R.id.login_redirect);
-        loginRedirect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UsernameActivity.this, PhoneAuth.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+
         usernameEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -72,80 +63,41 @@ public class UsernameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(checkPhoneNoValidity(phoneNumberEditText.getText().toString()) && checkUsernameValidity(usernameEditText.getText().toString())) {
-                    signUp();
-                }
+//                if(checkPhoneNoValidity(phoneNumberEditText.getText().toString()) && checkUsernameValidity(usernameEditText.getText().toString())) {
+//                    signUp();
+//                }
+                Intent intent =new Intent(UsernameActivity.this, MainActivity.class);
+                startActivity(intent);
 
             }
         });
-        registerButton.setEnabled(false);
     }
 
 
-    void signUp(){
-        signUpQueue = Volley.newRequestQueue(getBaseContext());
-        signUpMap.put("phone", phoneNumberEditText.getText().toString());
-        signUpMap.put("username", usernameEditText.getText().toString());
-        signUpMap.put("referral", referralCodeEditText.getText().toString());
-        String url = getString(R.string.apiBaseURL)+"auth/otp/send/new";
-        StringRequest signUpRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    Log.d("MESSAGE",jsonObject.toString());
-                    Log.d("MESSAGE",response);
-                    String message = jsonObject.getString("message");
-                    if(message.equals("MessageSendingSuccessful")){
-                        Intent intent = new Intent(UsernameActivity.this, OTPVerification.class);
-                        intent.putExtra("firstuser",true);
-                        intent.putExtra("phone", phoneNumberEditText.getText().toString());
-                        startActivity(intent);
-                        finish();
-                    }
-                    else{
-                        Toast.makeText(getBaseContext(),"Failed to send SMS",Toast.LENGTH_LONG).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
-            }
-        }){
-          @Override
-          public Map<String, String> getHeaders(){
-              return signUpMap;
-          }
-        };
-        signUpQueue.add(signUpRequest);
-    }
-    boolean checkPhoneNoValidity(final String username) {
-        int l = username.length();
-        for (int i = 0; i < l; i++) {
-            char c = username.charAt(i);
-            if (c >= '0' && c <= '9') {
-                continue;
-            }
-            phoneNumberEditText.setError("Invalid Phone Number");
-            registerButton.setEnabled(false);
-            return false;
-        }
-        if(l != 10) {
-            phoneNumberEditText.setError("Invalid Phone Number");
-            registerButton.setEnabled(false);
-
-
-            return false;
-        }
-        else {
-            return true;
-        }
-
-    }
+//    boolean checkPhoneNoValidity(final String username) {
+//        int l = username.length();
+//        for (int i = 0; i < l; i++) {
+//            char c = username.charAt(i);
+//            if (c >= '0' && c <= '9') {
+//                continue;
+//            }
+//            phoneNumberEditText.setError("Invalid Phone Number");
+//            registerButton.setEnabled(false);
+//            return false;
+//        }
+//        if(l != 10) {
+//            phoneNumberEditText.setError("Invalid Phone Number");
+//            registerButton.setEnabled(false);
+//
+//
+//            return false;
+//        }
+//        else {
+//            return true;
+//        }
+//
+//    }
 
 
     boolean checkUsernameValidity(final String username) {
@@ -164,38 +116,7 @@ public class UsernameActivity extends AppCompatActivity {
         validityMap.put("username",username);
         validityQueue = Volley.newRequestQueue(UsernameActivity.this);
         String url = getResources().getString(R.string.apiBaseURL)+"username/validity";
-        StringRequest validityRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    String status = new JSONObject(response).getString("status");
-                    if(status.equals("taken")){
-                        usernameEditText.setError("username already taken");
-                        registerButton.setEnabled(false);
 
-                    }
-                    else{
-                        usernameEditText.setError(null);
-                        if(checkPhoneNoValidity(phoneNumberEditText.getText().toString())) {
-                            registerButton.setEnabled(true);
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
-            @Override
-            public Map<String,String> getHeaders(){
-                return validityMap;
-            }
-        };
-        validityQueue.add(validityRequest);
     return true;
     //TODO FIGURE THIS SHIT OUT
     }

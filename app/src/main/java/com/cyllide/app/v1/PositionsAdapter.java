@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class PositionsAdapter extends RecyclerView.Adapter<PositionsViewHolder> {
     ArrayList<PositionsModel> positionsModels;
 
-    PositionsAdapter(ArrayList<PositionsModel> positionsModels){
+    public PositionsAdapter(ArrayList<PositionsModel> positionsModels){
         this.positionsModels = positionsModels;
     }
 

@@ -102,8 +102,9 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     private boolean setApplicationConstants(){
         SharedPreferences sharedPreferences = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE);
         AppConstants.token = sharedPreferences.getString("token", null);
+        //AppConstants.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiQW5zaHVtYW4iLCJleHAiOjE1OTcwNDY2NTN9.PINL7V39ivJXomf6NQMFNnkhVM2A2ZxlXfiISGNZuGc";
         if(AppConstants.token==null){
-            Intent authIntent = new Intent(MainActivity.this, UsernameActivity.class);
+            Intent authIntent = new Intent(MainActivity.this, PhoneAuth.class);
             startActivity(authIntent);
             finish();
             return false;
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     RequestQueue vcRequestQueue;
 
 
-
+    int minVersionCOde = -1;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -158,11 +159,20 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             return;
         };
 
+        if(minVersionCOde != -1){
+            setTheme(R.style.AppTheme_NoActionBar);
+            setUpActivity();
+            return;
+        }
+
         Context context;
         homepageDataHeaders.put("token", AppConstants.token);
         Log.d("ERROR","INSIDE ONCREATE");
         vcRequestQueue = Volley.newRequestQueue(MainActivity.this);
         String url = getResources().getString(R.string.apiBaseURL)+"info/homepage";
+
+//        setUpActivity();
+
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -179,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                     AppConstants.username = jsonObject.getString("username");
                     AppConstants.profilePic = jsonObject.getString("profilePicURL");
                     AppConstants.userLevel = jsonObject.getString("level");
+                    AppConstants.minWithdrawable = jsonObject.getInt("min_withdrawable");
 
                     if(versionCode>minVersionCode){
                         setTheme(R.style.AppTheme_NoActionBar);
@@ -405,9 +416,3 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     }
 
 }
-
-//TODO Integrate bulk API with cards
-//TODO Integrate it with portfolio positions
-//TODO test with 2 portfolios LEADERBOARD
-//TODO CHECK POINTS
-//TODO change workflow and ui of authentication

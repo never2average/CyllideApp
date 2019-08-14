@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -42,12 +43,16 @@ import com.google.firebase.storage.UploadTask;
 import com.razerdp.widget.animatedpieview.AnimatedPieView;
 import com.razerdp.widget.animatedpieview.AnimatedPieViewConfig;
 import com.razerdp.widget.animatedpieview.data.SimplePieInfo;
+import com.yalantis.ucrop.UCrop;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
@@ -55,6 +60,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -67,6 +73,8 @@ public class ProfileActivity extends AppCompatActivity {
     String cashValue;
     String coinsValue;
     Dialog quizWinPopup;
+    ImageView profileMedal;
+    String level;
 
 
     TextView
@@ -93,6 +101,15 @@ public class ProfileActivity extends AppCompatActivity {
     StorageReference storageReference;
     SharedPreferences sharedPreferences;
 
+    TextDrawable drawable;
+    ImageView cyllideLogo;
+    ImageView profilePic;
+
+    Uri photoURI;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +134,10 @@ public class ProfileActivity extends AppCompatActivity {
         prizes = findViewById(R.id.view_only_profile_prizes);
         money = findViewById(R.id.money_won);
         percentageDaysProfitable = findViewById(R.id.per_days_profitable);
+
+        cyllideLogo=findViewById(R.id.cyllidemainlogo);
+        profilePic=findViewById(R.id.profile_pic_container);
+        profileMedal=findViewById(R.id.profile_medal);
         Context context;
         quizWinPopup = new Dialog(this);
         quizWinPopup.setContentView(R.layout.quiz_wining_xml);
@@ -129,6 +150,57 @@ public class ProfileActivity extends AppCompatActivity {
         catch (Exception e){
             Log.d("ProfileActivity","Coins and money are not loaded");
         }
+
+        level=AppConstants.userLevel;
+        if(level.equals("Gold")){
+            profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_gold_medal));
+        }else{
+            if(level.equals("Silver")){
+                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_silver_medal));
+            }else{
+                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_bronze_medal));
+            }
+        }
+        if(sharedPreferences.getString("profileUri",null)==null)
+        {
+            // getProfilePicVolley();
+            ColorGenerator generator = ColorGenerator.MATERIAL;
+            int color = generator.getColor(AppConstants.username);
+            TextDrawable drawable = TextDrawable.builder()
+                    .beginConfig()
+                    .width(100)
+                    .height(100)
+                    .endConfig()
+                    .buildRect(Character.toString(AppConstants.username.charAt(0)).toUpperCase(), color);
+            profilePic.setImageDrawable(drawable);
+            Toast.makeText(ProfileActivity.this,"null part",Toast.LENGTH_SHORT).show();
+
+        }else{
+            String ur=sharedPreferences.getString("profileUri",null);
+            Uri uri=Uri.parse(ur);
+            Log.d("imageuri",ur);
+            Glide.with(ProfileActivity.this).load(uri).into(profilePic);
+            Toast.makeText(ProfileActivity.this," not null",Toast.LENGTH_SHORT).show();
+
+
+        }
+
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+//                int REQUEST_IMAGE_CAPTURE = 1;
+//               Intent intent = new Intent(Intent.ACTION_PICK,
+//                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(intent, 0);
+                dispatchTakePictureIntent();
+
+
+
+            }	            });
+
+
+
 
 //        if(Integer.parseInt(coins.getText().toString())>20){
 //            coins.setTextColor(ContextCompat.getColor(this,R.color.progressgreen));
@@ -222,7 +294,7 @@ public class ProfileActivity extends AppCompatActivity {
                     coins.setText(jsonResponse.getString("points_collected"));
                     money.setText(jsonResponse.getString("money_won"));
                     money.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.cyllide_grey));
-                    if(Integer.parseInt(money.getText().toString())<20){
+                    if(Integer.parseInt(money.getText().toString())>AppConstants.minWithdrawable){
                         money.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.green));
                         money.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -300,10 +372,41 @@ public class ProfileActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==REQUEST_TAKE_PHOTO&&resultCode==RESULT_OK){
 
-        if (resultCode == RESULT_OK) {
 
-            targetUri = data.getData();
+            UCrop.of(photoURI,photoURI)
+                    .start(ProfileActivity.this);
+        }
+
+        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+            final Uri resultUri = UCrop.getOutput(data);
+            Glide.with(ProfileActivity.this).load(photoURI).into(profilePic);
+            targetUri = photoURI;
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("profileUri", targetUri.toString());
+
+            editor.commit();
+            uploadImage(ProfileActivity.this);
+
+
+        } else if (resultCode == UCrop.RESULT_ERROR) {
+            final Throwable cropError = UCrop.getError(data);
+        }
+//        if (resultCode == RESULT_OK ) {
+//
+
+
+
+
+
+
+
+
+     //   }
+
+
 
 //            if(targetUri.equals(Uri.parse(AppConstants.noProfilePicURL))){
 //                ColorGenerator generator = ColorGenerator.MATERIAL;
@@ -326,7 +429,7 @@ public class ProfileActivity extends AppCompatActivity {
 //            uploadImage(getApplicationContext());
 //            Log.e("ProfilePicSet","inside on activity result");
 //            Toast.makeText(getApplicationContext(),"onActivityResult",Toast.LENGTH_LONG).show();
-        }
+
 
 
     }
@@ -362,9 +465,14 @@ public class ProfileActivity extends AppCompatActivity {
                             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.putString("profileUri", uri.toString());
-                                    editor.commit();
+//                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                                    editor.putString("profileUri", uri.toString());
+//
+//                                    editor.commit();
+                                    // loading the local uri not the one which is uploaded to the firebase storage
+                                   Glide.with(ProfileActivity.this).load(targetUri).into(profilePic);
+
+
                                     setProfilePicVolley(uri.toString());
                                 }
                             });
@@ -472,6 +580,52 @@ public class ProfileActivity extends AppCompatActivity {
         };
         uploadPicQueue.add(stringRequest);
     }
+
+
+    String currentPhotoPath;
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    static final int REQUEST_TAKE_PHOTO = 1;
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                photoURI = FileProvider.getUriForFile(this,
+                        "com.cyllide.app.v1.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
+    }
+
+
 
 
 }

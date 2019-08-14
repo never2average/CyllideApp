@@ -31,12 +31,36 @@
 
                 </LinearLayout>
             </FrameLayout>
+            <RelativeLayout
+                android:id="@+id/profile_pic_container_rl"
+                android:layout_marginVertical="@dimen/text_content_margin"
+                android:layout_below="@+id/view_only_cross_btn"
+                android:layout_width="110dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="110dp"
+                >
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_pic_container"
+                    android:layout_width="110dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_height="110dp"
+                    />
+                <ImageView
+                    android:layout_margin="@dimen/default_background_stroke_width"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/badge"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/profile_medal"/>
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/progress_rl"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/margin"
-                android:layout_below="@id/accuracy_tv"
+                android:layout_below="@id/profile_activity_coins_rl"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
                 android:layout_centerHorizontal="true"
@@ -58,7 +82,7 @@
 
                 <com.razerdp.widget.animatedpieview.AnimatedPieView
                     android:layout_centerInParent="true"
-                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginTop="@dimen/fab_size_mini"
                     android:layout_width="145dp"
                     android:layout_height="145dp"
                     android:layout_centerHorizontal="true"
@@ -73,7 +97,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/profile_activity_coins_rl"
                 android:layout_marginTop="@dimen/fab_size_mini"
-                android:layout_below="@id/progress_rl"
+                android:layout_below="@id/profile_pic_container_rl"
                 android:layout_width="match_parent"
                 android:layout_marginHorizontal="@dimen/fab_size_mini"
                 app:cardElevation="5dp"
@@ -128,11 +152,11 @@
             <LinearLayout
                 android:layout_marginStart="@dimen/fab_size_normal"
                 android:layout_marginEnd="@dimen/fab_size_normal"
-                android:layout_marginTop="@dimen/default_background_stroke_width"
+                android:layout_marginTop="@dimen/suggestion_body_text_size"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/profile_activity_coins_rl">
+                android:layout_below="@+id/progress_rl">
 
                 <LinearLayout
                     android:gravity="center_horizontal"
@@ -377,15 +401,17 @@
                 android:layout_height="50dp"
                 android:src="@drawable/cross_icon" />
             <TextView
+                android:layout_below="@+id/profile_activity_coins_rl"
                 android:layout_marginTop="@dimen/default_stroke_width"
                 android:id="@+id/accuracy_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:layout_centerHorizontal="true"
                 android:text="ACCURACY"
                 android:textSize="28sp"
+
                 />
 
         </RelativeLayout>

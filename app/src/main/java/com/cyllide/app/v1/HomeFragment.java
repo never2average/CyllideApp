@@ -13,6 +13,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.ArrayMap;
@@ -69,6 +70,10 @@ public class HomeFragment extends Fragment {
     SharedPreferences sharedPreferences;
     ImageView cyllideLogo;
     StorageReference storageReference;
+    ImageView profileMedal;
+    String level;
+    TextDrawable drawable;
+
 
     @Override
     public void onResume() {
@@ -103,6 +108,8 @@ public class HomeFragment extends Fragment {
         profilePic = view.findViewById(R.id.profile_pic_container);
        // profileMedal = view.findViewById(R.id.profile_medal);
         cyllideLogo=view.findViewById(R.id.cyllidemainlogo);
+        profileMedal = view.findViewById(R.id.profile_medal);
+
         storageReference= FirebaseStorage.getInstance().getReference();
         sharedPreferences=view.getContext().getSharedPreferences("profileUrl",Context.MODE_PRIVATE);
 
@@ -110,7 +117,7 @@ public class HomeFragment extends Fragment {
         if(sharedPreferences.getString("profileUri",null)==null)
         {
            // getProfilePicVolley();
-         //   profilePic.setImageDrawable(drawable);
+            profilePic.setImageDrawable(drawable);
 
           //  Toast.makeText(getContext(),"please choose your profile pic",Toast.LENGTH_SHORT).show();
         }else{
@@ -120,6 +127,18 @@ public class HomeFragment extends Fragment {
             RequestOptions requestOptions = new RequestOptions().override(100);
             Glide.with(getContext()).load(uri).apply(requestOptions).into(profilePic);
         }
+
+        level=AppConstants.userLevel;
+        if(level.equals("Gold")){
+            profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_gold_medal));
+        }else{
+            if(level.equals("Silver")){
+                profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_silver_medal));
+            }else{
+                profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_bronze_medal));
+            }
+        }
+
 
 
 
@@ -138,7 +157,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ArticlesMainActivity.class);
                 getContext().startActivity(intent);
-                getActivity().finish();
+//                getActivity().finish();
             }
         });
 
@@ -158,7 +177,7 @@ public class HomeFragment extends Fragment {
                 } else {
                     Intent portfolioIntent = new Intent(getContext(), PortfolioGameHomeActivity.class);
                     startActivity(portfolioIntent);
-                    getActivity().finish();
+//                    getActivity().finish();
                 }
             }
 
@@ -174,14 +193,29 @@ public class HomeFragment extends Fragment {
                     SharedPreferences sharedPreferences = getContext().getSharedPreferences("AUTHENTICATION", Context.MODE_PRIVATE);
                     String token = sharedPreferences.getString("token", "Not found!");
                     Intent intent;
+                    try {
+                        getActivity().findViewById(R.id.fabMenu).setVisibility(View.VISIBLE);
+                        getActivity().findViewById(R.id.fab_label).setVisibility(View.VISIBLE);
+                    }
+                    catch (Exception e){
+                        Log.d("ERROR",e.toString());
+                    }
+
                     intent = new Intent(getContext(), QuizRulesActivity.class);
 
                     getContext().startActivity(intent);
-                    getActivity().finish();
+//                    getActivity().finish();
                 } else {
                     Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
                     content.findViewById(R.id.main_content).setVisibility(View.GONE);
                     content.findViewById(R.id.network_retry_layout).setVisibility(View.VISIBLE);
+                    try{
+                    getActivity().findViewById(R.id.fabMenu).setVisibility(View.GONE);
+                    getActivity().findViewById(R.id.fab_label).setVisibility(View.GONE);
+                    }
+                    catch (Exception e){
+                        Log.d("ERROR",e.toString());
+                    }
                     Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
                 }
             }
@@ -194,7 +228,7 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(getContext(),ProfileActivity.class);
                 intent.putExtra("Editable",true);
                 getContext().startActivity(intent);
-                getActivity().finish();
+//                getActivity().finish();
 
             }
         });
@@ -208,7 +242,7 @@ public class HomeFragment extends Fragment {
                 if (ConnectionStatus.connectionstatus) {
                     Intent intent = new Intent(getContext(), ForumActivity.class);
                     getContext().startActivity(intent);
-                    getActivity().finish();
+//                    getActivity().finish();
                 } else {
 
 
@@ -263,13 +297,13 @@ public class HomeFragment extends Fragment {
                     if(profileURL.equals(AppConstants.noProfilePicURL)){
                         ColorGenerator generator = ColorGenerator.MATERIAL;
                         int color = generator.getColor(AppConstants.username);
-                        TextDrawable drawable = TextDrawable.builder()
+                         drawable = TextDrawable.builder()
                                 .beginConfig()
                                 .width(100)
                                 .height(100)
                                 .endConfig()
                                 .buildRect(Character.toString(AppConstants.username.charAt(0)).toUpperCase(), color);
-                        profilePic.setImageDrawable(drawable);
+                       // profilePic.setImageDrawable(drawable);
 
                         if(sharedPreferences.getString("profileUri",null)==null)
                         {
@@ -288,6 +322,10 @@ public class HomeFragment extends Fragment {
 
                     }
                     else {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("profileUri", profileURL.toString());
+
+                                    editor.commit();
                         RequestOptions requestOptions = new RequestOptions().override(100);
                         Glide.with(getContext()).load(profileURL).apply(requestOptions).into(profilePic);
                     }

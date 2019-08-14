@@ -39,7 +39,8 @@
                 android:orientation="horizontal"
                 android:padding="5dp"
                 android:visibility="visible"
-                android:weightSum="5">
+                android:weightSum="5"
+                >
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/chart_button_one_day"
@@ -52,7 +53,9 @@
                     android:onClick="onFrequencyClick"
                     android:text="1D"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/chart_button_five_days"
@@ -65,7 +68,9 @@
                     android:onClick="onFrequencyClick"
                     android:text="5D"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/chart_button_one_month"
@@ -78,7 +83,9 @@
                     android:onClick="onFrequencyClick"
                     android:text="1M"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/chart_button_six_months"
@@ -91,7 +98,9 @@
                     android:onClick="onFrequencyClick"
                     android:text="6M"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/chart_button_one_year"
@@ -104,22 +113,26 @@
                     android:onClick="onFrequencyClick"
                     android:text="1Y"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
                 <LinearLayout
                     android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:layout_margin="@dimen/default_background_stroke_width">
 
                         <TextView
@@ -139,7 +152,8 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:layout_margin="@dimen/default_background_stroke_width">
 
                         <TextView
@@ -152,7 +166,6 @@
 
                         <TextView
                             android:id="@+id/companyindustry"
-                            android:text="LOOL"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/default_background_stroke_width" />
@@ -160,7 +173,9 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_margin="@dimen/default_background_stroke_width">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -181,31 +196,16 @@
                 <LinearLayout
                     android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_margin="@dimen/default_background_stroke_width"
-                            android:gravity="end"
-                            android:text="Ask:"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:id="@+id/dtgc_ask"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_margin="@dimen/default_background_stroke_width" />
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_margin="@dimen/default_background_stroke_width">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -224,8 +224,9 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_margin="@dimen/default_background_stroke_width">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -243,7 +244,9 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_margin="@dimen/default_background_stroke_width">
 
                         <TextView
                             android:layout_width="wrap_content"

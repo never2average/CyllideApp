@@ -48,68 +48,9 @@ public class PhoneAuth extends AppCompatActivity {
                 input_phoneNo = String.valueOf(phone.getText());
 
                 boolean isPhoneValid = checkPhoneNumberValidity(input_phoneNo);
-                if(isPhoneValid){
-                    final Map<String, String> mHeaders = new ArrayMap<String, String>();
-                    mHeaders.put("phone", input_phoneNo);
-                    try {
-                        RequestQueue requestQueue;
-                        requestQueue = Volley.newRequestQueue(getBaseContext());
-                        String URL = getResources().getString(R.string.apiBaseURL)+"auth/otp/send/existing";
-                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                Intent intent =new Intent(PhoneAuth.this,OTPVerification.class);
+                startActivity(intent);
 
-                            @Override
-                            public void onResponse(String response) {
-                                boolean firstUser = false;
-                                try {
-                                    JSONObject jsonObject = new JSONObject(response);
-                                    String success = jsonObject.getString("message");
-                                    if(success.equals("MessageSendingSuccessful")){
-                                        firstUser = false;
-                                        Toast.makeText(PhoneAuth.this,"Message Sending Successful",Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(PhoneAuth.this, MainActivity.class);
-                            intent.putExtra("phone",input_phoneNo);
-
-                                        intent.putExtra("firstuser",firstUser);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                    else{
-                                        if(jsonObject.getString("message").equals("NewUser")){
-                                            Intent intent = new Intent(PhoneAuth.this,UsernameActivity.class);
-                                            intent.putExtra("phone",input_phoneNo);
-                                            startActivity(intent);
-                                            finish();                                        }
-                                        else{
-                                            Toast.makeText(PhoneAuth.this,"Message Sending Failed",Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-                                }
-                                catch (JSONException e) {
-
-                                }
-
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.e("VOLLEY", error.toString());
-                            }
-                        })
-                            {
-                                @Override
-                                public Map<String, String> getHeaders () {
-                                return mHeaders;
-                            }
-                        };
-
-                        requestQueue.add(stringRequest);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                else{
-                    Toast.makeText(PhoneAuth.this,"InvalidPhoneNumber",Toast.LENGTH_LONG).show();
-                }
             }
         });
     }
