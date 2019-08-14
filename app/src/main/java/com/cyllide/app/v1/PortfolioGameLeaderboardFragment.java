@@ -1,16 +1,20 @@
-package com.cyllide.app.v1.portfolio;
+package com.cyllide.app.v1;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,8 +24,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.cyllide.app.v1.AppConstants;
-import com.cyllide.app.v1.R;
+import com.cyllide.app.v1.portfolio.PortfolioGameLeaderboardRVAdapter;
+import com.cyllide.app.v1.portfolio.PortfolioGameLeaderboardRVModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,60 +35,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class PortfolioGameLeaderboardActivity extends AppCompatActivity {
-    ImageView tab1, tab2, tab3, backBtn, levelImage;
+public class PortfolioGameLeaderboardFragment extends Fragment {
+    Context context;
     TextView currentStreakDays, currentLevel, numberStreaks;
     RecyclerView leaderBoardRV;
+    ImageView levelImage;
     List<PortfolioGameLeaderboardRVModel> leaderBoardData;
     private RequestQueue leaderBoardQueue;
     private Map<String,String> leaderBoardMap = new ArrayMap<>();
 
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_portfolio_game_leaderboard);
-        tab1 = findViewById(R.id.pg_leaderboard_activity_1);
-        tab2 = findViewById(R.id.pg_leaderboard_activity_2);
-        tab3 = findViewById(R.id.pg_leaderboard_activity_3);
-        tab1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent returnHome = new Intent(PortfolioGameLeaderboardActivity.this,PortfolioGameHomeActivity.class);
-                startActivity(returnHome);
-                finish();
-            }
-        });
-        tab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent returnHome = new Intent(PortfolioGameLeaderboardActivity.this,PortfolioGamePortfolioActivity.class);
-                startActivity(returnHome);
-                finish();
-            }
-        });
-        backBtn = findViewById(R.id.portfolio_game_leaderboard_back_button);
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent returnHome = new Intent(PortfolioGameLeaderboardActivity.this,PortfolioGameHomeActivity.class);
-                startActivity(returnHome);
-                finish();
-            }
-        });
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_portfolio_leaderboard, container, false);
 
-        levelImage = findViewById(R.id.pg_leaderboard_current_level_img);
-        currentStreakDays = findViewById(R.id.pg_leaderboard_current_streak);
-        numberStreaks = findViewById(R.id.pg_leaderboard_num_streaks);
-        currentLevel = findViewById(R.id.pg_leaderboard_current_level);
-        leaderBoardRV = findViewById(R.id.pg_leaderboard_rv);
-        leaderBoardRV.setLayoutManager(new LinearLayoutManager(this));
+        levelImage = view.findViewById(R.id.pg_leaderboard_current_level_img);
+        currentStreakDays = view.findViewById(R.id.pg_leaderboard_current_streak);
+        numberStreaks = view.findViewById(R.id.pg_leaderboard_num_streaks);
+        currentLevel = view.findViewById(R.id.pg_leaderboard_current_level);
+        leaderBoardRV = view.findViewById(R.id.pg_leaderboard_rv);
+        leaderBoardRV.setLayoutManager(new LinearLayoutManager(context));
         populateLeaderBoard();
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
+    public PortfolioGameLeaderboardFragment(Context context) {
+        this.context = context;
     }
 
     private void populateLeaderBoard() {
         String url = getResources().getString(R.string.apiBaseURL)+"contest/leaderboard";
-        leaderBoardQueue = Volley.newRequestQueue(PortfolioGameLeaderboardActivity.this);
+        leaderBoardQueue = Volley.newRequestQueue(context);
         leaderBoardMap.put("token", AppConstants.token);
         StringRequest leaderBoardRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -110,21 +92,21 @@ public class PortfolioGameLeaderboardActivity extends AppCompatActivity {
                             switch (jsonObject.getString("userLevel")){
                                 case "Beginner":
                                     RequestOptions requestOptionsBeg = new RequestOptions().override(140).circleCrop();
-                                    Glide.with(PortfolioGameLeaderboardActivity.this)
+                                    Glide.with(context)
                                             .load("https://www.pngrepo.com/download/87539/bronze-medal.png")
                                             .apply(requestOptionsBeg)
                                             .into(levelImage);
                                     break;
                                 case "Professional":
                                     RequestOptions requestOptionsPro = new RequestOptions().override(140).circleCrop();
-                                    Glide.with(PortfolioGameLeaderboardActivity.this)
+                                    Glide.with(context)
                                             .load("https://www.pngrepo.com/download/87539/bronze-medal.png")
                                             .apply(requestOptionsPro)
                                             .into(levelImage);
                                     break;
                                 case "Masterclass":
                                     RequestOptions requestOptionsMaster = new RequestOptions().override(140).circleCrop();
-                                    Glide.with(PortfolioGameLeaderboardActivity.this)
+                                    Glide.with(context)
                                             .load("https://www.pngrepo.com/download/87539/bronze-medal.png")
                                             .apply(requestOptionsMaster)
                                             .into(levelImage);
@@ -132,7 +114,7 @@ public class PortfolioGameLeaderboardActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    leaderBoardRV.setAdapter(new PortfolioGameLeaderboardRVAdapter(getBaseContext(), leaderBoardData));
+                    leaderBoardRV.setAdapter(new PortfolioGameLeaderboardRVAdapter(context, leaderBoardData));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -148,4 +130,5 @@ public class PortfolioGameLeaderboardActivity extends AppCompatActivity {
         };
         leaderBoardQueue.add(leaderBoardRequest);
     }
+
 }

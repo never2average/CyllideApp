@@ -1,17 +1,21 @@
-package com.cyllide.app.v1.portfolio;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.cyllide.app.v1;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,10 +23,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.cyllide.app.v1.AppConstants;
-import com.cyllide.app.v1.MainActivity;
-import com.cyllide.app.v1.PositionsAdapter;
-import com.cyllide.app.v1.R;
 import com.cyllide.app.v1.portfolio.PortfolioPositionsRV.PositionsModel;
 
 import org.json.JSONArray;
@@ -33,55 +33,31 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PortfolioGamePortfolioActivity extends AppCompatActivity {
-    ImageView tab1, tab2, tab3;
+public class PortfolioGamePositionsFragment extends Fragment {
+    Context context;
     RecyclerView positionsRV;
     private ImageView backBtn;
     Map<String, String> positionsHeader = new HashMap<>();
     RequestQueue positionsQueue;
-//    ArrayList<PositionsModel = [;
 
+    public PortfolioGamePositionsFragment(Context context) {
+        this.context = context;
+    }
+
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_portfolio_game_portfolio);
-        tab1 = findViewById(R.id.pg_portfolio_activity_1);
-        tab2 = findViewById(R.id.pg_portfolio_activity_2);
-        tab3 = findViewById(R.id.pg_portfolio_activity_3);
-        positionsRV = findViewById(R.id.portfoliopositionsrv);
-        tab1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent returnHome = new Intent(PortfolioGamePortfolioActivity.this, PortfolioGameHomeActivity.class);
-                startActivity(returnHome);
-                finish();
-            }
-        });
-        tab3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent returnHome = new Intent(PortfolioGamePortfolioActivity.this, PortfolioGameLeaderboardActivity.class);
-                startActivity(returnHome);
-                finish();
-            }
-        });
-        backBtn = findViewById(R.id.portfolio_game_portfolio_back_button);
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent returnHome = new Intent(PortfolioGamePortfolioActivity.this, PortfolioGameHomeActivity.class);
-                startActivity(returnHome);
-                finish();
-            }
-        });
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_game_positions, container, false);
+        positionsRV = view.findViewById(R.id.portfoliopositionsrv);
         getPositionsLTPVolley();
-//        getPositionsVolley();
+
+        return view;
     }
 
     private void getPositionsLTPVolley() {
-        String url = "https://api.cyllide.com/api/client/ohlc";
-        Context context;
-        RequestQueue positionsRequestQueue = Volley.newRequestQueue(PortfolioGamePortfolioActivity.this);
+        String url = getResources().getString(R.string.apiBaseURL)+"ohlc";
+        RequestQueue positionsRequestQueue = Volley.newRequestQueue(context);
         StringRequest positionRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -116,15 +92,14 @@ public class PortfolioGamePortfolioActivity extends AppCompatActivity {
 
     void getPositionsVolley(final JSONObject ltp) {
         positionsHeader = new ArrayMap<>();
-        String url = getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
-        positionsQueue = Volley.newRequestQueue(PortfolioGamePortfolioActivity.this);
+        String url = context.getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
+        positionsQueue = Volley.newRequestQueue(context);
         positionsHeader.put("token", AppConstants.token);
         final PositionsAdapter positionsAdapter = new PositionsAdapter(positionsModels);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(PortfolioGamePortfolioActivity.this);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         positionsRV.setLayoutManager(layoutManager);
 
-//        positionsRV.setLayoutManager(new LinearLayoutManager(PortfolioGamePortfolioActivity.this));
 
         StringRequest positionRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -165,9 +140,5 @@ public class PortfolioGamePortfolioActivity extends AppCompatActivity {
         positionsQueue.add(positionRequest);
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Toast.makeText(PortfolioGamePortfolioActivity.this,"onNewIntentcalled",Toast.LENGTH_SHORT).show();
-    }
+
 }

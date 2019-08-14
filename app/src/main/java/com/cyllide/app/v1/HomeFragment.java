@@ -39,6 +39,7 @@ import com.cyllide.app.v1.stories.ArticlesMainActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -167,11 +168,14 @@ public class HomeFragment extends Fragment {
                 ConnectivityManager conMgr = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
+
                 if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
-                    Toast.makeText(getContext(), "Poor Network Connection", Toast.LENGTH_LONG).show();
+                    Snackbar snackbar = Snackbar
+                            .make(content.findViewById(R.id.root_layout),"Poor Network Connection", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+
                     content.findViewById(R.id.main_content).setVisibility(View.GONE);
                     content.findViewById(R.id.network_retry_layout).setVisibility(View.VISIBLE);
-                    Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
 
 
                 } else {
@@ -206,7 +210,10 @@ public class HomeFragment extends Fragment {
                     getContext().startActivity(intent);
 //                    getActivity().finish();
                 } else {
-                    Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
+                    Snackbar snackbar = Snackbar
+                            .make(content.findViewById(R.id.root_layout),"Poor Network Connection", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+
                     content.findViewById(R.id.main_content).setVisibility(View.GONE);
                     content.findViewById(R.id.network_retry_layout).setVisibility(View.VISIBLE);
                     try{
@@ -216,7 +223,7 @@ public class HomeFragment extends Fragment {
                     catch (Exception e){
                         Log.d("ERROR",e.toString());
                     }
-                    Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
+
                 }
             }
 
@@ -248,7 +255,11 @@ public class HomeFragment extends Fragment {
 
                    content.findViewById(R.id.main_content).setVisibility(View.GONE);
                    content.findViewById(R.id.network_retry_layout).setVisibility(View.VISIBLE);
-                    Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
+                    Snackbar snackbar = Snackbar
+                            .make(content.findViewById(R.id.root_layout),"Poor Network Connection", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+
+
 
                 }
             }
@@ -266,7 +277,10 @@ public class HomeFragment extends Fragment {
 
                     content.findViewById(R.id.main_content).setVisibility(View.GONE);
                     content.findViewById(R.id.network_retry_layout).setVisibility(View.VISIBLE);
-                    Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
+                    Snackbar snackbar = Snackbar
+                            .make(content.findViewById(R.id.root_layout),"Poor Network Connection", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+
 
                 }
 

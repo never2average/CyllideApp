@@ -37,6 +37,7 @@ import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.MainActivity;
 import com.cyllide.app.v1.R;
 import com.cyllide.app.v1.background.services.GetLatestQuizIDService;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -168,7 +169,9 @@ public class QuizRulesActivity extends AppCompatActivity {
     private void createTimer()
     {
         if (quizStartTime != 0 && quizStartTime-currentTime < 0){
-            Toast.makeText(QuizRulesActivity.this,"No Quizzes Available", Toast.LENGTH_LONG).show();
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(R.id.root_layout), "No Quizzes Available", Snackbar.LENGTH_LONG);
+            snackbar.show();
             startActivity(new Intent(QuizRulesActivity.this,MainActivity.class));
             finish();
         }

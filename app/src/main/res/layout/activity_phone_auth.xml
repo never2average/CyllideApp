@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".authentication.PhoneAuth">
+    tools:context=".authentication.SignupPage">
 
     <LinearLayout
-        android:orientation="vertical"
         android:weightSum="3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -20,28 +19,21 @@
             android:scaleType = "centerCrop"/>
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/fab_size_normal"
-        android:textColor="@android:color/white"
-        android:text="We’ve been missing you. Welcome back :)"
-        android:gravity="center"
-        android:textSize="@dimen/square_button_icon_size"/>
-
     <LinearLayout
-        android:gravity="center"
         android:orientation="vertical"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/fab_size_normal">
+        android:layout_marginBottom="@dimen/fab_size_mini">
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxBackgroundColor="#FFF8F8"
             app:boxStrokeColor="#BDBDBD"
+            android:layout_marginTop="@dimen/square_button_icon_size"
             app:boxCornerRadiusBottomEnd="@dimen/margin"
             app:boxCornerRadiusBottomStart="@dimen/margin"
             app:boxCornerRadiusTopEnd="@dimen/margin"
@@ -54,7 +46,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/input_phoneNo"
+                android:id="@+id/input_phone_auth"
                 android:inputType="number"
                 android:hint="PHONE NUMBER"
                 />
@@ -63,15 +55,16 @@
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
-            android:minWidth="140dp"
-            android:id="@+id/btn_send_otp"
-            android:padding="@dimen/margin"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
+            android:text="CONTINUE"
+            android:id="@+id/signup_btn"
+            android:minWidth="140dp"
+            android:layout_marginTop="@dimen/fab_size_mini"
             android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/suggestion_body_text_size"
-            android:text="LOGIN"
-            android:layout_marginTop="@dimen/fab_size_normal"/>
+            />
+
     </LinearLayout>
 
 </RelativeLayout>
