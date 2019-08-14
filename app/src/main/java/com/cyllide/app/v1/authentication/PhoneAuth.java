@@ -56,31 +56,6 @@ public class PhoneAuth extends AppCompatActivity {
     }
 
 
-//    public boolean checkPhoneNumberValidity(String s)
-//    {
-//        if(s.length()!=10 && s.length() != 13)
-//        {
-//            return false;
-//        }
-//        if(s.length()==13)
-//        {
-//            String ss = s.substring(0,3);
-//            if(!(ss.equals("+91")))
-//                return false;
-//            input_phoneNo = s.substring(3);
-//        }
-//        else{
-//            for(int i = 0;i < s.length(); i++)
-//            {
-//                if(!(Character.isDigit(s.charAt(i))))
-//                {
-//                    return false;
-//                }
-//            }
-//        }
-//        return true;
-//    }
-
     boolean checkPhoneNumberValidity(final String username) {
         int l = username.length();
         for (int i = 0; i < l; i++) {

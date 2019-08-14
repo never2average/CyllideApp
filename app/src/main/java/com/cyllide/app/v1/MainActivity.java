@@ -118,10 +118,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             AppConstants.referral = sharedPreferences.getString("referralCode","ERROR");
             SharedPreferences sharedPreferences2 =
                     PreferenceManager.getDefaultSharedPreferences(this);
-            if (!sharedPreferences2.getBoolean(
-                    COMPLETED_TUTORIAL_PREF_NAME, false)) {
-               // startActivity(new Intent(MainActivity.this, IntroActivity.class));
-            }
 
         }
         return true;
@@ -173,9 +169,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         homepageDataHeaders.put("token", AppConstants.token);
         Log.d("ERROR","INSIDE ONCREATE");
         vcRequestQueue = Volley.newRequestQueue(MainActivity.this);
-//        String url =getBaseContext().getResources().getString(R.string.apiBaseURL)+"forced/update";
         String url = getResources().getString(R.string.apiBaseURL)+"info/homepage";
-        Log.e("TOKKKEN",AppConstants.token);
 
 //        setUpActivity();
 
@@ -184,25 +178,22 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONObject jsonObject = (new JSONObject(response)).getJSONObject("data");
+                    JSONObject jsonObject = new JSONObject(response).getJSONObject("data");
                     Log.d("Summary",jsonObject.toString());
                     int versionCode = BuildConfig.VERSION_CODE;
                     String versionName = BuildConfig.VERSION_NAME;
                     Log.d("RESPONSE",response);
 
-                    minVersionCOde = jsonObject.getInt("version");
+                    int minVersionCode = jsonObject.getInt("version");
                     String playURL = jsonObject.getString("playurl");
                     AppConstants.username = jsonObject.getString("username");
                     AppConstants.profilePic = jsonObject.getString("profilePicURL");
                     AppConstants.userLevel = jsonObject.getString("level");
                     AppConstants.minWithdrawable = jsonObject.getInt("min_withdrawable");
 
-                    if(versionCode>minVersionCOde){
+                    if(versionCode>minVersionCode){
                         setTheme(R.style.AppTheme_NoActionBar);
-
                         setUpActivity();
-//                        fetchDataVolley();
-
                     }
                     else{
                         setTheme(R.style.AppTheme_NoActionBar);
@@ -214,7 +205,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
                 } catch (JSONException e) {
                     Log.e("ERROR",e.toString());
-                    e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
@@ -226,20 +216,16 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         }){
             @Override
             public Map<String,String> getHeaders(){
-
-                return homepageDataHeaders;            }
+                return homepageDataHeaders;
+            }
         };
         vcRequestQueue.add(stringRequest);
-
-
-
     }
 
     void setUpActivity(){
 
         setTheme(R.style.AppTheme_NoActionBar);
         setContentView(R.layout.activity_main);
-//        setApplicationConstants();
         InternetAvailabilityChecker.init(this);
         internetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
         internetAvailabilityChecker.addInternetConnectivityListener(this);
@@ -271,7 +257,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
 
         AppSignatureHelper appSignature = new AppSignatureHelper(this);
-//        Log.d("HASH",appSignature.getAppSignatures().toString());
 
 
         Intent serviceIntent = new Intent(this, GetLatestQuizIDService.class);
@@ -431,7 +416,3 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     }
 
 }
-
-//TODO Integrate it with portfolio positions
-//TODO test with 2 portfolios LEADERBOARD
-//TODO CHECK POINTS

@@ -161,6 +161,7 @@ public class HomeFragment extends Fragment {
 //                getActivity().finish();
             }
         });
+
         portfolios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,8 +223,6 @@ public class HomeFragment extends Fragment {
                     catch (Exception e){
                         Log.d("ERROR",e.toString());
                     }
-//                    Toast.makeText(getContext(), "Internet Connection Lost", Toast.LENGTH_LONG).show();
-
 
                 }
             }
