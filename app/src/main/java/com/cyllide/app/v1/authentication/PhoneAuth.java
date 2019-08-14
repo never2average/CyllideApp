@@ -5,6 +5,9 @@ import androidx.collection.ArrayMap;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -37,6 +40,22 @@ public class PhoneAuth extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_auth);
         phoneNumberEditText = findViewById(R.id.input_phone_auth);
+        phoneNumberEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkPhoneNoValidity(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         registerButton = findViewById(R.id.signup_btn);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +99,7 @@ public class PhoneAuth extends AppCompatActivity {
                         }
                     }
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.d("error", e.toString());
                 }
             }
         }, new Response.ErrorListener() {
@@ -97,10 +116,10 @@ public class PhoneAuth extends AppCompatActivity {
         signUpQueue.add(signUpRequest);
     }
 
-    boolean checkPhoneNoValidity(final String username) {
-        int l = username.length();
+    boolean checkPhoneNoValidity(final String phone) {
+        int l = phone.length();
         for (int i = 0; i < l; i++) {
-            char c = username.charAt(i);
+            char c = phone.charAt(i);
             if (c >= '0' && c <= '9') {
                 continue;
             }
@@ -111,11 +130,10 @@ public class PhoneAuth extends AppCompatActivity {
         if(l != 10) {
             phoneNumberEditText.setError("Invalid Phone Number");
             registerButton.setEnabled(false);
-
-
             return false;
         }
         else {
+            registerButton.setEnabled(true);
             return true;
         }
 

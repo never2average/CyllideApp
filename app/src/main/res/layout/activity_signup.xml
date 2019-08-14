@@ -47,7 +47,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/input_username"
-                android:inputType="number"
                 android:hint="USERNAME"
                 />
 
@@ -71,7 +70,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/input_referral"
-                android:inputType="number"
                 android:hint="REFERRAL CODE (OPTIONAL)"
                 />
 

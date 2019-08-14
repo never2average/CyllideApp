@@ -6,7 +6,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -52,15 +51,11 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements InternetConnectivityListener {
 
-
-
     com.github.clans.fab.FloatingActionButton referrals, feedback, help;
     InternetAvailabilityChecker internetAvailabilityChecker;
-    public static String COMPLETED_TUTORIAL_PREF_NAME = "tutorialcompleted";
     public final static int MY_PERMISSION_REQUEST_CODE = 200;
 
     NotificationManager notificationManager;
-    RemoteViews contentView;
     Map<String,String> homepageDataHeaders = new ArrayMap<>();
     RequestQueue homepageQueue;
     boolean doubleBackToExitPressedOnce = false;
@@ -91,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     private boolean setApplicationConstants(){
         SharedPreferences sharedPreferences = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE);
         AppConstants.token = sharedPreferences.getString("token", null);
-//        AppConstants.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiQW5zaHVtYW4iLCJleHAiOjE1OTcwNDY2NTN9.PINL7V39ivJXomf6NQMFNnkhVM2A2ZxlXfiISGNZuGc";
         if(AppConstants.token==null){
             Intent authIntent = new Intent(MainActivity.this, PhoneAuth.class);
             startActivity(authIntent);
@@ -103,11 +97,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             AppConstants.referral = sharedPreferences.getString("referralCode","ERROR");
             SharedPreferences sharedPreferences2 =
                     PreferenceManager.getDefaultSharedPreferences(this);
-            if (!sharedPreferences2.getBoolean(
-                    COMPLETED_TUTORIAL_PREF_NAME, false)) {
-               // startActivity(new Intent(MainActivity.this, IntroActivity.class));
-            }
-
         }
         return true;
     }
@@ -131,16 +120,17 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     RequestQueue vcRequestQueue;
 
 
-    int minVersionCOde = -1;
+    int minVersionCode = -1;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         try{
-        getSupportActionBar().hide();}
+            getSupportActionBar().hide();
+        }
         catch (Exception e){
-            Log.e("ERRIRR",e.toString());
+            Log.e("ERROR",e.toString());
         }
 
 
@@ -148,21 +138,17 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             return;
         };
 
-        if(minVersionCOde != -1){
+        if(minVersionCode != -1){
             setTheme(R.style.AppTheme_NoActionBar);
             setUpActivity();
             return;
         }
 
-        Context context;
         homepageDataHeaders.put("token", AppConstants.token);
         Log.d("ERROR","INSIDE ONCREATE");
         vcRequestQueue = Volley.newRequestQueue(MainActivity.this);
-//        String url =getBaseContext().getResources().getString(R.string.apiBaseURL)+"forced/update";
         String url = getResources().getString(R.string.apiBaseURL)+"info/homepage";
         Log.e("TOKKKEN",AppConstants.token);
-
-//        setUpActivity();
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -170,24 +156,18 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = (new JSONObject(response)).getJSONObject("data");
-                    Log.d("Summary",jsonObject.toString());
                     int versionCode = BuildConfig.VERSION_CODE;
                     String versionName = BuildConfig.VERSION_NAME;
-                    Log.d("RESPONSE",response);
-
-                    minVersionCOde = jsonObject.getInt("version");
+                    minVersionCode = jsonObject.getInt("version");
                     String playURL = jsonObject.getString("playurl");
                     AppConstants.username = jsonObject.getString("username");
                     AppConstants.profilePic = jsonObject.getString("profilePicURL");
                     AppConstants.userLevel = jsonObject.getString("level");
                     AppConstants.minWithdrawable = jsonObject.getInt("min_withdrawable");
 
-                    if(versionCode>minVersionCOde){
+                    if(versionCode> minVersionCode){
                         setTheme(R.style.AppTheme_NoActionBar);
-
                         setUpActivity();
-//                        fetchDataVolley();
-
                     }
                     else{
                         setTheme(R.style.AppTheme_NoActionBar);
@@ -199,20 +179,18 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
                 } catch (JSONException e) {
                     Log.e("ERROR",e.toString());
-                    e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("ERROR",error.toString());
-
             }
         }){
             @Override
             public Map<String,String> getHeaders(){
-
-                return homepageDataHeaders;            }
+                return homepageDataHeaders;
+            }
         };
         vcRequestQueue.add(stringRequest);
 
@@ -224,7 +202,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
         setTheme(R.style.AppTheme_NoActionBar);
         setContentView(R.layout.activity_main);
-//        setApplicationConstants();
         InternetAvailabilityChecker.init(this);
         internetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
         internetAvailabilityChecker.addInternetConnectivityListener(this);
@@ -241,12 +218,12 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
             } else {
                 ActivityCompat.requestPermissions(MainActivity.this,
-                        new String[]{Manifest.permission.CAMERA,
+                        new String[]{
+                                Manifest.permission.CAMERA,
                                 Manifest.permission.READ_EXTERNAL_STORAGE,
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         },
                         MY_PERMISSION_REQUEST_CODE);
-
                 Log.d("Permissions","NOt granted");
 
             }

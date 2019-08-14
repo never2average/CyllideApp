@@ -39,18 +39,18 @@ import java.util.Map;
 
 public class OTPVerification extends AppCompatActivity {
     public static OtpView otpView;
-    boolean firstuser;
     public static MaterialButton verifyBtn;
-    RequestQueue requestQueue;
-    String phoneNo,enteredOTP;
     public static String otpFromSMS;
-    Map<String,String> verificationMap = new ArrayMap<>();
+    boolean firstuser;
+    RequestQueue requestQueue;
+    String phoneNo, enteredOTP;
+    Map<String, String> verificationMap = new ArrayMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         phoneNo = getIntent().getStringExtra("phone");
-        firstuser = getIntent().getBooleanExtra("firstuser",false);
+        firstuser = getIntent().getBooleanExtra("firstuser", false);
         setContentView(R.layout.activity_otpverification);
 
         verifyBtn = findViewById(R.id.validate_otp_button);
@@ -94,39 +94,38 @@ public class OTPVerification extends AppCompatActivity {
     }
 
     void verifyMyOTP() {
-        verificationMap.put("phone",phoneNo);
-        verificationMap.put("otp",enteredOTP);
-        verificationMap.put("first",AppConstants.tempUsername);
+        verificationMap.put("phone", phoneNo);
+        verificationMap.put("otp", enteredOTP);
+        verificationMap.put("first", AppConstants.tempUsername);
 
         requestQueue = Volley.newRequestQueue(OTPVerification.this);
-        String url = getResources().getString(R.string.apiBaseURL)+"auth/otp/verify";
+        String url = getResources().getString(R.string.apiBaseURL) + "auth/otp/verify";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    if(jsonObject.getString("message").equals("InvalidOTPEntered")){
-                        Toast.makeText(OTPVerification.this,"Invalid OTP Entered",Toast.LENGTH_LONG).show();
-                    }
-                } catch (JSONException e) {
-                    try {
-                        if(AppConstants.tempUsername.equals("redirect")){
+                    if (jsonObject.getString("message").equals("InvalidOTPEntered")) {
+                        Toast.makeText(OTPVerification.this, "Invalid OTP Entered", Toast.LENGTH_LONG).show();
+                    } else {
+                        if (AppConstants.tempUsername.equals("redirect")) {
                             Intent intent = new Intent(OTPVerification.this, SignupPage.class);
                             intent.putExtra("phone", phoneNo);
                             startActivity(intent);
                             finish();
                         }
-                        else{
-                            JSONObject jsonObject = new JSONObject(response);
-                            SharedPreferences.Editor editor = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE).edit();
-                            editor.putString("token", jsonObject.getString("token"));
-                            editor.putInt("coins", jsonObject.getInt("coins"));
-                            editor.putString("referralCode", jsonObject.getString("referralCode"));
-                            editor.apply();
-                            Intent intent = new Intent(OTPVerification.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
+                    }
+                } catch (JSONException e) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        SharedPreferences.Editor editor = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE).edit();
+                        editor.putString("token", jsonObject.getString("token"));
+                        editor.putInt("coins", jsonObject.getInt("coins"));
+                        editor.putString("referralCode", jsonObject.getString("referralCode"));
+                        editor.apply();
+                        Intent intent = new Intent(OTPVerification.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
                     } catch (JSONException e1) {
                         e1.printStackTrace();
                     }
@@ -135,11 +134,11 @@ public class OTPVerification extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("mybad",error.toString());
+                Log.d("mybad", error.toString());
             }
-        }){
+        }) {
             @Override
-            public Map<String,String> getHeaders(){
+            public Map<String, String> getHeaders() {
                 return verificationMap;
             }
         };
