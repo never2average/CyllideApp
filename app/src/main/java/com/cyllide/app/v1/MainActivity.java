@@ -104,11 +104,11 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
     private boolean setApplicationConstants(){
         SharedPreferences sharedPreferences = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE);
-//        AppConstants.token = sharedPreferences.getString("token", null);
-//        AppConstants.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiQW5zaHVtYW4iLCJleHAiOjE1OTcwNDY2NTN9.PINL7V39ivJXomf6NQMFNnkhVM2A2ZxlXfiISGNZuGc";
-        AppConstants.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiQW5zaHVtYW4iLCJleHAiOjE1OTcxNTg1Mzd9.c_WhdJtn1S_EuED4IwO41SNFSBW68xE8vRgvZDNquSE";
+
+        AppConstants.token = sharedPreferences.getString("token", null);
+        //AppConstants.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiQW5zaHVtYW4iLCJleHAiOjE1OTcwNDY2NTN9.PINL7V39ivJXomf6NQMFNnkhVM2A2ZxlXfiISGNZuGc";
         if(AppConstants.token==null){
-            Intent authIntent = new Intent(MainActivity.this, UsernameActivity.class);
+            Intent authIntent = new Intent(MainActivity.this, PhoneAuth.class);
             startActivity(authIntent);
             finish();
             return false;
