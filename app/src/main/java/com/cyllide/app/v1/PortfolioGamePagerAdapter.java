@@ -27,11 +27,11 @@ public class PortfolioGamePagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new PortfolioGameFragment(context);
             case 1:
-//                return new PortfolioPositionsFragment(context);
+                return new PortfolioGamePositionsFragment(context);
             case 2:
 //                return new PortfolioLeaderboardFragment(context);
         }
-        return new PortfolioGameFragment(context);
+        return null;
 
     }
 
