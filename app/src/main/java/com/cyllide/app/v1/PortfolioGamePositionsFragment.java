@@ -92,7 +92,7 @@ public class PortfolioGamePositionsFragment extends Fragment {
 
     void getPositionsVolley(final JSONObject ltp) {
         positionsHeader = new ArrayMap<>();
-        String url = getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
+        String url = context.getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
         positionsQueue = Volley.newRequestQueue(context);
         positionsHeader.put("token", AppConstants.token);
         final PositionsAdapter positionsAdapter = new PositionsAdapter(positionsModels);

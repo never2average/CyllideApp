@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".authentication.PhoneAuth">
+    tools:context=".authentication.SignupPage">
 
     <LinearLayout
+        android:orientation="vertical"
         android:weightSum="3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -20,16 +21,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/fab_size_mini">
-
-
-
-
+        android:layout_marginBottom="@dimen/fab_size_normal">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -42,15 +39,14 @@
             app:boxCornerRadiusTopStart="@dimen/margin"
             android:layout_height="wrap_content"
             app:boxStrokeWidth="1dp"
-            android:layout_marginTop="@dimen/square_button_icon_size"
             android:minHeight="@dimen/fab_size_normal"
+            android:layout_marginBottom="@dimen/fab_size_mini"
             android:layout_marginHorizontal="@dimen/square_button_icon_size">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/input_scName_signup"
-                android:inputType="text"
+                android:id="@+id/input_username"
                 android:hint="USERNAME"
                 />
 
@@ -61,7 +57,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxBackgroundColor="#FFF8F8"
             app:boxStrokeColor="#BDBDBD"
-            android:layout_marginTop="@dimen/square_button_icon_size"
             app:boxCornerRadiusBottomEnd="@dimen/margin"
             app:boxCornerRadiusBottomStart="@dimen/margin"
             app:boxCornerRadiusTopEnd="@dimen/margin"
@@ -74,8 +69,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/input_referral_signup"
-                android:inputType="text"
+                android:id="@+id/input_referral"
                 android:hint="REFERRAL CODE (OPTIONAL)"
                 />
 
@@ -83,16 +77,15 @@
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SIGNUP"
-            android:id="@+id/signup_btn"
             android:minWidth="140dp"
-            android:layout_marginTop="@dimen/fab_size_mini"
-            android:background="@color/colorPrimary"
+            android:id="@+id/btn_update_username"
+            android:padding="@dimen/margin"
+            android:layout_height="wrap_content"
             android:textColor="@android:color/white"
+            android:background="@color/colorPrimary"
             android:textSize="@dimen/suggestion_body_text_size"
-            />
-
+            android:text="CONTINUE"
+            android:layout_marginTop="@dimen/fab_size_normal"/>
     </LinearLayout>
 
 </RelativeLayout>

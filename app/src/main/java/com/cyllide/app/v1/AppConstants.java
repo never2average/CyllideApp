@@ -27,4 +27,5 @@ public class AppConstants {
     public static String userLevel;
 
     public static int minWithdrawable;
+    public static String tempUsername;
 }
