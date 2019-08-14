@@ -52,11 +52,8 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class PortfolioGameHomeActivity extends AppCompatActivity {
 
-    List<String> testData;
-    ImageView tab1, tab2, tab3;
-    GifImageView loading;
    TabLayout tabLayout;
-   ViewPager viewPager;
+   NonSwipeableViewPager viewPager;
    ImageView backbutton;
 
 

@@ -9,6 +9,7 @@
 
 
      <LinearLayout
+         android:id="@+id/lol"
          android:layout_width="match_parent"
          android:layout_height="wrap_content">
          <ImageView
@@ -32,7 +33,7 @@
             android:layout_weight="1"
             android:padding="@dimen/margin"
             android:layout_height="match_parent"
-            android:background="@drawable/tab_selector"/>
+            />
         <com.google.android.material.tabs.TabItem
             android:padding="@dimen/margin"
             android:id="@+id/pg_home_activity_2"
@@ -56,20 +57,14 @@
      </LinearLayout>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/colorPrimary"/>
 
-    <androidx.viewpager.widget.ViewPager
-        android:layout_below="@id/portfoliogametabs"
+    <com.cyllide.app.v1.portfolio.NonSwipeableViewPager
+        android:layout_below="@id/lol"
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipChildren="false">
+        android:clipChildren="false"/>
 
-    </androidx.viewpager.widget.ViewPager>
 
 
 </RelativeLayout>

@@ -24,7 +24,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.cyllide.app.v1.portfolio.PortfolioGameLeaderboardActivity;
 import com.cyllide.app.v1.portfolio.PortfolioGameLeaderboardRVAdapter;
 import com.cyllide.app.v1.portfolio.PortfolioGameLeaderboardRVModel;
 
