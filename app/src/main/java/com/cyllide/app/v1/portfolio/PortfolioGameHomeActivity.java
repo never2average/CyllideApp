@@ -57,6 +57,7 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
     GifImageView loading;
    TabLayout tabLayout;
    ViewPager viewPager;
+   ImageView backbutton;
 
 
     @Override
@@ -66,11 +67,19 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
         setContentView(R.layout.portfolio_game_home_activity);
         tabLayout = findViewById(R.id.portfoliogametabs);
         viewPager = findViewById(R.id.view_pager);
+        backbutton = findViewById(R.id.portfolio_game_back_button);
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         PortfolioGamePagerAdapter pageAdapter = new PortfolioGamePagerAdapter(getSupportFragmentManager(), PortfolioGameHomeActivity.this);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
            @Override
            public void onTabSelected(TabLayout.Tab tab) {
+               viewPager.setCurrentItem(tab.getPosition());
 
            }
 
@@ -81,11 +90,13 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
 
            @Override
            public void onTabReselected(TabLayout.Tab tab) {
+               viewPager.setCurrentItem(tab.getPosition());
 
            }
        });
         viewPager.setAdapter(pageAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
 
 
     }

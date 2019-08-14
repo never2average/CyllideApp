@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-
 import com.cyllide.app.v1.portfolio.PortfolioGameFragment;
 import com.cyllide.app.v1.portfolio.PortfolioLeaderboardFragment;
 import com.cyllide.app.v1.portfolio.PortfolioPositionsFragment;
@@ -29,7 +28,7 @@ public class PortfolioGamePagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return new PortfolioGamePositionsFragment(context);
             case 2:
-//                return new PortfolioLeaderboardFragment(context);
+                return new PortfolioGameLeaderboardFragment(context);
         }
         return null;
 
