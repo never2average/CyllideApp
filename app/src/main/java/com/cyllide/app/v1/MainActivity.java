@@ -205,20 +205,16 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         }){
             @Override
             public Map<String,String> getHeaders(){
-
-                return homepageDataHeaders;            }
+                return homepageDataHeaders;
+            }
         };
         vcRequestQueue.add(stringRequest);
-
-
-
     }
 
     void setUpActivity(){
 
         setTheme(R.style.AppTheme_NoActionBar);
         setContentView(R.layout.activity_main);
-//        setApplicationConstants();
         InternetAvailabilityChecker.init(this);
         internetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
         internetAvailabilityChecker.addInternetConnectivityListener(this);
@@ -250,7 +246,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
 
         AppSignatureHelper appSignature = new AppSignatureHelper(this);
-//        Log.d("HASH",appSignature.getAppSignatures().toString());
 
 
         Intent serviceIntent = new Intent(this, GetLatestQuizIDService.class);
