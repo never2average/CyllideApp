@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:swipedeck="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9">
+
+    <link.fls.swipestack.SwipeStack
+        swipedeck:stack_rotation="0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/swipe_deck"/>
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/loading_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/web_view_loading"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/portfolio_game_buttons"
+        android:background="@android:color/transparent"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        android:padding="@dimen/default_background_stroke_width">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            swipedeck:cardCornerRadius="32dp"
+            android:layout_marginHorizontal="30dp"
+            swipedeck:cardElevation="5dp"
+            android:id="@+id/portfolio_game_cross"
+            >
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:padding="@dimen/margin"
+                    android:src="@drawable/cross_icon"
+                    android:tint="@android:color/holo_red_dark"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            swipedeck:cardCornerRadius="27dp"
+            swipedeck:cardElevation="5dp"
+            android:id="@+id/portfolio_game_diamond"
+            >
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:padding="@dimen/margin"
+                    android:src="@drawable/buydouble"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            swipedeck:cardCornerRadius="32dp"
+            android:layout_marginHorizontal="30dp"
+            swipedeck:cardElevation="5dp"
+            android:id="@+id/portfolio_game_heart"
+            >
+            <LinearLayout
+                android:padding="@dimen/margin"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:src="@drawable/heart_icon"
+                    android:tint="#5AE65A"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+
+</LinearLayout>

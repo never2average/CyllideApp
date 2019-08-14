@@ -35,6 +35,7 @@ import com.cyllide.app.v1.forum.ForumActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -173,14 +174,12 @@ public class ProfileActivity extends AppCompatActivity {
                     .endConfig()
                     .buildRect(Character.toString(AppConstants.username.charAt(0)).toUpperCase(), color);
             profilePic.setImageDrawable(drawable);
-            Toast.makeText(ProfileActivity.this,"null part",Toast.LENGTH_SHORT).show();
 
         }else{
             String ur=sharedPreferences.getString("profileUri",null);
             Uri uri=Uri.parse(ur);
             Log.d("imageuri",ur);
             Glide.with(ProfileActivity.this).load(uri).into(profilePic);
-            Toast.makeText(ProfileActivity.this," not null",Toast.LENGTH_SHORT).show();
 
 
         }
@@ -317,7 +316,9 @@ public class ProfileActivity extends AppCompatActivity {
                                     public void onClick(View v) {
                                         quizWinPopup.dismiss();
                                         final String string = upiID.getText().toString();
-                                        Toast.makeText(ProfileActivity.this,"Money will be sent",Toast.LENGTH_LONG).show();
+                                        Snackbar snackbar = Snackbar
+                                                .make(findViewById(R.id.root_layout),"Money will be sent", Snackbar.LENGTH_LONG);
+                                        snackbar.show();
                                         winnersMoney(string);
                                     }
                                 });
@@ -476,14 +477,12 @@ public class ProfileActivity extends AppCompatActivity {
                                     setProfilePicVolley(uri.toString());
                                 }
                             });
-                            Toast.makeText(context, "Uploaded", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(context, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {

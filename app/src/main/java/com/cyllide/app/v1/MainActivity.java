@@ -42,6 +42,7 @@ import com.cyllide.app.v1.notification.NotificationActivity;
 
 import com.cyllide.app.v1.portfolio.VersionControlActivity;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.android.material.snackbar.Snackbar;
 import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker;
 import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
 
@@ -87,7 +88,9 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click back again to exit", Toast.LENGTH_SHORT).show();
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.root_layout),"Please click back again to exit", Snackbar.LENGTH_LONG);
+        snackbar.show();
 
         new Handler().postDelayed(new Runnable() {
 

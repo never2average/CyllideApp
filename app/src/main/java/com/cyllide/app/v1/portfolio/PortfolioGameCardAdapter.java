@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -59,6 +60,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
     TextView companySector;
     TextView previousClose, open, marketCap,ticker, peRatio;
     View v;
+    ImageView infoButton;
     int lastIndex=60;
 
 
@@ -92,6 +94,11 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
         v = convertView;
         if (v == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
+            if(data.get(position).getTicker().equals("LoadingScreen")){
+                v = inflater.inflate(R.layout.loading_screen, parent, false);
+                return v;
+
+            }
             v = inflater.inflate(R.layout.game_card_nifty50, parent, false);
             companyIndustry = v.findViewById(R.id.companyindustry);
             companySector = v.findViewById(R.id.companysector);
@@ -101,6 +108,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
             //ask=v.findViewById(R.id.dtgc_ask);
             marketCap=v.findViewById(R.id.dtgc_marketcap);
             ticker = v.findViewById(R.id.ticker_title);
+            infoButton = v.findViewById(R.id.game_card_info_button);
 
 
         }
@@ -125,7 +133,16 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
         previousClose.setText(data.get(position).getPreviousClose());
         open.setText(data.get(position).getOpen());
         marketCap.setText(data.get(position).getMarketCap());
+        Log.d("DATAAA",data.get(position).getTicker());
         ticker.setText(data.get(position).getTicker());
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(v.getContext(),PortfolioGameDetailedChartActivity.class);
+                i.putExtra("ticker",data.get(position).getTicker());
+                v.getContext().startActivity(i);
+            }
+        });
 
 //        ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
 //        LineDataSet lineDataSet = new LineDataSet(yAxisValues,"Test");

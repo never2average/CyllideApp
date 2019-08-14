@@ -25,6 +25,7 @@ import com.cyllide.app.v1.R;
 import com.cyllide.app.v1.forum.ForumActivity;
 import com.cyllide.app.v1.forum.questionlist.questionPage.QuestionAnswerActivity;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.JsonArray;
 import com.nex3z.togglebuttongroup.MultiSelectToggleGroup;
@@ -65,8 +66,13 @@ public class AskQuestion extends AppCompatActivity {
         askQuestionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(questionText.getText().toString().length()>15){
+                if(questionText.getText().toString().length()>9){
                     askQuestionVolley();
+                }
+                else{
+                    Snackbar snackbar = Snackbar
+                            .make(findViewById(R.id.root_layout),"Question must be at least 10 characters long", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
             }
         });

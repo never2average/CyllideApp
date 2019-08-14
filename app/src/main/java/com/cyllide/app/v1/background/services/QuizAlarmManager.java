@@ -105,7 +105,7 @@ public class QuizAlarmManager extends BroadcastReceiver {
 
     public void setAlarm(Context context)
     {
-        Toast.makeText(context,"In SetAlarm",Toast.LENGTH_SHORT);
+//        Toast.makeText(context,"In SetAlarm",Toast.LENGTH_SHORT);
         AlarmManager am =(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(context, QuizAlarmManager.class);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);

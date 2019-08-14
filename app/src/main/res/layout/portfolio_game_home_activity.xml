@@ -19,22 +19,20 @@
             android:layout_weight="1"
             android:background="@color/colorPrimary"/>
 
-    <LinearLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/portfoliogametabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:padding="@dimen/margin"
-            android:id="@+id/portfolio_game_back_button"
-            android:src="@drawable/ic_arrow_back_black_24dp"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <ImageView
+        >
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:padding="@dimen/margin"-->
+            <!--android:id="@+id/portfolio_game_back_button"-->
+            <!--android:src="@drawable/ic_arrow_back_black_24dp"-->
+            <!--/>-->
+
+        <com.google.android.material.tabs.TabItem
             android:id="@+id/pg_home_activity_1"
             android:src="@drawable/graph_icon"
             android:layout_width="0dp"
@@ -42,7 +40,7 @@
             android:padding="@dimen/margin"
             android:layout_height="match_parent"
             android:background="@drawable/tab_selector"/>
-        <ImageView
+        <com.google.android.material.tabs.TabItem
             android:padding="@dimen/margin"
             android:id="@+id/pg_home_activity_2"
             android:src="@drawable/portfolio_icon"
@@ -50,7 +48,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             />
-        <ImageView
+        <com.google.android.material.tabs.TabItem
             android:id="@+id/pg_home_activity_3"
             android:src="@drawable/award_icon"
             android:layout_width="0dp"
@@ -58,119 +56,17 @@
             android:padding="@dimen/margin"
             android:layout_height="match_parent"
             />
-        </LinearLayout>
-    </LinearLayout>
 
-    <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
         android:layout_below="@id/portfoliogametabs"
-        android:layout_above="@id/portfolio_game_buttons"
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false">
-        <!--<com.yuyakaido.android.cardstackview.CardStackView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:id="@+id/swipe_deck" />-->
-        <link.fls.swipestack.SwipeStack
-            swipedeck:stack_rotation="0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/swipe_deck"></link.fls.swipestack.SwipeStack>
-    </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/portfolio_game_buttons"
-        android:background="@android:color/transparent"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="center"
-        android:layout_marginBottom="20dp"
-        android:padding="@dimen/default_background_stroke_width">
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            swipedeck:cardCornerRadius="32dp"
-            android:layout_marginHorizontal="30dp"
-            swipedeck:cardElevation="5dp"
-            android:id="@+id/portfolio_game_cross"
-            >
-            <LinearLayout
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            <ImageView
-                android:padding="@dimen/margin"
-                android:src="@drawable/cross_icon"
-                android:tint="@android:color/holo_red_dark"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"/>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="54dp"
-            android:layout_height="54dp"
-            swipedeck:cardCornerRadius="27dp"
-            swipedeck:cardElevation="5dp"
-            android:id="@+id/portfolio_game_diamond"
-            >
-            <LinearLayout
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:padding="@dimen/margin"
-                    android:src="@drawable/buydouble"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"/>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            swipedeck:cardCornerRadius="32dp"
-            android:layout_marginHorizontal="30dp"
-            swipedeck:cardElevation="5dp"
-            android:id="@+id/portfolio_game_heart"
-            >
-            <LinearLayout
-                android:padding="@dimen/margin"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:src="@drawable/heart_icon"
-                    android:tint="#5AE65A"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"/>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-    </LinearLayout>
-
-    <!--<FrameLayout-->
-        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:clipChildren="false">-->
-
-        <!--<com.daprlabs.aaron.swipedeck.SwipeDeck-->
-            <!--android:background="@android:color/transparent"-->
-            <!--android:id="@+id/swipe_deck"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_marginTop="50dp"-->
-            <!--android:layout_marginBottom="100dp"-->
-            <!--swipedeck:card_spacing="0dp"-->
-            <!--swipedeck:max_visible="5"-->
-            <!--swipedeck:swipe_enabled="true" />-->
-
-    <!--</FrameLayout>-->
+    </androidx.viewpager.widget.ViewPager>
 
 
 </RelativeLayout>
