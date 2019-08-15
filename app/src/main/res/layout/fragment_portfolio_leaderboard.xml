@@ -10,18 +10,99 @@
         <LinearLayout
             android:paddingTop="60dp"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:minHeight="300dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+           >
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:orientation="horizontal"
                 android:layout_gravity="center"
                 >
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/layout_pos_1"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="bottom"
                     android:layout_height="wrap_content"
-                    android:text="LOOL"/>
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/profilePic_pos_1"
+                        />
+                    <TextView
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:id="@+id/name_pos_1"
+                        android:text="LkgbliyguyguyglugluglOL"
+                        android:layout_marginStart="@dimen/default_background_stroke_width"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingBottom="100dp"
+                    android:id="@+id/layout_pos_2"
+                    android:layout_width="0dp"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/profilePic_pos_2" />
+                    <TextView
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:id="@+id/name_pos_2"
+                        android:text="LdjfhgalsiuhvisduhvOL"
+                        android:layout_marginStart="@dimen/default_background_stroke_width"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_gravity="bottom"
+                    android:id="@+id/layout_pos_3"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/profilePic_pos_3" />
+                    <TextView
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        android:id="@+id/name_pos_3"
+                        android:text="LOL"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/default_background_stroke_width"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+
+
             </LinearLayout>
 
 

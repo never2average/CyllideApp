@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.R;
 import com.github.mikephil.charting.components.Description;
@@ -42,10 +45,15 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.zip.Inflater;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class PortfolioLeaderboardFragment extends Fragment {
     RecyclerView recyclerView;
     ArrayList<LeaderBoardModel> data=new ArrayList<LeaderBoardModel>();
     Map<String,String> LeaderBoardMap;
+    LinearLayout position1ll, position2ll,position3ll;
+    CircleImageView position1cv, position2cv, position3cv;
+    TextView position1tv, position2tv, position3tv;
 
     Context context;
 
@@ -65,6 +73,17 @@ public class PortfolioLeaderboardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView=view.findViewById(R.id.pg_leaderboard_rv);
+        position1ll = view.findViewById(R.id.layout_pos_1);
+        position2ll = view.findViewById(R.id.layout_pos_2);
+        position3ll = view.findViewById(R.id.layout_pos_3);
+
+        position1cv = view.findViewById(R.id.profilePic_pos_1);
+        position2cv = view.findViewById(R.id.profilePic_pos_2);
+        position3cv = view.findViewById(R.id.profilePic_pos_3);
+
+        position1tv = view.findViewById(R.id.name_pos_1);
+        position2tv = view.findViewById(R.id.name_pos_2);
+        position3tv = view.findViewById(R.id.name_pos_3);
       getLeaderboard();
 
     }
@@ -85,9 +104,51 @@ public class PortfolioLeaderboardFragment extends Fragment {
                 try {
                     JSONArray responseArray = new JSONObject(response).getJSONArray("data");
                     int length = responseArray.length();
-                    for(int i=0;i<length;i++)
+                    for(int i=length-1;i>=0;i--)
                     {
                         data.add(new LeaderBoardModel(responseArray.getJSONObject(i).getString("userName"),responseArray.getJSONObject(i).getString("cyllidePoints"),responseArray.getJSONObject(i).getString("profilePic"),i+1));
+
+                    }
+                    position1ll.setVisibility(View.GONE);
+                    position2ll.setVisibility(View.GONE);
+                    position3ll.setVisibility(View.GONE);
+                    if(length >=3){
+                        position1ll.setVisibility(View.VISIBLE);
+                        Glide.with(context).load(Uri.parse(data.get(1).getProfileUri())).into(position1cv);
+                        position1tv.setText(data.get(1).getName());
+
+
+                        position2ll.setVisibility(View.VISIBLE);
+                        Glide.with(context).load(Uri.parse(data.get(0).getProfileUri())).into(position2cv);
+                        position2tv.setText(data.get(0).getName());
+
+                        position3ll.setVisibility(View.VISIBLE);
+                        Glide.with(context).load(Uri.parse(data.get(2).getProfileUri())).into(position3cv);
+                        position3tv.setText(data.get(2).getName());
+
+                    }
+                    else if(length >=2){
+                        position3ll.setVisibility(View.VISIBLE);
+                        Glide.with(context).load(Uri.parse(data.get(1).getProfileUri())).into(position3cv);
+                        position3tv.setText(data.get(1).getName());
+
+
+                        position2ll.setVisibility(View.VISIBLE);
+                        Glide.with(context).load(Uri.parse(data.get(0).getProfileUri())).into(position2cv);
+                        position2tv.setText(data.get(0).getName());
+
+                        position1ll.setVisibility(View.GONE);
+
+                    }
+                    else if(length>=1){
+                        position1ll.setVisibility(View.VISIBLE);
+                        Glide.with(context).load(Uri.parse(data.get(0).getProfileUri())).into(position1cv);
+                        position1tv.setText(data.get(0).getName());
+
+                        position2ll.setVisibility(View.GONE);
+                        position3ll.setVisibility(View.GONE);
+
+
 
                     }
                     recyclerView.setHasFixedSize(true);

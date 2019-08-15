@@ -9,7 +9,6 @@ android:padding="@dimen/default_stroke_width">
     android:layout_width="0dp"
     android:layout_height="50dp"
     android:layout_gravity="left"
-
     android:id="@+id/profilePic"
     android:layout_weight="1"/>
 <TextView
