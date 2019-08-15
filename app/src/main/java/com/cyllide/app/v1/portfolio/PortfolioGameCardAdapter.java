@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
@@ -31,6 +32,8 @@ import com.cyllide.app.v1.PortfolioGameCardModel;
 import com.cyllide.app.v1.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -61,7 +64,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
     TextView previousClose, open, marketCap,ticker, peRatio;
     View v;
     ImageView infoButton;
-    int lastIndex=60;
+    int lastIndex;
 
 
 
@@ -112,15 +115,15 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
 
 
         }
-        ArrayList<Entry> yAxisValues = new ArrayList<>();
-        for(int i=0;i<100;i++){
-            if(i<60){
-
-
-            yAxisValues.add(new Entry((float)i,(float)(2*i+1)));}
-
-
-        }
+//        ArrayList<Entry> yAxisValues = new ArrayList<>();
+//        for(int i=0;i<100;i++){
+//            if(i<60){
+//
+//
+//            yAxisValues.add(new Entry((float)i,(float)(2*i+1)));}
+//
+//
+//        }
 
 
 
@@ -177,23 +180,23 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
 
 
         ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
-        LineDataSet lineDataSet = new LineDataSet(yAxisValues,"Test");
-        lineDataSet.setDrawCircles(false);
+        //LineDataSet lineDataSet = new LineDataSet(yAxisValues,"Test");
+        //lineDataSet.setDrawCircles(false);
 
-        if(yAxisValues.get(lastIndex-1).getY()>=getMean(yAxisValues))
-        {
-            lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.progressgreen));
-            lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_gradient));
-
-
-        }
-        else {
-            lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.red));
-            lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_red_drawable));
-
-        }
+//        if(yAxisValues.get(lastIndex-1).getY()>=getMean(yAxisValues))
+//        {
+//            lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.progressgreen));
+//            lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_gradient));
+//
+//
+//        }
+//        else {
+//            lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.red));
+//            lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_red_drawable));
+//
+//        }
         //lineChart.getRenderer().getPaintRender().setShader(new LinearGradient(0, 0, lineChart.getMeasuredWidth(), 0, ContextCompat.getColor(context,R.color.colorPrimary),ContextCompat.getColor(context,R.color.colorPrimary), Shader.TileMode.CLAMP));
-        lineDataSets.add(lineDataSet);
+        //lineDataSets.add(lineDataSet);
 
        // lineDataSets.add(whiteLinedataset);
 
@@ -209,11 +212,11 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
         lineChart.getAxisLeft().setDrawGridLines(false);
         lineChart.getXAxis().setEnabled(false);
 
-        lineDataSet.setDrawFilled(true);
+       // lineDataSet.setDrawFilled(true);
 
         lineChart.getLegend().setEnabled(false);
 
-       plotMean(lineChart,yAxisValues,lineDataSets);
+      // plotMean(lineChart,yAxisValues,lineDataSets);
 
         lineChart.invalidate();
 
@@ -340,9 +343,10 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
                     lineChart.setData(new LineData(lineDataSets));
                     lineChart.getXAxis().setDrawLabels(false);
                     lineChart.getXAxis().setDrawGridLines(false);
-                    lineChart.getAxisRight().setEnabled(false);
-                    lineChart.getAxisLeft().setTextColor(ContextCompat.getColor(context,R.color.white));
-                    lineChart.getAxisLeft().setGridColor(ContextCompat.getColor(context,R.color.white));
+                    lineChart.getAxisRight().setEnabled(true);
+                    lineChart.getAxisLeft().setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
+                    lineChart.getAxisRight().setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
+                    lineChart.getAxisLeft().setGridColor(ContextCompat.getColor(context,R.color.colorPrimary));
                     lineChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
                         @Override
                         public void onValueSelected(Entry e, Highlight h) {
@@ -375,6 +379,8 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
                     d.setText("");
                     lineChart.setDescription(d);
                     lineChart.invalidate();
+                    plotMean(lineChart,yAxisValues,lineDataSets);
+                    lastIndex=yAxisValues.size();
 
                     if(yAxisValues.get(lastIndex-1).getY()>=getMean(yAxisValues))
                     {
@@ -400,8 +406,8 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
                     lineChart.getXAxis().setDrawLabels(false);
 
                     lineChart.setDescription(d);
-                    lineChart.getAxisLeft().setDrawGridLines(false);
-                    lineChart.getXAxis().setEnabled(false);
+                    lineChart.getAxisLeft().setDrawGridLines(true);
+                    lineChart.getXAxis().setEnabled(true);
 
                     lineDataSet.setDrawFilled(true);
 
@@ -440,7 +446,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
         int sum=0;
         for(int i= 0;i<list.size();i++) {
 
-            sum+=list.get(i).getX();
+            sum+=list.get(i).getY();
 
         }
         mean=sum/list.size();
@@ -449,12 +455,12 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
     }
 
     void plotMean( LineChart lineChart, ArrayList<Entry> yAxisValues,ArrayList<ILineDataSet> lineDataSets ){
-
+           float mean =getMean(yAxisValues);
         ArrayList<Entry> meanline =new ArrayList<>();
-        for (int i=0;i<100;i++)
+        for (int i=0;i<200;i++)
         {
 
-            meanline.add(new Entry((float)i,getMean(yAxisValues)));
+            meanline.add(new Entry((float)i,mean));
         }
         LineDataSet meanDataSet = new LineDataSet(meanline,"mean");
         meanDataSet.setDrawCircles(false);
@@ -463,8 +469,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
         meanDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.colorPrimary));
 
 
-        lineChart.setData(new LineData(lineDataSets));
-        lineChart.invalidate();
+        
 
 
 
