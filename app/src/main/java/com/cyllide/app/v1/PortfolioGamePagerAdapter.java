@@ -28,7 +28,7 @@ public class PortfolioGamePagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return new PortfolioGamePositionsFragment(context);
             case 2:
-                return new PortfolioGameLeaderboardFragment(context);
+                return new PortfolioLeaderboardFragment(context);
         }
         return null;
 
