@@ -370,6 +370,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
                         public void onNothingSelected() {
                         }
                     });
+                    plotMean(lineChart,yAxisValues,lineDataSets);
 
                     lineDataSet.setLineWidth(3);
                     lineDataSet.setCircleRadius(5);
@@ -379,7 +380,6 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
                     d.setText("");
                     lineChart.setDescription(d);
                     lineChart.invalidate();
-                    plotMean(lineChart,yAxisValues,lineDataSets);
                     lastIndex=yAxisValues.size();
 
                     if(yAxisValues.get(lastIndex-1).getY()>=getMean(yAxisValues))
@@ -469,7 +469,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
         meanDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.colorPrimary));
 
 
-        
+
 
 
 
