@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/layout"
-    >
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:id="@+id/profilePic"
-        android:layout_weight="1"/>
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/name"
-        android:layout_weight="4"
-        android:text="kartikbhardwaj"
-        />
-<TextView
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_height="wrap_content"
+android:layout_width="match_parent"
+    android:id="@+id/layout"
+android:padding="@dimen/default_stroke_width">
+<de.hdodenhof.circleimageview.CircleImageView
     android:layout_width="0dp"
-    android:layout_height="wrap_content"
+    android:layout_height="50dp"
+    android:layout_gravity="left"
+
+    android:id="@+id/profilePic"
+    android:layout_weight="1"/>
+<TextView
+    android:textSize="20sp"
+    android:gravity="center_vertical"
+    android:id="@+id/name"
+    android:layout_marginStart="@dimen/default_background_stroke_width"
+    android:layout_width="0dp"
+    android:layout_weight="3"
+    android:layout_height="match_parent" />
+<TextView
+    android:textSize="20sp"
+    android:gravity="center"
+    android:textAlignment="center"
     android:id="@+id/points"
+    android:layout_width="0dp"
     android:layout_weight="1"
-    android:text="99"/>
+    android:layout_height="match_parent" />
 </LinearLayout>

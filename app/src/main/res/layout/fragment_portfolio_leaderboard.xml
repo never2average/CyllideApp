@@ -11,54 +11,25 @@
             android:paddingTop="60dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            >
-
+            android:layout_weight="1">
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_margin="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="3"
-                    android:gravity="center">
-                    <ImageView
-                        android:id="@+id/pg_leaderboard_current_level_img"
-                        android:layout_marginBottom="@dimen/default_background_stroke_width"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="2">
-                    <TextView
-                        android:textColor="@color/white"
-                        android:id="@+id/pg_leaderboard_current_streak"
-                        android:gravity="center"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent" />
-                    <TextView
-                        android:textColor="@color/white"
-                        android:id="@+id/pg_leaderboard_current_level"
-                        android:text="BEGINNER"
-                        android:gravity="center"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent" />
-                    <TextView
-                        android:id="@+id/pg_leaderboard_num_streaks"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LOOL"/>
             </LinearLayout>
+
+
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"/>
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_margin="@dimen/default_background_stroke_width"
