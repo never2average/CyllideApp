@@ -33,12 +33,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import pl.droidsonroids.gif.GifImageView;
+
 public class PortfolioGamePositionsFragment extends Fragment {
     Context context;
     RecyclerView positionsRV;
     private ImageView backBtn;
     Map<String, String> positionsHeader = new HashMap<>();
     RequestQueue positionsQueue;
+    GifImageView loading;
 
     public PortfolioGamePositionsFragment(Context context) {
         this.context = context;
@@ -50,6 +53,8 @@ public class PortfolioGamePositionsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_positions, container, false);
         positionsRV = view.findViewById(R.id.portfoliopositionsrv);
+        loading = view.findViewById(R.id.loading_screen);
+        loading.setVisibility(View.VISIBLE);
         getPositionsLTPVolley();
 
         return view;
@@ -121,6 +126,7 @@ public class PortfolioGamePositionsFragment extends Fragment {
                     final PositionsAdapter positionsAdapter = new PositionsAdapter(positionsModels);
                     positionsRV.setAdapter(positionsAdapter);
                     positionsAdapter.notifyDataSetChanged();
+                    loading.setVisibility(View.GONE);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

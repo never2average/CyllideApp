@@ -80,6 +80,7 @@ public class PortfolioGameFragment extends Fragment {
 
             @Override
             public void onStackEmpty() {
+                loading.setVisibility(View.VISIBLE);
                 fetchCards(i);
                 i++;
             }
