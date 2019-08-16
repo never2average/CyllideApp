@@ -5,9 +5,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cyllide.app.v1.portfolio.PortfolioPositionsRV.PositionsModel;
+
+import java.text.Format;
+import java.util.Formatter;
 
 public class PositionsViewHolder extends RecyclerView.ViewHolder {
     TextView quantityTV,nameTV,avgPrice,ltp, cost;
@@ -24,7 +28,17 @@ public class PositionsViewHolder extends RecyclerView.ViewHolder {
         //TODO MESSED UP CLEAN HERE
         quantityTV.setText(positionsModel.getPositionQuantity());
         nameTV.setText(positionsModel.getPositionTicker());
-        ltp.setText(positionsModel.getPositionltp());
+        ltp.setText(String.format("%.2f",Double.parseDouble(positionsModel.getPositionltp())));
+        avgPrice.setText( String.format("%.2f",Double.parseDouble(positionsModel.getPositionCurrPrice())));
+        cost.setText(String.format("%.2f", Double.parseDouble(positionsModel.getPositionValue())));
+        if(Double.valueOf(positionsModel.getPositionValue())>=0){
+            cost.setTextColor(ContextCompat.getColor(itemView.getContext(),R.color.green));
+        }
+        else{
+            cost.setTextColor(ContextCompat.getColor(itemView.getContext(),R.color.red));
+
+        }
+
 //        cost.setText(positionsModel.getPositionCost());
     }
 }

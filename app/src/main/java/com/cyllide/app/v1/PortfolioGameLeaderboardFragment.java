@@ -50,10 +50,10 @@ public class PortfolioGameLeaderboardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_portfolio_leaderboard, container, false);
 
-        levelImage = view.findViewById(R.id.pg_leaderboard_current_level_img);
-        currentStreakDays = view.findViewById(R.id.pg_leaderboard_current_streak);
-        numberStreaks = view.findViewById(R.id.pg_leaderboard_num_streaks);
-        currentLevel = view.findViewById(R.id.pg_leaderboard_current_level);
+//        levelImage = view.findViewById(R.id.pg_leaderboard_current_level_img);
+//        currentStreakDays = view.findViewById(R.id.pg_leaderboard_current_streak);
+//        numberStreaks = view.findViewById(R.id.pg_leaderboard_num_streaks);
+//        currentLevel = view.findViewById(R.id.pg_leaderboard_current_level);
         leaderBoardRV = view.findViewById(R.id.pg_leaderboard_rv);
         leaderBoardRV.setLayoutManager(new LinearLayoutManager(context));
         populateLeaderBoard();
