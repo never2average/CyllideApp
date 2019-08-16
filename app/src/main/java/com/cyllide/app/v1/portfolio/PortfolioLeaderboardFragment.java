@@ -20,6 +20,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -135,26 +137,35 @@ public class PortfolioLeaderboardFragment extends Fragment {
                     if(length >=3){
                         position1ll.setVisibility(View.VISIBLE);
                         Glide.with(context).load(Uri.parse(data.get(1).getProfileUri())).into(position1cv);
+                        image(position1cv,data.get(1));
                         position1tv.setText(data.get(1).getName());
 
 
                         position2ll.setVisibility(View.VISIBLE);
                         Glide.with(context).load(Uri.parse(data.get(0).getProfileUri())).into(position2cv);
+                        image(position2cv,data.get(0));
+
                         position2tv.setText(data.get(0).getName());
 
                         position3ll.setVisibility(View.VISIBLE);
                         Glide.with(context).load(Uri.parse(data.get(2).getProfileUri())).into(position3cv);
+                        image(position3cv,data.get(2));
+
                         position3tv.setText(data.get(2).getName());
 
                     }
                     else if(length >=2){
                         position3ll.setVisibility(View.VISIBLE);
                         Glide.with(context).load(Uri.parse(data.get(1).getProfileUri())).into(position3cv);
+                        image(position3cv,data.get(1));
+
                         position3tv.setText(data.get(1).getName());
 
 
                         position2ll.setVisibility(View.VISIBLE);
                         Glide.with(context).load(Uri.parse(data.get(0).getProfileUri())).into(position2cv);
+                        image(position2cv,data.get(0));
+
                         position2tv.setText(data.get(0).getName());
 
                         position1ll.setVisibility(View.GONE);
@@ -164,6 +175,8 @@ public class PortfolioLeaderboardFragment extends Fragment {
                         position1ll.setVisibility(View.VISIBLE);
                         Glide.with(context).load(Uri.parse(data.get(0).getProfileUri())).into(position1cv);
                         position1tv.setText(data.get(0).getName());
+                        image(position1cv,data.get(0));
+
 
                         position2ll.setVisibility(View.GONE);
                         position3ll.setVisibility(View.GONE);
@@ -194,5 +207,21 @@ public class PortfolioLeaderboardFragment extends Fragment {
             }
         };
         requestQueue.add(stringRequest);
+    }
+
+    void image(CircleImageView profileImag, LeaderBoardModel model) {
+
+        ColorGenerator generator = ColorGenerator.MATERIAL;
+        int color = generator.getColor(AppConstants.username);
+        TextDrawable drawable = TextDrawable.builder()
+                .beginConfig()
+                .width(100)
+                .height(100)
+                .endConfig()
+                .buildRect(Character.toString(model.getName().charAt(0)).toUpperCase(), color);
+        if (model.getProfileUri().equals("https://firebasestorage.googleapis.com/v0/b/cyllide.appspot.com/o/defaultuser.png?alt=media&token=0453d4ba-82e8-4b6c-8415-2c3761d8b345")) {
+            profileImag.setImageDrawable(drawable);
+        }
+
     }
 }
