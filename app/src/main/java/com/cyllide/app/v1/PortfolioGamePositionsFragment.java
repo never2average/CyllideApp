@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,7 +43,9 @@ public class PortfolioGamePositionsFragment extends Fragment {
     private ImageView backBtn;
     Map<String, String> positionsHeader = new HashMap<>();
     RequestQueue positionsQueue;
+    TextView totalTV;
     GifImageView loading;
+    double totalValue;
 
     public PortfolioGamePositionsFragment(Context context) {
         this.context = context;
@@ -55,6 +59,7 @@ public class PortfolioGamePositionsFragment extends Fragment {
         positionsRV = view.findViewById(R.id.portfoliopositionsrv);
         loading = view.findViewById(R.id.loading_screen);
         loading.setVisibility(View.VISIBLE);
+        totalTV = view.findViewById(R.id.total_value);
         getPositionsLTPVolley();
 
         return view;
@@ -112,6 +117,7 @@ public class PortfolioGamePositionsFragment extends Fragment {
                 Log.d("DONE", response);
                 try {
                     positionsModels = new ArrayList<>();
+                    totalValue = 0;
                     JSONArray responseList = (new JSONObject(response).getJSONArray("data"));
                     for(int i = 0; i<responseList.length();i++){
                         PositionsModel pm = new PositionsModel();
@@ -119,6 +125,7 @@ public class PortfolioGamePositionsFragment extends Fragment {
                         pm.setPositionQuantity(Integer.toString(responseList.getJSONObject(i).getInt("quantity")));
                         double positionValue = responseList.getJSONObject(i).getDouble("entryPrice") - Double.parseDouble(ltp.getString(responseList.getJSONObject(i).getString("ticker").toUpperCase()));
                         positionValue  *= responseList.getJSONObject(i).getInt("quantity");
+                        totalValue+=positionValue;
                         pm.setPositionCurrPrice(Double.toString(responseList.getJSONObject(i).getDouble("entryPrice")));
                         pm.setPositionltp(ltp.getString(responseList.getJSONObject(i).getString("ticker").toUpperCase()));
                         pm.setPositionValue(Double.toString(positionValue));
@@ -130,6 +137,12 @@ public class PortfolioGamePositionsFragment extends Fragment {
                     positionsRV.setAdapter(positionsAdapter);
                     positionsAdapter.notifyDataSetChanged();
                     loading.setVisibility(View.GONE);
+                    totalTV.setText(String.format("%.2f",totalValue));
+                    totalTV.setTextColor(ContextCompat.getColor(context,R.color.red));
+
+                    if(totalValue>0){
+                        totalTV.setTextColor(ContextCompat.getColor(context,R.color.green));
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
