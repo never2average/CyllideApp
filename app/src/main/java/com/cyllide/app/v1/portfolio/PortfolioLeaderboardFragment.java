@@ -3,6 +3,7 @@ package com.cyllide.app.v1.portfolio;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,6 +57,28 @@ public class PortfolioLeaderboardFragment extends Fragment {
     TextView position1tv, position2tv, position3tv;
 
     Context context;
+    Handler handler = new Handler();
+    Runnable runnable;
+    int delay = 60*1000;
+
+    @Override
+    public void onResume() {
+        handler.postDelayed( runnable = new Runnable() {
+            public void run() {
+                Log.d("LBPERIODIC", "Called once more");
+                getLeaderboard();
+                handler.postDelayed(runnable, delay);
+            }
+        }, delay);
+
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        handler.removeCallbacks(runnable);
+        super.onPause();
+    }
 
     public PortfolioLeaderboardFragment(Context context) {
         this.context = context;
@@ -89,8 +112,8 @@ public class PortfolioLeaderboardFragment extends Fragment {
     }
 
     void getLeaderboard()
-    {                Toast.makeText(context, "insideMethod", Toast.LENGTH_SHORT).show();
-
+    {
+        data = new ArrayList<>();
         String uri=  getResources().getString(R.string.apiBaseURL) + "contest/leaderboard";
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         LeaderBoardMap = new ArrayMap();
@@ -98,9 +121,6 @@ public class PortfolioLeaderboardFragment extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, uri, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("kartik",response.toString());
-
-
                 try {
                     JSONArray responseArray = new JSONObject(response).getJSONArray("data");
                     int length = responseArray.length();
@@ -174,8 +194,5 @@ public class PortfolioLeaderboardFragment extends Fragment {
             }
         };
         requestQueue.add(stringRequest);
-
-
-
     }
 }
