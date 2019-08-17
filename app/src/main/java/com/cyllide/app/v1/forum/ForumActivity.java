@@ -95,7 +95,6 @@ public class ForumActivity extends AppCompatActivity {
                     questionList.add(new QuestionListModel(questionObject.getString("queryBody"), questionObject.getJSONObject("_id"), questionObject.getInt("queryNumViews"), questionObject.getJSONObject("queryLastUpdateTime").getLong("$date"), questionObject.getJSONArray("queryTags")));
                 }
             } catch (JSONException e) {
-                Log.d("JSON Error", e.toString());
             }
         }
         questionListAdapter = new QuestionListAdapter(questionList);
@@ -207,7 +206,6 @@ public class ForumActivity extends AppCompatActivity {
         tags.setOnCheckedChangeListener(new MultiSelectToggleGroup.OnCheckedStateChangeListener() {
             @Override
             public void onCheckedStateChanged(MultiSelectToggleGroup group, int checkedId, boolean isChecked) {
-                Log.d("CheckedID",Integer.toString(checkedId));
 
 
                             if(!selectedTags.contains(forumTags.get(checkedId))){
@@ -217,7 +215,6 @@ public class ForumActivity extends AppCompatActivity {
                                 selectedTags.remove(forumTags.get(checkedId));
                             }
 
-                Log.d("ForumActivity",Integer.toString(selectedTags.size()));
                 if(responseData==null){
                     getQuestions();
                 }

@@ -134,7 +134,6 @@ public class OTPVerification extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("mybad", error.toString());
             }
         }) {
             @Override

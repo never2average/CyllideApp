@@ -80,7 +80,6 @@ public class StoriesFragment extends Fragment {
         StringRequest request = new StringRequest(Request.Method.POST, newsURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("Stories", response);
                 try {
                     List<StoriesModel> storiesModelArrayList = new ArrayList<>();
                     JSONArray storiesJSONArray = new JSONObject(response).getJSONArray("data");
@@ -104,7 +103,6 @@ public class StoriesFragment extends Fragment {
 
 
                 } catch (JSONException e) {
-                    Log.d("NewsFragment", e.toString());
                 }
 
 
@@ -112,7 +110,6 @@ public class StoriesFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Stories Error", error.toString());
             }
         }) {
             @Override
@@ -123,7 +120,6 @@ public class StoriesFragment extends Fragment {
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 int mStatusCode = response.statusCode;
-                Log.d("whats failing", String.valueOf(mStatusCode));
                 return super.parseNetworkResponse(response);
             }
         };

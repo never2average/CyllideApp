@@ -3,7 +3,6 @@ package com.cyllide.app.v1.portfolio;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.ArrayMap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,21 +55,22 @@ public class PortfolioPositionsFragment extends Fragment {
     Map<String, String> holdingPositionRequestHeader = new ArrayMap<>();
 
 
-    private List<PositionsModel> portfolioPositionsData(){
-        List<PositionsModel> data= new ArrayList<>();
-        for(int i = 0; i<CurrentPositions.tickerName.size(); i++){
-            if(System.currentTimeMillis()/1000L - CurrentPositions.tickerEntryTime.get(i) >= 300){
-                data.add(new PositionsModel(CurrentPositions.tickerName.get(i),CurrentPositions.tickerQuantity.get(i),String.valueOf(1234.23),CurrentPositions.tickerPositionType.get(i),CurrentPositions.tickerQuantity.get(i)*1234.23));
-                BalanceClass.balance-=(CurrentPositions.tickerQuantity.get(i)*1234.23);
+    private List<PositionsModel> portfolioPositionsData() {
+        List<PositionsModel> data = new ArrayList<>();
+        for (int i = 0; i < CurrentPositions.tickerName.size(); i++) {
+            if (System.currentTimeMillis() / 1000L - CurrentPositions.tickerEntryTime.get(i) >= 300) {
+                data.add(new PositionsModel(CurrentPositions.tickerName.get(i), CurrentPositions.tickerQuantity.get(i), String.valueOf(1234.23), CurrentPositions.tickerPositionType.get(i), CurrentPositions.tickerQuantity.get(i) * 1234.23));
+                BalanceClass.balance -= (CurrentPositions.tickerQuantity.get(i) * 1234.23);
             }
         }
         return data;
     }
+
     private List<OrdersModel> pendingOrdersData() {
         List<OrdersModel> data = new ArrayList<>(12);
         for (int i = 0; i < CurrentPositions.tickerName.size(); i++) {
-            if(System.currentTimeMillis()/1000L - CurrentPositions.tickerEntryTime.get(i) < 300){
-                data.add(new OrdersModel(CurrentPositions.tickerPositionType.get(i),CurrentPositions.tickerQuantity.get(i),CurrentPositions.tickerName.get(i)));
+            if (System.currentTimeMillis() / 1000L - CurrentPositions.tickerEntryTime.get(i) < 300) {
+                data.add(new OrdersModel(CurrentPositions.tickerPositionType.get(i), CurrentPositions.tickerQuantity.get(i), CurrentPositions.tickerName.get(i)));
             }
         }
         return data;
@@ -83,11 +83,10 @@ public class PortfolioPositionsFragment extends Fragment {
     }
 
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView =inflater.inflate(R.layout.portfolio_positions_fragment,null);
+        View rootView = inflater.inflate(R.layout.portfolio_positions_fragment, null);
         positionsRV = rootView.findViewById(R.id.positions_rv);
         positionsRV.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -100,34 +99,32 @@ public class PortfolioPositionsFragment extends Fragment {
         List<PositionsModel> data1 = portfolioPositionsData();
 
 
-            PositionsAdapter positionsAdapter= new PositionsAdapter(data1);
-            positionsRV.setAdapter(positionsAdapter);
+        PositionsAdapter positionsAdapter = new PositionsAdapter(data1);
+        positionsRV.setAdapter(positionsAdapter);
 
 
         List<OrdersModel> ordersModels = pendingOrdersData();
-            OrdersAdapter ordersAdapter = new OrdersAdapter(ordersModels);
-            pendingOrdersRV.setAdapter(ordersAdapter);
+        OrdersAdapter ordersAdapter = new OrdersAdapter(ordersModels);
+        pendingOrdersRV.setAdapter(ordersAdapter);
 
-        getPendingOrders(getContext(),pendingOrdersRV);
-        getHoldingPositions(getContext(),positionsRV);
+        getPendingOrders(getContext(), pendingOrdersRV);
+        getHoldingPositions(getContext(), positionsRV);
 
         return rootView;
     }
 
-    private void getPendingOrders(Context context, final RecyclerView pendingOrdersRV){
-        String url = getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
+    private void getPendingOrders(Context context, final RecyclerView pendingOrdersRV) {
+        String url = getResources().getString(R.string.apiBaseURL) + "portfolios/positionlist";
         pendingOrderQueue = Volley.newRequestQueue(context);
-        pendingOrderRequestHeader.put("token",AppConstants.token);
+        pendingOrderRequestHeader.put("token", AppConstants.token);
         pendingOrderRequestHeader.put("portfolioID", AppConstants.portfolioID);
-        pendingOrderRequestHeader.put("posType","Pending");
-        Log.d("resp",AppConstants.portfolioID);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,  new Response.Listener<String>() {
+        pendingOrderRequestHeader.put("posType", "Pending");
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.d("resp",response);
                     JSONArray responseData = new JSONObject(response).getJSONArray("data");
-                    populatePendingOrdersRV(responseData,pendingOrdersRV );
+                    populatePendingOrdersRV(responseData, pendingOrdersRV);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -136,7 +133,6 @@ public class PortfolioPositionsFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Question Error", error.toString());
             }
         }) {
             @Override
@@ -147,7 +143,6 @@ public class PortfolioPositionsFragment extends Fragment {
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 int mStatusCode = response.statusCode;
-                Log.d("whats failing", String.valueOf(mStatusCode));
                 return super.parseNetworkResponse(response);
             }
         };
@@ -155,20 +150,18 @@ public class PortfolioPositionsFragment extends Fragment {
 
     }
 
-    private void deletePendingOrders(Context context, final RecyclerView pendingOrdersRV){
-        String url = getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
+    private void deletePendingOrders(Context context, final RecyclerView pendingOrdersRV) {
+        String url = getResources().getString(R.string.apiBaseURL) + "portfolios/positionlist";
         deletePendingOrderQueue = Volley.newRequestQueue(context);
-        deletePendingOrderRequestHeader.put("token",AppConstants.token);
+        deletePendingOrderRequestHeader.put("token", AppConstants.token);
         deletePendingOrderRequestHeader.put("portfolioID", AppConstants.portfolioID);
-        deletePendingOrderRequestHeader.put("posType","Pending");
-        Log.d("resp",AppConstants.portfolioID);
-        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url,  new Response.Listener<String>() {
+        deletePendingOrderRequestHeader.put("posType", "Pending");
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.d("resp",response);
                     JSONArray responseData = new JSONObject(response).getJSONArray("data");
-                    populatePendingOrdersRV(responseData,pendingOrdersRV );
+                    populatePendingOrdersRV(responseData, pendingOrdersRV);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -177,7 +170,6 @@ public class PortfolioPositionsFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Question Error", error.toString());
             }
         }) {
             @Override
@@ -188,7 +180,6 @@ public class PortfolioPositionsFragment extends Fragment {
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 int mStatusCode = response.statusCode;
-                Log.d("whats failing", String.valueOf(mStatusCode));
                 return super.parseNetworkResponse(response);
             }
         };
@@ -197,18 +188,16 @@ public class PortfolioPositionsFragment extends Fragment {
     }
 
 
-    private void getHoldingPositions(Context context, final RecyclerView recyclerView){
-        String url = getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
+    private void getHoldingPositions(Context context, final RecyclerView recyclerView) {
+        String url = getResources().getString(R.string.apiBaseURL) + "portfolios/positionlist";
         holdingPositionsQueue = Volley.newRequestQueue(context);
-        holdingPositionRequestHeader.put("token",AppConstants.token);
+        holdingPositionRequestHeader.put("token", AppConstants.token);
         holdingPositionRequestHeader.put("portfolioID", AppConstants.portfolioID);
-        holdingPositionRequestHeader.put("posType","Holding");
-        Log.d("resp",AppConstants.portfolioID);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,  new Response.Listener<String>() {
+        holdingPositionRequestHeader.put("posType", "Holding");
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.d("resp",response);
                     JSONArray responseData = new JSONObject(response).getJSONArray("data");
                     populateHoldingPositionsRV(responseData, recyclerView);
 
@@ -219,7 +208,6 @@ public class PortfolioPositionsFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Question Error", error.toString());
             }
         }) {
             @Override
@@ -230,7 +218,6 @@ public class PortfolioPositionsFragment extends Fragment {
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 int mStatusCode = response.statusCode;
-                Log.d("whats failing", String.valueOf(mStatusCode));
                 return super.parseNetworkResponse(response);
             }
         };
@@ -239,31 +226,26 @@ public class PortfolioPositionsFragment extends Fragment {
     }
 
 
-
-
-
     private void populateHoldingPositionsRV(JSONArray jsonArray, RecyclerView recyclerView) {
         positionsModel = new ArrayList<>();
-        for(int i=0; i<jsonArray.length(); i++){
+        for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 positionsModel.add(new PositionsModel(
-                                jsonArray.getJSONObject(i).getString("ticker"),
-                                jsonArray.getJSONObject(i).getInt("quantity"),
-                                jsonArray.getJSONObject(i).getString("entryPrice"),
-                                jsonArray.getJSONObject(i).getBoolean("longPosition"),
-                                jsonArray.getJSONObject(i).getDouble("entryPrice")*jsonArray.getJSONObject(i).getInt("quantity")
-                        ));
-                Log.d("portfolioHistory",jsonArray.toString());
+                        jsonArray.getJSONObject(i).getString("ticker"),
+                        jsonArray.getJSONObject(i).getInt("quantity"),
+                        jsonArray.getJSONObject(i).getString("entryPrice"),
+                        jsonArray.getJSONObject(i).getBoolean("longPosition"),
+                        jsonArray.getJSONObject(i).getDouble("entryPrice") * jsonArray.getJSONObject(i).getInt("quantity")
+                ));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        if(positionsModel.size() == 0){
+        if (positionsModel.size() == 0) {
             positionsStatus.setVisibility(View.VISIBLE);
             positionsStatus.setText("Nothing to show.");
-        }
-        else {
+        } else {
             OrdersAdapter myOrdersAdapter = new OrdersAdapter(positionsModel);
             recyclerView.setAdapter(myOrdersAdapter);
             positionsStatus.setVisibility(View.INVISIBLE);
@@ -275,25 +257,23 @@ public class PortfolioPositionsFragment extends Fragment {
 
     private void populatePendingOrdersRV(JSONArray jsonArray, RecyclerView recyclerView) {
         ordersModel = new ArrayList<>();
-        for(int i=0; i<jsonArray.length(); i++){
+        for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 ordersModel.add(
                         new OrdersModel(
                                 jsonArray.getJSONObject(i).getBoolean("longPosition"),
                                 jsonArray.getJSONObject(i).getInt("quantity"),
                                 jsonArray.getJSONObject(i).getString("ticker")
-                                )
+                        )
                 );
-                Log.d("portfolioHistory",jsonArray.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        if(ordersModel.size() == 0){
+        if (ordersModel.size() == 0) {
             pendingOrdersStatus.setVisibility(View.VISIBLE);
             pendingOrdersStatus.setText("Nothing to show.");
-        }
-        else {
+        } else {
             OrdersAdapter myOrdersAdapter = new OrdersAdapter(ordersModel);
             recyclerView.setAdapter(myOrdersAdapter);
             pendingOrdersStatus.setVisibility(View.INVISIBLE);
