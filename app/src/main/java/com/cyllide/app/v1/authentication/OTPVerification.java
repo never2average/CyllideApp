@@ -51,7 +51,7 @@ public class OTPVerification extends AppCompatActivity {
     Runnable runnable;
     int delay = 30*1000;
     LinearLayout resendOTPLayout;
-    TextView resendOTP;
+    TextView resendOTP, changeNumber;
 
     @Override
     protected void onPause() {
@@ -79,6 +79,15 @@ public class OTPVerification extends AppCompatActivity {
         resendOTPLayout = findViewById(R.id.otp_verify_resend);
         verifyBtn = findViewById(R.id.validate_otp_button);
         otpFromSMS = null;
+        changeNumber = findViewById(R.id.change_number);
+        changeNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OTPVerification.this, PhoneAuth.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         otpView = findViewById(R.id.otp_view);
         otpView.requestFocus();
         resendOTP= findViewById(R.id.resend_otp_click);
