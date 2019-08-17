@@ -48,9 +48,7 @@ public class FeedbackActivity extends AppCompatActivity {
         closeFeedBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FeedbackActivity.this,MainActivity.class);
-                startActivity(intent);
-                finish();
+                onBackPressed();
             }
         });
     }
@@ -89,11 +87,5 @@ public class FeedbackActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    @Override
-    public void onBackPressed(){
-        Intent returnHome = new Intent(this,MainActivity.class);
-        startActivity(returnHome);
-        finish();
-    }
 
 }

@@ -273,7 +273,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                 fabMenu.close(true);
                 Intent faqIntent=new Intent(MainActivity.this, FAQActivity.class);
                 startActivity(faqIntent);
-                finish();
             }
         });
 
@@ -284,7 +283,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                 fabMenu.close(true);
                 Intent feedbackIntent = new Intent(MainActivity.this,FeedbackActivity.class);
                 startActivity(feedbackIntent);
-                finish();
             }
         });
 
