@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -45,6 +47,28 @@ public class OTPVerification extends AppCompatActivity {
     RequestQueue requestQueue;
     String phoneNo, enteredOTP;
     Map<String, String> verificationMap = new ArrayMap<>();
+    Handler handler = new Handler();
+    Runnable runnable;
+    int delay = 30*1000;
+    LinearLayout resendOTPLayout;
+    TextView resendOTP;
+
+    @Override
+    protected void onPause() {
+        handler.removeCallbacks(runnable);
+        super.onPause();
+    }
+    @Override
+    protected void onResume() {
+        handler.postDelayed( runnable = new Runnable() {
+            public void run() {
+                delay = delay * 2;
+                resendOTPLayout.setVisibility(View.VISIBLE);
+                handler.postDelayed(runnable, delay);
+            }
+        }, delay);
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +76,18 @@ public class OTPVerification extends AppCompatActivity {
         phoneNo = getIntent().getStringExtra("phone");
         firstuser = getIntent().getBooleanExtra("firstuser", false);
         setContentView(R.layout.activity_otpverification);
-
+        resendOTPLayout = findViewById(R.id.otp_verify_resend);
         verifyBtn = findViewById(R.id.validate_otp_button);
         otpFromSMS = null;
         otpView = findViewById(R.id.otp_view);
         otpView.requestFocus();
-
+        resendOTP= findViewById(R.id.resend_otp_click);
+        resendOTP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resendOTPLayout.setVisibility(View.INVISIBLE);
+            }
+        });
         otpView.setOtpCompletionListener(new OnOtpCompletionListener() {
             @Override
             public void onOtpCompleted(String otp) {
