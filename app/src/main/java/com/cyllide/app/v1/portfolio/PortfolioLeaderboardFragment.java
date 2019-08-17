@@ -57,7 +57,6 @@ public class PortfolioLeaderboardFragment extends Fragment {
     LinearLayout position1ll, position2ll,position3ll;
     CircleImageView position1cv, position2cv, position3cv;
     TextView position1tv, position2tv, position3tv;
-
     Context context;
     Handler handler = new Handler();
     Runnable runnable;
@@ -67,7 +66,6 @@ public class PortfolioLeaderboardFragment extends Fragment {
     public void onResume() {
         handler.postDelayed( runnable = new Runnable() {
             public void run() {
-                Log.d("LBPERIODIC", "Called once more");
                 getLeaderboard();
                 handler.postDelayed(runnable, delay);
             }
