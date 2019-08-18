@@ -2,8 +2,13 @@ package com.cyllide.app.v1.authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.collection.ArrayMap;
+import androidx.core.content.ContextCompat;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
@@ -33,6 +39,7 @@ public class PhoneAuth extends AppCompatActivity {
     MaterialButton registerButton;
     Map<String, String> signUpMap = new ArrayMap<>();
     RequestQueue signUpQueue;
+    Dialog dialog;
 
 
     @Override
@@ -40,6 +47,12 @@ public class PhoneAuth extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_auth);
         phoneNumberEditText = findViewById(R.id.input_phone_auth);
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.otp_loading);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        dialog.setCancelable(false);
+
+
         phoneNumberEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -61,6 +74,7 @@ public class PhoneAuth extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(checkPhoneNoValidity(phoneNumberEditText.getText().toString())) {
+                    dialog.show();
                     signUp();
                 }
 
@@ -80,6 +94,7 @@ public class PhoneAuth extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
+                    dialog.dismiss();
                     if(jsonObject.getString("message").equals("NewUser")){
                         AppConstants.tempUsername="redirect";
                         Intent intent = new Intent(PhoneAuth.this, OTPVerification.class);
@@ -96,7 +111,10 @@ public class PhoneAuth extends AppCompatActivity {
                             finish();
                         }
                         else {
-                            Toast.makeText(getBaseContext(), "Message Sending ",Toast.LENGTH_LONG).show();
+//                            Toast.makeText(getBaseContext(), "Message Sending ",Toast.LENGTH_LONG).show();
+                            Snackbar.make(findViewById(R.id.root_layout),"Something went wrong!",Snackbar.LENGTH_SHORT).show();
+
+
                         }
                     }
                 } catch (JSONException e) {
@@ -106,6 +124,8 @@ public class PhoneAuth extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
+                Snackbar.make(findViewById(R.id.root_layout),"Something went wrong!",Snackbar.LENGTH_SHORT).show();
 
             }
         }){

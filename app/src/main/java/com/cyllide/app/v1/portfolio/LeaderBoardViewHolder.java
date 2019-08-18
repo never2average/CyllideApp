@@ -68,4 +68,5 @@ public class LeaderBoardViewHolder extends RecyclerView.ViewHolder {
        });
 
     }
+
 }

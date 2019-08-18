@@ -69,18 +69,9 @@ public class FAQActivity extends AppCompatActivity {
             crossbutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent mainActivityInt=new Intent(FAQActivity.this, MainActivity.class);
-                    startActivity(mainActivityInt);
-                    finish();
+                  onBackPressed();
                 }
             });
-    }
-
-    @Override
-    public void onBackPressed(){
-        Intent returnHome = new Intent(this,MainActivity.class);
-        startActivity(returnHome);
-        finish();
     }
 
 }

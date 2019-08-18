@@ -1,25 +1,16 @@
-package com.cyllide.app.v1.portfolio;
+package com.cyllide.app.v1;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Paint;
-import android.graphics.Shader;
-import android.net.Uri;
-import android.service.autofill.Dataset;
 import android.util.ArrayMap;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,13 +18,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.cyllide.app.v1.AppConstants;
-import com.cyllide.app.v1.PortfolioGameCardModel;
-import com.cyllide.app.v1.R;
+import com.cyllide.app.v1.portfolio.PortfolioGameDetailedChartActivity;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.LimitLine;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -41,169 +28,83 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.google.android.material.card.MaterialCardView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-public class PortfolioGameCardAdapter extends BaseAdapter {
+public class PortfolioGameCardViewholder extends RecyclerView.ViewHolder {
 
     private ArrayList<PortfolioGameCardModel> data;
     private Context context;
-    RequestQueue summaryQueue;
-    Map<String, String> summaryHeaders = new ArrayMap<>();
-    RequestQueue statsQueue;
-    Map<String, String> statsMap = new ArrayMap<>();
-    TextView companyIndustry;
-    TextView companySector;
-    TextView previousClose, open, marketCap,ticker, peRatio;
-    View v;
-    ImageView infoButton;
-    int lastIndex;
+    private RequestQueue summaryQueue;
+    private Map<String, String> summaryHeaders = new ArrayMap<>();
+    private RequestQueue statsQueue;
+    private Map<String, String> statsMap = new ArrayMap<>();
+    private TextView companyIndustry;
+    private TextView companySector;
+    private TextView previousClose, open, marketCap,ticker, peRatio;
+//    View v;
+private LineChart lineChart;
+    private ImageView infoButton;
+    private int lastIndex;
+
+
+
+    public PortfolioGameCardViewholder(@NonNull View itemView) {
+        super(itemView);
+//        v = itemView;
+        companyIndustry = itemView.findViewById(R.id.companyindustry);
+        companySector = itemView.findViewById(R.id.companysector);
+        peRatio=itemView.findViewById(R.id.dtgc_peratio);
+        previousClose=itemView.findViewById(R.id.dtgc_previousclose);
+        open=itemView.findViewById(R.id.dtgc_open);
+        //ask=v.findViewById(R.id.dtgc_ask);
+        marketCap=itemView.findViewById(R.id.dtgc_marketcap);
+        ticker = itemView.findViewById(R.id.ticker_title);
+        infoButton = itemView.findViewById(R.id.game_card_info_button);
+        context = itemView.getContext();
+        lineChart = itemView.findViewById(R.id.portfolio_game_home_chart);
 
 
 
 
-    public PortfolioGameCardAdapter(ArrayList<PortfolioGameCardModel> data, Context context) {
-        Log.d("ADAPTER BANA","YES");
-        this.data = data;
-        this.context = context;
     }
+    PortfolioGameCardModel model;
+    public void populate(final PortfolioGameCardModel model){
+        this.model = model;
+        Log.d("HERE",model.getTicker());
 
-    @Override
-    public int getCount() {
-        return data.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return data.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-
-        v = convertView;
-        if (v == null) {
-            LayoutInflater inflater = LayoutInflater.from(context);
-            if(data.get(position).getTicker().equals("LoadingScreen")){
-                v = inflater.inflate(R.layout.loading_screen, parent, false);
-                return v;
-
-            }
-            v = inflater.inflate(R.layout.game_card_nifty50, parent, false);
-            companyIndustry = v.findViewById(R.id.companyindustry);
-            companySector = v.findViewById(R.id.companysector);
-            peRatio=v.findViewById(R.id.dtgc_peratio);
-            previousClose=v.findViewById(R.id.dtgc_previousclose);
-            open=v.findViewById(R.id.dtgc_open);
-            //ask=v.findViewById(R.id.dtgc_ask);
-            marketCap=v.findViewById(R.id.dtgc_marketcap);
-            ticker = v.findViewById(R.id.ticker_title);
-            infoButton = v.findViewById(R.id.game_card_info_button);
-
-
-        }
-//        ArrayList<Entry> yAxisValues = new ArrayList<>();
-//        for(int i=0;i<100;i++){
-//            if(i<60){
-//
-//
-//            yAxisValues.add(new Entry((float)i,(float)(2*i+1)));}
-//
-//
-//        }
-
-
-
-        LineChart lineChart = v.findViewById(R.id.portfolio_game_home_chart);
-//        summaryVolley();
-//        statsVolley();
-        companyIndustry.setText(data.get(position).getCompanyIndustry());
-        companySector.setText(data.get(position).getCompanySector());
-        peRatio.setText(data.get(position).getPeRatio());
-        previousClose.setText(data.get(position).getPreviousClose());
-        open.setText(data.get(position).getOpen());
-        marketCap.setText(data.get(position).getMarketCap());
-        Log.d("DATAAA",data.get(position).getTicker());
-        ticker.setText(data.get(position).getTicker());
+        companyIndustry.setText(model.getCompanyIndustry());
+        companySector.setText(model.getCompanySector());
+        peRatio.setText(model.getPeRatio());
+        previousClose.setText(model.getPreviousClose());
+        open.setText(model.getOpen());
+        marketCap.setText(model.getMarketCap());
+        ticker.setText(model.getTicker());
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(v.getContext(),PortfolioGameDetailedChartActivity.class);
-                i.putExtra("ticker",data.get(position).getTicker());
-                v.getContext().startActivity(i);
+                Intent i = new Intent(context, PortfolioGameDetailedChartActivity.class);
+                i.putExtra("ticker",model.getTicker());
+                context.startActivity(i);
             }
         });
 
-//        ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
-//        LineDataSet lineDataSet = new LineDataSet(yAxisValues,"Test");
-//        lineDataSet.setDrawCircles(false);
-//        lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.colorPrimary));
-//        lineChart.getRenderer().getPaintRender().setShader(new LinearGradient(0, 0, lineChart.getMeasuredWidth(), 0, ContextCompat.getColor(context,R.color.colorPrimary),ContextCompat.getColor(context,R.color.colorPrimary), Shader.TileMode.CLAMP));
-//        lineDataSets.add(lineDataSet);
-//
-//
-//
-//        lineChart.setData(new LineData(lineDataSets));
-//        lineChart.getXAxis().setDrawLabels(false);
-//
-//        Description d = new Description();
-//        d.setText("");
-//        lineChart.setDescription(d);
-//        lineChart.getAxisLeft().setDrawGridLines(false);
-//        lineChart.getXAxis().setEnabled(false);
-//
-//        lineDataSet.setDrawFilled(true);
-//        lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_gradient));
-//
-//        lineChart.getLegend().setEnabled(false);
-////        Description dddd = new Description();
-////        d.setText("");
-////        lineChart.setDescription(dddd);
-//
-//        lineChart.invalidate();
-        getChartData(data.get(position).getTicker(),"1D",v.getContext(),lineChart);
+
+        getChartData(model.getTicker(),"1D",context,lineChart);
 //        summaryVolley();
 //        statsVolley();
 
 
         ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
-        //LineDataSet lineDataSet = new LineDataSet(yAxisValues,"Test");
-        //lineDataSet.setDrawCircles(false);
-
-//        if(yAxisValues.get(lastIndex-1).getY()>=getMean(yAxisValues))
-//        {
-//            lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.progressgreen));
-//            lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_gradient));
-//
-//
-//        }
-//        else {
-//            lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.red));
-//            lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_red_drawable));
-//
-//        }
-        //lineChart.getRenderer().getPaintRender().setShader(new LinearGradient(0, 0, lineChart.getMeasuredWidth(), 0, ContextCompat.getColor(context,R.color.colorPrimary),ContextCompat.getColor(context,R.color.colorPrimary), Shader.TileMode.CLAMP));
-        //lineDataSets.add(lineDataSet);
-
-       // lineDataSets.add(whiteLinedataset);
 
 
 
         lineChart.setData(new LineData(lineDataSets));
-       // lineChart.setScaleEnabled(false);
         lineChart.getXAxis().setDrawLabels(false);
 
         Description d = new Description();
@@ -212,15 +113,13 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
         lineChart.getAxisLeft().setDrawGridLines(false);
         lineChart.getXAxis().setEnabled(false);
 
-       // lineDataSet.setDrawFilled(true);
 
         lineChart.getLegend().setEnabled(false);
 
-      // plotMean(lineChart,yAxisValues,lineDataSets);
 
         lineChart.invalidate();
 
-        v.setOnClickListener(new View.OnClickListener() {
+        itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i("Layer type: ", Integer.toString(v.getLayerType()));
@@ -228,15 +127,11 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
             }
         });
         Log.d("RETURNINGV","YES");
-        return v;
     }
-
-
 
     void summaryVolley(){
         String url = context.getResources().getString(R.string.dataApiBaseURL)+"stocks/details";
         summaryHeaders.put("ticker", AppConstants.currTicker);
-        ticker.setText(AppConstants.currTicker);
         summaryQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -384,14 +279,14 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
 
                     if(yAxisValues.get(lastIndex-1).getY()>=getMean(yAxisValues))
                     {
-                        lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.progressgreen));
-                        lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_gradient));
+                        lineDataSet.setColor(ContextCompat.getColor(context,R.color.progressgreen));
+                        lineDataSet.setFillDrawable(ContextCompat.getDrawable(context,R.drawable.chart_gradient));
 
 
                     }
                     else {
-                        lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.red));
-                        lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_red_drawable));
+                        lineDataSet.setColor(ContextCompat.getColor(itemView.getContext(),R.color.red));
+                        lineDataSet.setFillDrawable(ContextCompat.getDrawable(itemView.getContext(),R.drawable.chart_red_drawable));
 
                     }
                     //lineChart.getRenderer().getPaintRender().setShader(new LinearGradient(0, 0, lineChart.getMeasuredWidth(), 0, ContextCompat.getColor(context,R.color.colorPrimary),ContextCompat.getColor(context,R.color.colorPrimary), Shader.TileMode.CLAMP));
@@ -455,7 +350,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
     }
 
     void plotMean( LineChart lineChart, ArrayList<Entry> yAxisValues,ArrayList<ILineDataSet> lineDataSets ){
-           float mean =getMean(yAxisValues);
+        float mean =getMean(yAxisValues);
         ArrayList<Entry> meanline =new ArrayList<>();
         for (int i=0;i<200;i++)
         {
@@ -466,7 +361,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
         meanDataSet.setDrawCircles(false);
 
         lineDataSets.add(meanDataSet);
-        meanDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.colorPrimary));
+        meanDataSet.setColor(ContextCompat.getColor(itemView.getContext(),R.color.colorPrimary));
 
 
 
@@ -475,6 +370,7 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
 
 
     }
+
 
 
 

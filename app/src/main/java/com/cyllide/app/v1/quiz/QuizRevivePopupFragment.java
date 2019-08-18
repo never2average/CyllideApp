@@ -51,7 +51,6 @@ public class QuizRevivePopupFragment extends DialogFragment{
         revivalYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(),"Yes",Toast.LENGTH_SHORT).show();
                 QuizActivity.hasRevive = true;
                 dismiss();
             }
@@ -61,7 +60,6 @@ public class QuizRevivePopupFragment extends DialogFragment{
             @Override
             public void onClick(View view) {
                 QuizActivity.hasRevive = false;
-                Toast.makeText(view.getContext(),"No",Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         });

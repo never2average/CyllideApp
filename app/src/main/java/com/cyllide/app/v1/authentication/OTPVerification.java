@@ -31,6 +31,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.mukesh.OnOtpCompletionListener;
 import com.mukesh.OtpView;
 
@@ -95,6 +96,7 @@ public class OTPVerification extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 resendOTPLayout.setVisibility(View.INVISIBLE);
+                sendOTP();
             }
         });
         otpView.setOtpCompletionListener(new OnOtpCompletionListener() {
@@ -173,7 +175,6 @@ public class OTPVerification extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("mybad", error.toString());
             }
         }) {
             @Override
@@ -183,4 +184,44 @@ public class OTPVerification extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
+    RequestQueue signUpQueue;
+    Map<String,String> signUpMap = new ArrayMap<>();
+
+    void sendOTP(){
+        signUpQueue = Volley.newRequestQueue(getBaseContext());
+        signUpMap.put("phone", getIntent().getStringExtra("phone"));
+        String url = getString(R.string.apiBaseURL)+"auth/otp/send";
+        StringRequest signUpRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                        if(jsonObject.getString("message").equals("MessageSendingSuccessful")){
+                            AppConstants.tempUsername="no-redirect";
+                            Snackbar.make(findViewById(R.id.root_layout),"OTP sent successfully",Snackbar.LENGTH_SHORT).show();
+
+                        }
+                        else {
+                            Snackbar.make(findViewById(R.id.root_layout),"Something went wrong!",Snackbar.LENGTH_SHORT).show();
+                        }
+
+                } catch (JSONException e) {
+                    Log.d("error", e.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Snackbar.make(findViewById(R.id.root_layout),"Something went wrong!",Snackbar.LENGTH_SHORT).show();
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders(){
+                return signUpMap;
+            }
+        };
+        signUpQueue.add(signUpRequest);
+    }
+
 }

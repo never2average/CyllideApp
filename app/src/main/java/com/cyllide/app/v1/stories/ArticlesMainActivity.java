@@ -64,17 +64,10 @@ public class ArticlesMainActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(ArticlesMainActivity.this,MainActivity.class);
-                startActivity(intent);
-                finish();
+               onBackPressed();
             }
         });
     }
-//    @Override
-//    public void onBackPressed(){
-//        Intent returnHome = new Intent(this,MainActivity.class);
-//        startActivity(returnHome);
-//        finish();
-//    }
+
 }
 
