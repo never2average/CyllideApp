@@ -96,7 +96,7 @@ dependencies {
     implementation 'link.fls:swipestack:0.3.0'
     implementation "com.yuyakaido.android:card-stack-view:2.3.3"
     implementation 'com.yalantis:ucrop:1.0.1'
-
+    implementation 'com.github.arimorty:floatingsearchview:2.1.1'
 
 
 }
