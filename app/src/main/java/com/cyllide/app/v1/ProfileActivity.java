@@ -1,6 +1,5 @@
 package com.cyllide.app.v1;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -19,7 +18,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
@@ -31,7 +29,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.cyllide.app.v1.forum.ForumActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -59,11 +56,8 @@ import java.util.UUID;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ProfileActivity extends AppCompatActivity {
@@ -71,12 +65,12 @@ public class ProfileActivity extends AppCompatActivity {
     ImageButton cross;
     Uri targetUri;
     Map<String, String> uploadPicUriMap = new ArrayMap<>();
-    String cashValue;
-    String coinsValue;
     Dialog quizWinPopup;
     ImageView profileMedal;
     String level;
-
+    RequestQueue winPAYTMRequestQueue;
+    Map<String,String> winPAYTMRequestHeader = new ArrayMap<>();
+    Map<String,String> othersMap = new ArrayMap<>();
 
     TextView
             username,
@@ -102,9 +96,9 @@ public class ProfileActivity extends AppCompatActivity {
     StorageReference storageReference;
     SharedPreferences sharedPreferences;
 
-    TextDrawable drawable;
     ImageView cyllideLogo;
     ImageView profilePic;
+    String viewUsername;
 
     Uri photoURI;
 
@@ -123,7 +117,6 @@ public class ProfileActivity extends AppCompatActivity {
         username = findViewById(R.id.view_only_profile_username);
         storageReference = FirebaseStorage.getInstance().getReference();
         sharedPreferences = getApplicationContext().getSharedPreferences("profileUrl", MODE_PRIVATE);
-
         quizzesWon = findViewById(R.id.view_only_profile_quiz_wins);
         quizzesParticipated = findViewById(R.id.view_only_profile_quizzes);
         numReferrals = findViewById(R.id.view_only_profile_referrals);
@@ -139,7 +132,7 @@ public class ProfileActivity extends AppCompatActivity {
         cyllideLogo=findViewById(R.id.cyllidemainlogo);
         profilePic=findViewById(R.id.profile_pic_container);
         profileMedal=findViewById(R.id.profile_medal);
-        Context context;
+
         quizWinPopup = new Dialog(this);
         quizWinPopup.setContentView(R.layout.quiz_wining_xml);
         quizWinPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -150,6 +143,11 @@ public class ProfileActivity extends AppCompatActivity {
         }
         catch (Exception e){
             Log.d("ProfileActivity","Coins and money are not loaded");
+        }
+        try{
+            viewUsername = getIntent().getStringExtra("viewname");
+        }catch (Exception e){
+
         }
 
         level=AppConstants.userLevel;
@@ -164,7 +162,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
         if(sharedPreferences.getString("profileUri",null)==null)
         {
-            // getProfilePicVolley();
             ColorGenerator generator = ColorGenerator.MATERIAL;
             int color = generator.getColor(AppConstants.username);
             TextDrawable drawable = TextDrawable.builder()
@@ -187,34 +184,10 @@ public class ProfileActivity extends AppCompatActivity {
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//                int REQUEST_IMAGE_CAPTURE = 1;
-//               Intent intent = new Intent(Intent.ACTION_PICK,
-//                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                startActivityForResult(intent, 0);
                 dispatchTakePictureIntent();
+            }
+        });
 
-
-
-            }	            });
-
-
-
-
-//        if(Integer.parseInt(coins.getText().toString())>20){
-//            coins.setTextColor(ContextCompat.getColor(this,R.color.progressgreen));
-//            coins.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Dialog d = new Dialog(ProfileActivity.this);
-////                    d.setContentView();
-////                    TODO ADD DIALOG
-//                }
-//            });
-//        }
-//        else{
-////            coins.setTextColor(ContextCompat.getColor(this,R.color.progressred));
-//        }
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -233,14 +206,11 @@ public class ProfileActivity extends AppCompatActivity {
         });
         fillAllViewsVolley();
     }
-    RequestQueue winPaytmRequestQueue;
-    Map<String,String> winPaytmRequestHeader = new ArrayMap<>();
 
     void winnersMoney(String upiID){
-        winPaytmRequestQueue = Volley.newRequestQueue(ProfileActivity.this);
-//        winPaytmRequestHeader.put("quizID",quizID);
-        winPaytmRequestHeader.put("token",AppConstants.token);
-        winPaytmRequestHeader.put("upiID",upiID);
+        winPAYTMRequestQueue = Volley.newRequestQueue(ProfileActivity.this);
+        winPAYTMRequestHeader.put("token",AppConstants.token);
+        winPAYTMRequestHeader.put("upiID",upiID);
         String url = getResources().getString(R.string.apiBaseURL)+"quiz/reward";
         StringRequest sr = new StringRequest(Request.Method.POST,url,  new Response.Listener<String>() {
             @Override
@@ -251,23 +221,16 @@ public class ProfileActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
-//                Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
-//                Toast.makeText(QuizActivity.this,"Poor Internet Connection, please try again later",Toast.LENGTH_LONG).show();
-//                startActivity(new Intent(QuizActivity.this, MainActivity.class));
-//                finish();
-
-
             }
         }){
             @Override
             public Map<String,String> getHeaders(){
 
-                return winPaytmRequestHeader;
+                return winPAYTMRequestHeader;
             }
         };
 
-        winPaytmRequestQueue.add(sr);
+        winPAYTMRequestQueue.add(sr);
     }
 
 
@@ -281,7 +244,6 @@ public class ProfileActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonResponse = new JSONObject(response).getJSONObject("data");
-//                    username.setText(jsonResponse.getString("userName"));
                     quizzesWon.setText(jsonResponse.getString("quizzesWon"));
                     quizzesParticipated.setText(jsonResponse.getString("quizzesWon"));
                     numReferrals.setText(jsonResponse.getString("numberReferrals"));
@@ -395,44 +357,6 @@ public class ProfileActivity extends AppCompatActivity {
         } else if (resultCode == UCrop.RESULT_ERROR) {
             final Throwable cropError = UCrop.getError(data);
         }
-//        if (resultCode == RESULT_OK ) {
-//
-
-
-
-
-
-
-
-
-     //   }
-
-
-
-//            if(targetUri.equals(Uri.parse(AppConstants.noProfilePicURL))){
-//                ColorGenerator generator = ColorGenerator.MATERIAL;
-//                Log.d("ProfileFragment","inside if");
-//                int color = generator.getColor(username.getText().toString());
-//                TextDrawable drawable = TextDrawable.builder()
-//                        .beginConfig()
-//                        .width(60)  // width in px
-//                        .height(60) // height in px
-//                        .endConfig()
-//                        .buildRect(Character.toString(username.getText().toString().charAt(0)).toUpperCase(), color);
-//
-//                profilePic.setImageDrawable(drawable);
-//
-//            }
-//            else {
-//                RequestOptions requestOptions = new RequestOptions().override(100);
-//                Glide.with(getApplicationContext()).load(targetUri).apply(requestOptions).into(profilePic);
-//            }
-//            uploadImage(getApplicationContext());
-//            Log.e("ProfilePicSet","inside on activity result");
-//            Toast.makeText(getApplicationContext(),"onActivityResult",Toast.LENGTH_LONG).show();
-
-
-
     }
 
     private void uploadImage(final Context context) {
@@ -450,10 +374,6 @@ public class ProfileActivity extends AppCompatActivity {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 25, baos);
                 String path = MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(), bitmap, "profile_pic", null);
                 bitmapUri = Uri.parse(path);
-
-                //data =baos.toByteArray();
-
-                // profilePic.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -466,11 +386,6 @@ public class ProfileActivity extends AppCompatActivity {
                             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-//                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-//                                    editor.putString("profileUri", uri.toString());
-//
-//                                    editor.commit();
-                                    // loading the local uri not the one which is uploaded to the firebase storage
                                    Glide.with(ProfileActivity.this).load(targetUri).into(profilePic);
 
 
@@ -514,28 +429,6 @@ public class ProfileActivity extends AppCompatActivity {
                     Log.d("ProfileFragment", "Inside get profile pic");
                     Log.d("ProfileFragment", uri);
                     Log.d("ProfileFragment", AppConstants.noProfilePicURL);
-//                    if(uri.equals(AppConstants.noProfilePicURL)){
-//                        ColorGenerator generator = ColorGenerator.MATERIAL;
-//                        Log.d("ProfileFragment","inside if");
-//                        int color = generator.getColor(username.getText().toString());
-//                        TextDrawable drawable = TextDrawable.builder()
-//                                .beginConfig()
-//                                .width(120)  // width in px
-//                                .height(120) // height in px
-//                                .endConfig()
-//                                .buildRect(Character.toString(username.getText().toString().charAt(0)).toUpperCase(), color);
-//
-//                        profilePic.setImageDrawable(drawable);
-//
-//                    }
-//                    else {
-//                        RequestOptions requestOptions = new RequestOptions().override(100);
-//                        Glide.with(getApplicationContext()).load(uri).apply(requestOptions).into(profilePic);
-//                    }
-
-
-//                    RequestOptions requestOptions = new RequestOptions().override(100);
-//                    Glide.with(getContext()).load(uri).apply(requestOptions).into(profilePic);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -584,7 +477,6 @@ public class ProfileActivity extends AppCompatActivity {
     String currentPhotoPath;
 
     private File createImageFile() throws IOException {
-        // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
@@ -594,7 +486,6 @@ public class ProfileActivity extends AppCompatActivity {
                 storageDir      /* directory */
         );
 
-        // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
@@ -603,17 +494,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
             File photoFile = null;
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
-                // Error occurred while creating the File
-
             }
-            // Continue only if the File was successfully created
             if (photoFile != null) {
                 photoURI = FileProvider.getUriForFile(this,
                         "com.cyllide.app.v1.android.fileprovider",
@@ -624,7 +510,27 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-
-
-
+    private void fetchProfileOthers(String username){
+        requestQueue = Volley.newRequestQueue(ProfileActivity.this);
+        String url = getResources().getString(R.string.apiBaseURL)+"profileinfo";
+        othersMap.put("token", AppConstants.token);
+        othersMap.put("username", username);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Others Profile", response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("LOGERROR", error.toString());
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders(){
+                return othersMap;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
 }
