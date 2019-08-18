@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -21,6 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.PortfolioGameCardModel;
+import com.cyllide.app.v1.PortfolioGameCardRVAdapter;
 import com.cyllide.app.v1.R;
 import com.google.android.material.card.MaterialCardView;
 
@@ -46,6 +49,7 @@ public class PortfolioGameFragment extends Fragment {
     ArrayList<PortfolioGameCardModel> portfolioGameCardModels = new ArrayList<>();
     PortfolioGameCardAdapter adapter;
     Context context;
+    RecyclerView recyclerView;
 
     public PortfolioGameFragment(Context context) {
         this.context = context;
@@ -58,6 +62,7 @@ public class PortfolioGameFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_portfolio_game, container, false);
         cardStack = view.findViewById(R.id.swipe_deck);
+        recyclerView = view.findViewById(R.id.game_rv);
         loading = view.findViewById(R.id.loading_screen);
         cardStack.setListener(new SwipeStack.SwipeStackListener() {
             @Override
@@ -150,6 +155,8 @@ public class PortfolioGameFragment extends Fragment {
                     portfolioGameCardModels = new ArrayList<>();
                     for (Iterator<String> iter = detailsObject.keys(); iter.hasNext(); ) {
                         String key = iter.next();
+                        Log.d("KEY",key);
+
                         PortfolioGameCardModel model = new PortfolioGameCardModel();
                         model.setTicker(key);
                         model.setCompanySector(detailsObject.getJSONObject(key).getString("Sector"));
@@ -161,6 +168,10 @@ public class PortfolioGameFragment extends Fragment {
                         portfolioGameCardModels.add(model);
                     }
                     loading.setVisibility(View.GONE);
+                    PortfolioGameCardRVAdapter rvAdapter = new PortfolioGameCardRVAdapter(portfolioGameCardModels);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false));
+                    recyclerView.setAdapter(rvAdapter);
+                    recyclerView.setItemViewCacheSize(10);
 
                     adapter = new PortfolioGameCardAdapter(portfolioGameCardModels, context);
                     cardStack.setAdapter(adapter);
