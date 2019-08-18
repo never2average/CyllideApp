@@ -41,7 +41,7 @@
                         android:gravity="center"
                         android:layout_gravity="center"
                         android:id="@+id/name_pos_1"
-                        android:text="LkgbliyguyguyglugluglOL"
+                        android:text="Player 2"
                         android:layout_marginStart="@dimen/default_background_stroke_width"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -68,7 +68,7 @@
                         android:gravity="center"
                         android:layout_gravity="center"
                         android:id="@+id/name_pos_2"
-                        android:text="LdjfhgalsiuhvisduhvOL"
+                        android:text="Player 1"
                         android:layout_marginStart="@dimen/default_background_stroke_width"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -92,7 +92,7 @@
                         android:textSize="20sp"
                         android:gravity="center"
                         android:id="@+id/name_pos_3"
-                        android:text="LOL"
+                        android:text="Player 3"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/default_background_stroke_width"
                         android:layout_width="wrap_content"

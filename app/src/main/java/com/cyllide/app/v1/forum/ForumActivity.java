@@ -173,8 +173,6 @@ public class ForumActivity extends AppCompatActivity {
                     inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
                 }
                 onBackPressed();
-//                startActivity(new Intent(ForumActivity.this, MainActivity.class));
-//                finish();
 
             }
         });
@@ -191,8 +189,6 @@ public class ForumActivity extends AppCompatActivity {
             lt.setPadding(pixels,pixels,pixels,pixels);
             lt.setLayoutParams(buttonLayoutParams);
             lt.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,6, getResources().getDisplayMetrics()));
-
-//            lt.setMargin
             tags.addView(lt);
 
 
@@ -258,18 +254,11 @@ public class ForumActivity extends AppCompatActivity {
                 }
             }
         });
-
-//        finance = findViewById(R.id.tb_finance);
-//        capitalMarkets = findViewById(R.id.tb_capital_markets);
-//        macroEconimics = findViewById(R.id.tb_macro_economics);
-//        business = findViewById(R.id.tb_business);
         forumTagsVolley();
 
 
 
     }
-
-//
 
     private void applyFilter(String newQuery, List<QuestionListModel> questionList) {
         filterList = new ArrayList<>();
@@ -345,8 +334,6 @@ public class ForumActivity extends AppCompatActivity {
                         lt.setPadding(pixels,pixels,pixels,pixels);
                         lt.setLayoutParams(buttonLayoutParams);
                         lt.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,6, getResources().getDisplayMetrics()));
-
-//            lt.setMargin
                         tags.addView(lt);
 
 

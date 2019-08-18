@@ -196,7 +196,6 @@ public class PortfolioLeaderboardFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("kartik", error.toString());
             }
         }){
             @Override
