@@ -110,7 +110,7 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 			@Override
 			public void onClick(View v) {
 				Intent profileIntentView = new Intent(view.getContext(), ProfileActivity.class);
-				AppConstants.viewUsername = answers.getAnsweredBy();
+				profileIntentView.putExtra("viewname",answeredBy);
 				view.getContext().startActivity(profileIntentView);
 			}
 		});
