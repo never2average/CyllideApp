@@ -82,10 +82,12 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 					.buildRect(Character.toString(answeredBy.charAt(0)).toUpperCase(), color);
 
 			answerProfilePic.setImageDrawable(drawable);
+
 		}
 		else {
-
 			Glide.with(itemView.getContext()).load(answers.getProfileURL()).into(answerProfilePic);
+
+
 		}
 		upVoteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -110,7 +112,7 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 			@Override
 			public void onClick(View v) {
 				Intent profileIntentView = new Intent(view.getContext(), ProfileActivity.class);
-				AppConstants.viewUsername = answers.getAnsweredBy();
+				profileIntentView.putExtra("viewname",answeredBy);
 				view.getContext().startActivity(profileIntentView);
 			}
 		});

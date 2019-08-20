@@ -1,5 +1,6 @@
 package com.cyllide.app.v1.portfolio;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +36,7 @@ import com.cyllide.app.v1.R;
 import com.daprlabs.aaron.swipedeck.SwipeDeck;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
@@ -47,6 +50,10 @@ import java.util.List;
 import java.util.Map;
 
 import link.fls.swipestack.SwipeStack;
+import me.toptas.fancyshowcase.FancyShowCaseQueue;
+import me.toptas.fancyshowcase.FancyShowCaseView;
+import me.toptas.fancyshowcase.FocusShape;
+import me.toptas.fancyshowcase.listener.OnViewInflateListener;
 import pl.droidsonroids.gif.GifImageView;
 
 
@@ -55,6 +62,7 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
    TabLayout tabLayout;
    NonSwipeableViewPager viewPager;
    ImageView backbutton;
+   ImageView game, leaderboard, positions;
 
 
     @Override
@@ -72,6 +80,9 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
             }
         });
         PortfolioGamePagerAdapter pageAdapter = new PortfolioGamePagerAdapter(getSupportFragmentManager(), PortfolioGameHomeActivity.this);
+        game = findViewById(R.id.pgi_home_activity_1);
+        positions = findViewById(R.id.pgi_home_activity_2);
+        leaderboard = findViewById(R.id.pgi_home_activity_3);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
            @Override
@@ -93,10 +104,12 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
        });
         viewPager.setAdapter(pageAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+//        showAppTour();
 
 
 
     }
+
 
 
 }

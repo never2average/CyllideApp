@@ -687,6 +687,7 @@ public class SocketQuizActivity extends AppCompatActivity {
             }
             TextView quizMoney = quizWinPopup.findViewById(R.id.quiz_winning_prize_money);
             quizWinPopup.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+            ((TextView)quizWinPopup.findViewById(R.id.quiz_win_name)).setText("Congratulations!!! "+AppConstants.username);
 
             quizWinPopup.show();
             quizMoney.setText("₹ "+format.format(prize));
@@ -868,6 +869,10 @@ public class SocketQuizActivity extends AppCompatActivity {
                     losersPopup.show();
                 }
             });
+            revivalpopup=new Dialog(SocketQuizActivity.this);
+            revivalpopup.setContentView(R.layout.quiz_revival_xml);
+            revivalpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
 
             revivalpopup.show();
             startRevivalTimer(3,pb);

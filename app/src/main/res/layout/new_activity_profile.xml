@@ -75,7 +75,7 @@
                     android:layout_height="125dp"
                     android:layout_centerHorizontal="true"
                     android:textAlignment="center"
-                    android:text="550.0%"
+                    android:text=""
                     android:id="@+id/per_days_profitable"
                     android:background="@drawable/circle"
                     android:textSize="30sp"
@@ -118,7 +118,7 @@
                             android:textSize="@dimen/suggestion_body_text_size"
                             android:gravity="center_vertical|end"
                             android:id="@+id/money_won"
-                            android:text="300"
+                            android:text=""
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
                         <ImageView
@@ -133,7 +133,7 @@
                         android:layout_weight="1"
                         android:layout_height="match_parent">
                         <TextView
-                            android:text="40"
+                            android:text=""
                             android:gravity="center_vertical|end"
                             android:textSize="@dimen/suggestion_body_text_size"
                             android:id="@+id/points_collected"
@@ -180,7 +180,7 @@
                         <!--android:layout_gravity="center"/>-->
                     <TextView
                         android:layout_marginStart="@dimen/fab_size_mini"
-                        android:text="45"
+                        android:text=""
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -215,7 +215,7 @@
                     <!--android:layout_gravity="center"/>-->
                     <TextView
                         android:layout_marginStart="@dimen/fab_size_mini"
-                        android:text="45"
+                        android:text=""
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -249,7 +249,7 @@
                         <!--android:text="Quizzes"-->
                         <!--android:layout_gravity="center"/>-->
                     <TextView
-                        android:text="55"
+                        android:text=""
                         android:layout_marginStart="@dimen/fab_size_mini"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -282,7 +282,7 @@
                         <!--android:text="Referrals"-->
                         <!--android:layout_gravity="center"/>-->
                     <TextView
-                        android:text="45"
+                        android:text=""
                         android:layout_marginStart="@dimen/fab_size_mini"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -321,7 +321,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="55"
+                        android:text=""
                         android:id="@+id/view_only_profile_quiz_wins"/>
                 </LinearLayout>
 
@@ -351,7 +351,7 @@
                         <!--android:layout_gravity="center"/>-->
                     <TextView
                         android:layout_marginStart="@dimen/fab_size_mini"
-                        android:text="24"
+                        android:text=""
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -383,7 +383,7 @@
                         <!--android:text="Hearts"-->
                         <!--android:layout_gravity="center"/>-->
                     <TextView
-                        android:text="44"
+                        android:text=""
                         android:layout_marginStart="@dimen/fab_size_mini"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

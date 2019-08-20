@@ -239,7 +239,7 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
     }
 
 
-    void getChartData(String ticker, String value, Context context){
+    void getChartData(String ticker, String value, final Context context){
         requestQueue = Volley.newRequestQueue(context);
         String url = getResources().getString(R.string.dataApiBaseURL)+"stocks/close";
         stringMap.put("value",value);
@@ -315,7 +315,7 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
 
                     lineDataSet.setLineWidth(3);
                     lineDataSet.setCircleRadius(5);
-                    lineDataSet.setColor(ContextCompat.getColor(getBaseContext(),R.color.white));
+                    lineDataSet.setColor(ContextCompat.getColor(getBaseContext(),R.color.colorPrimary));
                     lineChart.getLegend().setEnabled(false);
                     Description d = new Description();
                     d.setText("");
@@ -324,6 +324,91 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
 
 
                     Log.d("PortfolioActivity","FInished setting data");
+
+
+
+
+
+                    lineChart.setData(new LineData(lineDataSets));
+                    lineChart.getXAxis().setDrawLabels(false);
+                    lineChart.getXAxis().setDrawGridLines(false);
+                    lineChart.getAxisRight().setEnabled(true);
+                    lineChart.getAxisLeft().setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
+                    lineChart.getAxisRight().setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
+                    lineChart.getAxisLeft().setGridColor(ContextCompat.getColor(context,R.color.colorPrimary));
+                    lineChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+                        @Override
+                        public void onValueSelected(Entry e, Highlight h) {
+
+                            Highlight highlight[] = new Highlight[lineChart.getData().getDataSets().size()];
+                            for (int j = 0; j < lineChart.getData().getDataSets().size(); j++) {
+
+                                IDataSet iDataSet = lineChart.getData().getDataSets().get(j);
+
+                                for (int i = 0; i < ((LineDataSet) iDataSet).getValues().size(); i++) {
+                                    if (((LineDataSet) iDataSet).getValues().get(i).getX() == e.getX()) {
+                                        highlight[j] = new Highlight(e.getX(), e.getY(), j);
+                                    }
+                                }
+
+                            }
+                            lineChart.highlightValues(highlight);
+                        }
+
+                        @Override
+                        public void onNothingSelected() {
+                        }
+                    });
+//                    plotMean(lineChart,yAxisValues,lineDataSets);
+
+                    lineDataSet.setLineWidth(3);
+                    lineDataSet.setCircleRadius(5);
+                    lineDataSet.setColor(ContextCompat.getColor(context,R.color.colorPrimary));
+                    lineChart.getLegend().setEnabled(false);
+//                    Description d = new Description();
+                    d.setText("");
+                    lineChart.setDescription(d);
+                    lineChart.invalidate();
+//                    lastIndex=yAxisValues.size();
+
+//                    if(yAxisValues.get(lastIndex-1).getY()>=getMean(yAxisValues))
+//                    {
+//                        lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.progressgreen));
+//                        lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_gradient));
+//
+//
+//                    }
+//                    else {
+//                        lineDataSet.setColor(ContextCompat.getColor(v.getContext(),R.color.red));
+//                        lineDataSet.setFillDrawable(ContextCompat.getDrawable(v.getContext(),R.drawable.chart_red_drawable));
+//
+//                    }
+                    //lineChart.getRenderer().getPaintRender().setShader(new LinearGradient(0, 0, lineChart.getMeasuredWidth(), 0, ContextCompat.getColor(context,R.color.colorPrimary),ContextCompat.getColor(context,R.color.colorPrimary), Shader.TileMode.CLAMP));
+                    lineDataSets.add(lineDataSet);
+
+                    // lineDataSets.add(whiteLinedataset);
+
+
+
+                    lineChart.setData(new LineData(lineDataSets));
+                    // lineChart.setScaleEnabled(false);
+                    lineChart.getXAxis().setDrawLabels(false);
+
+                    lineChart.setDescription(d);
+                    lineChart.getAxisLeft().setDrawGridLines(true);
+                    lineChart.getXAxis().setEnabled(true);
+
+                    lineDataSet.setDrawFilled(true);
+
+                    lineChart.getLegend().setEnabled(false);
+
+
+
+                    Log.d("PortfolioActivity","FInished setting data");
+
+
+
+
 
 
 

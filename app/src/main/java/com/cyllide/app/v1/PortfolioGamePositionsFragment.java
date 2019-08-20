@@ -123,7 +123,7 @@ public class PortfolioGamePositionsFragment extends Fragment {
                         PositionsModel pm = new PositionsModel();
                         pm.setPositionTicker(responseList.getJSONObject(i).getString("ticker"));
                         pm.setPositionQuantity(Integer.toString(responseList.getJSONObject(i).getInt("quantity")));
-                        double positionValue = responseList.getJSONObject(i).getDouble("entryPrice") - Double.parseDouble(ltp.getString(responseList.getJSONObject(i).getString("ticker").toUpperCase()));
+                        double positionValue = Double.parseDouble(ltp.getString(responseList.getJSONObject(i).getString("ticker").toUpperCase())) - responseList.getJSONObject(i).getDouble("entryPrice") ;
                         positionValue  *= responseList.getJSONObject(i).getInt("quantity");
                         totalValue+=positionValue;
                         pm.setPositionCurrPrice(Double.toString(responseList.getJSONObject(i).getDouble("entryPrice")));

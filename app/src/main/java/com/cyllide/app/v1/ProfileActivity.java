@@ -72,8 +72,8 @@ public class ProfileActivity extends AppCompatActivity {
     ImageView profileMedal;
     String level;
     RequestQueue winPAYTMRequestQueue;
-    Map<String,String> winPAYTMRequestHeader = new ArrayMap<>();
-    Map<String,String> othersMap = new ArrayMap<>();
+    Map<String, String> winPAYTMRequestHeader = new ArrayMap<>();
+    Map<String, String> othersMap = new ArrayMap<>();
 
     TextView
             username,
@@ -106,17 +106,14 @@ public class ProfileActivity extends AppCompatActivity {
     Uri photoURI;
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_activity_profile);
         Fresco.initialize(this);
-        cross=findViewById(R.id.view_only_cross_btn);
-        username=findViewById(R.id.view_only_profile_username);
+        cross = findViewById(R.id.view_only_cross_btn);
+        username = findViewById(R.id.view_only_profile_username);
         username = findViewById(R.id.view_only_profile_username);
         storageReference = FirebaseStorage.getInstance().getReference();
         sharedPreferences = getApplicationContext().getSharedPreferences("profileUrl", MODE_PRIVATE);
@@ -132,38 +129,58 @@ public class ProfileActivity extends AppCompatActivity {
         money = findViewById(R.id.money_won);
         percentageDaysProfitable = findViewById(R.id.per_days_profitable);
 
-        cyllideLogo=findViewById(R.id.cyllidemainlogo);
-        profilePic=findViewById(R.id.profile_pic_container);
-        profileMedal=findViewById(R.id.profile_medal);
+        cyllideLogo = findViewById(R.id.cyllidemainlogo);
+        profilePic = findViewById(R.id.profile_pic_container);
+        profileMedal = findViewById(R.id.profile_medal);
 
         quizWinPopup = new Dialog(ProfileActivity.this);
         quizWinPopup.setContentView(R.layout.quiz_wining_xml);
+        quizWinPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+//                Intent exitIntent = new Intent(ProfileActivity.this, MainActivity.class);
+//                startActivity(exitIntent);
+//                finish();
+            }
+        });
+        try {
+            if (getIntent().getStringExtra("viewname") != null) {
+                fetchProfileOthers(getIntent().getStringExtra("viewname"));
+            } else {
+                setupProfile();
+            }
 
+        } catch (Exception e) {
+
+        }
+
+    }
+    void setupProfile() {
         try {
             coins.setText(AppConstants.coins);
             money.setText(AppConstants.money);
+        } catch (Exception e) {
+            Log.d("ProfileActivity", "Coins and money are not loaded");
         }
-        catch (Exception e){
-            Log.d("ProfileActivity","Coins and money are not loaded");
-        }
-        try{
+        try {
             viewUsername = getIntent().getStringExtra("viewname");
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
-//        level=AppConstants.userLevel;
-//        if(level.equals("Gold")){
-//            profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_gold_medal));
-//        }else{
-//            if(level.equals("Silver")){
-//                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_silver_medal));
-//            }else{
-//                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_bronze_medal));
-//            }
-//        }
-        if(sharedPreferences.getString("profileUri",null)==null)
-        {
+        level = AppConstants.userLevel;
+        if (level.equals("Gold")) {
+            profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_gold_medal));
+        } else {
+            if (level.equals("Silver")) {
+                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_silver_medal));
+            } else {
+                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_bronze_medal));
+            }
+        }
+        if (sharedPreferences.getString("profileUri", null) == null) {
             ColorGenerator generator = ColorGenerator.MATERIAL;
             int color = generator.getColor(AppConstants.username);
             TextDrawable drawable = TextDrawable.builder()
@@ -174,10 +191,10 @@ public class ProfileActivity extends AppCompatActivity {
                     .buildRect(Character.toString(AppConstants.username.charAt(0)).toUpperCase(), color);
             profilePic.setImageDrawable(drawable);
 
-        }else{
-            String ur=sharedPreferences.getString("profileUri",null);
-            Uri uri=Uri.parse(ur);
-            Log.d("imageuri",ur);
+        } else {
+            String ur = sharedPreferences.getString("profileUri", null);
+            Uri uri = Uri.parse(ur);
+            Log.d("imageuri", ur);
             Glide.with(ProfileActivity.this).load(uri).into(profilePic);
 
 
@@ -199,23 +216,16 @@ public class ProfileActivity extends AppCompatActivity {
 
         }
 
-        cross.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent exitIntent = new Intent(ProfileActivity.this, MainActivity.class);
-                startActivity(exitIntent);
-                finish();
-            }
-        });
+
         fillAllViewsVolley();
     }
 
-    void winnersMoney(String upiID){
+    void winnersMoney(String upiID) {
         winPAYTMRequestQueue = Volley.newRequestQueue(ProfileActivity.this);
-        winPAYTMRequestHeader.put("token",AppConstants.token);
-        winPAYTMRequestHeader.put("upiID",upiID);
-        String url = getResources().getString(R.string.apiBaseURL)+"quiz/reward";
-        StringRequest sr = new StringRequest(Request.Method.POST,url,  new Response.Listener<String>() {
+        winPAYTMRequestHeader.put("token", AppConstants.token);
+        winPAYTMRequestHeader.put("upiID", upiID);
+        String url = getResources().getString(R.string.apiBaseURL) + "quiz/reward";
+        StringRequest sr = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("moneyResponse", response);
@@ -225,9 +235,9 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
             }
-        }){
+        }) {
             @Override
-            public Map<String,String> getHeaders(){
+            public Map<String, String> getHeaders() {
 
                 return winPAYTMRequestHeader;
             }
@@ -257,16 +267,16 @@ public class ProfileActivity extends AppCompatActivity {
                     config.strokeWidth(30);
                     coins.setText(jsonResponse.getString("points_collected"));
                     money.setText(jsonResponse.getString("money_won"));
-                    money.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.cyllide_grey));
-                    if(Integer.parseInt(money.getText().toString())>AppConstants.minWithdrawable){
-                        money.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.green));
+                    money.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.cyllide_grey));
+                    if (Integer.parseInt(money.getText().toString()) > AppConstants.minWithdrawable) {
+                        money.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.green));
                         money.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 TextView quizMoney = quizWinPopup.findViewById(R.id.quiz_winning_prize_money);
 
                                 quizWinPopup.show();
-                                quizMoney.setText("₹ "+money.getText().toString());
+                                quizMoney.setText("₹ " + money.getText().toString());
                                 ImageView closePrizePopup = quizWinPopup.findViewById(R.id.close_prize_popup);
                                 closePrizePopup.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -274,28 +284,38 @@ public class ProfileActivity extends AppCompatActivity {
                                         quizWinPopup.dismiss();
                                     }
                                 });
-
+//                                ImageView sendUPI = quizWinPopup.findViewById(R.id.upi_id_button);
+//                                sendUPI.setOnClickListener(new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                        quizWinPopup.dismiss();
+//                                        final String string = upiID.getText().toString();
+//                                        Snackbar snackbar = Snackbar
+//                                                .make(findViewById(R.id.root_layout), "Money will be sent", Snackbar.LENGTH_LONG);
+//                                        snackbar.show();
+//                                        winnersMoney(string);
+//                                    }
+//                                });
 
                             }
                         });
                     }
 
                     double contestsPart = jsonResponse.getDouble("portfolioDays");
-                    prizes.setText(contestsPart+"");
+                    prizes.setText(contestsPart + "");
                     double contestsWon = jsonResponse.getDouble("profitablePortfolioDays");
                     double winPercent;
 
                     try {
                         winPercent = contestsWon / contestsPart;
-                        if(contestsPart == 0){
+                        if (contestsPart == 0) {
                             throw new Exception();
                         }
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         winPercent = 0;
                     }
                     double lostPercent = 1 - winPercent;
-                    percentageDaysProfitable.setText(winPercent*100+"%");
+                    percentageDaysProfitable.setText(winPercent * 100 + "%");
                     config.startAngle(-90).addData(
                             new SimplePieInfo((float) winPercent, ContextCompat.getColor(ProfileActivity.this, R.color.progress_), "")).addData(
                             new SimplePieInfo((float) lostPercent, ContextCompat.getColor(ProfileActivity.this, R.color.transparent), "")).duration(1500);
@@ -326,10 +346,10 @@ public class ProfileActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==REQUEST_TAKE_PHOTO&&resultCode==RESULT_OK){
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
 
 
-            UCrop.of(photoURI,photoURI)
+            UCrop.of(photoURI, photoURI)
                     .start(ProfileActivity.this);
         }
 
@@ -377,7 +397,7 @@ public class ProfileActivity extends AppCompatActivity {
                             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                   Glide.with(ProfileActivity.this).load(targetUri).into(profilePic);
+                                    Glide.with(ProfileActivity.this).load(targetUri).into(profilePic);
 
 
                                     setProfilePicVolley(uri.toString());
@@ -501,24 +521,75 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void fetchProfileOthers(String username){
+    private void fetchProfileOthers(String username) {
         requestQueue = Volley.newRequestQueue(ProfileActivity.this);
-        String url = getResources().getString(R.string.apiBaseURL)+"profileinfo";
+        String url = getResources().getString(R.string.apiBaseURL) + "profileinfo";
         othersMap.put("token", AppConstants.token);
         othersMap.put("username", username);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("Others Profile", response);
+                try {
+                    JSONObject jsonResponse = new JSONObject(response).getJSONObject("data");
+                    quizzesWon.setText(jsonResponse.getString("quizzesWon"));
+                    quizzesParticipated.setText(jsonResponse.getString("quizzesWon"));
+                    numReferrals.setText(jsonResponse.getString("numberReferrals"));
+                    numPosts.setText(String.valueOf(jsonResponse.getInt("questionsAsked") + jsonResponse.getInt("questionsAnswered")));
+                    numUpvotes.setText(jsonResponse.getString("numUpvotes"));
+                    numHearts.setText(jsonResponse.getString("numCoins"));
+                    AnimatedPieViewConfig config = new AnimatedPieViewConfig().drawText(false).textSize(40);
+                    config.strokeWidth(30);
+                    coins.setText(jsonResponse.getString("points_collected"));
+                    money.setText(jsonResponse.getString("money_won"));
+                    String uri = jsonResponse.getString("profilePic");
+                    Glide.with(ProfileActivity.this).load(uri).into(profilePic);
+                    String level = jsonResponse.getString("level");
+                    if (level.equals("Gold")) {
+                        profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_gold_medal));
+                    } else {
+                        if (level.equals("Silver")) {
+                            profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_silver_medal));
+                        } else {
+                            profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_bronze_medal));
+                        }
+                    }
+                    money.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.cyllide_grey));
+
+                    double contestsPart = jsonResponse.getDouble("portfolioDays");
+                    prizes.setText(contestsPart + "");
+                    double contestsWon = jsonResponse.getDouble("profitablePortfolioDays");
+                    double winPercent;
+
+                    try {
+                        winPercent = contestsWon / contestsPart;
+                        if (contestsPart == 0) {
+                            throw new Exception();
+                        }
+                    } catch (Exception e) {
+                        winPercent = 0;
+                    }
+                    double lostPercent = 1 - winPercent;
+                    percentageDaysProfitable.setText(winPercent * 100 + "%");
+                    config.startAngle(-90).addData(
+                            new SimplePieInfo((float) winPercent, ContextCompat.getColor(ProfileActivity.this, R.color.progress_), "")).addData(
+                            new SimplePieInfo((float) lostPercent, ContextCompat.getColor(ProfileActivity.this, R.color.transparent), "")).duration(1500);
+                    contestWinPerc.applyConfig(config);
+                    contestWinPerc.start();
+                    RequestOptions cropOptions = new RequestOptions().override(100, 100);
+                    String profilePicURL = jsonResponse.getString("profilePic");
+                } catch (JSONException e) {
+                    Log.d("ProfileActivity", e.toString());
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("LOGERROR", error.toString());
             }
-        }){
+        }) {
             @Override
-            public Map<String,String> getHeaders(){
+            public Map<String, String> getHeaders() {
                 return othersMap;
             }
         };

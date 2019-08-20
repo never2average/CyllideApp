@@ -45,6 +45,10 @@
                 app:floatingSearch_leftActionMode="noLeftAction"
                 app:floatingSearch_searchHint="Search..."
                 app:floatingSearch_showSearchKey="false"
+                app:floatingSearch_showMenuAction="false"
+                app:floatingSearch_showOverFlowMenu="false"
+                app:floatingSearch_showMoveSuggestionUp="false"
+                app:floatingSearch_showVoiceInput="false"
                 app:floatingSearch_suggestionsListAnimDuration="250" />
         </LinearLayout>
 

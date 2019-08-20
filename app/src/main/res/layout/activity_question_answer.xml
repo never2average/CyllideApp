@@ -7,6 +7,7 @@
     tools:context=".forum.questionlist.questionPage.QuestionAnswerActivity">
 
     <ScrollView
+        android:layout_marginStart="@dimen/default_background_stroke_width"
         android:layout_width="match_parent"
         android:scrollbars="none"
         android:layout_height="match_parent"
@@ -18,6 +19,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:visibility="invisible"
                 android:layout_marginTop="@dimen/default_background_stroke_width"
                 android:layout_width="match_parent"
                 android:layout_height="24dp">
