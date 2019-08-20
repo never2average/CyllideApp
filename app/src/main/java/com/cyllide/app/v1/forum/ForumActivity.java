@@ -231,6 +231,7 @@ public class ForumActivity extends AppCompatActivity {
             }
         });
         searchQuestions = findViewById(R.id.search_questions);
+        searchQuestions.setDimBackground(false);
         searchQuestions.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, String newQuery) {
