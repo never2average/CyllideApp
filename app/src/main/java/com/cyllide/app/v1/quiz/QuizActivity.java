@@ -619,8 +619,6 @@ public class QuizActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     TextView quizMoney = quizWinPopup.findViewById(R.id.quiz_winning_prize_money);
-                    TextInputEditText upiID = quizWinPopup.findViewById(R.id.upi_id);
-                    final String string = upiID.getText().toString();
 
                     quizWinPopup.show();
                     quizMoney.setText("₹ "+format.format(prize));
@@ -631,23 +629,9 @@ public class QuizActivity extends AppCompatActivity {
                             quizWinPopup.dismiss();
                         }
                     });
-                    sendUPI = quizWinPopup.findViewById(R.id.upi_id_button);
-                    sendUPI.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            quizWinPopup.dismiss();
-                            Toast.makeText(QuizActivity.this,"Money will be sent",Toast.LENGTH_LONG).show();
-                            winnersMoney(string);
-                        }
-                    });
 
-                    if(prize==0){
-                        quizMoney.setVisibility(View.GONE);
-                        sendUPI.setVisibility(View.GONE);
-                        upiID.setVisibility(View.GONE);
-                        quizWinPopup.findViewById(R.id.quiz_winning_text).setVisibility(View.GONE);
 
-                    }
+
 
                 }
             }, new Response.ErrorListener() {

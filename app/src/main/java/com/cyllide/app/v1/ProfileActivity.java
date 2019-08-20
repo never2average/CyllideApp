@@ -14,7 +14,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.ArrayMap;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.cyllide.app.v1.quiz.SocketQuizActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -133,9 +136,8 @@ public class ProfileActivity extends AppCompatActivity {
         profilePic=findViewById(R.id.profile_pic_container);
         profileMedal=findViewById(R.id.profile_medal);
 
-        quizWinPopup = new Dialog(this);
+        quizWinPopup = new Dialog(ProfileActivity.this);
         quizWinPopup.setContentView(R.layout.quiz_wining_xml);
-        quizWinPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         try {
             coins.setText(AppConstants.coins);
@@ -150,16 +152,16 @@ public class ProfileActivity extends AppCompatActivity {
 
         }
 
-        level=AppConstants.userLevel;
-        if(level.equals("Gold")){
-            profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_gold_medal));
-        }else{
-            if(level.equals("Silver")){
-                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_silver_medal));
-            }else{
-                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_bronze_medal));
-            }
-        }
+//        level=AppConstants.userLevel;
+//        if(level.equals("Gold")){
+//            profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_gold_medal));
+//        }else{
+//            if(level.equals("Silver")){
+//                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_silver_medal));
+//            }else{
+//                profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_bronze_medal));
+//            }
+//        }
         if(sharedPreferences.getString("profileUri",null)==null)
         {
             ColorGenerator generator = ColorGenerator.MATERIAL;
@@ -185,6 +187,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dispatchTakePictureIntent();
+
             }
         });
 
@@ -261,7 +264,6 @@ public class ProfileActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 TextView quizMoney = quizWinPopup.findViewById(R.id.quiz_winning_prize_money);
-                                final TextInputEditText upiID = quizWinPopup.findViewById(R.id.upi_id);
 
                                 quizWinPopup.show();
                                 quizMoney.setText("₹ "+money.getText().toString());
@@ -272,18 +274,7 @@ public class ProfileActivity extends AppCompatActivity {
                                         quizWinPopup.dismiss();
                                     }
                                 });
-                                ImageView sendUPI = quizWinPopup.findViewById(R.id.upi_id_button);
-                                sendUPI.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        quizWinPopup.dismiss();
-                                        final String string = upiID.getText().toString();
-                                        Snackbar snackbar = Snackbar
-                                                .make(findViewById(R.id.root_layout),"Money will be sent", Snackbar.LENGTH_LONG);
-                                        snackbar.show();
-                                        winnersMoney(string);
-                                    }
-                                });
+
 
                             }
                         });
