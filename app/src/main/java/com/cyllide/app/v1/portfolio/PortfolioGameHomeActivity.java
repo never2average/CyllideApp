@@ -1,5 +1,6 @@
 package com.cyllide.app.v1.portfolio;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,7 +62,7 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
    TabLayout tabLayout;
    NonSwipeableViewPager viewPager;
    ImageView backbutton;
-   TabItem game, leaderboard, positions;
+   ImageView game, leaderboard, positions;
 
 
     @Override
@@ -79,9 +80,9 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
             }
         });
         PortfolioGamePagerAdapter pageAdapter = new PortfolioGamePagerAdapter(getSupportFragmentManager(), PortfolioGameHomeActivity.this);
-        game = findViewById(R.id.pg_home_activity_1);
-        positions = findViewById(R.id.pg_home_activity_2);
-        leaderboard = findViewById(R.id.pg_home_activity_3);
+        game = findViewById(R.id.pgi_home_activity_1);
+        positions = findViewById(R.id.pgi_home_activity_2);
+        leaderboard = findViewById(R.id.pgi_home_activity_3);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
            @Override
@@ -103,10 +104,132 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
        });
         viewPager.setAdapter(pageAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        showAppTour();
 
 
 
     }
+    public void showAppTour(){
+
+
+        FancyShowCaseView welcome = new FancyShowCaseView.Builder(this)
+                .backgroundColor(R.color.colorPrimary)
+                .customView(R.layout.welcome_contest, new OnViewInflateListener() {
+                    @Override
+                    public void onViewInflated(@NonNull View view) {
+                    }
+                })
+                .build();
+
+
+        FancyShowCaseView gameTab = new FancyShowCaseView.Builder(this)
+                .backgroundColor(R.color.colorPrimary)
+                .focusOn(game)
+                .fitSystemWindows(true)
+                .customView(R.layout.contest_tour_game, new OnViewInflateListener() {
+                    @Override
+                    public void onViewInflated( @NonNull View view) {
+                    }
+                })
+                .build();
+
+
+
+        FancyShowCaseView positionsTab = new FancyShowCaseView.Builder(this)
+                .backgroundColor(R.color.colorPrimary)
+                .focusOn(positions)
+                .fitSystemWindows(true)
+                .customView(R.layout.contest_tour_positions, new OnViewInflateListener() {
+                    @Override
+                    public void onViewInflated( @NonNull View view) {
+                    }
+                })
+                .build();
+
+        FancyShowCaseView leaderboardTab = new FancyShowCaseView.Builder(this)
+                .backgroundColor(R.color.colorPrimary)
+                .focusOn(leaderboard)
+                .fitSystemWindows(true)
+                .customView(R.layout.contest_tour_leaderboard, new OnViewInflateListener() {
+                    @Override
+                    public void onViewInflated(@NonNull View view) {
+                    }
+                })
+                .build();
+
+//        FancyShowCaseView noStocksButton = new FancyShowCaseView.Builder(this)
+//                .backgroundColor(R.color.colorPrimary)
+//                .focusOn(dontChooseStockBtn)
+//                .fitSystemWindows(true)
+//                .customView(R.layout.contest_tour_cancel, new OnViewInflateListener() {
+//                    @Override
+//                    public void onViewInflated( View view) {
+//                    }
+//                })
+//                .build();
+//
+//        FancyShowCaseView chooseStocksButton = new FancyShowCaseView.Builder(this)
+//                .backgroundColor(R.color.colorPrimary)
+//                .focusOn(chooseStockBtn)
+//                .fitSystemWindows(true)
+//                .customView(R.layout.contest_tour_love, new OnViewInflateListener() {
+//                    @Override
+//                    public void onViewInflated( View view) {
+//                    }
+//                })
+//                .build();
+//
+//        FancyShowCaseView chooseDoubleStocksButton = new FancyShowCaseView.Builder(this)
+//                .backgroundColor(R.color.colorPrimary)
+//                .focusOn(chooseStockBtn)
+//                .fitSystemWindows(true)
+//                .customView(R.layout.contest_tour_star, new OnViewInflateListener() {
+//                    @Override
+//                    public void onViewInflated( View view) {
+//                    }
+//                })
+//                .build();
+
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int dpi = (int)(metrics.density);
+        int x = 50*dpi;
+        int y = 160*dpi;
+        int w = 1100*dpi;
+        int h = 120*dpi;
+//        FancyShowCaseView features = new FancyShowCaseView.Builder(this)
+//                .backgroundColor(R.color.colorPrimary)
+//                .focusRectAtPosition(x, y, w, h)
+//                .fitSystemWindows(true)
+//                .customView(R.layout.app_tour_features, new OnViewInflateListener() {
+//                    @Override
+//                    public void onViewInflated(@NotNull View view) {
+//                    }
+//                })
+//                .focusShape(FocusShape.ROUNDED_RECTANGLE)
+//                .roundRectRadius(15)
+//                .build();
+
+//        FancyShowCaseView end = new FancyShowCaseView.Builder(this)
+//                .backgroundColor(R.color.deeppurple700)
+//                .customView(R.layout.app_tour_end, new OnViewInflateListener() {
+//                    @Override
+//                    public void onViewInflated(@NotNull View view) {
+//                    }
+//                })
+//                .build();
+
+        FancyShowCaseQueue queue = new FancyShowCaseQueue()
+                .add(welcome)
+                .add(gameTab)
+                .add(positionsTab)
+                .add(leaderboardTab);
+
+        queue.show();
+
+    }
+
+
 
 
 }
