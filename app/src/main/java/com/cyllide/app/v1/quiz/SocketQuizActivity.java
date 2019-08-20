@@ -882,6 +882,10 @@ public class SocketQuizActivity extends AppCompatActivity {
                     losersPopup.show();
                 }
             });
+            revivalpopup=new Dialog(SocketQuizActivity.this);
+            revivalpopup.setContentView(R.layout.quiz_revival_xml);
+            revivalpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
 
             revivalpopup.show();
             startRevivalTimer(3,pb);
