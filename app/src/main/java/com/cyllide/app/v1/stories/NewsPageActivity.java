@@ -18,6 +18,7 @@ import com.android.volley.toolbox.Volley;
 import com.cyllide.app.v1.R;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,7 +29,7 @@ public class NewsPageActivity extends AppCompatActivity {
     private String  articleURL;
     private TextView newsTitle, newsContent, newsSummary, newsDatePublished;
     private SimpleDraweeView coverImage;
-    private ImageView backBtn;
+    private FloatingActionButton backBtn;
     private RequestQueue requestQueue;
     private Map<String, String> articleDataMap = new ArrayMap<>();
     private String requestURL;

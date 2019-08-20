@@ -136,9 +136,10 @@ public class ProfileActivity extends AppCompatActivity {
         cross.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent exitIntent = new Intent(ProfileActivity.this, MainActivity.class);
-                startActivity(exitIntent);
-                finish();
+                onBackPressed();
+//                Intent exitIntent = new Intent(ProfileActivity.this, MainActivity.class);
+//                startActivity(exitIntent);
+//                finish();
             }
         });
         try {

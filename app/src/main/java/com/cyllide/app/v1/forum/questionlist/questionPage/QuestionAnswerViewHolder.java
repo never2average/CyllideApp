@@ -82,10 +82,12 @@ public class QuestionAnswerViewHolder extends RecyclerView.ViewHolder{
 					.buildRect(Character.toString(answeredBy.charAt(0)).toUpperCase(), color);
 
 			answerProfilePic.setImageDrawable(drawable);
+
 		}
 		else {
-
 			Glide.with(itemView.getContext()).load(answers.getProfileURL()).into(answerProfilePic);
+
+
 		}
 		upVoteButton.setOnClickListener(new View.OnClickListener() {
 			@Override

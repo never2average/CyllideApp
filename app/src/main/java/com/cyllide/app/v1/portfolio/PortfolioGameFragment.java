@@ -1,8 +1,11 @@
 package com.cyllide.app.v1.portfolio;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,12 +33,18 @@ import com.google.android.material.card.MaterialCardView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import link.fls.swipestack.SwipeStack;
+import me.toptas.fancyshowcase.FancyShowCaseQueue;
+import me.toptas.fancyshowcase.FancyShowCaseView;
+import me.toptas.fancyshowcase.listener.OnViewInflateListener;
 import pl.droidsonroids.gif.GifImageView;
 
 public class PortfolioGameFragment extends Fragment {
@@ -50,6 +59,7 @@ public class PortfolioGameFragment extends Fragment {
     PortfolioGameCardAdapter adapter;
     Context context;
     RecyclerView recyclerView;
+    boolean isFirstTime = false;
 
     public PortfolioGameFragment(Context context) {
         this.context = context;
@@ -68,6 +78,14 @@ public class PortfolioGameFragment extends Fragment {
             @Override
             public void onViewSwipedToLeft(int position) {
                 Log.i("MainActivity", "card was swiped left, position in adapter: " + position);
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("ticker",portfolioGameCardModels.get(position).getTicker());
+                Date c = Calendar.getInstance().getTime();
+                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+                String formattedDate = df.format(c);
+                editor.putString(formattedDate,Integer.toString(i));
+                editor.apply();
             }
 
             @Override
@@ -87,8 +105,8 @@ public class PortfolioGameFragment extends Fragment {
             @Override
             public void onStackEmpty() {
                 loading.setVisibility(View.VISIBLE);
-                fetchCards(i);
                 i++;
+                fetchCards(i);
             }
         });
 
@@ -98,7 +116,10 @@ public class PortfolioGameFragment extends Fragment {
         dontChooseStockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                portfolioGameCardModels.remove(0);
                 cardStack.swipeTopViewToLeft();
+                adapter = new PortfolioGameCardAdapter(portfolioGameCardModels, context);
+                cardStack.setAdapter(adapter);
             }
         });
         MaterialCardView chooseStockDoubleQuantity = view.findViewById(R.id.portfolio_game_diamond);
@@ -106,6 +127,7 @@ public class PortfolioGameFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 cardStack.swipeTopViewToRight();
+
                 isSuper = true;
 
             }
@@ -133,6 +155,24 @@ public class PortfolioGameFragment extends Fragment {
         cardStack.forceLayout();
         cardStack.invalidate();
         cardStack.refreshDrawableState();
+
+
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate = df.format(c);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String name = preferences.getString(formattedDate, "");
+        if(!name.equalsIgnoreCase(""))
+        {
+           i = Integer.parseInt(name);
+           i = 1;
+           isFirstTime = true;
+        }
+        else{
+            i = 1;
+        }
+
         fetchCards(i);
         i++;
 
@@ -142,6 +182,7 @@ public class PortfolioGameFragment extends Fragment {
 
     void fetchCards(int i) {
         cardsRequestQueue = Volley.newRequestQueue(context);
+        Log.d("IIIII",i+"");
         String url = "https://api.cyllide.com/api/client/bulkdata/fetch";
         cardsHeader.put("page", Integer.toString(i));
         StringRequest cardRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -155,6 +196,19 @@ public class PortfolioGameFragment extends Fragment {
                     portfolioGameCardModels = new ArrayList<>();
                     for (Iterator<String> iter = detailsObject.keys(); iter.hasNext(); ) {
                         String key = iter.next();
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+                        if(isFirstTime){
+                            Log.d("HEREEEE",preferences.getString("ticker", ""));
+                            Log.d("HEREEE",key);
+                            if(key.equals( preferences.getString("ticker", ""))){
+                                isFirstTime = false;
+                            }
+                            else{
+                                continue;
+                            }
+                        }
+
+
                         Log.d("KEY",key);
 
                         PortfolioGameCardModel model = new PortfolioGameCardModel();
@@ -192,6 +246,7 @@ public class PortfolioGameFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 Log.d("ERRORHEAR", error.toString());
 
+
             }
         }) {
             @Override
@@ -211,16 +266,33 @@ public class PortfolioGameFragment extends Fragment {
     RequestQueue requestQueue;
     Map<String, String> getCardsHeader = new HashMap<>();
 
-    private void sendSwipeCard(PortfolioGameCardModel portfolioGameCardModel, int i) {
+    private void sendSwipeCard(PortfolioGameCardModel portfolioGameCardModel, int qty) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("ticker",portfolioGameCardModel.getTicker());
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate = df.format(c);
+        editor.putString(formattedDate,Integer.toString(i));
+        editor.apply();
         requestQueue = Volley.newRequestQueue(context);
         getCardsHeader.put("token", AppConstants.token);
         getCardsHeader.put("ticker", portfolioGameCardModel.getTicker());
-        getCardsHeader.put("quantity", Integer.toString(i));
+        getCardsHeader.put("quantity", Integer.toString(qty));
         String url = getResources().getString(R.string.apiBaseURL) + "portfolio/order";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("RESPONSE", response);
+                if(response.equals("{\"data\": \"Position Not Taken\"}")){
+                    cardStack.resetStack();
+                }
+                else{
+                    portfolioGameCardModels.remove(0);
+                    adapter = new PortfolioGameCardAdapter(portfolioGameCardModels, context);
+                    cardStack.setAdapter(adapter);
+
+                }
 
             }
         }, new Response.ErrorListener() {
@@ -240,6 +312,94 @@ public class PortfolioGameFragment extends Fragment {
 
 
     }
+
+    public void showAppTour(){
+
+
+        FancyShowCaseView welcome = new FancyShowCaseView.Builder(this)
+                .backgroundColor(R.color.colorPrimary)
+                .customView(R.layout.welcome_contest, new OnViewInflateListener() {
+                    @Override
+                    public void onViewInflated( View view) {
+                    }
+                })
+                .build();
+
+        FancyShowCaseView home = new FancyShowCaseView.Builder(this)
+                .backgroundColor(R.color.colorPrimary)
+                .focusOn(game)
+                .fitSystemWindows(true)
+                .customView(R.layout.contest_tour_game, new OnViewInflateListener() {
+                    @Override
+                    public void onViewInflated( View view) {
+                    }
+                })
+                .build();
+
+
+
+        FancyShowCaseView forums = new FancyShowCaseView.Builder(this)
+                .backgroundColor(R.color.colorPrimary)
+                .focusOn(positions)
+                .fitSystemWindows(true)
+                .customView(R.layout.contest_tour_positions, new OnViewInflateListener() {
+                    @Override
+                    public void onViewInflated( View view) {
+                    }
+                })
+                .build();
+
+        FancyShowCaseView add = new FancyShowCaseView.Builder(this)
+                .backgroundColor(R.color.colorPrimary)
+                .focusOn(leaderboard)
+                .fitSystemWindows(true)
+                .customView(R.layout.contest_tour_leaderboard, new OnViewInflateListener() {
+                    @Override
+                    public void onViewInflated( View view) {
+                    }
+                })
+                .build();
+
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int dpi = (int)(metrics.density);
+        int x = 50*dpi;
+        int y = 160*dpi;
+        int w = 1100*dpi;
+        int h = 120*dpi;
+//        FancyShowCaseView features = new FancyShowCaseView.Builder(this)
+//                .backgroundColor(R.color.colorPrimary)
+//                .focusRectAtPosition(x, y, w, h)
+//                .fitSystemWindows(true)
+//                .customView(R.layout.app_tour_features, new OnViewInflateListener() {
+//                    @Override
+//                    public void onViewInflated(@NotNull View view) {
+//                    }
+//                })
+//                .focusShape(FocusShape.ROUNDED_RECTANGLE)
+//                .roundRectRadius(15)
+//                .build();
+
+//        FancyShowCaseView end = new FancyShowCaseView.Builder(this)
+//                .backgroundColor(R.color.deeppurple700)
+//                .customView(R.layout.app_tour_end, new OnViewInflateListener() {
+//                    @Override
+//                    public void onViewInflated(@NotNull View view) {
+//                    }
+//                })
+//                .build();
+
+        FancyShowCaseQueue queue = new FancyShowCaseQueue()
+                .add(welcome)
+                .add(home)
+                .add(forums)
+                .add(add);
+
+        queue.show();
+
+    }
+
+
 
 
 }

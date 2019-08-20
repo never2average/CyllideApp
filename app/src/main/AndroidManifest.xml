@@ -28,7 +28,10 @@
 
 
         <activity android:name=".portfolio.VersionControlActivity"></activity>
-        <activity android:name=".authentication.PhoneAuth"></activity>
+        <activity android:name=".authentication.PhoneAuth"
+            android:windowSoftInputMode="stateVisible|adjustResize">
+
+        </activity>
 
 
         <activity android:name=".FeedbackActivity" />
@@ -123,7 +126,8 @@
         <activity
             android:name=".portfolio.PortfolioGameDetailedChartActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".authentication.SignupPage" />
+        <activity android:name=".authentication.SignupPage"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".quiz.SocketQuizActivity"
             android:screenOrientation="portrait" />
