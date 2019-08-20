@@ -105,9 +105,9 @@
                   android:id="@+id/text_view_yes"
                   android:gravity="center"
                   android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
+                  android:layout_height="30dp"
                   android:text="YES"
-                  android:textColor="@color/white"
+                  android:textColor="@color/colorPrimary"
                   android:background="@drawable/quiz_yes_drawable"
 
                   android:layout_weight="1"

@@ -687,6 +687,7 @@ public class SocketQuizActivity extends AppCompatActivity {
             }
             TextView quizMoney = quizWinPopup.findViewById(R.id.quiz_winning_prize_money);
             quizWinPopup.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+            ((TextView)quizWinPopup.findViewById(R.id.quiz_win_name)).setText("Congratulations!!! "+AppConstants.username);
 
             quizWinPopup.show();
             quizMoney.setText("₹ "+format.format(prize));
