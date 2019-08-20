@@ -104,7 +104,7 @@ public class PortfolioGameHomeActivity extends AppCompatActivity {
        });
         viewPager.setAdapter(pageAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        showAppTour();
+//        showAppTour();
 
 
 
