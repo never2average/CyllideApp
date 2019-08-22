@@ -655,7 +655,8 @@ public class SocketQuizActivity extends AppCompatActivity {
         questionsSocket.close();
     }
     @Override
-            protected void onPause(){
+    protected void onPause(){
+
         super.onPause();
     }
 

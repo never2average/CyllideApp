@@ -87,9 +87,6 @@ public class QuizRulesActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    CountDownTimer countDownTimer;
-    ProgressBar barTimer;
-
 
 
 
@@ -337,13 +334,13 @@ public class QuizRulesActivity extends AppCompatActivity {
         requestQueue.add(questionRequest);
     }
 
-//    @Override
-//    public void onBackPressed(){
-//        Intent returnHome = new Intent(this,MainActivity.class);
-//        startActivity(returnHome);
-//        finish();
-//    }
-
+    @Override
+    protected void onResume() {
+        if(quizCountDownTimer != null){
+            quizCountDownTimer.start();
+        }
+        super.onResume();
+    }
 }
 
 

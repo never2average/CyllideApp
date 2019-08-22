@@ -622,7 +622,6 @@ public class QuizActivity extends AppCompatActivity {
 
                     quizWinPopup.show();
                     quizMoney.setText("₹ "+format.format(prize));
-                    closePrizePopup = quizWinPopup.findViewById(R.id.close_prize_popup);
                     closePrizePopup.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
