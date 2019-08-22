@@ -4,14 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginHorizontal="@dimen/default_stroke_width"
-    tools:context=".forum.questionlist.questionPage.QuestionAnswerActivity">
+    tools:context=".forum.questionlist.questionPage.QuestionAnswerActivity"
+    >
 
     <ScrollView
         android:layout_marginStart="@dimen/default_background_stroke_width"
         android:layout_width="match_parent"
         android:scrollbars="none"
         android:layout_height="match_parent"
-        android:nestedScrollingEnabled="false">
+        android:nestedScrollingEnabled="false"
+        android:id="@+id/content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -35,7 +37,7 @@
                 android:id="@+id/questionTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Is this a simple sample question?"
+                android:text=""
                 android:textSize="20sp" />
 
 
@@ -71,7 +73,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="1dp"
                             android:fontFamily="@font/barlow_regular"
-                            android:text="notAnshuman"
+                            android:text=""
                             android:textSize="15sp" />
 
                     </LinearLayout>
@@ -96,7 +98,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="1dp"
                             android:fontFamily="@font/barlow_regular"
-                            android:text="Today"
+                            android:text=""
                             android:textSize="13sp" />
 
                     </LinearLayout>
@@ -176,5 +178,11 @@
 
         </LinearLayout>
     </ScrollView>
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/web_view_loading"
+        android:visibility="gone"
+        android:id="@+id/loading_gif"/>
 
 </FrameLayout>

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -72,11 +73,9 @@ public class FeedbackActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
                 findViewById(R.id.loading).setVisibility(View.GONE);
                 findViewById(R.id.linearlayout).setVisibility(View.VISIBLE);
-                Toast.makeText(FeedbackActivity.this,"Shame on us. The feedback could not be submitted successfully",Toast.LENGTH_LONG).show();
-
+                Toast.makeText(FeedbackActivity.this,"The feedback could not be submitted successfully",Toast.LENGTH_LONG).show();
             }
         }){
             @Override
@@ -86,6 +85,4 @@ public class FeedbackActivity extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
-
-
 }
