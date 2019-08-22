@@ -137,7 +137,7 @@ public class SocketQuizActivity extends AppCompatActivity {
 //            viewersTV.setText(Integer.toString(jsonResponse));
             circularProgressBar.setProgress(0);
 //            jsonObject = jsonQuestionArray.getJSONObject(questionID);
-            mainQuestion.setText(jsonObject.getString("question"));
+            mainQuestion.setText("Q."+questionID+" "+jsonObject.getString("question"));
             JSONArray answerArray = jsonObject.getJSONArray("options");
             optionA.setText(answerArray.getString(0));
             optionB.setText(answerArray.getString(1));
@@ -840,6 +840,11 @@ public class SocketQuizActivity extends AppCompatActivity {
 
 
         if(AppConstants.coins>0 && QuizActivity.numberOfRevivals<2){
+            revivalpopup=new Dialog(SocketQuizActivity.this);
+            revivalpopup.setContentView(R.layout.quiz_revival_xml);
+            revivalpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
             TextView coinsLeft = revivalpopup.findViewById(R.id.quiz_revival_coins_left);
             TextView revivalYes = revivalpopup.findViewById(R.id.text_view_yes);
             TextView revivalNo = revivalpopup.findViewById(R.id.text_view_no);
@@ -867,10 +872,6 @@ public class SocketQuizActivity extends AppCompatActivity {
                     losersPopup.show();
                 }
             });
-            revivalpopup=new Dialog(SocketQuizActivity.this);
-            revivalpopup.setContentView(R.layout.quiz_revival_xml);
-            revivalpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
 
             revivalpopup.show();
             startRevivalTimer(3,pb);

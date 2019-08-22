@@ -91,6 +91,7 @@ public class QuizRulesActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -336,10 +337,47 @@ public class QuizRulesActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        if(quizCountDownTimer != null){
-            quizCountDownTimer.start();
-        }
         super.onResume();
+
+
+        currentTimeRequestQueue = Volley.newRequestQueue(this);
+        String url = getResources().getString(R.string.currentTimeApiURL);
+        StringRequest currentTimeStringRequest = new StringRequest(Request.Method.GET,url , new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    currentTime = (new JSONObject(response).getLong("unixtime"))* 1000;
+                    Log.d("QuizRulesActivity", Long.toString(currentTime));
+                    Log.d("QuizRulesActivity",Long.toString(new JSONObject(response).getLong("unixtime")));
+                    createTimer();
+                } catch (JSONException e) {
+                    Log.d("QuizRulesActivity", e.toString());
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("VOLLEY", error.toString());
+            }
+        })
+        {
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse nr) {
+                int n = nr.statusCode;
+                Log.d("Res Code",""+n);
+                return super.parseNetworkResponse(nr);
+            }
+
+        };
+
+        currentTimeRequestQueue.add(currentTimeStringRequest);
+
+
+
     }
 }
 

@@ -47,7 +47,9 @@ public class SignupPage extends AppCompatActivity {
         materialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeUsername();
+                if(isUsernameValid()) {
+                    changeUsername();
+                }
             }
         });
 
@@ -66,6 +68,27 @@ public class SignupPage extends AppCompatActivity {
 
             }
         });
+    }
+
+    private boolean isUsernameValid() {
+        String name = input_referral.getText().toString().trim();
+        if(name.length()<=5){
+            input_user_name.setError("Username must be atleast 5 characters long");
+            return false;
+        }
+        else if(Character.isDigit(name.charAt(0))){
+            input_user_name.setError("Username must be start with numbers");
+
+            return false;
+        }
+        else if(!name.matches("[A-Za-z0-9]+")){
+            input_user_name.setError("Username must contain numbers or characters only");
+            return false;
+        }
+        input_user_name.setError("");
+
+        return true;
+
     }
 
     void changeUsername() {
