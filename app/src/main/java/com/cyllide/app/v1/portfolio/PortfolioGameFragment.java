@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,6 +64,7 @@ public class PortfolioGameFragment extends Fragment {
     MaterialCardView dontChooseStockBtn;
     MaterialCardView chooseStockBtn;
     MaterialCardView chooseStockDoubleQuantity;
+    TextView noCards;
 
     public PortfolioGameFragment(Context context) {
         this.context = context;
@@ -77,6 +79,7 @@ public class PortfolioGameFragment extends Fragment {
         cardStack = view.findViewById(R.id.swipe_deck);
         recyclerView = view.findViewById(R.id.game_rv);
         loading = view.findViewById(R.id.loading_screen);
+        noCards = view.findViewById(R.id.no_cards_tv);
         cardStack.setListener(new SwipeStack.SwipeStackListener() {
             @Override
             public void onViewSwipedToLeft(int position) {
@@ -157,16 +160,7 @@ public class PortfolioGameFragment extends Fragment {
 
             }
         });
-//        backBtn = findViewById(R.id.portfolio_game_back_button);
-//        backBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                Intent returnHome = new Intent(PortfolioGameHomeActivity.this,MainActivity.class);
-////                startActivity(returnHome);
-////                finish();
-//                onBackPressed();
-//            }
-//        });
+
         cardStack.forceLayout();
         cardStack.invalidate();
         cardStack.refreshDrawableState();
@@ -195,7 +189,7 @@ public class PortfolioGameFragment extends Fragment {
 
     }
 
-    void fetchCards(int i) {
+    void fetchCards(final int i) {
         cardsRequestQueue = Volley.newRequestQueue(context);
         Log.d("IIIII",i+"");
         String url = "https://api.cyllide.com/api/client/bulkdata/fetch";
@@ -241,6 +235,17 @@ public class PortfolioGameFragment extends Fragment {
                     recyclerView.setLayoutManager(new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false));
                     recyclerView.setAdapter(rvAdapter);
                     recyclerView.setItemViewCacheSize(10);
+                    noCards.setVisibility(View.GONE);
+
+                    if(portfolioGameCardModels.size() == 0 && i <5){
+                        int e = i+1;
+                        fetchCards(e);
+
+                    }
+                    if(responseObject.equals(null)){
+                            noCards.setVisibility(View.VISIBLE);
+                    }
+
 
                     adapter = new PortfolioGameCardAdapter(portfolioGameCardModels, context);
                     cardStack.setAdapter(adapter);
@@ -250,7 +255,16 @@ public class PortfolioGameFragment extends Fragment {
                     cardStack.refreshDrawableState();
                     adapter.notifyDataSetChanged();
                     cardStack.resetStack();
-                    showAppTour();
+
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+                    boolean firstTimeUser = preferences.getBoolean("firstTimeUser", false);
+                    if(!firstTimeUser){
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putBoolean("firstTimeUser",true);
+                        editor.apply();
+                        showAppTour();
+                    }
+
                 } catch (JSONException e) {
                     Log.d("ERROR", e.toString());
                     e.printStackTrace();

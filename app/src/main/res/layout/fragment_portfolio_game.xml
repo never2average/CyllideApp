@@ -26,6 +26,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/d1"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/no_cards_tv"
+            android:layout_marginTop="@dimen/square_button_padding"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:text="No Cards to show!"/>
 
     </FrameLayout>
 
