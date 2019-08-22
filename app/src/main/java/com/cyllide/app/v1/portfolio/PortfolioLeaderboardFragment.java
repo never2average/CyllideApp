@@ -124,7 +124,7 @@ public class PortfolioLeaderboardFragment extends Fragment {
                 try {
                     JSONArray responseArray = new JSONObject(response).getJSONArray("data");
                     int length = responseArray.length();
-                    for(int i=length-1;i>=0;i--)
+                    for(int i=0;i< length;i++)
                     {
                         data.add(new LeaderBoardModel(responseArray.getJSONObject(i).getString("userName"),responseArray.getJSONObject(i).getString("cyllidePoints"),responseArray.getJSONObject(i).getString("profilePic"),i+1));
 

@@ -67,7 +67,7 @@ public class SocketQuizActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     CountDownTimer countDownTimer;
     CircularProgressBar circularProgressBar;
-    ImageView closePrizePopup;
+    TextView continueButtonPopup;
     ProgressBar pb;
     String selectedOption = "noOption";
     boolean isCorrect;
@@ -77,13 +77,12 @@ public class SocketQuizActivity extends AppCompatActivity {
     JSONArray jsonQuestionArray;
     Map<String,String> winPaytmRequestHeader = new ArrayMap<>();
     ProgressBar option1PB, option2PB, option3PB, option4PB;
-//    private int questionID = -1; old value
     private int questionID = 0; // new value for socket
     Dialog revivalpopup;
     Dialog quizWinPopup;
     Dialog losersPopup;
     Dialog confirmExitPopup;
-    ImageView quizActivityAnswerIndicator, sendUPI;
+    ImageView quizActivityAnswerIndicator;
     private String quizID;
     String socketQuestionID;
     ImageView exitQuiz;
@@ -391,7 +390,7 @@ public class SocketQuizActivity extends AppCompatActivity {
                 catch(Exception e){
                     startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
                     finish();
-                    Log.d("QuizSocketActivity","SUm Catch Prob");
+                    Log.d("QuizSocketActivity","Sum Catch Prob");
                 }
             }
         });
@@ -489,12 +488,8 @@ public class SocketQuizActivity extends AppCompatActivity {
         questionsSocket.on("numPlayers",numActivePlayers);
         questionsSocket.on("question_data_response",onNewQuestion);
         questionsSocket.on("amicorrect", answerResponseFromServer);
-//        questionsSocket.emit("question_data_test");
         questionsSocket.on("answer_stat_results",onResponseFromServer);
         questionsSocket.on("quiz_winners_listener",winnerMoney);
-
-//    losersPopup.show();
-//        revivalpopup.show();
 
 
 
@@ -660,7 +655,8 @@ public class SocketQuizActivity extends AppCompatActivity {
         questionsSocket.close();
     }
     @Override
-            protected void onPause(){
+    protected void onPause(){
+
         super.onPause();
     }
 
@@ -691,11 +687,13 @@ public class SocketQuizActivity extends AppCompatActivity {
 
             quizWinPopup.show();
             quizMoney.setText("₹ "+format.format(prize));
-            closePrizePopup = quizWinPopup.findViewById(R.id.close_prize_popup);
-            closePrizePopup.setOnClickListener(new View.OnClickListener() {
+            continueButtonPopup=quizWinPopup.findViewById(R.id.continue_txtview);
+            continueButtonPopup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     quizWinPopup.dismiss();
+                    startActivity(new Intent(SocketQuizActivity.this,MainActivity.class));
+                    finish();
                 }
             });
 

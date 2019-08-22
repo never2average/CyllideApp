@@ -38,50 +38,52 @@ import java.util.Map;
 
 public class QuestionAnswerActivity extends AppCompatActivity {
 
-	RecyclerView ansRecyclerView, questionTagRecyclerView;
+    RecyclerView ansRecyclerView, questionTagRecyclerView;
     ArrayList<QuestionTagModel> questionTagModels = new ArrayList<>();
     ArrayList<QuestionAnswerModel> questionAnswerModels = new ArrayList<>();
-	TextView questionTitle, questionAskedByText, questionLastModifiedText;
-	String questionID;
-	ImageView backButton;
-	TextInputEditText answerBody;
-	private RequestQueue answerQueue, postQueue;
-	private Map<String, String> requestHeaders = new ArrayMap<String, String>();
+    TextView questionTitle, questionAskedByText, questionLastModifiedText;
+    String questionID;
+    ImageView backButton;
+    TextInputEditText answerBody;
+    private RequestQueue answerQueue, postQueue;
+    private Map<String, String> requestHeaders = new ArrayMap<String, String>();
     private Map<String, String> requestHeadersPost = new ArrayMap<String, String>();
-	MaterialButton postAnswer;
+    MaterialButton postAnswer;
 
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_question_answer);
-		ansRecyclerView = findViewById(R.id.ansRV);
-		questionTitle = findViewById(R.id.questionTitle);
-		answerBody = findViewById(R.id.answer_body);
-		questionAskedByText = findViewById(R.id.question_asked_by_text);
-		questionLastModifiedText = findViewById(R.id.last_updated_question_text);
-		ansRecyclerView.setHasFixedSize(true);
-		questionTagRecyclerView = findViewById(R.id.question_tags_reyclerview);
-		postAnswer = findViewById(R.id.post_answer);
-		backButton = findViewById(R.id.activity_question_answer_back_button);
-		postAnswer.setOnClickListener(new View.OnClickListener() {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_question_answer);
+        ansRecyclerView = findViewById(R.id.ansRV);
+        questionTitle = findViewById(R.id.questionTitle);
+        answerBody = findViewById(R.id.answer_body);
+        questionAskedByText = findViewById(R.id.question_asked_by_text);
+        questionLastModifiedText = findViewById(R.id.last_updated_question_text);
+        ansRecyclerView.setHasFixedSize(true);
+        questionTagRecyclerView = findViewById(R.id.question_tags_reyclerview);
+        postAnswer = findViewById(R.id.post_answer);
+        backButton = findViewById(R.id.activity_question_answer_back_button);
+        postAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                findViewById(R.id.content).setVisibility(View.GONE);
+                findViewById(R.id.loading_gif).setVisibility(View.VISIBLE);
                 postAnswerVolley(answerBody.getText().toString());
             }
         });
 
-		backButton.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(QuestionAnswerActivity.this, ForumActivity.class));
                 finish();
             }
         });
-		RecyclerView.LayoutManager  tagsLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-		RecyclerView.LayoutManager answerLayoutManager = new LinearLayoutManager(this);
-		ansRecyclerView.setLayoutManager(answerLayoutManager);
-		questionTagRecyclerView.setLayoutManager(tagsLayoutManager);
+        RecyclerView.LayoutManager  tagsLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        RecyclerView.LayoutManager answerLayoutManager = new LinearLayoutManager(this);
+        ansRecyclerView.setLayoutManager(answerLayoutManager);
+        questionTagRecyclerView.setLayoutManager(tagsLayoutManager);
 
         try {
             questionID = new JSONObject(getIntent().getStringExtra("questionID")).getString("$oid");
@@ -94,14 +96,16 @@ public class QuestionAnswerActivity extends AppCompatActivity {
     }
 
     private void postAnswerVolley(final String answer) {
-	    postQueue = Volley.newRequestQueue(this);
+        postQueue = Volley.newRequestQueue(this);
         String requestEndpoint = getResources().getString(R.string.apiBaseURL)+"answer/add";
         requestHeadersPost.put("token", AppConstants.token);
         requestHeadersPost.put("qid",questionID);
         requestHeadersPost.put("answerBody",answer);
-	    StringRequest postAnswer = new StringRequest(Request.Method.POST, requestEndpoint, new Response.Listener<String>() {
+        StringRequest postAnswer = new StringRequest(Request.Method.POST, requestEndpoint, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                findViewById(R.id.loading_gif).setVisibility(View.GONE);
+                findViewById(R.id.content).setVisibility(View.VISIBLE);
                 Toast.makeText(QuestionAnswerActivity.this,"Answer posted successfully",Toast.LENGTH_LONG).show();
                 answerBody.setText("");
                 fillAnswers(questionID);
@@ -117,14 +121,14 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                 return requestHeadersPost;
             }
         };
-	    postQueue.add(postAnswer);
+        postQueue.add(postAnswer);
     }
 
 
     private void fillAnswers(String questionID) {
-	    answerQueue = Volley.newRequestQueue(this);
-	    requestHeaders.put("token",AppConstants.token);
-	    requestHeaders.put("qid",questionID);
+        answerQueue = Volley.newRequestQueue(this);
+        requestHeaders.put("token",AppConstants.token);
+        requestHeaders.put("qid",questionID);
         String requestEndpoint = getResources().getString(R.string.apiBaseURL)+"query/display/one";
         StringRequest answers = new StringRequest(Request.Method.GET, requestEndpoint, new Response.Listener<String>() {
             @Override
@@ -146,7 +150,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                     }
                     for(int i=0;i<answerList.length();i++){
                         JSONObject singleAnswer = answerList.getJSONObject(i);
-                       questionAnswerModels.add(new QuestionAnswerModel(singleAnswer.getJSONObject("_id").getString("$oid"),singleAnswer.getString("answerBody"),singleAnswer.getInt("answerUpvotes"),singleAnswer.getString("answerUID"),singleAnswer.getJSONObject("answerTime").getLong("$date"),singleAnswer.getString("profilePic")));
+                        questionAnswerModels.add(new QuestionAnswerModel(singleAnswer.getJSONObject("_id").getString("$oid"),singleAnswer.getString("answerBody"),singleAnswer.getInt("answerUpvotes"),singleAnswer.getString("answerUID"),singleAnswer.getJSONObject("answerTime").getLong("$date"),singleAnswer.getString("profilePic")));
                     }
                     Collections.sort(questionAnswerModels,new CustomComparatorAnswerUpVotes());
 
@@ -173,6 +177,6 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                 return requestHeaders;
             }
         };
-	    answerQueue.add(answers);
+        answerQueue.add(answers);
     }
 }
