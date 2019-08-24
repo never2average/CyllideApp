@@ -15,6 +15,7 @@ import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.JsonObject;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
@@ -490,6 +491,9 @@ public class SocketQuizActivity extends AppCompatActivity {
         questionsSocket.on("amicorrect", answerResponseFromServer);
         questionsSocket.on("answer_stat_results",onResponseFromServer);
         questionsSocket.on("quiz_winners_listener",winnerMoney);
+        JSONObject jsonObject = new JSONObject();
+
+//        questionsSocket.emit("special_connect",jsonObject);
 
 
 
@@ -672,6 +676,7 @@ public class SocketQuizActivity extends AppCompatActivity {
             losersPopup.show();
         }
         else{
+
 
 
             Double prize = 0.0;

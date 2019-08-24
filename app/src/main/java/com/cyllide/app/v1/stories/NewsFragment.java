@@ -145,7 +145,7 @@ public class NewsFragment extends Fragment{
                     isLoading = false;
                     loading.setVisibility(View.GONE);
                 } catch (JSONException e) {
-                    Log.e(TAG, e.toString()); ;
+                    Log.e(TAG, e.toString());
                 }
             }
         }, new Response.ErrorListener() {
