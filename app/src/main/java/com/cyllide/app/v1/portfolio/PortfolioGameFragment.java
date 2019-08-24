@@ -10,11 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -28,6 +30,7 @@ import com.cyllide.app.v1.AppConstants;
 import com.cyllide.app.v1.PortfolioGameCardModel;
 import com.cyllide.app.v1.PortfolioGameCardRVAdapter;
 import com.cyllide.app.v1.R;
+import com.cyllide.app.v1.stories.SnapHelperOneByOne;
 import com.google.android.material.card.MaterialCardView;
 
 import org.json.JSONException;
@@ -61,8 +64,11 @@ public class PortfolioGameFragment extends Fragment {
     RecyclerView recyclerView;
     boolean isFirstTime = false;
     MaterialCardView dontChooseStockBtn;
+    PortfolioGameCardRVAdapter rvAdapter;
     MaterialCardView chooseStockBtn;
     MaterialCardView chooseStockDoubleQuantity;
+    TextView noCards;
+    boolean isLoading = false;
 
     public PortfolioGameFragment(Context context) {
         this.context = context;
@@ -76,55 +82,40 @@ public class PortfolioGameFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_portfolio_game, container, false);
         cardStack = view.findViewById(R.id.swipe_deck);
         recyclerView = view.findViewById(R.id.game_rv);
+        LinearSnapHelper linearSnapHelper = new SnapHelperOneByOne();
+        linearSnapHelper.attachToRecyclerView(recyclerView);
         loading = view.findViewById(R.id.loading_screen);
-        cardStack.setListener(new SwipeStack.SwipeStackListener() {
-            @Override
-            public void onViewSwipedToLeft(int position) {
-                Log.i("MainActivity", "card was swiped left, position in adapter: " + position);
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-                SharedPreferences.Editor editor = preferences.edit();
-                if(position != 9) {
-                    editor.putString("ticker",Integer.toString(position));
-                    editor.apply();
-                    Date c = Calendar.getInstance().getTime();
-                    SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-                    String formattedDate = df.format(c);
-                    editor.putString(formattedDate, Integer.toString(i));
-                    editor.apply();
-                }
-                else{
-                    editor.putString("ticker", portfolioGameCardModels.get(position + 1).getTicker());
-                    editor.apply();
-                    Date c = Calendar.getInstance().getTime();
-                    SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-                    String formattedDate = df.format(c);
-                    editor.putString(formattedDate, Integer.toString(i));
-                    editor.apply();
-
-                }
-            }
-
-            @Override
-            public void onViewSwipedToRight(int position) {
-                Log.i("MainActivity", "card was swiped right, position in adapter: " + position);
-                if(isSuper) {
-                    sendSwipeCard(portfolioGameCardModels.get(position),200);
-                    isSuper = false;
-                }
-                else{
-                    sendSwipeCard(portfolioGameCardModels.get(position),100);
-
-                }
-
-            }
-
-            @Override
-            public void onStackEmpty() {
-                loading.setVisibility(View.VISIBLE);
-                i++;
-                fetchCards(i);
-            }
-        });
+        noCards = view.findViewById(R.id.no_cards_tv);
+//        cardStack.setListener(new SwipeStack.SwipeStackListener() {
+//            @Override
+//            public void onViewSwipedToLeft(int position) {
+//                Log.i("MainActivity", "card was swiped left, position in adapter: " + position);
+//
+//            }
+//
+//            @Override
+//            public void onViewSwipedToRight(int position) {
+//                Log.i("MainActivity", "card was swiped right, position in adapter: " + position);
+//                if(isSuper) {
+//                    Log.d("NUMMMMM", ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition()+"");
+//                    sendSwipeCard(portfolioGameCardModels.get(position),200);
+//                    isSuper = false;
+//                }
+//                else{
+//                    sendSwipeCard(portfolioGameCardModels.get(position),100);
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onStackEmpty() {
+//                loading.setVisibility(View.VISIBLE);
+//                i++;
+//                fetchCards(i);
+//            }
+//        });
+//
 
 
 
@@ -132,15 +123,31 @@ public class PortfolioGameFragment extends Fragment {
         dontChooseStockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cardStack.swipeTopViewToLeft();
-                adapter = new PortfolioGameCardAdapter(portfolioGameCardModels, context);
-                cardStack.setAdapter(adapter);
+                final int position = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+                Log.d("NUMMMMM", position+"");
+                recyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(position != 0) {
+                            recyclerView.smoothScrollToPosition(position - 1);
+                        }
+                    }
+                });
+
+//                cardStack.swipeTopViewToLeft();
+//                adapter = new PortfolioGameCardAdapter(portfolioGameCardModels, context);
+//                cardStack.setAdapter(adapter);
             }
         });
         chooseStockDoubleQuantity = view.findViewById(R.id.portfolio_game_diamond);
         chooseStockDoubleQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final int position = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+                Log.d("NUMMMMM", position+"");
+                Log.d("NUMMMMM", ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition()+"");
+                sendSwipeCard(portfolioGameCardModels.get(position),100);
+
                 cardStack.swipeTopViewToRight();
 
                 isSuper = true;
@@ -152,21 +159,20 @@ public class PortfolioGameFragment extends Fragment {
         chooseStockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cardStack.swipeTopViewToRight();
+                final int position = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+                Log.d("NUMMMMM", position+"");
+                recyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                            recyclerView.smoothScrollToPosition(position + 1);
+
+                    }
+                });
 
 
             }
         });
-//        backBtn = findViewById(R.id.portfolio_game_back_button);
-//        backBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                Intent returnHome = new Intent(PortfolioGameHomeActivity.this,MainActivity.class);
-////                startActivity(returnHome);
-////                finish();
-//                onBackPressed();
-//            }
-//        });
+
         cardStack.forceLayout();
         cardStack.invalidate();
         cardStack.refreshDrawableState();
@@ -188,16 +194,53 @@ public class PortfolioGameFragment extends Fragment {
             i = 1;
         }
 
+
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                if (!isLoading) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == portfolioGameCardModels.size() - 1) {
+                        //bottom of list!
+                        if(i<=5 && !isLoading){
+                            i++;
+                            isLoading = true;
+                            loading.setVisibility(View.VISIBLE);
+                            fetchCards(i);
+                        }
+
+                    }
+                }
+            }
+        });
+
+        rvAdapter = new PortfolioGameCardRVAdapter(portfolioGameCardModels);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false));
+        recyclerView.setAdapter(rvAdapter);
+
+
+
+
+
         fetchCards(i);
-        i++;
 
         return view;
 
+
     }
 
-    void fetchCards(int i) {
+    void fetchCards(final int i) {
         cardsRequestQueue = Volley.newRequestQueue(context);
-        Log.d("IIIII",i+"");
+        Log.d("IIIII","Entering here as page"+i+"");
         String url = "https://api.cyllide.com/api/client/bulkdata/fetch";
         cardsHeader.put("page", Integer.toString(i));
         StringRequest cardRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -205,23 +248,25 @@ public class PortfolioGameFragment extends Fragment {
             public void onResponse(String response) {
                 Log.d("RESPONSE", response);
                 try {
+                    if(portfolioGameCardModels.size()>= i*10){
+                        Log.d("IIIII","Exiting here as page"+i+" already exists");
+                        return;
+                    }
                     JSONObject responseObject = new JSONObject(response);
                     JSONObject detailsObject = responseObject.getJSONObject("details");
                     JSONObject summaryObject = responseObject.getJSONObject("summary");
-                    portfolioGameCardModels = new ArrayList<>();
                     for (Iterator<String> iter = detailsObject.keys(); iter.hasNext(); ) {
                         String key = iter.next();
-                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-                        if(isFirstTime){
-                            Log.d("HEREEEE",preferences.getString("ticker", ""));
-                            Log.d("HEREEE",key);
-                            if(key.equals( preferences.getString("ticker", ""))){
-                                isFirstTime = false;
-                            }
-                            else{
-                                continue;
-                            }
-                        }
+//                        if(isFirstTime){
+//                            Log.d("HEREEEE",preferences.getString("ticker", ""));
+//                            Log.d("HEREEE",key);
+//                            if(key.equals( preferences.getString("ticker", ""))){
+//                                isFirstTime = false;
+//                            }
+//                            else{
+//                                continue;
+//                            }
+//                        }
 
 
                         Log.d("KEY",key);
@@ -236,11 +281,24 @@ public class PortfolioGameFragment extends Fragment {
                         model.setPeRatio(summaryObject.getJSONObject(key).getString("PE ratio (TTM)"));
                         portfolioGameCardModels.add(model);
                     }
+                    Log.d("IIIII","Setting adapter"+i+"");
                     loading.setVisibility(View.GONE);
-                    PortfolioGameCardRVAdapter rvAdapter = new PortfolioGameCardRVAdapter(portfolioGameCardModels);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false));
-                    recyclerView.setAdapter(rvAdapter);
-                    recyclerView.setItemViewCacheSize(10);
+                    rvAdapter.notifyDataSetChanged();
+
+
+                    noCards.setVisibility(View.GONE);
+
+                    if(portfolioGameCardModels.size() == 0 && i <5){
+                        Log.d("IIIII","Fetching cards again"+i+"");
+
+                        int e = i+1;
+                        fetchCards(e);
+
+                    }
+                    if(responseObject.equals(null)){
+                            noCards.setVisibility(View.VISIBLE);
+                    }
+
 
                     adapter = new PortfolioGameCardAdapter(portfolioGameCardModels, context);
                     cardStack.setAdapter(adapter);
@@ -249,8 +307,11 @@ public class PortfolioGameFragment extends Fragment {
                     cardStack.invalidate();
                     cardStack.refreshDrawableState();
                     adapter.notifyDataSetChanged();
+                    isLoading = false;
                     cardStack.resetStack();
-                    showAppTour();
+
+
+
                 } catch (JSONException e) {
                     Log.d("ERROR", e.toString());
                     e.printStackTrace();
@@ -275,6 +336,7 @@ public class PortfolioGameFragment extends Fragment {
                 20000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         cardsRequestQueue.add(cardRequest);
 
     }
@@ -324,6 +386,7 @@ public class PortfolioGameFragment extends Fragment {
         };
 
         requestQueue.add(stringRequest);
+
 
 
     }

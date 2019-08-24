@@ -148,6 +148,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                     for(int i=0;i<tagList.length();i++){
                         questionTagModels.add(new QuestionTagModel(tagList.getString(i)));
                     }
+                    questionAnswerModels = new ArrayList<>();
                     for(int i=0;i<answerList.length();i++){
                         JSONObject singleAnswer = answerList.getJSONObject(i);
                         questionAnswerModels.add(new QuestionAnswerModel(singleAnswer.getJSONObject("_id").getString("$oid"),singleAnswer.getString("answerBody"),singleAnswer.getInt("answerUpvotes"),singleAnswer.getString("answerUID"),singleAnswer.getJSONObject("answerTime").getLong("$date"),singleAnswer.getString("profilePic")));

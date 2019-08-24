@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="326dp"
+        android:layout_height="547dp"
+        android:background="@drawable/quiz_wining_drawable"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cross_icon"
+            android:tint="@color/colorPrimary"
+            android:layout_gravity="right"
+            android:id="@+id/close_prize_popup"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"/>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cracker"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hurray! You Won"
+            android:textSize="23dp"
+            android:textColor="#00B9FF"/>
+
+        <TextView
+            android:id="@+id/quiz_winning_prize_money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="₹ 250"
+            android:textAlignment="center"
+            android:textSize="29sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+            >
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/upi_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="UPI ID"
+                    android:inputType="text"
+                    android:textCursorDrawable="@null"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+        <TextView
+            android:layout_marginTop="@dimen/margin"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/quiz_winning_text"
+            android:text="Please enter your UPI id above in order to claim your prize"
+            android:textColor="#00B9FF"/>
+        <ImageView
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/upi_id_button"
+            android:src="@drawable/ic_upi_logo_vector"/>
+
+    </LinearLayout>
+
+</LinearLayout>

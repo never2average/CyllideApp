@@ -15,6 +15,7 @@ import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.JsonObject;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
@@ -137,7 +138,7 @@ public class SocketQuizActivity extends AppCompatActivity {
 //            viewersTV.setText(Integer.toString(jsonResponse));
             circularProgressBar.setProgress(0);
 //            jsonObject = jsonQuestionArray.getJSONObject(questionID);
-            mainQuestion.setText(jsonObject.getString("question"));
+            mainQuestion.setText("Q."+questionID+" "+jsonObject.getString("question"));
             JSONArray answerArray = jsonObject.getJSONArray("options");
             optionA.setText(answerArray.getString(0));
             optionB.setText(answerArray.getString(1));
@@ -490,6 +491,9 @@ public class SocketQuizActivity extends AppCompatActivity {
         questionsSocket.on("amicorrect", answerResponseFromServer);
         questionsSocket.on("answer_stat_results",onResponseFromServer);
         questionsSocket.on("quiz_winners_listener",winnerMoney);
+        JSONObject jsonObject = new JSONObject();
+
+//        questionsSocket.emit("special_connect",jsonObject);
 
 
 
@@ -674,6 +678,7 @@ public class SocketQuizActivity extends AppCompatActivity {
         else{
 
 
+
             Double prize = 0.0;
             DecimalFormat format = new DecimalFormat("####0.0");
             try {
@@ -840,6 +845,11 @@ public class SocketQuizActivity extends AppCompatActivity {
 
 
         if(AppConstants.coins>0 && QuizActivity.numberOfRevivals<2){
+            revivalpopup=new Dialog(SocketQuizActivity.this);
+            revivalpopup.setContentView(R.layout.quiz_revival_xml);
+            revivalpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
             TextView coinsLeft = revivalpopup.findViewById(R.id.quiz_revival_coins_left);
             TextView revivalYes = revivalpopup.findViewById(R.id.text_view_yes);
             TextView revivalNo = revivalpopup.findViewById(R.id.text_view_no);
@@ -867,10 +877,6 @@ public class SocketQuizActivity extends AppCompatActivity {
                     losersPopup.show();
                 }
             });
-            revivalpopup=new Dialog(SocketQuizActivity.this);
-            revivalpopup.setContentView(R.layout.quiz_revival_xml);
-            revivalpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
 
             revivalpopup.show();
             startRevivalTimer(3,pb);

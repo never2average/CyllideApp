@@ -10,13 +10,13 @@
         android:layout_height="0dp"
         android:layout_weight="9">
         <androidx.recyclerview.widget.RecyclerView
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/game_rv"/>
 
     <link.fls.swipestack.SwipeStack
-        android:visibility="visible"
+        android:visibility="gone"
         swipedeck:stack_rotation="0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,6 +26,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/d1"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/no_cards_tv"
+            android:layout_marginTop="@dimen/square_button_padding"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:text="No Cards to show!"/>
 
     </FrameLayout>
 
@@ -52,7 +60,7 @@
                 android:layout_height="match_parent">
                 <ImageView
                     android:padding="@dimen/margin"
-                    android:src="@drawable/cross_icon"
+                    android:src="@drawable/left_arrow"
                     android:tint="@android:color/holo_red_dark"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -92,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <ImageView
-                    android:src="@drawable/heart_icon"
+                    android:src="@drawable/right_arrow"
                     android:tint="#5AE65A"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

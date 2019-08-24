@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
@@ -134,7 +135,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileMedal = findViewById(R.id.profile_medal);
 
         quizWinPopup = new Dialog(ProfileActivity.this);
-        quizWinPopup.setContentView(R.layout.quiz_wining_xml);
+        quizWinPopup.setContentView(R.layout.money_dialog);
         quizWinPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         cross.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -266,11 +267,69 @@ public class ProfileActivity extends AppCompatActivity {
                     AnimatedPieViewConfig config = new AnimatedPieViewConfig().drawText(false).textSize(40);
                     config.strokeWidth(30);
                     coins.setText(jsonResponse.getString("points_collected"));
-                    money.setText(jsonResponse.getString("money_won"));
+                    money.setText("₹ "+jsonResponse.getString("money_won"));
                     money.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.cyllide_grey));
                     if (Integer.parseInt(money.getText().toString()) > AppConstants.minWithdrawable) {
                         money.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.green));
                     }
+
+
+                    if(Integer.parseInt(money.getText().toString())>=20){
+                        money.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.green));
+                        findViewById(R.id.money_ic).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                TextView quizMoney = quizWinPopup.findViewById(R.id.quiz_winning_prize_money);
+                                final TextInputEditText upiID = quizWinPopup.findViewById(R.id.upi_id);
+
+                                quizWinPopup.show();
+                                quizMoney.setText("₹ " + money.getText().toString());
+                                ImageView closePrizePopup = quizWinPopup.findViewById(R.id.close_prize_popup);
+                                closePrizePopup.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        quizWinPopup.dismiss();
+                                    }
+                                });
+
+                            }
+
+
+
+                        });
+                        money.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                TextView quizMoney = quizWinPopup.findViewById(R.id.quiz_winning_prize_money);
+                                final TextInputEditText upiID = quizWinPopup.findViewById(R.id.upi_id);
+
+                                quizWinPopup.show();
+                                quizMoney.setText("₹ "+money.getText().toString());
+                                ImageView closePrizePopup = quizWinPopup.findViewById(R.id.close_prize_popup);
+                                closePrizePopup.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        quizWinPopup.dismiss();
+                                    }
+                                });
+                                ImageView sendUPI = quizWinPopup.findViewById(R.id.upi_id_button);
+                                sendUPI.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        quizWinPopup.dismiss();
+                                        final String string = upiID.getText().toString();
+                                        Toast.makeText(ProfileActivity.this,"Money will be sent", Toast.LENGTH_LONG).show();
+                                        winnersMoney(string);
+                                    }
+                                });
+
+                            }
+                        });
+                    }
+
+
+
+
 
                     double contestsPart = jsonResponse.getDouble("portfolioDays");
                     prizes.setText(contestsPart + "");
