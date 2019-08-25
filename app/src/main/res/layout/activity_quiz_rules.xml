@@ -112,7 +112,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PRIZE MONEY"
+                android:text="PRIZE POOL"
                 android:textAlignment="center"
                 android:textSize="26sp"
                 android:layout_margin="2dp"/>

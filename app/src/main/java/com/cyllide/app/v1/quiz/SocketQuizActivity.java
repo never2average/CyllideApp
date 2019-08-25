@@ -171,6 +171,13 @@ public class SocketQuizActivity extends AppCompatActivity {
         Emitter.Listener winnerMoney = new Emitter.Listener() {
             @Override
             public void call(Object... args) {
+                JSONObject data = new JSONObject();
+                try {
+                    data.put("token",AppConstants.username);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                questionsSocket.emit("winner_token",data);
                 Log.d("HEAAARRRR",args.toString());
                 JSONObject response;
                 try{
@@ -492,8 +499,12 @@ public class SocketQuizActivity extends AppCompatActivity {
         questionsSocket.on("answer_stat_results",onResponseFromServer);
         questionsSocket.on("quiz_winners_listener",winnerMoney);
         JSONObject jsonObject = new JSONObject();
-
-//        questionsSocket.emit("special_connect",jsonObject);
+        try {
+            jsonObject.put("token",AppConstants.token);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        questionsSocket.emit("special_connect",jsonObject);
 
 
 
@@ -647,6 +658,14 @@ public class SocketQuizActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("token",AppConstants.token);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        questionsSocket.emit("special_disconnect",jsonObject);
+
         super.onDestroy();
         questionID = -1;
         quizMusicPlayer.stop();
@@ -670,6 +689,14 @@ public class SocketQuizActivity extends AppCompatActivity {
     Map<String,String> quizMoneyRequestHeader = new ArrayMap<>();
 
     private void finishQuiz(int questionID,Double response){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("token",AppConstants.token);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        questionsSocket.emit("special_disconnect",jsonObject);
+
         if(questionID != 10){
             Toast.makeText(this,"You  lol",Toast.LENGTH_LONG).show();
             questionsSocket.close();

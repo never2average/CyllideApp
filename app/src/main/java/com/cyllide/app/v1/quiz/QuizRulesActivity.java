@@ -302,37 +302,39 @@ public class QuizRulesActivity extends AppCompatActivity {
     private void fetchQuestions(final String quizID){
         RequestQueue requestQueue;
         requestQueue = Volley.newRequestQueue(this);
-        String URL = getResources().getString(R.string.apiBaseURL)+"quiz/get";
-        questionHeaders.put("token", AppConstants.token);
-        questionHeaders.put("quizID",quizID);
-        StringRequest questionRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Intent quizSwitcher = new Intent(QuizRulesActivity.this,SocketQuizActivity.class);
-                quizSwitcher.putExtra("questions",response);
-                quizSwitcher.putExtra("quizID",quizID);
-                startActivity(quizSwitcher);
-                finish();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+//        String URL = getResources().getString(R.string.apiBaseURL)+"quiz/get";
+//        questionHeaders.put("token", AppConstants.token);
+//        questionHeaders.put("quizID",quizID);
+//        StringRequest questionRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        }){
+//            @Override
+//            public Map<String, String> getHeaders() {
+//                return questionHeaders;
+//            }
+//
+//            @Override
+//            protected Response<String> parseNetworkResponse(NetworkResponse nr) {
+//                int n = nr.statusCode;
+//                Log.d("Res Code",""+n);
+//                return super.parseNetworkResponse(nr);
+//            }
+//        };
+//        requestQueue.add(questionRequest);
 
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() {
-                return questionHeaders;
-            }
-
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse nr) {
-                int n = nr.statusCode;
-                Log.d("Res Code",""+n);
-                return super.parseNetworkResponse(nr);
-            }
-        };
-        requestQueue.add(questionRequest);
+        Intent quizSwitcher = new Intent(QuizRulesActivity.this,SocketQuizActivity.class);
+        quizSwitcher.putExtra("questions","");
+        quizSwitcher.putExtra("quizID",quizID);
+        startActivity(quizSwitcher);
+        finish();
     }
 
     @Override
