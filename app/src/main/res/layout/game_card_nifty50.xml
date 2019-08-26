@@ -6,7 +6,9 @@
     android:layout_gravity="center"
     android:layout_margin="6dp"
     android:gravity="center_horizontal"
-    app:cardCornerRadius="12dp">
+    app:cardCornerRadius="15dp"
+
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
