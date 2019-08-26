@@ -269,12 +269,12 @@ public class ProfileActivity extends AppCompatActivity {
                     coins.setText(jsonResponse.getString("points_collected"));
                     money.setText("₹ "+jsonResponse.getString("money_won"));
                     money.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.cyllide_grey));
-                    if (Integer.parseInt(money.getText().toString()) > AppConstants.minWithdrawable) {
+                    if (Integer.parseInt(jsonResponse.getString("money_won")) > AppConstants.minWithdrawable) {
                         money.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.green));
                     }
 
 
-                    if(Integer.parseInt(money.getText().toString())>=20){
+                    if(Integer.parseInt(jsonResponse.getString("money_won"))>=20){
                         money.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.green));
                         findViewById(R.id.money_ic).setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -283,7 +283,7 @@ public class ProfileActivity extends AppCompatActivity {
                                 final TextInputEditText upiID = quizWinPopup.findViewById(R.id.upi_id);
 
                                 quizWinPopup.show();
-                                quizMoney.setText("₹ " + money.getText().toString());
+                                quizMoney.setText( money.getText().toString());
                                 ImageView closePrizePopup = quizWinPopup.findViewById(R.id.close_prize_popup);
                                 closePrizePopup.setOnClickListener(new View.OnClickListener() {
                                     @Override
