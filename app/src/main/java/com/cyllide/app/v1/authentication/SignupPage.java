@@ -71,7 +71,7 @@ public class SignupPage extends AppCompatActivity {
     }
 
     private boolean isUsernameValid() {
-        String name = input_referral.getText().toString().trim();
+        String name = input_user_name.getText().toString().trim();
         if(name.length()<=5){
             input_user_name.setError("Username must be atleast 5 characters long");
             return false;

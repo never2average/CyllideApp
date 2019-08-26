@@ -379,6 +379,8 @@ public class PortfolioGameCardAdapter extends BaseAdapter {
                     Description d = new Description();
                     d.setText("");
                     lineChart.setDescription(d);
+                    lineChart.setScaleEnabled(false);
+
                     lineChart.invalidate();
                     lastIndex=yAxisValues.size();
 

@@ -79,6 +79,7 @@ public class CardSwipeRecyclerAdapter extends
         Description d = new Description();
         d.setText("");
         holder.lineChart.setDescription(d);
+        holder.lineChart.setScaleEnabled(false);
         holder. lineChart.invalidate();
         holder.infoButton.setOnClickListener(new View.OnClickListener() {
             @Override

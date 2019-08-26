@@ -112,9 +112,12 @@ private LineChart lineChart;
         lineChart.setDescription(d);
         lineChart.getAxisLeft().setDrawGridLines(false);
         lineChart.getXAxis().setEnabled(false);
+        lineChart.getAxisRight().setDrawGridLinesBehindData(false);
+        lineChart.getAxisRight().setEnabled(false);
 
 
         lineChart.getLegend().setEnabled(false);
+        lineChart.setScaleEnabled(false);
 
 
         lineChart.invalidate();
@@ -238,7 +241,6 @@ private LineChart lineChart;
                     lineChart.setData(new LineData(lineDataSets));
                     lineChart.getXAxis().setDrawLabels(false);
                     lineChart.getXAxis().setDrawGridLines(false);
-                    lineChart.getAxisRight().setEnabled(true);
                     lineChart.getAxisLeft().setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
                     lineChart.getAxisRight().setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
                     lineChart.getAxisLeft().setGridColor(ContextCompat.getColor(context,R.color.colorPrimary));
@@ -265,7 +267,6 @@ private LineChart lineChart;
                         public void onNothingSelected() {
                         }
                     });
-                    plotMean(lineChart,yAxisValues,lineDataSets);
 
                     lineDataSet.setLineWidth(3);
                     lineDataSet.setCircleRadius(5);
@@ -274,6 +275,7 @@ private LineChart lineChart;
                     Description d = new Description();
                     d.setText("");
                     lineChart.setDescription(d);
+                    lineChart.setScaleEnabled(false);
                     lineChart.invalidate();
                     lastIndex=yAxisValues.size();
 
@@ -289,20 +291,17 @@ private LineChart lineChart;
                         lineDataSet.setFillDrawable(ContextCompat.getDrawable(itemView.getContext(),R.drawable.chart_red_drawable));
 
                     }
-                    //lineChart.getRenderer().getPaintRender().setShader(new LinearGradient(0, 0, lineChart.getMeasuredWidth(), 0, ContextCompat.getColor(context,R.color.colorPrimary),ContextCompat.getColor(context,R.color.colorPrimary), Shader.TileMode.CLAMP));
                     lineDataSets.add(lineDataSet);
+                    plotMean(lineChart,yAxisValues,lineDataSets);
 
-                    // lineDataSets.add(whiteLinedataset);
+
 
 
 
                     lineChart.setData(new LineData(lineDataSets));
-                    // lineChart.setScaleEnabled(false);
                     lineChart.getXAxis().setDrawLabels(false);
 
                     lineChart.setDescription(d);
-                    lineChart.getAxisLeft().setDrawGridLines(true);
-                    lineChart.getXAxis().setEnabled(true);
 
                     lineDataSet.setDrawFilled(true);
 
@@ -359,6 +358,7 @@ private LineChart lineChart;
         }
         LineDataSet meanDataSet = new LineDataSet(meanline,"mean");
         meanDataSet.setDrawCircles(false);
+        meanDataSet.setLineWidth(3.4f);
 
         lineDataSets.add(meanDataSet);
         meanDataSet.setColor(ContextCompat.getColor(itemView.getContext(),R.color.colorPrimary));
