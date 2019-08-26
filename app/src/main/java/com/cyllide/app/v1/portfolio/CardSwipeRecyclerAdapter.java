@@ -96,6 +96,7 @@ public class CardSwipeRecyclerAdapter extends
                 Log.i("Hardware Accel type:", Integer.toString(View.LAYER_TYPE_HARDWARE));
             }
         });
+        holder.lineChart.getAxisRight().setEnabled(false);
 
 
     }
