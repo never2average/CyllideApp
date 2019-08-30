@@ -95,6 +95,8 @@ public class SocketQuizActivity extends AppCompatActivity {
     private DeviceBandwidthSampler mDeviceBandwidthSampler;
     private ConnectionChangedListener mListener;
     private FrameLayout waitingScreen;
+    int revivalsUsed;
+    int revivalsRemaining;
 
 
     private void changeQuestion(JSONObject quizObject){
@@ -233,6 +235,8 @@ public class SocketQuizActivity extends AppCompatActivity {
 
             }
         };
+
+
 
         Emitter.Listener answerResponseFromServer = new Emitter.Listener() {
             @Override
@@ -626,6 +630,7 @@ public class SocketQuizActivity extends AppCompatActivity {
                         if (questionID == 9) {
                             losersPopup.show();
                         } else {
+                            if(!isRevivalShowing)
                             showRevival();
                         }
                     }
@@ -866,15 +871,20 @@ public class SocketQuizActivity extends AppCompatActivity {
 
 
     }
-
+public static boolean isRevivalShowing = false;
     private void showRevival(){
+        isRevivalShowing = true;
+        Log.d("HEARTSSS", getIntent().getIntExtra("hearts",0)+" "+numberOfRevivals);
+        AppConstants.hearts = getIntent().getIntExtra("hearts",0);
 
 
 
-        if(AppConstants.coins>0 && QuizActivity.numberOfRevivals<2){
+        if(AppConstants.hearts > 0 && numberOfRevivals<2){
+            Log.d("HEARTSSS", getIntent().getIntExtra("hearts",0)+" "+numberOfRevivals);
             revivalpopup=new Dialog(SocketQuizActivity.this);
             revivalpopup.setContentView(R.layout.quiz_revival_xml);
             revivalpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            isRevivalShowing = false;
 
 
             TextView coinsLeft = revivalpopup.findViewById(R.id.quiz_revival_coins_left);
@@ -882,7 +892,7 @@ public class SocketQuizActivity extends AppCompatActivity {
             TextView revivalNo = revivalpopup.findViewById(R.id.text_view_no);
             CircularProgressBar revivalProgressBar = revivalpopup.findViewById(R.id.revival_progress_bar);
             ProgressBar pb = revivalpopup.findViewById(R.id.progressBarTodayRevival);
-            coinsLeft.setText(Integer.toString(AppConstants.coins));
+            coinsLeft.setText(Integer.toString(AppConstants.hearts));
 
             revivalYes.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -891,6 +901,14 @@ public class SocketQuizActivity extends AppCompatActivity {
                     QuizActivity.hasRevive = true;
                     numberOfRevivals++;
                     revivalpopup.dismiss();
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put("hearts",AppConstants.hearts);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    //todo enter event name;
+                    questionsSocket.emit("entereventname",jsonObject);
 
                 }
             });
@@ -916,7 +934,7 @@ public class SocketQuizActivity extends AppCompatActivity {
                     revivalpopup.dismiss();
                     if(QuizActivity.hasRevive == true){
                         QuizActivity.hasRevive = false;
-                        AppConstants.coins -= 1;
+                        AppConstants.hearts -= 1;
                         QuizActivity.numberOfRevivals +=1;
                         SharedPreferences.Editor editor = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE).edit();
                         editor.putInt("coins", AppConstants.coins);
@@ -933,6 +951,7 @@ public class SocketQuizActivity extends AppCompatActivity {
             }, 3000);
         }
         else{
+            Log.d("HEARTSSSLOST", getIntent().getIntExtra("hearts",0)+" "+numberOfRevivals);
             losersPopup=new Dialog(SocketQuizActivity.this);
             losersPopup.setContentView(R.layout.quiz_loser_popup);
             losersPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
