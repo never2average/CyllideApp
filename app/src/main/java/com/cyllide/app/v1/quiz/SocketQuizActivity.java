@@ -901,14 +901,14 @@ public static boolean isRevivalShowing = false;
                     QuizActivity.hasRevive = true;
                     numberOfRevivals++;
                     revivalpopup.dismiss();
-                    JSONObject jsonObject = new JSONObject();
-                    try {
-                        jsonObject.put("hearts",AppConstants.hearts);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    //todo enter event name;
-                    questionsSocket.emit("entereventname",jsonObject);
+//                    JSONObject jsonObject = new JSONObject();
+//                    try {
+//                        jsonObject.put("hearts",AppConstants.hearts);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                    //todo enter event name;
+//                    questionsSocket.emit("entereventname",jsonObject);
 
                 }
             });
