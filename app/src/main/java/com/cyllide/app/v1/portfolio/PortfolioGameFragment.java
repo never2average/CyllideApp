@@ -225,14 +225,14 @@ public class PortfolioGameFragment extends Fragment {
         });
 
         rvAdapter = new PortfolioGameCardRVAdapter(portfolioGameCardModels);
-        linearLayoutManager1 =new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false){
-            @Override
-            public boolean canScrollHorizontally() {
-                return false;
-            }
-        };
+//        linearLayoutManager1 =new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false){
+//            @Override
+//            public boolean canScrollHorizontally() {
+//                return false;
+//            }
+//        };
 
-        recyclerView.setLayoutManager(linearLayoutManager1);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
         recyclerView.setAdapter(rvAdapter);
 
 
