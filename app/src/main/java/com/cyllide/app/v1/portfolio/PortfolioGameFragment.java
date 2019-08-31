@@ -69,6 +69,7 @@ public class PortfolioGameFragment extends Fragment {
     MaterialCardView chooseStockDoubleQuantity;
     TextView noCards;
     boolean isLoading = false;
+    LinearLayoutManager linearLayoutManager1;
 
     public PortfolioGameFragment(Context context) {
         this.context = context;
@@ -224,7 +225,14 @@ public class PortfolioGameFragment extends Fragment {
         });
 
         rvAdapter = new PortfolioGameCardRVAdapter(portfolioGameCardModels);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false));
+        linearLayoutManager1 =new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false){
+            @Override
+            public boolean canScrollHorizontally() {
+                return false;
+            }
+        };
+
+        recyclerView.setLayoutManager(linearLayoutManager1);
         recyclerView.setAdapter(rvAdapter);
 
 
