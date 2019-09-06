@@ -52,7 +52,17 @@
             android:text="200"
             android:textSize="22dp"
             android:textColor="@color/white"/>
+
+
     </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="@dimen/square_button_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your money will be deposited shortly"
+        android:textSize="16dp"
+        android:textColor="@color/white"/>
 
     <TextView
         android:layout_width="100dp"

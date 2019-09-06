@@ -8,8 +8,9 @@ public class AppConstants {
     public static String contestID = "currentContest";
     public static String portfolioID;
     public static String token;
-    //    public static String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU5NDIzMDcwNn0.Vi9edjRLRHDBOuP34Ihk3ABOSOnzgimzzKfRZeykurw";
+    // public static String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiUHJpeWVzaCIsImV4cCI6MTU5NDIzMDcwNn0.Vi9edjRLRHDBOuP34Ihk3ABOSOnzgimzzKfRZeykurw";
     public static int coins;
+    public static int hearts;
 
     public static String referral;
     public static ArrayList<String> myPortfolioList = new ArrayList<String>();

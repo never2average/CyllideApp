@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -35,6 +36,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Map;
+
+import static androidx.recyclerview.widget.ItemTouchHelper.Callback.makeMovementFlags;
 
 public class PortfolioGameCardViewholder extends RecyclerView.ViewHolder {
 
@@ -370,7 +373,6 @@ private LineChart lineChart;
 
 
     }
-
 
 
 
