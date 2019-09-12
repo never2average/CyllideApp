@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.cyllide.app.v1">
+    package="com.cyllide.app.beta">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".MainApplication"
+        android:name="com.cyllide.app.beta.MainApplication"
         android:allowBackup="true"
         android:icon="@drawable/app_logo"
         android:label="@string/app_name"
@@ -27,32 +27,32 @@
 
 
 
-        <activity android:name=".portfolio.VersionControlActivity"></activity>
-        <activity android:name=".authentication.PhoneAuth"
+        <activity android:name="com.cyllide.app.beta.portfolio.VersionControlActivity"></activity>
+        <activity android:name="com.cyllide.app.beta.authentication.PhoneAuth"
             android:windowSoftInputMode="stateVisible|adjustResize">
 
         </activity>
 
 
-        <activity android:name=".FeedbackActivity" />
+        <activity android:name="com.cyllide.app.beta.FeedbackActivity" />
         <activity
-            android:name=".contests.portfolioRV.LeaderboardsActivity"
+            android:name="com.cyllide.app.beta.contests.portfolioRV.LeaderboardsActivity"
             android:screenOrientation="portrait"
             />
         <activity
-            android:name=".contests.MonthlyActivity"
-            android:parentActivityName=".MainActivity"
+            android:name="com.cyllide.app.beta.contests.MonthlyActivity"
+            android:parentActivityName="com.cyllide.app.beta.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".authentication.OTPVerification"
+            android:name="com.cyllide.app.beta.authentication.OTPVerification"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
-            android:name=".quiz.QuizRulesActivity"
-            android:parentActivityName=".MainActivity"
+            android:name="com.cyllide.app.beta.quiz.QuizRulesActivity"
+            android:parentActivityName="com.cyllide.app.beta.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.cyllide.app.beta.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -62,8 +62,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".forum.ForumActivity"
-            android:parentActivityName=".MainActivity"
+            android:name="com.cyllide.app.beta.forum.ForumActivity"
+            android:parentActivityName="com.cyllide.app.beta.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             />
@@ -72,81 +72,81 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
-            android:name=".forum.askquestion.AskQuestion"
-            android:parentActivityName=".forum.ForumActivity"
+            android:name="com.cyllide.app.beta.forum.askquestion.AskQuestion"
+            android:parentActivityName="com.cyllide.app.beta.forum.ForumActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".forum.questionlist.questionPage.QuestionAnswerActivity"
+            android:name="com.cyllide.app.beta.forum.questionlist.questionPage.QuestionAnswerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".stories.ArticlesMainActivity"
+            android:name="com.cyllide.app.beta.stories.ArticlesMainActivity"
             android:screenOrientation="portrait"
             />
         <activity
-            android:name=".quiz.QuizActivity"
+            android:name="com.cyllide.app.beta.quiz.QuizActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".stories.NewsPageActivity"
+            android:name="com.cyllide.app.beta.stories.NewsPageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".portfolio.PortfolioActivity"
+            android:name="com.cyllide.app.beta.portfolio.PortfolioActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".portfolio.PortfolioGameHomeActivity"
-            android:parentActivityName=".MainActivity"
+            android:name="com.cyllide.app.beta.portfolio.PortfolioGameHomeActivity"
+            android:parentActivityName="com.cyllide.app.beta.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             >
 
         </activity>
         <activity
-            android:name=".ProfileActivity"
-            android:parentActivityName=".MainActivity"
+            android:name="com.cyllide.app.beta.ProfileActivity"
+            android:parentActivityName="com.cyllide.app.beta.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             >
 
         </activity>
         <activity
-            android:name=".faq_view.FAQActivity"
-            android:parentActivityName=".MainActivity"
+            android:name="com.cyllide.app.beta.faq_view.FAQActivity"
+            android:parentActivityName="com.cyllide.app.beta.MainActivity"
             android:screenOrientation="portrait"
             />
 
         <activity
-            android:name=".PasswordChangeActivity"
+            android:name="com.cyllide.app.beta.PasswordChangeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".stories.StoriesPageActivity"
-            android:parentActivityName=".MainActivity"
+            android:name="com.cyllide.app.beta.stories.StoriesPageActivity"
+            android:parentActivityName="com.cyllide.app.beta.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".notification.NotificationActivity"
+            android:name="com.cyllide.app.beta.notification.NotificationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".portfolio.PortfolioGameDetailedChartActivity"
+            android:name="com.cyllide.app.beta.portfolio.PortfolioGameDetailedChartActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".authentication.SignupPage"
+        <activity android:name="com.cyllide.app.beta.authentication.SignupPage"
             android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
-            android:name=".quiz.SocketQuizActivity"
+            android:name="com.cyllide.app.beta.quiz.SocketQuizActivity"
             android:screenOrientation="portrait" />
 
-        <receiver android:name=".background.services.QuizAlarmManager" />
+        <receiver android:name="com.cyllide.app.beta.background.services.QuizAlarmManager" />
         <receiver
-            android:name=".MySMSBroadcastReceiver"
+            android:name="com.cyllide.app.beta.MySMSBroadcastReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".background.services.AutoStart">
+        <receiver android:name="com.cyllide.app.beta.background.services.AutoStart">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".background.services.GetLatestQuizIDService" /> <!-- <receiver -->
+        <service android:name="com.cyllide.app.beta.background.services.GetLatestQuizIDService" /> <!-- <receiver -->
         <!-- android:name=".NetworkConnectionBroadcastReveiver" -->
         <!-- android:enabled="true" -->
         <!-- android:exported="true"> -->
@@ -155,7 +155,7 @@
         <!-- </intent-filter> -->
         <!-- </receiver> -->
         <receiver
-            android:name=".background.services.MySMSBroadcastReceiver"
+            android:name="com.cyllide.app.beta.background.services.MySMSBroadcastReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
@@ -166,7 +166,7 @@
         </receiver>
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.cyllide.app.v1.android.fileprovider"
+            android:authorities="com.cyllide.app.beta.android.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

@@ -92,7 +92,7 @@
     </LinearLayout>
 
 
-    <com.cyllide.app.v1.portfolio.NonSwipeableViewPager
+    <com.cyllide.app.beta.portfolio.NonSwipeableViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

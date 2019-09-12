@@ -180,7 +180,7 @@
                 android:background="@color/black"
                 />
 
-            <com.cyllide.app.v1.portfolio.CustomViewPager
+            <com.cyllide.app.beta.portfolio.CustomViewPager
                 android:background="@color/white"
                 android:id="@+id/view_pager_chart_activity"
                 android:layout_width="match_parent"
