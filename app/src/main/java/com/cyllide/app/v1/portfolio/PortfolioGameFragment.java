@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -130,6 +131,7 @@ public class PortfolioGameFragment extends Fragment {
                     @Override
                     public void run() {
                         if(position != 0) {
+                            dontChooseStockBtn.startAnimation(AnimationUtils.loadAnimation(context, R.anim.rotate));
                             recyclerView.smoothScrollToPosition(position - 1);
                         }
                     }
