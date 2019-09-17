@@ -17,11 +17,13 @@ import com.cyllide.app.beta.forum.ForumActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,6 +86,17 @@ public class QuestionAnswerActivity extends AppCompatActivity {
         RecyclerView.LayoutManager answerLayoutManager = new LinearLayoutManager(this);
         ansRecyclerView.setLayoutManager(answerLayoutManager);
         questionTagRecyclerView.setLayoutManager(tagsLayoutManager);
+        findViewById(R.id.empty_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                answerBody.requestFocus();
+                InputMethodManager inputMethodManager =
+                        (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.toggleSoftInputFromWindow(
+                        answerBody.getApplicationWindowToken(),
+                        InputMethodManager.SHOW_FORCED, 0);
+            }
+        });
 
         try {
             questionID = new JSONObject(getIntent().getStringExtra("questionID")).getString("$oid");

@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,6 +33,7 @@ import com.cyllide.app.beta.PortfolioGameCardRVAdapter;
 import com.cyllide.app.beta.R;
 import com.cyllide.app.beta.stories.SnapHelperOneByOne;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,6 +70,7 @@ public class PortfolioGameFragment extends Fragment {
     MaterialCardView chooseStockBtn;
     MaterialCardView chooseStockDoubleQuantity;
     TextView noCards;
+    LinearLayout rootView;
     boolean isLoading = false;
     LinearLayoutManager linearLayoutManager1;
 
@@ -86,6 +90,7 @@ public class PortfolioGameFragment extends Fragment {
         linearSnapHelper.attachToRecyclerView(recyclerView);
         loading = view.findViewById(R.id.loading_screen);
         noCards = view.findViewById(R.id.no_cards_tv);
+        rootView = view.findViewById(R.id.root_layout);
 //        cardStack.setListener(new SwipeStack.SwipeStackListener() {
 //            @Override
 //            public void onViewSwipedToLeft(int position) {
@@ -129,6 +134,7 @@ public class PortfolioGameFragment extends Fragment {
                     @Override
                     public void run() {
                         if(position != 0) {
+                            dontChooseStockBtn.startAnimation(AnimationUtils.loadAnimation(context, R.anim.rotate));
                             recyclerView.smoothScrollToPosition(position - 1);
                         }
                     }
@@ -370,6 +376,10 @@ public class PortfolioGameFragment extends Fragment {
             public void onResponse(String response) {
                 Log.d("RESPONSE", response);
                 if(response.equals("{\"data\": \"Position Not Taken\"}")){
+                    Snackbar snackbar = Snackbar
+
+                            .make(rootView,"Market is Closed", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                     cardStack.resetStack();
                 }
                 else{

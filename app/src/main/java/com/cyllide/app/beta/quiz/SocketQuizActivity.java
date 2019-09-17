@@ -896,14 +896,7 @@ public static boolean isRevivalShowing = false;
                     QuizActivity.hasRevive = true;
                     numberOfRevivals++;
                     revivalpopup.dismiss();
-//                    JSONObject jsonObject = new JSONObject();
-//                    try {
-//                        jsonObject.put("hearts",AppConstants.hearts);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                    //todo enter event name;
-//                    questionsSocket.emit("entereventname",jsonObject);
+
 
                 }
             });
@@ -935,6 +928,15 @@ public static boolean isRevivalShowing = false;
                         editor.putInt("coins", AppConstants.coins);
                         editor.apply();
                         JSONObject quizObject = null;
+                                            JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put("hearts",AppConstants.hearts);
+                        jsonObject.put("username",AppConstants.username);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    //todo enter event name;
+                    questionsSocket.emit("hearts_updater",jsonObject);
                     }
                     else{
                         questionsSocket.close();

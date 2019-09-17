@@ -58,7 +58,7 @@ public class PortfolioGamePositionsFragment extends Fragment {
         loading = view.findViewById(R.id.loading_screen);
         loading.setVisibility(View.VISIBLE);
         totalTV = view.findViewById(R.id.total_value);
-        getPositionsLTPVolley();
+        setRetainInstance(false);
 
         return view;
     }
@@ -161,4 +161,19 @@ public class PortfolioGamePositionsFragment extends Fragment {
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("HEAAARRR","RESUMMEDDD");
+        getPositionsLTPVolley();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            Log.d("HEAAARRR","RESUMMEDDD");
+
+            getPositionsLTPVolley();        }
+    }
 }
