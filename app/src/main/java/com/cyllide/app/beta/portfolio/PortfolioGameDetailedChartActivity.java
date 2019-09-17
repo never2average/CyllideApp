@@ -380,6 +380,21 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
 //
 //                    }
                     //lineChart.getRenderer().getPaintRender().setShader(new LinearGradient(0, 0, lineChart.getMeasuredWidth(), 0, ContextCompat.getColor(context,R.color.colorPrimary),ContextCompat.getColor(context,R.color.colorPrimary), Shader.TileMode.CLAMP));
+                    int lastIndex=yAxisValues.size();
+
+                    if(yAxisValues.get(lastIndex-1).getY()>=getMean(yAxisValues))
+                    {
+                        lineDataSet.setColor(ContextCompat.getColor(context,R.color.progressgreen));
+                        lineDataSet.setFillDrawable(ContextCompat.getDrawable(context,R.drawable.chart_gradient));
+
+
+                    }
+                    else {
+                        lineDataSet.setColor(ContextCompat.getColor(context,R.color.red));
+                        lineDataSet.setFillDrawable(ContextCompat.getDrawable(context,R.drawable.chart_red_drawable));
+
+                    }
+
                     lineDataSets.add(lineDataSet);
 
                     // lineDataSets.add(whiteLinedataset);
@@ -397,6 +412,15 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
                     lineDataSet.setDrawFilled(true);
 
                     lineChart.getLegend().setEnabled(false);
+                    lineChart.getAxisLeft().setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
+                    lineChart.getAxisRight().setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
+                    lineChart.getAxisLeft().setGridColor(ContextCompat.getColor(context,R.color.colorPrimary));
+
+                    lineDataSet.setDrawFilled(true);
+
+                    lineChart.getLegend().setEnabled(false);
+
+
 
 
 
@@ -428,5 +452,18 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
         };
         stringRequest.setShouldCache(false);
         requestQueue.add(stringRequest);
+    }
+
+    float getMean(ArrayList<Entry> list){
+        int mean;
+        int sum=0;
+        for(int i= 0;i<list.size();i++) {
+
+            sum+=list.get(i).getY();
+
+        }
+        mean=sum/list.size();
+        return mean;
+
     }
 }
