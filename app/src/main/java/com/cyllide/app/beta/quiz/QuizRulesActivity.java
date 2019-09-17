@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -95,7 +96,7 @@ public class QuizRulesActivity extends AppCompatActivity {
 
 
         currentTimeRequestQueue = Volley.newRequestQueue(this);
-        String url = getResources().getString(R.string.currentTimeApiURL);
+        String url = getResources().getString(R.string.dataApiBaseURL)+"stocks/timeserver";
         StringRequest currentTimeStringRequest = new StringRequest(Request.Method.GET,url , new Response.Listener<String>() {
 
             @Override
@@ -103,11 +104,11 @@ public class QuizRulesActivity extends AppCompatActivity {
 
                 try {
                     currentTime = (new JSONObject(response).getLong("unixtime"))* 1000;
-                    Log.d("QuizRulesActivity", Long.toString(currentTime));
-                    Log.d("QuizRulesActivity",Long.toString(new JSONObject(response).getLong("unixtime")));
+                    Log.d("rules", Long.toString(currentTime));
+                    Log.d("rules",Long.toString(new JSONObject(response).getLong("unixtime")));
                     createTimer();
                 } catch (JSONException e) {
-                    Log.d("QuizRulesActivity", e.toString());
+                    Log.d("rules", e.toString());
 
                 }
 
@@ -117,16 +118,7 @@ public class QuizRulesActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Log.e("VOLLEY", error.toString());
             }
-        })
-        {
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse nr) {
-                int n = nr.statusCode;
-                Log.d("Res Code",""+n);
-                return super.parseNetworkResponse(nr);
-            }
-
-        };
+        });
 
         currentTimeRequestQueue.add(currentTimeStringRequest);
 
@@ -167,9 +159,6 @@ public class QuizRulesActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(QuizRulesActivity.this, MainActivity.class);
-//                startActivity(intent);
-//                finish();
                 onBackPressed();
             }
         });
@@ -187,8 +176,6 @@ public class QuizRulesActivity extends AppCompatActivity {
 
                 @Override
                 public void onResponse(String response) {
-                    Log.e("RealityCheck",response);
-                    Log.e("RealityCheck","Inside onResponse");
                     try {
                         lives = new JSONObject(response).getString("lives");
                         quizID = new JSONObject(response).getJSONObject("data").getJSONObject("_id").getString("$oid");
@@ -199,16 +186,13 @@ public class QuizRulesActivity extends AppCompatActivity {
                         edit.apply();
                         quizPrize.setText("₹ "+Integer.toString(new JSONObject(response).getJSONObject("data").getInt("quizPrizeMoney")));
 
-                        Log.d("Response", quizID);
-
                         startQuizButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 fetchQuestions(quizID);
                             }
                         });
-                        Log.d("Response", Long.toString(quizStartTime));
-                        Log.d("Timer",Long.toString(quizStartTime-currentTime));
+                        Toast.makeText(QuizRulesActivity.this,String.valueOf(quizStartTime-currentTime), Toast.LENGTH_LONG).show();
                         quizCountDownTimer =
                                 new CountDownTimer(quizStartTime-currentTime,1000){
                                     @Override
@@ -275,8 +259,6 @@ public class QuizRulesActivity extends AppCompatActivity {
 
 
     private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "CGANNEL NAME";
             String description = "CHANNEL DESC";
@@ -306,16 +288,14 @@ public class QuizRulesActivity extends AppCompatActivity {
 
 
         currentTimeRequestQueue = Volley.newRequestQueue(this);
-        String url = getResources().getString(R.string.currentTimeApiURL);
+        String url = getResources().getString(R.string.dataApiBaseURL)+"stocks/timeserver";
         StringRequest currentTimeStringRequest = new StringRequest(Request.Method.GET,url , new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
 
                 try {
-                    currentTime = (new JSONObject(response).getLong("unixtime"))* 1000;
-                    Log.d("QuizRulesActivity", Long.toString(currentTime));
-                    Log.d("QuizRulesActivity",Long.toString(new JSONObject(response).getLong("unixtime")));
+                    currentTime = ((new JSONObject(response).getLong("unixtime"))+ 330*60)* 1000;
                     createTimer();
                 } catch (JSONException e) {
                     Log.d("QuizRulesActivity", e.toString());

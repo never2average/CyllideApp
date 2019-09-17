@@ -27,7 +27,7 @@ public class ArticlesMainActivity extends AppCompatActivity {
         TabLayout tabLayout =
                 (TabLayout) findViewById(R.id.tab_layout);
         back=findViewById(R.id.newsbackbutton);
-        tabLayout.addTab(tabLayout.newTab().setText("Shorts"));
+//        tabLayout.addTab(tabLayout.newTab().setText("Shorts"));
 
         tabLayout.addTab(tabLayout.newTab().setText("News"));
         tabLayout.addTab(tabLayout.newTab().setText("Stories"));

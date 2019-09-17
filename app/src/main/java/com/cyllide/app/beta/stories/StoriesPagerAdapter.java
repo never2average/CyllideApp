@@ -23,13 +23,13 @@ public class StoriesPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         switch (position) {
+//            case 0:
+//                ShortsFragment shortsFragment = new ShortsFragment();
+//                return shortsFragment;
             case 0:
-                ShortsFragment shortsFragment = new ShortsFragment();
-                return shortsFragment;
-            case 1:
                 NewsFragment newsFragment = new NewsFragment();
                 return newsFragment;
-            case 2:
+            case 1:
                 StoriesFragment storiesFragment = new StoriesFragment();
                 return storiesFragment;
 
