@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -49,7 +48,7 @@ public class QuizRulesActivity extends AppCompatActivity {
     RequestQueue currentTimeRequestQueue;
     RemoteViews contentView;
     CountDownTimer quizCountDownTimer;
-    long currentTime;
+    long currentTime = 0L;
     private String lives;
 
     @Override
@@ -149,21 +148,21 @@ public class QuizRulesActivity extends AppCompatActivity {
 
     private void createTimer()
     {
-        if (quizStartTime != 0 && quizStartTime-currentTime < 0){
-            Snackbar snackbar = Snackbar
-                    .make(findViewById(R.id.root_layout), "No Quizzes Available", Snackbar.LENGTH_LONG);
-            snackbar.show();
-            startActivity(new Intent(QuizRulesActivity.this,MainActivity.class));
-            finish();
-        }
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-
-
+//        if (quizStartTime != 0 && quizStartTime-currentTime < 0){
+//            Snackbar snackbar = Snackbar
+//                    .make(findViewById(R.id.root_layout), "No Quizzes Available", Snackbar.LENGTH_LONG);
+//            snackbar.show();
+//            startActivity(new Intent(QuizRulesActivity.this,MainActivity.class));
+//            finish();
+//        }
+//        backButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                onBackPressed();
+//            }
+//        });
+//
+//
 
         final Map<String, String> mHeaders = new ArrayMap<String, String>();
         mHeaders.put("token", AppConstants.token);
@@ -177,6 +176,7 @@ public class QuizRulesActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(String response) {
                     try {
+                        Log.d("QuizRulesActivity",currentTime+"");
                         lives = new JSONObject(response).getString("lives");
                         quizID = new JSONObject(response).getJSONObject("data").getJSONObject("_id").getString("$oid");
                         quizStartTime = new JSONObject(response).getJSONObject("data").getJSONObject("quizStartTime").getLong("$date");
@@ -184,6 +184,7 @@ public class QuizRulesActivity extends AppCompatActivity {
                         edit.putString("time",Long.toString(quizStartTime));
                         edit.putString("id",quizID);
                         edit.apply();
+                        Log.d("TIMES","currentTime :"+currentTime+" QuizTime :"+quizStartTime);
                         quizPrize.setText("₹ "+Integer.toString(new JSONObject(response).getJSONObject("data").getInt("quizPrizeMoney")));
 
                         startQuizButton.setOnClickListener(new View.OnClickListener() {
@@ -192,7 +193,7 @@ public class QuizRulesActivity extends AppCompatActivity {
                                 fetchQuestions(quizID);
                             }
                         });
-                        Toast.makeText(QuizRulesActivity.this,String.valueOf(quizStartTime-currentTime), Toast.LENGTH_LONG).show();
+                        Log.d("QuizRulesActivity1",quizStartTime-currentTime+"");
                         quizCountDownTimer =
                                 new CountDownTimer(quizStartTime-currentTime,1000){
                                     @Override
@@ -224,6 +225,11 @@ public class QuizRulesActivity extends AppCompatActivity {
                                     }
                                 }.start();
                     } catch (JSONException e) {
+                        Snackbar snackbar = Snackbar
+                                .make(findViewById(R.id.root_layout), "No Quizzes Available", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                        startActivity(new Intent(QuizRulesActivity.this,MainActivity.class));
+                        finish();
                         e.printStackTrace();
                     }
 
@@ -232,6 +238,11 @@ public class QuizRulesActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    Snackbar snackbar = Snackbar
+                            .make(findViewById(R.id.root_layout), "No Quizzes Available", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    startActivity(new Intent(QuizRulesActivity.this,MainActivity.class));
+                    finish();
                     Log.e("VOLLEY", error.toString());
                 }
             })
@@ -295,7 +306,7 @@ public class QuizRulesActivity extends AppCompatActivity {
             public void onResponse(String response) {
 
                 try {
-                    currentTime = ((new JSONObject(response).getLong("unixtime"))+ 330*60)* 1000;
+                    currentTime = ((new JSONObject(response).getLong("unixtime")))* 1000;
                     createTimer();
                 } catch (JSONException e) {
                     Log.d("QuizRulesActivity", e.toString());
