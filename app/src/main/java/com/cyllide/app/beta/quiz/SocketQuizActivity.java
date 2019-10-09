@@ -93,6 +93,7 @@ public class SocketQuizActivity extends AppCompatActivity {
     int revivalsUsed;
     int revivalsRemaining;
 
+    //TODO MAJOR FKUP: COINS AND HEARTS MEAN THE SAME THING, REFACTOR WITH PRECAUTION
 
     private void changeQuestion(JSONObject quizObject){
         quizMusicPlayer.start();
@@ -925,7 +926,7 @@ public static boolean isRevivalShowing = false;
                         AppConstants.hearts -= 1;
                         QuizActivity.numberOfRevivals +=1;
                         SharedPreferences.Editor editor = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE).edit();
-                        editor.putInt("coins", AppConstants.coins);
+                        editor.putInt("coins", AppConstants.hearts);
                         editor.apply();
                         JSONObject quizObject = null;
                                             JSONObject jsonObject = new JSONObject();

@@ -60,12 +60,7 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     Map<String,String> stringMap = new ArrayMap<>();
 
-    @Override
-    public void onBackPressed(){
-        Intent intent = new Intent(PortfolioGameDetailedChartActivity.this, PortfolioGameHomeActivity.class);
-        startActivity(intent);
-        finish();
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +85,7 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PortfolioGameDetailedChartActivity.this, PortfolioGameHomeActivity.class);
-                startActivity(intent);
-                finish();
+               onBackPressed();
             }
         });
 

@@ -56,18 +56,21 @@ private LineChart lineChart;
 
     public PortfolioGameCardViewholder(@NonNull View itemView) {
         super(itemView);
+        try {
 //        v = itemView;
-        companyIndustry = itemView.findViewById(R.id.companyindustry);
-        companySector = itemView.findViewById(R.id.companysector);
-        peRatio=itemView.findViewById(R.id.dtgc_peratio);
-        previousClose=itemView.findViewById(R.id.dtgc_previousclose);
-        open=itemView.findViewById(R.id.dtgc_open);
-        //ask=v.findViewById(R.id.dtgc_ask);
-        marketCap=itemView.findViewById(R.id.dtgc_marketcap);
-        ticker = itemView.findViewById(R.id.ticker_title);
-        infoButton = itemView.findViewById(R.id.game_card_info_button);
-        context = itemView.getContext();
-        lineChart = itemView.findViewById(R.id.portfolio_game_home_chart);
+            companyIndustry = itemView.findViewById(R.id.companyindustry);
+            companySector = itemView.findViewById(R.id.companysector);
+            peRatio = itemView.findViewById(R.id.dtgc_peratio);
+            previousClose = itemView.findViewById(R.id.dtgc_previousclose);
+            open = itemView.findViewById(R.id.dtgc_open);
+            //ask=v.findViewById(R.id.dtgc_ask);
+            marketCap = itemView.findViewById(R.id.dtgc_marketcap);
+            ticker = itemView.findViewById(R.id.ticker_title);
+            infoButton = itemView.findViewById(R.id.game_card_info_button);
+            context = itemView.getContext();
+            lineChart = itemView.findViewById(R.id.portfolio_game_home_chart);
+        }
+        catch (Exception e){}
 
 
 

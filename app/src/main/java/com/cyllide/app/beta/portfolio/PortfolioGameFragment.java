@@ -57,7 +57,7 @@ public class PortfolioGameFragment extends Fragment {
 
     Map<String, String> cardsHeader = new HashMap<>();
     RequestQueue cardsRequestQueue;
-    GifImageView loading;
+//    GifImageView loading;
     SwipeStack cardStack;
     boolean isSuper = false;
     ArrayList<PortfolioGameCardModel> portfolioGameCardModels = new ArrayList<>();
@@ -88,7 +88,7 @@ public class PortfolioGameFragment extends Fragment {
         recyclerView = view.findViewById(R.id.game_rv);
         LinearSnapHelper linearSnapHelper = new SnapHelperOneByOne();
         linearSnapHelper.attachToRecyclerView(recyclerView);
-        loading = view.findViewById(R.id.loading_screen);
+//        loading = view.findViewById(R.id.loading_screen);
         noCards = view.findViewById(R.id.no_cards_tv);
         rootView = view.findViewById(R.id.root_layout);
 //        cardStack.setListener(new SwipeStack.SwipeStackListener() {
@@ -152,6 +152,14 @@ public class PortfolioGameFragment extends Fragment {
                 final int position = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
                 Log.d("NUMMMMM", position+"");
                 Log.d("NUMMMMM", ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition()+"");
+                if(portfolioGameCardModels.get(position).getAsk() == null){
+                    Snackbar snackbar = Snackbar
+
+                            .make(rootView,"Loading more cards", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    return;
+
+                }
                 sendSwipeCard(portfolioGameCardModels.get(position),100);
 
                 cardStack.swipeTopViewToRight();
@@ -220,7 +228,9 @@ public class PortfolioGameFragment extends Fragment {
                         if(i<=5 && !isLoading){
                             i++;
                             isLoading = true;
-                            loading.setVisibility(View.VISIBLE);
+//                            loading.setVisibility(View.VISIBLE);
+                            portfolioGameCardModels.add(new PortfolioGameCardModel());
+                            rvAdapter.notifyDataSetChanged();
                             fetchCards(i);
                         }
 
@@ -243,7 +253,6 @@ public class PortfolioGameFragment extends Fragment {
 
 
 
-
         fetchCards(i);
 
         return view;
@@ -261,10 +270,14 @@ public class PortfolioGameFragment extends Fragment {
             public void onResponse(String response) {
                 Log.d("RESPONSE", response);
                 try {
-                    if(portfolioGameCardModels.size()>= i*10){
+                    if(portfolioGameCardModels.size()>= i*10+1){
                         Log.d("IIIII","Exiting here as page"+i+" already exists");
                         return;
                     }
+                    try {
+                        portfolioGameCardModels.remove(portfolioGameCardModels.size() - 1);
+                    }
+                    catch (Exception e){}
                     JSONObject responseObject = new JSONObject(response);
                     JSONObject detailsObject = responseObject.getJSONObject("details");
                     JSONObject summaryObject = responseObject.getJSONObject("summary");
@@ -295,7 +308,7 @@ public class PortfolioGameFragment extends Fragment {
                         portfolioGameCardModels.add(model);
                     }
                     Log.d("IIIII","Setting adapter"+i+"");
-                    loading.setVisibility(View.GONE);
+//                    loading.setVisibility(View.GONE);
                     rvAdapter.notifyDataSetChanged();
 
 

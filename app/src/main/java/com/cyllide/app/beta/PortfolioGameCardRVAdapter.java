@@ -22,16 +22,25 @@ public class PortfolioGameCardRVAdapter extends RecyclerView.Adapter<PortfolioGa
     @Override
     public PortfolioGameCardViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater=LayoutInflater.from(parent.getContext());
-        View view=inflater.inflate(R.layout.game_card_nifty50,parent,false);
-        PortfolioGameCardViewholder holder = new PortfolioGameCardViewholder(view);
-        return holder;
+        if(viewType == 1) {
+            View view = inflater.inflate(R.layout.game_card_nifty50, parent, false);
+            PortfolioGameCardViewholder holder = new PortfolioGameCardViewholder(view);
+            return holder;
+        }
+        else{
+            View view = inflater.inflate(R.layout.loading_nifty_50_card, parent, false);
+            PortfolioGameCardViewholder holder = new PortfolioGameCardViewholder(view);
+            return holder;
+
+        }
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull PortfolioGameCardViewholder holder, int position) {
-        Log.d("DETAILSSS",data.get(position).getTicker());
-        Log.d("DETAILSSS",data.get(position).getCompanySector());
+        if(data.get(position).getTicker()==null){
+            return;
+        }
         holder.populate(data.get(position));
 
     }
@@ -48,6 +57,7 @@ public class PortfolioGameCardRVAdapter extends RecyclerView.Adapter<PortfolioGa
     }
     @Override
     public int getItemViewType(int position) {
-        return position;
+        if(data.get(position).getTicker() == null){return 0;}
+        else {return 1;}
     }
 }
