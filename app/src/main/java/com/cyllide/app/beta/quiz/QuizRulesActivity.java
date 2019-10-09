@@ -140,6 +140,12 @@ public class QuizRulesActivity extends AppCompatActivity {
         backButton = findViewById(R.id.activity_quiz_rules_back_button);
         SharedPreferences sharedPreferences = getSharedPreferences("LATESTQUIZ", 0);
         quizStartTime = Long.parseLong(sharedPreferences.getString("time","0"));
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
 
 
@@ -155,12 +161,7 @@ public class QuizRulesActivity extends AppCompatActivity {
 //            startActivity(new Intent(QuizRulesActivity.this,MainActivity.class));
 //            finish();
 //        }
-//        backButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                onBackPressed();
-//            }
-//        });
+
 //
 //
 
