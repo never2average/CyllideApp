@@ -13,16 +13,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:gravity="end"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:text="Previous close:"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"
                 />
             <TextView
+                android:layout_width="0dp"
+                android:gravity="start"
+                android:layout_weight="1"
                 android:id="@+id/dtgc_previousclose"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"/>
         </LinearLayout>
@@ -30,16 +33,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:gravity="end"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:text="Open:"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"
                 />
             <TextView
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:id="@+id/dtgc_open"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"/>
         </LinearLayout>
@@ -47,16 +53,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:gravity="end"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:text="Bid:"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"
                 />
             <TextView
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:id="@+id/dtgc_bid"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"/>
         </LinearLayout>
@@ -64,16 +73,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:gravity="end"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:text="Ask:"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"
                 />
             <TextView
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:id="@+id/dtgc_ask"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"/>
         </LinearLayout>
@@ -81,16 +93,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:gravity="end"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:text="Day's Range:"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"
                 />
             <TextView
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:id="@+id/dtgc_daysrange"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"/>
         </LinearLayout>
@@ -98,16 +113,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:gravity="end"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:text="52-week range:"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"
                 />
             <TextView
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:id="@+id/dtgc_52weekrange"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"/>
         </LinearLayout>
@@ -115,16 +133,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:gravity="end"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:text="Volume:"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"
                 />
             <TextView
                 android:id="@+id/dtgc_volume"
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"/>
         </LinearLayout>
@@ -132,16 +153,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:gravity="end"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:text="Avg Volume:"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"
                 />
             <TextView
                 android:id="@+id/dtgc_avgvolume"
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"/>
         </LinearLayout>
@@ -149,16 +173,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:gravity="end"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:text="Market Cap:"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"
                 />
             <TextView
                 android:id="@+id/dtgc_marketcap"
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"/>
         </LinearLayout>
@@ -166,16 +193,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:gravity="end"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:text="Beta:"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"
                 />
             <TextView
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:id="@+id/dtgc_beta"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"/>
         </LinearLayout>
@@ -183,16 +213,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:gravity="end"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:text="PE ratio:"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"
                 />
             <TextView
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:id="@+id/dtgc_peratio"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"/>
         </LinearLayout>
@@ -200,16 +233,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:gravity="end"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:text="EPS:"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"
                 />
             <TextView
                 android:id="@+id/dtgc_eps"
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"/>
         </LinearLayout>
@@ -217,16 +253,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:gravity="end"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:text="Earnings date	:"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"
                 />
             <TextView
                 android:id="@+id/dtgc_earnings"
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"/>
         </LinearLayout>
@@ -234,16 +273,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:gravity="end"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:text="Forward dividend &amp; yield:"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"
                 />
             <TextView
                 android:id="@+id/dtgc_fwddividendyield"
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"/>
         </LinearLayout>
@@ -251,16 +293,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:gravity="end"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:text="Ex-dividend date:"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"
                 />
             <TextView
                 android:id="@+id/dtgc_exdividentdate"
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"/>
         </LinearLayout>
@@ -268,16 +313,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:gravity="end"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:text="1y target est	:"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"
                 />
             <TextView
                 android:id="@+id/dtgc_1ytargetest"
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/default_background_stroke_width"/>
         </LinearLayout>
