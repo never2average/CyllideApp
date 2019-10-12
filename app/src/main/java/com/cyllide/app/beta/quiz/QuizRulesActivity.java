@@ -50,13 +50,16 @@ public class QuizRulesActivity extends AppCompatActivity {
     CountDownTimer quizCountDownTimer;
     long currentTime = 0L;
     private String lives;
+    boolean isRunning = true;
 
     @Override
     protected void onPause(){
         if(quizCountDownTimer!=null) {
             quizCountDownTimer.cancel();
             quizCountDownTimer=null;
+            isRunning = false;
         }
+        Log.d("TEASTonPause",isRunning+"");
         super.onPause();
     }
 
@@ -222,7 +225,7 @@ public class QuizRulesActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onFinish() {
-                                        fetchQuestions(quizID);
+                                      fetchQuestions(quizID);
                                     }
                                 }.start();
                     } catch (JSONException e) {
@@ -286,52 +289,58 @@ public class QuizRulesActivity extends AppCompatActivity {
 
 
     private void fetchQuestions(final String quizID){
-        Intent quizSwitcher = new Intent(QuizRulesActivity.this,SocketQuizActivity.class);
-        quizSwitcher.putExtra("questions","");
-        quizSwitcher.putExtra("quizID",quizID);
-        quizSwitcher.putExtra("hearts", Integer.parseInt(lives));
-        startActivity(quizSwitcher);
-        finish();
+        Log.d("TEASTisRunning",isRunning+"");
+        if(isRunning) {
+            Intent quizSwitcher = new Intent(QuizRulesActivity.this, SocketQuizActivity.class);
+            quizSwitcher.putExtra("questions", "");
+            quizSwitcher.putExtra("quizID", quizID);
+            quizSwitcher.putExtra("hearts", Integer.parseInt(lives));
+            startActivity(quizSwitcher);
+            finish();
+        }
     }
 
     @Override
     protected void onResume() {
+        isRunning = true;
         super.onResume();
 
+        if(quizCountDownTimer == null) {
 
-        currentTimeRequestQueue = Volley.newRequestQueue(this);
-        String url = getResources().getString(R.string.dataApiBaseURL)+"stocks/timeserver";
-        StringRequest currentTimeStringRequest = new StringRequest(Request.Method.GET,url , new Response.Listener<String>() {
+            currentTimeRequestQueue = Volley.newRequestQueue(this);
+            String url = getResources().getString(R.string.dataApiBaseURL) + "stocks/timeserver";
+            StringRequest currentTimeStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
 
-            @Override
-            public void onResponse(String response) {
+                @Override
+                public void onResponse(String response) {
 
-                try {
-                    currentTime = ((new JSONObject(response).getLong("unixtime")))* 1000;
-                    createTimer();
-                } catch (JSONException e) {
-                    Log.d("QuizRulesActivity", e.toString());
+                    try {
+                        currentTime = ((new JSONObject(response).getLong("unixtime"))) * 1000;
+                        createTimer();
+                    } catch (JSONException e) {
+                        Log.d("QuizRulesActivity", e.toString());
+
+                    }
 
                 }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("VOLLEY", error.toString());
+                }
+            }) {
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse nr) {
+                    int n = nr.statusCode;
+                    Log.d("Res Code", "" + n);
+                    return super.parseNetworkResponse(nr);
+                }
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("VOLLEY", error.toString());
-            }
-        })
-        {
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse nr) {
-                int n = nr.statusCode;
-                Log.d("Res Code",""+n);
-                return super.parseNetworkResponse(nr);
-            }
+            };
 
-        };
+            currentTimeRequestQueue.add(currentTimeStringRequest);
 
-        currentTimeRequestQueue.add(currentTimeStringRequest);
+        }
 
 
 

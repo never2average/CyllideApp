@@ -152,7 +152,7 @@ public class PortfolioGameFragment extends Fragment {
                 final int position = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
                 Log.d("NUMMMMM", position+"");
                 Log.d("NUMMMMM", ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition()+"");
-                if(portfolioGameCardModels.get(position).getAsk() == null){
+                if(portfolioGameCardModels.get(position).getTicker() == null){
                     Snackbar snackbar = Snackbar
 
                             .make(rootView,"Loading more cards", Snackbar.LENGTH_LONG);
