@@ -92,6 +92,7 @@ public class SocketQuizActivity extends AppCompatActivity {
     private FrameLayout waitingScreen;
     int revivalsUsed;
     int revivalsRemaining;
+    boolean quizOver = false;
 
     //TODO MAJOR FKUP: COINS AND HEARTS MEAN THE SAME THING, REFACTOR WITH PRECAUTION
 
@@ -132,6 +133,15 @@ public class SocketQuizActivity extends AppCompatActivity {
 
         JSONObject jsonObject = quizObject;
         try {
+            try{
+                if(questionID != jsonObject.getInt("qno")){
+                    Toast.makeText(this,"Question number does not match",Toast.LENGTH_SHORT).show();
+                }
+            }
+            catch(Exception e){
+                Toast.makeText(this,"Question number try error",Toast.LENGTH_SHORT).show();
+
+            }
             socketQuestionID = jsonObject.getString("id");
 //            viewersTV.setText(Integer.toString(jsonResponse));
             circularProgressBar.setProgress(0);
@@ -275,7 +285,9 @@ public class SocketQuizActivity extends AppCompatActivity {
                             data = (JSONObject) args[0];
                         }
                         Log.d("SocketQuizActivity",data.toString());
-                        changeQuestion(data);
+                        if(!quizOver) {
+                            changeQuestion(data);
+                        }
 
                     }
                 });
@@ -623,7 +635,7 @@ public class SocketQuizActivity extends AppCompatActivity {
 
                             v.vibrate(500);
                         }
-                        if (questionID == 9) {
+                        if (questionID >= 9) {
                             losersPopup.show();
                         } else {
                             if(!isRevivalShowing)
@@ -696,11 +708,13 @@ public class SocketQuizActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        quizOver = true;
         questionsSocket.emit("special_disconnect",jsonObject);
 
         if(questionID != 10){
             Toast.makeText(this,"You  lol",Toast.LENGTH_LONG).show();
             questionsSocket.close();
+            quizOver = true;
             losersPopup.show();
         }
         else{
@@ -907,6 +921,9 @@ public static boolean isRevivalShowing = false;
                 public void onClick(View view) {
                     QuizActivity.hasRevive = false;
                     revivalpopup.dismiss();
+                    quizOver = true;
+
+                    questionsSocket.disconnect();
                     questionsSocket.close();
                     losersPopup.show();
                 }
@@ -932,7 +949,7 @@ public static boolean isRevivalShowing = false;
                                             JSONObject jsonObject = new JSONObject();
                     try {
                         jsonObject.put("hearts",AppConstants.hearts);
-                        jsonObject.put("username",AppConstants.username);
+                        jsonObject.put("username",AppConstants.username+"_"+numberOfRevivals);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -940,6 +957,7 @@ public static boolean isRevivalShowing = false;
                     questionsSocket.emit("hearts_updater",jsonObject);
                     }
                     else{
+                        quizOver = true;
                         questionsSocket.close();
 
                         losersPopup.show();
