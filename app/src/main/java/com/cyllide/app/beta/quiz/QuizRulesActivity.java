@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -131,7 +132,7 @@ public class QuizRulesActivity extends AppCompatActivity {
         startQuizButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent quizSwitcher = new Intent(QuizRulesActivity.this,SocketQuizActivity.class);
+                Intent quizSwitcher = new Intent(QuizRulesActivity.this,FirebaseQuizActivity.class);
                 quizSwitcher.putExtra("questions","");
                 quizSwitcher.putExtra("quizID",quizID);
                 startActivity(quizSwitcher);
@@ -229,12 +230,10 @@ public class QuizRulesActivity extends AppCompatActivity {
                                     }
                                 }.start();
                     } catch (JSONException e) {
-                        Snackbar snackbar = Snackbar
-                                .make(findViewById(R.id.root_layout), "No Quizzes Available", Snackbar.LENGTH_LONG);
-                        snackbar.show();
-                        startActivity(new Intent(QuizRulesActivity.this,MainActivity.class));
-                        finish();
-                        e.printStackTrace();
+//                        Snackbar snackbar = Snackbar
+//                                .make(findViewById(R.id.root_layout), "No Quizzes Available", Snackbar.LENGTH_LONG);
+                        Toast.makeText(getBaseContext(),"No Quizzes Available right now!",Toast.LENGTH_SHORT).show();
+                        onBackPressed();
                     }
 
 
@@ -242,11 +241,8 @@ public class QuizRulesActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Snackbar snackbar = Snackbar
-                            .make(findViewById(R.id.root_layout), "No Quizzes Available", Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                    startActivity(new Intent(QuizRulesActivity.this,MainActivity.class));
-                    finish();
+                    Toast.makeText(getBaseContext(),"No Quizzes Available right now!",Toast.LENGTH_SHORT).show();
+                    onBackPressed();
                     Log.e("VOLLEY", error.toString());
                 }
             })
@@ -291,12 +287,11 @@ public class QuizRulesActivity extends AppCompatActivity {
     private void fetchQuestions(final String quizID){
         Log.d("TEASTisRunning",isRunning+"");
         if(isRunning) {
-            Intent quizSwitcher = new Intent(QuizRulesActivity.this, SocketQuizActivity.class);
+            Intent quizSwitcher = new Intent(QuizRulesActivity.this, FirebaseQuizActivity.class);
             quizSwitcher.putExtra("questions", "");
             quizSwitcher.putExtra("quizID", quizID);
             quizSwitcher.putExtra("hearts", Integer.parseInt(lives));
             startActivity(quizSwitcher);
-            finish();
         }
     }
 

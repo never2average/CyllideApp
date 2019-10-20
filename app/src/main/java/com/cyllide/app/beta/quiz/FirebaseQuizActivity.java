@@ -14,6 +14,12 @@ import com.facebook.network.connectionclass.DeviceBandwidthSampler;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
@@ -45,27 +51,32 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.net.URISyntaxException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.room.Database;
+
 import android.os.Vibrator;
 import com.github.nkzawa.socketio.client.IO;
 
 
 
-public class SocketQuizActivity extends AppCompatActivity {
+public class FirebaseQuizActivity extends AppCompatActivity {
 
 
 
     public static boolean hasRevive = false;
     public static int numberOfRevivals=0;
     private Handler handler = new Handler();
-    CountDownTimer countDownTimer;
+    CountDownTimer countDownTimer = null;
     CircularProgressBar circularProgressBar;
     TextView continueButtonPopup;
     ProgressBar pb;
+    int correctOptionID = -1;
     String selectedOption = "noOption";
     boolean isCorrect;
     TextView mainQuestion, optionA, optionB, optionC, optionD, textTimer, viewersTV;
@@ -86,22 +97,32 @@ public class SocketQuizActivity extends AppCompatActivity {
     MediaPlayer quizMusicPlayer;
     MediaPlayer quizCorrectAnswerMusicPlayer;
     MediaPlayer quizWrongAnswerMusicPlayer;
-    private ConnectionQuality mConnectionClass = ConnectionQuality.UNKNOWN;
-    private ConnectionClassManager mConnectionClassManager;
-    private DeviceBandwidthSampler mDeviceBandwidthSampler;
-    private ConnectionChangedListener mListener;
+    DatabaseReference questionsDBRef;
+    DatabaseReference playersDBRef;
+    String playerQuizID = null;
+
     private FrameLayout waitingScreen;
     int revivalsUsed;
     int revivalsRemaining;
     boolean quizOver = false;
 
+    boolean isTimerRunning = false;
+
     //TODO MAJOR FKUP: COINS AND HEARTS MEAN THE SAME THING, REFACTOR WITH PRECAUTION
 
-    private void changeQuestion(JSONObject quizObject){
+    private void startMusic(){
         quizMusicPlayer.start();
         quizMusicPlayer.setLooping(true);
+    }
+    private void stopMusic(){
+
+    }
+
+
+//    JSONObject quizObject
+    private void changeQuestion(int qno, String question, ArrayList<String> answerList){
+        startMusic();
         waitingScreen.setVisibility(View.GONE);
-        questionID++;
 
         String id;
 
@@ -118,254 +139,326 @@ public class SocketQuizActivity extends AppCompatActivity {
         option2PB.setVisibility(View.INVISIBLE);
         option3PB.setVisibility(View.INVISIBLE);
         option4PB.setVisibility(View.INVISIBLE);
-        option1CV.setBackgroundDrawable(ContextCompat.getDrawable(SocketQuizActivity.this,R.drawable.drawable_activity_quiz_unselected_option));
-        option2CV.setBackgroundDrawable(ContextCompat.getDrawable(SocketQuizActivity.this,R.drawable.drawable_activity_quiz_unselected_option));
-        option3CV.setBackgroundDrawable(ContextCompat.getDrawable(SocketQuizActivity.this,R.drawable.drawable_activity_quiz_unselected_option));
-        option4CV.setBackgroundDrawable(ContextCompat.getDrawable(SocketQuizActivity.this,R.drawable.drawable_activity_quiz_unselected_option));
+        option1CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this,R.drawable.drawable_activity_quiz_unselected_option));
+        option2CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this,R.drawable.drawable_activity_quiz_unselected_option));
+        option3CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this,R.drawable.drawable_activity_quiz_unselected_option));
+        option4CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this,R.drawable.drawable_activity_quiz_unselected_option));
 
 
-        optionA.setTextColor(ContextCompat.getColor(SocketQuizActivity.this,R.color.colorPrimary));
-        optionB.setTextColor(ContextCompat.getColor(SocketQuizActivity.this,R.color.colorPrimary));
-        optionC.setTextColor(ContextCompat.getColor(SocketQuizActivity.this,R.color.colorPrimary));
-        optionD.setTextColor(ContextCompat.getColor(SocketQuizActivity.this,R.color.colorPrimary));
+        optionA.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this,R.color.colorPrimary));
+        optionB.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this,R.color.colorPrimary));
+        optionC.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this,R.color.colorPrimary));
+        optionD.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this,R.color.colorPrimary));
 
 
 
-        JSONObject jsonObject = quizObject;
-        try {
-            try{
-                if(questionID != jsonObject.getInt("qno")){
-                    Toast.makeText(this,"Question number does not match",Toast.LENGTH_SHORT).show();
-                }
-            }
-            catch(Exception e){
-                Toast.makeText(this,"Question number try error",Toast.LENGTH_SHORT).show();
-
-            }
-            socketQuestionID = jsonObject.getString("id");
-//            viewersTV.setText(Integer.toString(jsonResponse));
             circularProgressBar.setProgress(0);
-//            jsonObject = jsonQuestionArray.getJSONObject(questionID);
-            mainQuestion.setText("Q."+questionID+" "+jsonObject.getString("question"));
-            JSONArray answerArray = jsonObject.getJSONArray("options");
-            optionA.setText(answerArray.getString(0));
-            optionB.setText(answerArray.getString(1));
-            optionC.setText(answerArray.getString(2));
-            optionD.setText(answerArray.getString(3));
+            mainQuestion.setText("Q."+qno+" "+question);
+            optionA.setText(answerList.get(0));
+            optionB.setText(answerList.get(1));
+            optionC.setText(answerList.get(2));
+            optionD.setText(answerList.get(3));
             circularProgressBar.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
             circularProgressBar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
             circularProgressBar.setProgressBarWidth(10);
             circularProgressBar.setBackgroundProgressBarWidth(10);
             circularProgressBar.setProgressWithAnimation(100, 20000);
             startTimer(10);
-        } catch (JSONException e) {
-            Log.d("QuizActivity",e.toString());
-        }
 
 
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        questionsDBRef.addValueEventListener(onNewQuestionsAdded);
+        playersDBRef.addValueEventListener(numberOfPlayersActive);
+
+        //Attach all listeners
+
+    }
+    ValueEventListener onNewQuestionsAdded;
+    ValueEventListener numberOfPlayersActive;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         quizID = getIntent().getStringExtra("quizID");
-        Log.d("Value",quizID);
-        Log.d("Value",AppConstants.token);
+        questionsDBRef = FirebaseDatabase.getInstance().getReference().child("questions");
+        playersDBRef = FirebaseDatabase.getInstance().getReference().child("ActivePlayers");
+        playerQuizID = playersDBRef.push().getKey();
+        if(playerQuizID!= null) {
+            playersDBRef.child(playerQuizID).setValue("Playing");
+        }
+
+        Log.d(
+                "FIREBASE",questionsDBRef.toString()
+        );
+        Log.d("Value",quizID+"");
+        Log.d("Value",AppConstants.token+"");
 //        waitingScreen = findViewById(R.id.waiting_layout);
 //        waitingScreen.setVisibility(View.VISIBLE);
 //        Log.d("Value",)
+        countDownTimer = null;
 
-        Emitter.Listener winnerMoney = new Emitter.Listener() {
+
+        numberOfPlayersActive = new ValueEventListener() {
             @Override
-            public void call(Object... args) {
-                Log.d("QUIZCHUD","WinnerMoney at: "+ Calendar.getInstance().getTime()+"");
-                JSONObject data = new JSONObject();
-                try {
-                    data.put("token",AppConstants.username);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                questionsSocket.emit("winner_token",data);
-                Log.d("HEAAARRRR",args.toString());
-                JSONObject response;
-                try{
-                 response = (JSONObject)args[1];
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                long numberOfPlayers = dataSnapshot.getChildrenCount();
+                viewersTV.setText(numberOfPlayers+"");
+            }
 
-                }
-                catch (ArrayIndexOutOfBoundsException e){
-                    response = (JSONObject)args[0];
-                }
-                try{
-                    final JSONObject finalResponse = response;
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            try {
-                                finishQuiz(10, finalResponse.getDouble("amount"));
-                            }
-                            catch (Exception e){
-                                Log.d("Inner Try",e.toString());
-                            }
-                        }
-                    });
-                    Log.d("Value",Double.toString(response.getDouble("amount")));
-//                    Looper.prepare();
-                    finishQuiz(10,response.getDouble("amount"));
-                }
-                catch(Exception e){
-                    Log.d("QuizSocket",e.toString());
-                }
-                Log.d("HEAAARR",args.toString());
-
-                Log.d("QUIZCHUD","Winnermoney Exit at: "+ Calendar.getInstance().getTime()+"");
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         };
 
-
-        Emitter.Listener numActivePlayers = new Emitter.Listener() {
+        onNewQuestionsAdded = new ValueEventListener() {
             @Override
-            public void call(Object... args) {
-//                waitingScreen.setVisibility(View.GONE);
-                Log.d("QUIZCHUD","numActivePlayers at: "+ Calendar.getInstance().getTime()+"");
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(isTimerRunning){return;}
+                isTimerRunning = true;
 
-                try {
-                    viewersTV.setText(Integer.toString(((JSONObject)args[1]).getInt("value")));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                catch (ArrayIndexOutOfBoundsException e1){
-                    try {
-                        Log.d("QuizActivity",args[0].toString());
-                        viewersTV.setText(Integer.toString(((JSONObject)args[0]).getInt("value")));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Log.d("QUIZCHUD","numActivePlayers Exit at: "+ Calendar.getInstance().getTime()+"");
-
-
-            }
-        };
-
-
-
-        Emitter.Listener answerResponseFromServer = new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                String result = "";
-//                isCorrect = false;
-                Log.d("QUIZCHUD","amICorrect at: "+ Calendar.getInstance().getTime()+"");
-
-                try {
-                    result = ((JSONObject)args[1]).getString("myresp");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                catch (ArrayIndexOutOfBoundsException e1){
-                    try {
-                        Log.d("QuizActivity",args[0].toString());
-                        result = ((JSONObject)args[0]).getString("myresp");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if(result.equals("Correct")){
-                    isCorrect = true;
-                }
-                Log.d("QuizActivity", result);
-                Log.d("QUIZCHUD","amICorrect Exit at: "+ Calendar.getInstance().getTime()+"");
-
-            }
-        };
-
-
-        Emitter.Listener onNewQuestion = new Emitter.Listener() {
-            @Override
-            public void call(final Object... args) {
-                SocketQuizActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d("QUIZCHUD","NewQuestion at: "+ Calendar.getInstance().getTime()+"");
-
-                        Log.d("SocketQuizActivity",args.toString());
-                        JSONObject data;
+                ArrayList<String> answerList = new ArrayList<>();
+                String question = "";
+                int currentQuestionNumber = -1;
+                Iterable<DataSnapshot> questionList = dataSnapshot.getChildren();
+                for(DataSnapshot questionObject: questionList) {
+                    question = questionObject.child("theQuestion").getValue(String.class);
+                    answerList = new ArrayList<>();
+                    for (int i = 0; i < 4; i++) {
                         try {
-                            data = (JSONObject) args[1];
-                        }
-                        catch (ArrayIndexOutOfBoundsException e){
-                            data = (JSONObject) args[0];
-                        }
-                        Log.d("SocketQuizActivity",data.toString());
-                        if(!quizOver) {
-                            changeQuestion(data);
-                        }
-                        Log.d("QUIZCHUD","NewQuestion Exit at: "+ Calendar.getInstance().getTime()+"");
-
-
-                    }
-                });
-            }
-        };
-
-        Emitter.Listener onResponseFromServer = new Emitter.Listener() {
-            @Override
-            public void call(final Object... args) {
-                Log.d("QUIZCHUD","QuestionAnswer at: "+ Calendar.getInstance().getTime()+"");
-
-                SocketQuizActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d("QuizSocketActivity",args.toString());
-                            mDeviceBandwidthSampler.stopSampling();
-                            Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
-                            quizMusicPlayer.pause();
-                            quizMusicPlayer.seekTo(0);
-                            quizActivityAnswerIndicator.setVisibility(View.VISIBLE);
-                            textTimer.setVisibility(View.INVISIBLE);
-                            JSONObject jsonResponse;
-                            Log.d("changequestion","inside response question");
-
-                            try {
-                                try {
-                                    jsonResponse = (JSONObject) args[1];
-                                }
-                                catch(ArrayIndexOutOfBoundsException e){
-                                    jsonResponse = (JSONObject) args[0];
-                                }
-                                showAnswer(jsonResponse);
-                                if(isCorrect){
-//                                    isCorrect = false;
-                                    quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
-                                    quizCorrectAnswerMusicPlayer.start();
-                                    Log.d("questionID",Integer.toString(questionID));
-                                    Log.d("changequestion","calling change change question");
-                                    if(questionID == 10) {
-                                        //check wheter last question
-//                                        finishQuiz(questionID,0.0);
-                                    }
-                                }
-                                else {
-
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                            if (questionObject.child("answerOptions").child(i + "").child("isCorrect").getValue(Integer.class) == 1) {
+                                correctOptionID = i;
                             }
-
-                        Log.d("QUIZCHUD","QuestionAnswer Exit at: "+ Calendar.getInstance().getTime()+"");
-
-
+                            answerList.add(questionObject.child("answerOptions").child(i + "").child("value").getValue(String.class));
+                            currentQuestionNumber = questionObject.child("appearancePosition").getValue(Integer.class);
+                        }
+                        catch(Exception e){
+                            Log.d("PREDICTABLE EROR",e.toString());
+                            }
                     }
+                }
+                if(question.equals("")){
+                    isTimerRunning = false;
+                    return;
+                }
+                questionID++;
+                //TODO UNCOMMENT IT LATER
+//                if(currentQuestionNumber == questionID) {
+//                    changeQuestion(questionID, question, answerList);
+//                }
+//                else{
+//                    //DISPLAY YOU HAVE MISSED THE QUIZ
+//                }
+
+                //TODO COmment it later
+                    changeQuestion(questionID, question, answerList);
 
 
 
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-
-                });
             }
         };
+
+        questionsDBRef.addValueEventListener(onNewQuestionsAdded);
+
+//        Emitter.Listener winnerMoney = new Emitter.Listener() {
+//            @Override
+//            public void call(Object... args) {
+//                Log.d("QUIZCHUD","WinnerMoney at: "+ Calendar.getInstance().getTime()+"");
+//                JSONObject data = new JSONObject();
+//                try {
+//                    data.put("token",AppConstants.username);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                questionsSocket.emit("winner_token",data);
+//                Log.d("HEAAARRRR",args.toString());
+//                JSONObject response;
+//                try{
+//                    response = (JSONObject)args[1];
+//
+//                }
+//                catch (ArrayIndexOutOfBoundsException e){
+//                    response = (JSONObject)args[0];
+//                }
+//                try{
+//                    final JSONObject finalResponse = response;
+//                    runOnUiThread(new Runnable() {
+//                        public void run() {
+//                            try {
+//                                finishQuiz(10, finalResponse.getDouble("amount"));
+//                            }
+//                            catch (Exception e){
+//                                Log.d("Inner Try",e.toString());
+//                            }
+//                        }
+//                    });
+//                    Log.d("Value",Double.toString(response.getDouble("amount")));
+////                    Looper.prepare();
+//                    finishQuiz(10,response.getDouble("amount"));
+//                }
+//                catch(Exception e){
+//                    Log.d("QuizSocket",e.toString());
+//                }
+//                Log.d("HEAAARR",args.toString());
+//
+//                Log.d("QUIZCHUD","Winnermoney Exit at: "+ Calendar.getInstance().getTime()+"");
+//
+//
+//            }
+//        };
+//
+//
+//        Emitter.Listener numActivePlayers = new Emitter.Listener() {
+//            @Override
+//            public void call(Object... args) {
+////                waitingScreen.setVisibility(View.GONE);
+//                Log.d("QUIZCHUD","numActivePlayers at: "+ Calendar.getInstance().getTime()+"");
+//
+//                try {
+//                    viewersTV.setText(Integer.toString(((JSONObject)args[1]).getInt("value")));
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                catch (ArrayIndexOutOfBoundsException e1){
+//                    try {
+//                        Log.d("QuizActivity",args[0].toString());
+//                        viewersTV.setText(Integer.toString(((JSONObject)args[0]).getInt("value")));
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                Log.d("QUIZCHUD","numActivePlayers Exit at: "+ Calendar.getInstance().getTime()+"");
+//
+//
+//            }
+//        };
+//
+
+
+//        Emitter.Listener answerResponseFromServer = new Emitter.Listener() {
+//            @Override
+//            public void call(Object... args) {
+//                String result = "";
+////                isCorrect = false;
+//                Log.d("QUIZCHUD","amICorrect at: "+ Calendar.getInstance().getTime()+"");
+//
+//                try {
+//                    result = ((JSONObject)args[1]).getString("myresp");
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                catch (ArrayIndexOutOfBoundsException e1){
+//                    try {
+//                        Log.d("QuizActivity",args[0].toString());
+//                        result = ((JSONObject)args[0]).getString("myresp");
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                if(result.equals("Correct")){
+//                    isCorrect = true;
+//                }
+//                Log.d("QuizActivity", result);
+//                Log.d("QUIZCHUD","amICorrect Exit at: "+ Calendar.getInstance().getTime()+"");
+//
+//            }
+//        };
+//
+//
+//        Emitter.Listener onNewQuestion = new Emitter.Listener() {
+//            @Override
+//            public void call(final Object... args) {
+//                FirebaseQuizActivity.this.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Log.d("QUIZCHUD","NewQuestion at: "+ Calendar.getInstance().getTime()+"");
+//
+//                        Log.d("FirebaseQuizActivity",args.toString());
+//                        JSONObject data;
+//                        try {
+//                            data = (JSONObject) args[1];
+//                        }
+//                        catch (ArrayIndexOutOfBoundsException e){
+//                            data = (JSONObject) args[0];
+//                        }
+//                        Log.d("FirebaseQuizActivity",data.toString());
+//                        if(!quizOver) {
+////                            changeQuestion(data);
+//                        }
+//                        Log.d("QUIZCHUD","NewQuestion Exit at: "+ Calendar.getInstance().getTime()+"");
+//
+//
+//                    }
+//                });
+//            }
+//        };
+//
+//        Emitter.Listener onResponseFromServer = new Emitter.Listener() {
+//            @Override
+//            public void call(final Object... args) {
+//                Log.d("QUIZCHUD","QuestionAnswer at: "+ Calendar.getInstance().getTime()+"");
+//
+//                FirebaseQuizActivity.this.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Log.d("QuizSocketActivity",args.toString());
+//
+//                        quizMusicPlayer.pause();
+//                        quizMusicPlayer.seekTo(0);
+//                        quizActivityAnswerIndicator.setVisibility(View.VISIBLE);
+//                        textTimer.setVisibility(View.INVISIBLE);
+//                        JSONObject jsonResponse;
+//                        Log.d("changequestion","inside response question");
+//
+//                        try {
+//                            try {
+//                                jsonResponse = (JSONObject) args[1];
+//                            }
+//                            catch(ArrayIndexOutOfBoundsException e){
+//                                jsonResponse = (JSONObject) args[0];
+//                            }
+//                            showAnswer(jsonResponse);
+//                            if(isCorrect){
+////                                    isCorrect = false;
+//                                quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
+//                                quizCorrectAnswerMusicPlayer.start();
+//                                Log.d("questionID",Integer.toString(questionID));
+//                                Log.d("changequestion","calling change change question");
+//                                if(questionID == 10) {
+//                                    //check wheter last question
+////                                        finishQuiz(questionID,0.0);
+//                                }
+//                            }
+//                            else {
+//
+//                            }
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        Log.d("QUIZCHUD","QuestionAnswer Exit at: "+ Calendar.getInstance().getTime()+"");
+//
+//
+//                    }
+//
+//
+//
+//
+//
+//
+//                });
+//            }
+//        };
 
 
         quizMusicPlayer= MediaPlayer.create(getApplicationContext(), R.raw.quiz_backgorund_sound);
@@ -376,28 +469,23 @@ public class SocketQuizActivity extends AppCompatActivity {
         quizWrongAnswerMusicPlayer = MediaPlayer.create(getApplicationContext(),R.raw.wrong_answer_sound);
 
 
-        mConnectionClassManager = ConnectionClassManager.getInstance();
-        mDeviceBandwidthSampler = DeviceBandwidthSampler.getInstance();
-        mConnectionClassManager.register(mListener);
-
-
 
 
         setContentView(R.layout.activity_quiz);
         waitingScreen = findViewById(R.id.waiting_layout);
-        revivalpopup=new Dialog(SocketQuizActivity.this);
+        revivalpopup=new Dialog(FirebaseQuizActivity.this);
         revivalpopup.setContentView(R.layout.quiz_revival_xml);
         revivalpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        confirmExitPopup = new Dialog(SocketQuizActivity.this);
+        confirmExitPopup = new Dialog(FirebaseQuizActivity.this);
         confirmExitPopup.setContentView(R.layout.quiz_exit_confirm_dialog);
         confirmExitPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        quizWinPopup = new Dialog(SocketQuizActivity.this);
+        quizWinPopup = new Dialog(FirebaseQuizActivity.this);
         quizWinPopup.setContentView(R.layout.quiz_wining_xml);
         quizWinPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        losersPopup=new Dialog(SocketQuizActivity.this);
+        losersPopup=new Dialog(FirebaseQuizActivity.this);
         losersPopup.setContentView(R.layout.quiz_loser_popup);
         losersPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         ImageView imageView = losersPopup.findViewById(R.id.close_loser_popup);
@@ -405,7 +493,7 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 losersPopup.dismiss();
-//                startActivity(new Intent(SocketQuizActivity.this,MainActivity.class));
+//                startActivity(new Intent(FirebaseQuizActivity.this,MainActivity.class));
                 finish();
             }
         });
@@ -424,11 +512,11 @@ public class SocketQuizActivity extends AppCompatActivity {
                     quizWrongAnswerMusicPlayer.stop();
                     questionsSocket.close();
                     questionsSocket.disconnect();
-//                    startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
+//                    startActivity(new Intent(FirebaseQuizActivity.this, MainActivity.class));
                     finish();
                 }
                 catch(Exception e){
-//                    startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
+//                    startActivity(new Intent(FirebaseQuizActivity.this, MainActivity.class));
                     finish();
                     Log.d("QuizSocketActivity","Sum Catch Prob");
                 }
@@ -471,9 +559,9 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectedOption = optionA.getText().toString();
-                sendAnswer(selectedOption);
-                option1CV.setBackgroundDrawable(ContextCompat.getDrawable(SocketQuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
-                optionA.setTextColor(ContextCompat.getColor(SocketQuizActivity.this,R.color.white));
+                sendAnswer(0);
+                option1CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
+                optionA.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this,R.color.white));
                 option2CV.setClickable(false);
                 option3CV.setClickable(false);
                 option4CV.setClickable(false);
@@ -484,9 +572,9 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectedOption = optionB.getText().toString();
-                sendAnswer(selectedOption);
-                option2CV.setBackgroundDrawable(ContextCompat.getDrawable(SocketQuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
-                optionB.setTextColor(ContextCompat.getColor(SocketQuizActivity.this,R.color.white));
+                sendAnswer(1);
+                option2CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
+                optionB.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this,R.color.white));
                 option1CV.setClickable(false);
                 option3CV.setClickable(false);
                 option4CV.setClickable(false);
@@ -497,9 +585,9 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectedOption = optionC.getText().toString();
-                sendAnswer(selectedOption);
-                option3CV.setBackgroundDrawable(ContextCompat.getDrawable(SocketQuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
-                optionC.setTextColor(ContextCompat.getColor(SocketQuizActivity.this,R.color.white));
+                sendAnswer(2);
+                option3CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
+                optionC.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this,R.color.white));
                 option2CV.setClickable(false);
                 option1CV.setClickable(false);
                 option4CV.setClickable(false);
@@ -510,9 +598,9 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectedOption = optionD.getText().toString();
-                sendAnswer(selectedOption);
-                option4CV.setBackgroundDrawable(ContextCompat.getDrawable(SocketQuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
-                optionD.setTextColor(ContextCompat.getColor(SocketQuizActivity.this,R.color.white));
+                sendAnswer(3);
+                option4CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
+                optionD.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this,R.color.white));
                 option1CV.setClickable(false);
                 option2CV.setClickable(false);
                 option3CV.setClickable(false);
@@ -524,20 +612,20 @@ public class SocketQuizActivity extends AppCompatActivity {
         textTimer = findViewById(R.id.textTimer);
 
 
-        questionsSocket.connect();
-        questionsSocket.on("numPlayers",numActivePlayers);
-        questionsSocket.on("question_data_response",onNewQuestion);
-        questionsSocket.on("amicorrect", answerResponseFromServer);
-        questionsSocket.on("answer_stat_results",onResponseFromServer);
-        questionsSocket.on("quiz_winners_listener",winnerMoney);
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("token",AppConstants.token);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        questionsSocket.emit("special_connect",jsonObject);
-
+//        questionsSocket.connect();
+//        questionsSocket.on("numPlayers",numActivePlayers);
+//        questionsSocket.on("question_data_response",onNewQuestion);
+//        questionsSocket.on("amicorrect", answerResponseFromServer);
+//        questionsSocket.on("answer_stat_results",onResponseFromServer);
+//        questionsSocket.on("quiz_winners_listener",winnerMoney);
+//        JSONObject jsonObject = new JSONObject();
+//        try {
+//            jsonObject.put("token",AppConstants.token);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        questionsSocket.emit("special_connect",jsonObject);
+//
 
 
     }
@@ -578,7 +666,7 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 confirmExitPopup.dismiss();
-//                startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
+//                startActivity(new Intent(FirebaseQuizActivity.this, MainActivity.class));
                 finish();
                 questionID = 0;
                 quizMusicPlayer.stop();
@@ -603,23 +691,7 @@ public class SocketQuizActivity extends AppCompatActivity {
     }
 
 
-    private class ConnectionChangedListener
-            implements ConnectionClassManager.ConnectionClassStateChangeListener {
 
-        @Override
-        public void onBandwidthStateChange(final ConnectionQuality bandwidthState) {
-            mConnectionClass = bandwidthState;
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d("QuizActivity",mConnectionClass.name());
-                    if(mConnectionClass==ConnectionQuality.POOR){
-                        Toast.makeText(getBaseContext(),"Poor connection Detected",Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }
-    }
 // Socketio legend
 //    new questions = NewQuestionEvent
 //    send questions = SendQuestionEvent
@@ -635,58 +707,73 @@ public class SocketQuizActivity extends AppCompatActivity {
             }
             @Override
             public void onFinish() {
-                    textTimer.setText("STOP");
-                    JSONObject response = new JSONObject();
-                    try{
-                        response = new JSONObject();
-                        response.put("qid",socketQuestionID);
-                    }
-                    catch (JSONException e){
-                        Log.d("QuizActivity",e.toString());
-                    }
-                    if(!isCorrect){
-                        quizActivityAnswerIndicator.setImageResource(R.drawable.ic_cancel);
-                        quizWrongAnswerMusicPlayer.start();
-                        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                isTimerRunning = false;
+                textTimer.setText("STOP");
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-                        } else {
+                quizMusicPlayer.pause();
+                        quizMusicPlayer.seekTo(0);
+                        quizActivityAnswerIndicator.setVisibility(View.VISIBLE);
+                        textTimer.setVisibility(View.INVISIBLE);
+                        JSONObject jsonResponse;
+                        Log.d("changequestion","inside response question");
 
-                            v.vibrate(500);
-                        }
-                        if (questionID >= 9) {
-                            losersPopup.show();
-                        } else {
-                            if(!isRevivalShowing)
+
+//                            showAnswer(jsonResponse);
+                            if(isCorrect){
+//                                    isCorrect = false;
+                                quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
+                                quizCorrectAnswerMusicPlayer.start();
+                                Log.d("questionID",Integer.toString(questionID));
+                                Log.d("changequestion","calling change change question");
+                                if(questionID == 10) {
+                                    FirebaseDatabase.getInstance().getReference().child("Winners").child(AppConstants.username).setValue(AppConstants.token);
+                                    quizWinPopup.show();
+                                    //check wheter last question
+//                                    quizWinPopup.show();
+                                    Toast.makeText(FirebaseQuizActivity.this,"You won, write code now",Toast.LENGTH_SHORT).show();
+                                    }
+                            }
+
+                if(!isCorrect){
+                    quizActivityAnswerIndicator.setImageResource(R.drawable.ic_cancel);
+                    quizWrongAnswerMusicPlayer.start();
+                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+
+                        v.vibrate(500);
+                    }
+                    if (questionID >= 9) {
+                        losersPopup.show();
+                    } else {
+                        if(!isRevivalShowing)
                             showRevival();
-                        }
                     }
-////                    questionsSocket.emit("answer_stats",response);
-                    Log.d("answer_stats",response.toString());
-                    Log.d("answer_stats","DONE");
+                }
+                countDownTimer = null;
 
-        }}.start();
+            }}.start();
 
     }
 
-    private boolean sendAnswer(final String selectedOption){
+    private boolean sendAnswer(final int selectedOptionID){
         option1CV.setClickable(false);
         option2CV.setClickable(false);
         option3CV.setClickable(false);
         option4CV.setClickable(false);
-        JSONObject answer = new JSONObject();
-        try {
-            answer.put("id",socketQuestionID);
-            answer.put("option",selectedOption);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if(selectedOptionID == -1){
+            //SOMETHING is WRONG RETURN
         }
-        questionsSocket.emit("answer_option",answer);
-        Log.d("QuizActivity","Emitted");
-
+        if(selectedOptionID == correctOptionID){
+            isCorrect = true;
+        }
+        else{
+            isCorrect = false;
+        }
         return true;
-    }
+            }
 
 
     @Override
@@ -712,8 +799,15 @@ public class SocketQuizActivity extends AppCompatActivity {
     }
     @Override
     protected void onPause(){
+        super.onPause();
 
-        super.onDestroy();
+        //TODO Remove all listeners
+        questionsDBRef.removeEventListener(onNewQuestionsAdded);
+        if(playerQuizID != null) {
+            playersDBRef.child(playerQuizID).setValue(null);
+        }
+        playersDBRef.removeEventListener(numberOfPlayersActive);
+
         questionID = -1;
         quizMusicPlayer.stop();
         if(countDownTimer != null) {
@@ -722,9 +816,8 @@ public class SocketQuizActivity extends AppCompatActivity {
         }
         quizCorrectAnswerMusicPlayer.stop();
         quizWrongAnswerMusicPlayer.stop();
-        questionsSocket.close();
+        super.onDestroy();
 
-        super.onPause();
     }
 
 
@@ -770,7 +863,7 @@ public class SocketQuizActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     quizWinPopup.dismiss();
-//                    startActivity(new Intent(SocketQuizActivity.this,MainActivity.class));
+//                    startActivity(new Intent(FirebaseQuizActivity.this,MainActivity.class));
                     finish();
                 }
             });
@@ -818,7 +911,7 @@ public class SocketQuizActivity extends AppCompatActivity {
 
     void winnersMoney(String upiID){
         Log.d("value",upiID);
-        winPaytmRequestQueue = Volley.newRequestQueue(SocketQuizActivity.this);
+        winPaytmRequestQueue = Volley.newRequestQueue(FirebaseQuizActivity.this);
         winPaytmRequestHeader.put("quizID",quizID);
         winPaytmRequestHeader.put("token",AppConstants.token);
         winPaytmRequestHeader.put("upiID",upiID);
@@ -833,9 +926,8 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
-                Toast.makeText(SocketQuizActivity.this,"Poor Internet Connection, please try again later",Toast.LENGTH_LONG).show();
-//                startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
+                Toast.makeText(FirebaseQuizActivity.this,"Poor Internet Connection, please try again later",Toast.LENGTH_LONG).show();
+//                startActivity(new Intent(FirebaseQuizActivity.this, MainActivity.class));
                 finish();
 
 
@@ -871,26 +963,26 @@ public class SocketQuizActivity extends AppCompatActivity {
 
 //            int totalResponses = numCorrectOptionA + numCorrectOptionB + numCorrectOptionC + numCorrectOptionD;
             int totalResponses = response.getInt("totalresponses");
-            option1PB.setProgressDrawable(ContextCompat.getDrawable(SocketQuizActivity.this, R.drawable.answer_progress_bar_wrong));
-            option2PB.setProgressDrawable(ContextCompat.getDrawable(SocketQuizActivity.this, R.drawable.answer_progress_bar_wrong));
-            option3PB.setProgressDrawable(ContextCompat.getDrawable(SocketQuizActivity.this, R.drawable.answer_progress_bar_wrong));
-            option4PB.setProgressDrawable(ContextCompat.getDrawable(SocketQuizActivity.this, R.drawable.answer_progress_bar_wrong));
+            option1PB.setProgressDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.answer_progress_bar_wrong));
+            option2PB.setProgressDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.answer_progress_bar_wrong));
+            option3PB.setProgressDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.answer_progress_bar_wrong));
+            option4PB.setProgressDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.answer_progress_bar_wrong));
 
 
             if (isOptionACorrect == 1) {
-                option1PB.setProgressDrawable(ContextCompat.getDrawable(SocketQuizActivity.this, R.drawable.answer_progress_bar_correct));
+                option1PB.setProgressDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.answer_progress_bar_correct));
             }
             if (isOptionBCorrect == 1) {
-                option2PB.setProgressDrawable(ContextCompat.getDrawable(SocketQuizActivity.this, R.drawable.answer_progress_bar_correct));
+                option2PB.setProgressDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.answer_progress_bar_correct));
             }
             if (isOptionCCorrect == 1) {
-                option3PB.setProgressDrawable(ContextCompat.getDrawable(SocketQuizActivity.this, R.drawable.answer_progress_bar_correct));
+                option3PB.setProgressDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.answer_progress_bar_correct));
             }
             if (isOptionDCorrect == 1) {
-                option4PB.setProgressDrawable(ContextCompat.getDrawable(SocketQuizActivity.this, R.drawable.answer_progress_bar_correct));
+                option4PB.setProgressDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.answer_progress_bar_correct));
             }
 
-            Toast.makeText(SocketQuizActivity.this, "Showing Answers", Toast.LENGTH_SHORT).show();
+            Toast.makeText(FirebaseQuizActivity.this, "Showing Answers", Toast.LENGTH_SHORT).show();
             option1PB.setVisibility(View.VISIBLE);
             startAnswerAnimation(option1PB, (numCorrectOptionA * 400) / totalResponses, 3000);
             Log.d("percent", Integer.toString((numCorrectOptionA * 400) / totalResponses));
@@ -902,7 +994,7 @@ public class SocketQuizActivity extends AppCompatActivity {
             startAnswerAnimation(option4PB, (numCorrectOptionD * 400) / totalResponses, 3000);
         }
         catch (JSONException e){
-            Log.d("SocketQuizActivity",e.toString());
+            Log.d("FirebaseQuizActivity",e.toString());
         }
 
 
@@ -912,7 +1004,7 @@ public class SocketQuizActivity extends AppCompatActivity {
 
 
     }
-public static boolean isRevivalShowing = false;
+    public static boolean isRevivalShowing = false;
     private void showRevival(){
         isRevivalShowing = true;
         Log.d("HEARTSSS", getIntent().getIntExtra("hearts",0)+" "+numberOfRevivals);
@@ -922,7 +1014,7 @@ public static boolean isRevivalShowing = false;
 
         if(AppConstants.hearts > 0 && numberOfRevivals<2){
             Log.d("HEARTSSS", getIntent().getIntExtra("hearts",0)+" "+numberOfRevivals);
-            revivalpopup=new Dialog(SocketQuizActivity.this);
+            revivalpopup=new Dialog(FirebaseQuizActivity.this);
             revivalpopup.setContentView(R.layout.quiz_revival_xml);
             revivalpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             isRevivalShowing = false;
@@ -966,6 +1058,7 @@ public static boolean isRevivalShowing = false;
                     quizWrongAnswerMusicPlayer.stop();
                     questionsSocket.close();
                     losersPopup.show();
+                    questionsDBRef.removeEventListener(onNewQuestionsAdded);
                 }
             });
 
@@ -986,15 +1079,15 @@ public static boolean isRevivalShowing = false;
                         editor.putInt("coins", AppConstants.hearts);
                         editor.apply();
                         JSONObject quizObject = null;
-                                            JSONObject jsonObject = new JSONObject();
-                    try {
-                        jsonObject.put("hearts",AppConstants.hearts);
-                        jsonObject.put("username",AppConstants.username+"_"+numberOfRevivals);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    //todo enter event name;
-                    questionsSocket.emit("hearts_updater",jsonObject);
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            jsonObject.put("hearts",AppConstants.hearts);
+                            jsonObject.put("username",AppConstants.username+"_"+numberOfRevivals);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        //todo enter event name;
+                        questionsSocket.emit("hearts_updater",jsonObject);
                     }
                     else{
                         quizOver = true;
@@ -1008,7 +1101,7 @@ public static boolean isRevivalShowing = false;
         }
         else{
             Log.d("HEARTSSSLOST", getIntent().getIntExtra("hearts",0)+" "+numberOfRevivals);
-            losersPopup=new Dialog(SocketQuizActivity.this);
+            losersPopup=new Dialog(FirebaseQuizActivity.this);
             losersPopup.setContentView(R.layout.quiz_loser_popup);
             losersPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             ImageView imageView = losersPopup.findViewById(R.id.close_loser_popup);
@@ -1016,7 +1109,7 @@ public static boolean isRevivalShowing = false;
                 @Override
                 public void onClick(View v) {
                     losersPopup.dismiss();
-//                    startActivity(new Intent(SocketQuizActivity.this,MainActivity.class));
+//                    startActivity(new Intent(FirebaseQuizActivity.this,MainActivity.class));
                     finish();
                 }
             });
@@ -1035,12 +1128,12 @@ public static boolean isRevivalShowing = false;
                         quizWrongAnswerMusicPlayer.stop();
                         questionsSocket.close();
                         questionsSocket.disconnect();
-//                        startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
+//                        startActivity(new Intent(FirebaseQuizActivity.this, MainActivity.class));
 //                        finish();
                         finish();
                     }
                     catch(Exception e){
-//                        startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
+//                        startActivity(new Intent(FirebaseQuizActivity.this, MainActivity.class));
                         finish();
                         Log.d("QuizSocketActivity","SUm Catch Prob");
                     }
