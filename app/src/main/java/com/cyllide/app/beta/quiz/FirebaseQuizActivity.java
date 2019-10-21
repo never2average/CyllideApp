@@ -97,8 +97,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     MediaPlayer quizMusicPlayer;
     MediaPlayer quizCorrectAnswerMusicPlayer;
     MediaPlayer quizWrongAnswerMusicPlayer;
-    DatabaseReference questionsDBRef;
-    DatabaseReference playersDBRef;
+
     String playerQuizID = null;
 
     private FrameLayout waitingScreen;
@@ -171,14 +170,30 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        questionsDBRef.addValueEventListener(onNewQuestionsAdded);
-        playersDBRef.addValueEventListener(numberOfPlayersActive);
+       addEventListeners();
 
         //Attach all listeners
 
     }
+    private void addEventListeners(){
+        questionsDBRef.addValueEventListener(onNewQuestionsAdded);
+        playersDBRef.addValueEventListener(numberOfPlayersActive);
+
+    }
+    private void removeEventListeners(){
+        questionsDBRef.removeEventListener(onNewQuestionsAdded);
+        playersDBRef.removeEventListener(numberOfPlayersActive);
+        if(playerQuizID != null) {
+            playersDBRef.child(playerQuizID).setValue(null);
+        }
+
+    }
+    DatabaseReference questionsDBRef;
+    DatabaseReference playersDBRef;
+    DatabaseReference answerStatsDBRef;
     ValueEventListener onNewQuestionsAdded;
     ValueEventListener numberOfPlayersActive;
+    ValueEventListener answerStats;
 
 
     @Override
@@ -187,6 +202,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         quizID = getIntent().getStringExtra("quizID");
         questionsDBRef = FirebaseDatabase.getInstance().getReference().child("questions");
         playersDBRef = FirebaseDatabase.getInstance().getReference().child("ActivePlayers");
+        answerStatsDBRef = FirebaseDatabase.getInstance().getReference().child("AnswerStats");
         playerQuizID = playersDBRef.push().getKey();
         if(playerQuizID!= null) {
             playersDBRef.child(playerQuizID).setValue("Playing");
@@ -714,13 +730,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                         quizMusicPlayer.seekTo(0);
                         quizActivityAnswerIndicator.setVisibility(View.VISIBLE);
                         textTimer.setVisibility(View.INVISIBLE);
-                        JSONObject jsonResponse;
-                        Log.d("changequestion","inside response question");
-
-
-//                            showAnswer(jsonResponse);
                             if(isCorrect){
-//                                    isCorrect = false;
                                 quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
                                 quizCorrectAnswerMusicPlayer.start();
                                 Log.d("questionID",Integer.toString(questionID));
@@ -728,8 +738,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                                 if(questionID == 10) {
                                     FirebaseDatabase.getInstance().getReference().child("Winners").child(AppConstants.username).setValue(AppConstants.token);
                                     quizWinPopup.show();
-                                    //check wheter last question
-//                                    quizWinPopup.show();
+                                    removeEventListeners();
                                     Toast.makeText(FirebaseQuizActivity.this,"You won, write code now",Toast.LENGTH_SHORT).show();
                                     }
                             }
@@ -747,6 +756,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                     }
                     if (questionID >= 9) {
                         losersPopup.show();
+                        removeEventListeners();
                     } else {
                         if(!isRevivalShowing)
                             showRevival();
@@ -763,6 +773,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         option2CV.setClickable(false);
         option3CV.setClickable(false);
         option4CV.setClickable(false);
+        answerStatsDBRef.child(selectedOptionID+"").child(playerQuizID).setValue(AppConstants.token);
         if(selectedOptionID == -1){
             //SOMETHING is WRONG RETURN
         }
@@ -802,20 +813,23 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         super.onPause();
 
         //TODO Remove all listeners
-        questionsDBRef.removeEventListener(onNewQuestionsAdded);
-        if(playerQuizID != null) {
-            playersDBRef.child(playerQuizID).setValue(null);
-        }
-        playersDBRef.removeEventListener(numberOfPlayersActive);
+        removeEventListeners();
+       //Remove the player from the active users
+
+
 
         questionID = -1;
+        //stop the music
         quizMusicPlayer.stop();
+        quizCorrectAnswerMusicPlayer.stop();
+        quizWrongAnswerMusicPlayer.stop();
+
+        //stop timers
         if(countDownTimer != null) {
             countDownTimer.cancel();
             countDownTimer = null;
         }
-        quizCorrectAnswerMusicPlayer.stop();
-        quizWrongAnswerMusicPlayer.stop();
+
         super.onDestroy();
 
     }
@@ -1092,8 +1106,8 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                     else{
                         quizOver = true;
                         questionsSocket.close();
-
                         losersPopup.show();
+                        removeEventListeners();
 
                     }
                 }
@@ -1109,6 +1123,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     losersPopup.dismiss();
+                    removeEventListeners();
 //                    startActivity(new Intent(FirebaseQuizActivity.this,MainActivity.class));
                     finish();
                 }
@@ -1124,6 +1139,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                         countDownTimer = null;
                     }
                     try {
+                        removeEventListeners();
                         quizCorrectAnswerMusicPlayer.stop();
                         quizWrongAnswerMusicPlayer.stop();
                         questionsSocket.close();
