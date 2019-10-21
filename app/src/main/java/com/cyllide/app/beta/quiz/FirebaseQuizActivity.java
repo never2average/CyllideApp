@@ -1,4 +1,5 @@
 package com.cyllide.app.beta.quiz;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
+
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.Context;
@@ -46,9 +48,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.net.URISyntaxException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -61,16 +65,15 @@ import androidx.core.content.ContextCompat;
 import androidx.room.Database;
 
 import android.os.Vibrator;
-import com.github.nkzawa.socketio.client.IO;
 
+import com.github.nkzawa.socketio.client.IO;
 
 
 public class FirebaseQuizActivity extends AppCompatActivity {
 
 
-
     public static boolean hasRevive = false;
-    public static int numberOfRevivals=0;
+    public static int numberOfRevivals = 0;
     private Handler handler = new Handler();
     CountDownTimer countDownTimer = null;
     CircularProgressBar circularProgressBar;
@@ -80,10 +83,10 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     String selectedOption = "noOption";
     boolean isCorrect;
     TextView mainQuestion, optionA, optionB, optionC, optionD, textTimer, viewersTV;
-    MaterialCardView option1CV,option2CV,option3CV,option4CV;
+    MaterialCardView option1CV, option2CV, option3CV, option4CV;
     RequestQueue winPaytmRequestQueue;
     JSONArray jsonQuestionArray;
-    Map<String,String> winPaytmRequestHeader = new ArrayMap<>();
+    Map<String, String> winPaytmRequestHeader = new ArrayMap<>();
     ProgressBar option1PB, option2PB, option3PB, option4PB;
     private int questionID = 0; // new value for socket
     Dialog revivalpopup;
@@ -109,17 +112,13 @@ public class FirebaseQuizActivity extends AppCompatActivity {
 
     //TODO MAJOR FKUP: COINS AND HEARTS MEAN THE SAME THING, REFACTOR WITH PRECAUTION
 
-    private void startMusic(){
+    private void startMusic() {
         quizMusicPlayer.start();
         quizMusicPlayer.setLooping(true);
     }
-    private void stopMusic(){
-
-    }
 
 
-//    JSONObject quizObject
-    private void changeQuestion(int qno, String question, ArrayList<String> answerList){
+    private void changeQuestion(int qno, String question, ArrayList<String> answerList) {
         startMusic();
         waitingScreen.setVisibility(View.GONE);
 
@@ -138,57 +137,59 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         option2PB.setVisibility(View.INVISIBLE);
         option3PB.setVisibility(View.INVISIBLE);
         option4PB.setVisibility(View.INVISIBLE);
-        option1CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this,R.drawable.drawable_activity_quiz_unselected_option));
-        option2CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this,R.drawable.drawable_activity_quiz_unselected_option));
-        option3CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this,R.drawable.drawable_activity_quiz_unselected_option));
-        option4CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this,R.drawable.drawable_activity_quiz_unselected_option));
+        option1CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_unselected_option));
+        option2CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_unselected_option));
+        option3CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_unselected_option));
+        option4CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_unselected_option));
 
 
-        optionA.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this,R.color.colorPrimary));
-        optionB.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this,R.color.colorPrimary));
-        optionC.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this,R.color.colorPrimary));
-        optionD.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this,R.color.colorPrimary));
+        optionA.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.colorPrimary));
+        optionB.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.colorPrimary));
+        optionC.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.colorPrimary));
+        optionD.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.colorPrimary));
 
 
-
-            circularProgressBar.setProgress(0);
-            mainQuestion.setText("Q."+qno+" "+question);
-            optionA.setText(answerList.get(0));
-            optionB.setText(answerList.get(1));
-            optionC.setText(answerList.get(2));
-            optionD.setText(answerList.get(3));
-            circularProgressBar.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
-            circularProgressBar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
-            circularProgressBar.setProgressBarWidth(10);
-            circularProgressBar.setBackgroundProgressBarWidth(10);
-            circularProgressBar.setProgressWithAnimation(100, 20000);
-            startTimer(10);
+        circularProgressBar.setProgress(0);
+        mainQuestion.setText("Q." + qno + " " + question);
+        optionA.setText(answerList.get(0));
+        optionB.setText(answerList.get(1));
+        optionC.setText(answerList.get(2));
+        optionD.setText(answerList.get(3));
+        circularProgressBar.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        circularProgressBar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
+        circularProgressBar.setProgressBarWidth(10);
+        circularProgressBar.setBackgroundProgressBarWidth(10);
+        circularProgressBar.setProgressWithAnimation(100, 20000);
+        startTimer(10);
 
 
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-       addEventListeners();
+        addEventListeners();
 
         //Attach all listeners
 
     }
-    private void addEventListeners(){
+
+    private void addEventListeners() {
         questionsDBRef.addValueEventListener(onNewQuestionsAdded);
         playersDBRef.addValueEventListener(numberOfPlayersActive);
 
     }
-    private void removeEventListeners(){
+
+    private void removeEventListeners() {
         questionsDBRef.removeEventListener(onNewQuestionsAdded);
         playersDBRef.removeEventListener(numberOfPlayersActive);
         answerStatsDBRef.removeEventListener(answerStats);
-        if(playerQuizID != null) {
+        if (playerQuizID != null) {
             playersDBRef.child(playerQuizID).setValue(null);
         }
 
     }
+
     DatabaseReference questionsDBRef;
     DatabaseReference playersDBRef;
     DatabaseReference answerStatsDBRef;
@@ -205,81 +206,79 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         playersDBRef = FirebaseDatabase.getInstance().getReference().child("ActivePlayers");
         answerStatsDBRef = FirebaseDatabase.getInstance().getReference().child("AnswerStats");
         playerQuizID = playersDBRef.push().getKey();
-        if(playerQuizID!= null) {
+        if (playerQuizID != null) {
             playersDBRef.child(playerQuizID).setValue("Playing");
         }
 
         Log.d(
-                "FIREBASE",questionsDBRef.toString()
+                "FIREBASE", questionsDBRef.toString()
         );
-        Log.d("Value",quizID+"");
-        Log.d("Value",AppConstants.token+"");
-//        waitingScreen = findViewById(R.id.waiting_layout);
-//        waitingScreen.setVisibility(View.VISIBLE);
-//        Log.d("Value",)
+        Log.d("Value", quizID + "");
+        Log.d("Value", AppConstants.token + "");
+        waitingScreen = findViewById(R.id.waiting_layout);
+        waitingScreen.setVisibility(View.VISIBLE);
         countDownTimer = null;
 
         answerStats = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("ANSWERSTATSS","INSIDE ANSWERSTATS");
+                Log.d("ANSWERSTATSS", "INSIDE ANSWERSTATS");
 
                 try {
                     JSONObject response = new JSONObject();
                     JSONArray optionsData = new JSONArray();
 
-                    int noOfSelectedOptions0 = (int)dataSnapshot.child("0").getChildrenCount();
-                    int noOfSelectedOptions1 = (int)dataSnapshot.child("1").getChildrenCount();
-                    int noOfSelectedOptions2 = (int)dataSnapshot.child("2").getChildrenCount();
-                    int noOfSelectedOptions3 = (int)dataSnapshot.child("3").getChildrenCount();
+                    int noOfSelectedOptions0 = (int) dataSnapshot.child("0").getChildrenCount();
+                    int noOfSelectedOptions1 = (int) dataSnapshot.child("1").getChildrenCount();
+                    int noOfSelectedOptions2 = (int) dataSnapshot.child("2").getChildrenCount();
+                    int noOfSelectedOptions3 = (int) dataSnapshot.child("3").getChildrenCount();
 
                     int isCorrect0 = 0;
                     int isCorrect1 = 0;
                     int isCorrect2 = 0;
                     int isCorrect3 = 0;
 
-                    if(correctOptionID == 0){
+                    if (correctOptionID == 0) {
                         isCorrect0 = 1;
                     }
-                    if(correctOptionID == 1){
+                    if (correctOptionID == 1) {
                         isCorrect1 = 1;
                     }
-                    if(correctOptionID == 2){
+                    if (correctOptionID == 2) {
                         isCorrect2 = 1;
                     }
-                    if(correctOptionID == 3){
+                    if (correctOptionID == 3) {
                         isCorrect3 = 1;
                     }
                     JSONObject answerObject0 = new JSONObject();
                     answerObject0.put("numResponses", noOfSelectedOptions0);
-                    answerObject0.put("isCorrect",isCorrect0);
+                    answerObject0.put("isCorrect", isCorrect0);
                     optionsData.put(answerObject0);
 
                     JSONObject answerObject1 = new JSONObject();
                     answerObject1.put("numResponses", noOfSelectedOptions1);
-                    answerObject1.put("isCorrect",isCorrect1);
+                    answerObject1.put("isCorrect", isCorrect1);
                     optionsData.put(answerObject1);
 
                     JSONObject answerObject2 = new JSONObject();
                     answerObject2.put("numResponses", noOfSelectedOptions2);
-                    answerObject2.put("isCorrect",isCorrect2);
+                    answerObject2.put("isCorrect", isCorrect2);
                     optionsData.put(answerObject2);
 
                     JSONObject answerObject3 = new JSONObject();
                     answerObject3.put("numResponses", noOfSelectedOptions3);
-                    answerObject3.put("isCorrect",isCorrect3);
+                    answerObject3.put("isCorrect", isCorrect3);
                     optionsData.put(answerObject3);
 
 
                     response.put("optionsData", optionsData);
                     showAnswer(response);
                     answerStatsDBRef.removeEventListener(answerStats);
-                    Log.d("ANSWERSTATSS","COMPLETE ANSWERSTATS");
+                    Log.d("ANSWERSTATSS", "COMPLETE ANSWERSTATS");
 
 
-                }
-                catch(Exception e){
-                    Log.e("answerSTatsFQA",e.toString());
+                } catch (Exception e) {
+                    Log.e("answerSTatsFQA", e.toString());
                 }
 
             }
@@ -295,7 +294,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 long numberOfPlayers = dataSnapshot.getChildrenCount();
-                viewersTV.setText(numberOfPlayers+"");
+                viewersTV.setText(numberOfPlayers + "");
             }
 
             @Override
@@ -307,14 +306,18 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         onNewQuestionsAdded = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(isTimerRunning){return;}
+                if (isTimerRunning) {
+                    return;
+                }
                 isTimerRunning = true;
+                waitingScreen.setVisibility(View.GONE);
+
 
                 ArrayList<String> answerList = new ArrayList<>();
                 String question = "";
                 int currentQuestionNumber = -1;
                 Iterable<DataSnapshot> questionList = dataSnapshot.getChildren();
-                for(DataSnapshot questionObject: questionList) {
+                for (DataSnapshot questionObject : questionList) {
                     question = questionObject.child("theQuestion").getValue(String.class);
                     answerList = new ArrayList<>();
                     for (int i = 0; i < 4; i++) {
@@ -324,13 +327,12 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                             }
                             answerList.add(questionObject.child("answerOptions").child(i + "").child("value").getValue(String.class));
                             currentQuestionNumber = questionObject.child("appearancePosition").getValue(Integer.class);
+                        } catch (Exception e) {
+                            Log.d("PREDICTABLE EROR", e.toString());
                         }
-                        catch(Exception e){
-                            Log.d("PREDICTABLE EROR",e.toString());
-                            }
                     }
                 }
-                if(question.equals("")){
+                if (question.equals("")) {
                     isTimerRunning = false;
                     return;
                 }
@@ -344,8 +346,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
 //                }
 
                 //TODO COmment it later
-                    changeQuestion(questionID, question, answerList);
-
+                changeQuestion(questionID, question, answerList);
 
 
             }
@@ -358,210 +359,18 @@ public class FirebaseQuizActivity extends AppCompatActivity {
 
         questionsDBRef.addValueEventListener(onNewQuestionsAdded);
 
-//        Emitter.Listener winnerMoney = new Emitter.Listener() {
-//            @Override
-//            public void call(Object... args) {
-//                Log.d("QUIZCHUD","WinnerMoney at: "+ Calendar.getInstance().getTime()+"");
-//                JSONObject data = new JSONObject();
-//                try {
-//                    data.put("token",AppConstants.username);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                questionsSocket.emit("winner_token",data);
-//                Log.d("HEAAARRRR",args.toString());
-//                JSONObject response;
-//                try{
-//                    response = (JSONObject)args[1];
-//
-//                }
-//                catch (ArrayIndexOutOfBoundsException e){
-//                    response = (JSONObject)args[0];
-//                }
-//                try{
-//                    final JSONObject finalResponse = response;
-//                    runOnUiThread(new Runnable() {
-//                        public void run() {
-//                            try {
-//                                finishQuiz(10, finalResponse.getDouble("amount"));
-//                            }
-//                            catch (Exception e){
-//                                Log.d("Inner Try",e.toString());
-//                            }
-//                        }
-//                    });
-//                    Log.d("Value",Double.toString(response.getDouble("amount")));
-////                    Looper.prepare();
-//                    finishQuiz(10,response.getDouble("amount"));
-//                }
-//                catch(Exception e){
-//                    Log.d("QuizSocket",e.toString());
-//                }
-//                Log.d("HEAAARR",args.toString());
-//
-//                Log.d("QUIZCHUD","Winnermoney Exit at: "+ Calendar.getInstance().getTime()+"");
-//
-//
-//            }
-//        };
-//
-//
-//        Emitter.Listener numActivePlayers = new Emitter.Listener() {
-//            @Override
-//            public void call(Object... args) {
-////                waitingScreen.setVisibility(View.GONE);
-//                Log.d("QUIZCHUD","numActivePlayers at: "+ Calendar.getInstance().getTime()+"");
-//
-//                try {
-//                    viewersTV.setText(Integer.toString(((JSONObject)args[1]).getInt("value")));
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                catch (ArrayIndexOutOfBoundsException e1){
-//                    try {
-//                        Log.d("QuizActivity",args[0].toString());
-//                        viewersTV.setText(Integer.toString(((JSONObject)args[0]).getInt("value")));
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                Log.d("QUIZCHUD","numActivePlayers Exit at: "+ Calendar.getInstance().getTime()+"");
-//
-//
-//            }
-//        };
-//
+
+        quizMusicPlayer = MediaPlayer.create(getApplicationContext(), R.raw.quiz_backgorund_sound);
 
 
-//        Emitter.Listener answerResponseFromServer = new Emitter.Listener() {
-//            @Override
-//            public void call(Object... args) {
-//                String result = "";
-////                isCorrect = false;
-//                Log.d("QUIZCHUD","amICorrect at: "+ Calendar.getInstance().getTime()+"");
-//
-//                try {
-//                    result = ((JSONObject)args[1]).getString("myresp");
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                catch (ArrayIndexOutOfBoundsException e1){
-//                    try {
-//                        Log.d("QuizActivity",args[0].toString());
-//                        result = ((JSONObject)args[0]).getString("myresp");
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                if(result.equals("Correct")){
-//                    isCorrect = true;
-//                }
-//                Log.d("QuizActivity", result);
-//                Log.d("QUIZCHUD","amICorrect Exit at: "+ Calendar.getInstance().getTime()+"");
-//
-//            }
-//        };
-//
-//
-//        Emitter.Listener onNewQuestion = new Emitter.Listener() {
-//            @Override
-//            public void call(final Object... args) {
-//                FirebaseQuizActivity.this.runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Log.d("QUIZCHUD","NewQuestion at: "+ Calendar.getInstance().getTime()+"");
-//
-//                        Log.d("FirebaseQuizActivity",args.toString());
-//                        JSONObject data;
-//                        try {
-//                            data = (JSONObject) args[1];
-//                        }
-//                        catch (ArrayIndexOutOfBoundsException e){
-//                            data = (JSONObject) args[0];
-//                        }
-//                        Log.d("FirebaseQuizActivity",data.toString());
-//                        if(!quizOver) {
-////                            changeQuestion(data);
-//                        }
-//                        Log.d("QUIZCHUD","NewQuestion Exit at: "+ Calendar.getInstance().getTime()+"");
-//
-//
-//                    }
-//                });
-//            }
-//        };
-//
-//        Emitter.Listener onResponseFromServer = new Emitter.Listener() {
-//            @Override
-//            public void call(final Object... args) {
-//                Log.d("QUIZCHUD","QuestionAnswer at: "+ Calendar.getInstance().getTime()+"");
-//
-//                FirebaseQuizActivity.this.runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Log.d("QuizSocketActivity",args.toString());
-//
-//                        quizMusicPlayer.pause();
-//                        quizMusicPlayer.seekTo(0);
-//                        quizActivityAnswerIndicator.setVisibility(View.VISIBLE);
-//                        textTimer.setVisibility(View.INVISIBLE);
-//                        JSONObject jsonResponse;
-//                        Log.d("changequestion","inside response question");
-//
-//                        try {
-//                            try {
-//                                jsonResponse = (JSONObject) args[1];
-//                            }
-//                            catch(ArrayIndexOutOfBoundsException e){
-//                                jsonResponse = (JSONObject) args[0];
-//                            }
-//                            showAnswer(jsonResponse);
-//                            if(isCorrect){
-////                                    isCorrect = false;
-//                                quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
-//                                quizCorrectAnswerMusicPlayer.start();
-//                                Log.d("questionID",Integer.toString(questionID));
-//                                Log.d("changequestion","calling change change question");
-//                                if(questionID == 10) {
-//                                    //check wheter last question
-////                                        finishQuiz(questionID,0.0);
-//                                }
-//                            }
-//                            else {
-//
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                        Log.d("QUIZCHUD","QuestionAnswer Exit at: "+ Calendar.getInstance().getTime()+"");
-//
-//
-//                    }
-//
-//
-//
-//
-//
-//
-//                });
-//            }
-//        };
+        quizCorrectAnswerMusicPlayer = MediaPlayer.create(getApplicationContext(), R.raw.correct_answer_sound);
 
-
-        quizMusicPlayer= MediaPlayer.create(getApplicationContext(), R.raw.quiz_backgorund_sound);
-
-
-        quizCorrectAnswerMusicPlayer = MediaPlayer.create(getApplicationContext(),R.raw.correct_answer_sound);
-
-        quizWrongAnswerMusicPlayer = MediaPlayer.create(getApplicationContext(),R.raw.wrong_answer_sound);
-
-
+        quizWrongAnswerMusicPlayer = MediaPlayer.create(getApplicationContext(), R.raw.wrong_answer_sound);
 
 
         setContentView(R.layout.activity_quiz);
         waitingScreen = findViewById(R.id.waiting_layout);
-        revivalpopup=new Dialog(FirebaseQuizActivity.this);
+        revivalpopup = new Dialog(FirebaseQuizActivity.this);
         revivalpopup.setContentView(R.layout.quiz_revival_xml);
         revivalpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -573,7 +382,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         quizWinPopup.setContentView(R.layout.quiz_wining_xml);
         quizWinPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        losersPopup=new Dialog(FirebaseQuizActivity.this);
+        losersPopup = new Dialog(FirebaseQuizActivity.this);
         losersPopup.setContentView(R.layout.quiz_loser_popup);
         losersPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         ImageView imageView = losersPopup.findViewById(R.id.close_loser_popup);
@@ -581,7 +390,6 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 losersPopup.dismiss();
-//                startActivity(new Intent(FirebaseQuizActivity.this,MainActivity.class));
                 finish();
             }
         });
@@ -591,22 +399,17 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             public void onDismiss(DialogInterface dialogInterface) {
                 questionID = -1;
                 quizMusicPlayer.stop();
-                if(countDownTimer != null) {
+                if (countDownTimer != null) {
                     countDownTimer.cancel();
                     countDownTimer = null;
                 }
                 try {
                     quizCorrectAnswerMusicPlayer.stop();
                     quizWrongAnswerMusicPlayer.stop();
-                    questionsSocket.close();
-                    questionsSocket.disconnect();
-//                    startActivity(new Intent(FirebaseQuizActivity.this, MainActivity.class));
                     finish();
-                }
-                catch(Exception e){
-//                    startActivity(new Intent(FirebaseQuizActivity.this, MainActivity.class));
+                } catch (Exception e) {
                     finish();
-                    Log.d("QuizSocketActivity","Sum Catch Prob");
+                    Log.d("QuizSocketActivity", "Sum Catch Prob");
                 }
             }
         });
@@ -640,16 +443,13 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         quizActivityAnswerIndicator = findViewById(R.id.activity_quiz_indicator);
 
 
-
-
-
         option1CV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectedOption = optionA.getText().toString();
                 sendAnswer(0);
-                option1CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
-                optionA.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this,R.color.white));
+                option1CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_selected_option));
+                optionA.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.white));
                 option2CV.setClickable(false);
                 option3CV.setClickable(false);
                 option4CV.setClickable(false);
@@ -661,8 +461,8 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectedOption = optionB.getText().toString();
                 sendAnswer(1);
-                option2CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
-                optionB.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this,R.color.white));
+                option2CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_selected_option));
+                optionB.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.white));
                 option1CV.setClickable(false);
                 option3CV.setClickable(false);
                 option4CV.setClickable(false);
@@ -674,8 +474,8 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectedOption = optionC.getText().toString();
                 sendAnswer(2);
-                option3CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
-                optionC.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this,R.color.white));
+                option3CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_selected_option));
+                optionC.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.white));
                 option2CV.setClickable(false);
                 option1CV.setClickable(false);
                 option4CV.setClickable(false);
@@ -687,8 +487,8 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectedOption = optionD.getText().toString();
                 sendAnswer(3);
-                option4CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this,R.drawable.drawable_activity_quiz_selected_option));
-                optionD.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this,R.color.white));
+                option4CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_selected_option));
+                optionD.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.white));
                 option1CV.setClickable(false);
                 option2CV.setClickable(false);
                 option3CV.setClickable(false);
@@ -700,46 +500,16 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         textTimer = findViewById(R.id.textTimer);
 
 
-//        questionsSocket.connect();
-//        questionsSocket.on("numPlayers",numActivePlayers);
-//        questionsSocket.on("question_data_response",onNewQuestion);
-//        questionsSocket.on("amicorrect", answerResponseFromServer);
-//        questionsSocket.on("answer_stat_results",onResponseFromServer);
-//        questionsSocket.on("quiz_winners_listener",winnerMoney);
-//        JSONObject jsonObject = new JSONObject();
-//        try {
-//            jsonObject.put("token",AppConstants.token);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        questionsSocket.emit("special_connect",jsonObject);
-//
-
-
-    }
-
-
-
-
-    private Socket questionsSocket;
-    {
-        try {
-            questionsSocket = IO.socket("https://quiz.cyllide.com");
-        } catch (URISyntaxException e) {
-            Log.d("QuizActivity",e.toString());
-        }
     }
 
 
     @Override
     public void onBackPressed() {
-//        showRevival();
         exitConfirmDialog();
     }
 
 
-
-    private void exitConfirmDialog(){
+    private void exitConfirmDialog() {
         ImageView cross = confirmExitPopup.findViewById(R.id.quiz_exit_confirm_cross);
         Button yes = confirmExitPopup.findViewById(R.id.quiz_exit_confirm_yes);
         Button no = confirmExitPopup.findViewById(R.id.quiz_exit_confirm_no);
@@ -758,7 +528,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                 finish();
                 questionID = 0;
                 quizMusicPlayer.stop();
-                if(countDownTimer != null) {
+                if (countDownTimer != null) {
                     countDownTimer.cancel();
                     countDownTimer = null;
                 }
@@ -779,46 +549,46 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     }
 
 
-
 // Socketio legend
 //    new questions = NewQuestionEvent
 //    send questions = SendQuestionEvent
 //    recieve response = RecieveQuestionEvent
 
     private void startTimer(final int seconds) {
-        countDownTimer = new CountDownTimer(  seconds * 1000, 1) {
+        countDownTimer = new CountDownTimer(seconds * 1000, 1) {
             @Override
             public void onTick(long leftTimeInMilliseconds) {
                 long seconds = leftTimeInMilliseconds / 1000;
-                pb.setProgress((int)leftTimeInMilliseconds);
-                textTimer.setText(String.format("%02d", seconds/60) + ":" + String.format("%02d", seconds%60));
+                pb.setProgress((int) leftTimeInMilliseconds);
+                textTimer.setText(String.format("%02d", seconds / 60) + ":" + String.format("%02d", seconds % 60));
             }
+
             @Override
             public void onFinish() {
                 isTimerRunning = false;
                 textTimer.setText("STOP");
                 answerStatsDBRef.addValueEventListener(answerStats);
                 quizMusicPlayer.pause();
-                        quizMusicPlayer.seekTo(0);
-                        quizActivityAnswerIndicator.setVisibility(View.VISIBLE);
-                        textTimer.setVisibility(View.INVISIBLE);
-                            if(isCorrect){
-                                quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
-                                quizCorrectAnswerMusicPlayer.start();
-                                Log.d("questionID",Integer.toString(questionID));
-                                Log.d("changequestion","calling change change question");
-                                if(questionID == 10) {
-                                    FirebaseDatabase.getInstance().getReference().child("Winners").child(AppConstants.username).setValue(AppConstants.token);
-                                    try {
-                                        quizWinPopup.show();
-                                    }
-                                    catch (Exception e){}
-                                    removeEventListeners();
-                                    Toast.makeText(FirebaseQuizActivity.this,"You won, write code now",Toast.LENGTH_SHORT).show();
-                                    }
-                            }
+                quizMusicPlayer.seekTo(0);
+                quizActivityAnswerIndicator.setVisibility(View.VISIBLE);
+                textTimer.setVisibility(View.INVISIBLE);
+                if (isCorrect) {
+                    quizActivityAnswerIndicator.setImageResource(R.drawable.ic_checked);
+                    quizCorrectAnswerMusicPlayer.start();
+                    Log.d("questionID", Integer.toString(questionID));
+                    Log.d("changequestion", "calling change change question");
+                    if (questionID == 10) {
+                        FirebaseDatabase.getInstance().getReference().child("Winners").child(AppConstants.username).setValue(AppConstants.token);
+                        try {
+                            quizWinPopup.show();
+                        } catch (Exception e) {
+                        }
+                        removeEventListeners();
+                        Toast.makeText(FirebaseQuizActivity.this, "You won, write code now", Toast.LENGTH_SHORT).show();
+                    }
+                }
 
-                if(!isCorrect){
+                if (!isCorrect) {
                     quizActivityAnswerIndicator.setImageResource(R.drawable.ic_cancel);
                     quizWrongAnswerMusicPlayer.start();
                     Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -832,68 +602,66 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                     if (questionID >= 9) {
                         try {
                             losersPopup.show();
+                        } catch (Exception e) {
                         }
-                        catch(Exception e){}
                         removeEventListeners();
                     } else {
-                        if(!isRevivalShowing)
+                        if (!isRevivalShowing)
                             showRevival();
                     }
                 }
                 countDownTimer = null;
 
-            }}.start();
+            }
+        }.start();
 
     }
 
-    private boolean sendAnswer(final int selectedOptionID){
+    private boolean sendAnswer(final int selectedOptionID) {
         option1CV.setClickable(false);
         option2CV.setClickable(false);
         option3CV.setClickable(false);
         option4CV.setClickable(false);
-        answerStatsDBRef.child(selectedOptionID+"").child(playerQuizID).setValue(AppConstants.token);
-        if(selectedOptionID == -1){
+        answerStatsDBRef.child(selectedOptionID + "").child(playerQuizID).setValue(AppConstants.token);
+        if (selectedOptionID == -1) {
             //SOMETHING is WRONG RETURN
         }
-        if(selectedOptionID == correctOptionID){
+        if (selectedOptionID == correctOptionID) {
             isCorrect = true;
-        }
-        else{
+        } else {
             isCorrect = false;
         }
         return true;
-            }
+    }
 
 
     @Override
     protected void onDestroy() {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("token",AppConstants.token);
+            jsonObject.put("token", AppConstants.token);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        questionsSocket.emit("special_disconnect",jsonObject);
 
         super.onDestroy();
         questionID = -1;
         quizMusicPlayer.stop();
-        if(countDownTimer != null) {
+        if (countDownTimer != null) {
             countDownTimer.cancel();
             countDownTimer = null;
         }
         quizCorrectAnswerMusicPlayer.stop();
         quizWrongAnswerMusicPlayer.stop();
-        questionsSocket.close();
     }
+
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
 
         //TODO Remove all listeners
         removeEventListeners();
-       //Remove the player from the active users
-
+        //Remove the player from the active users
 
 
         questionID = -1;
@@ -903,7 +671,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         quizWrongAnswerMusicPlayer.stop();
 
         //stop timers
-        if(countDownTimer != null) {
+        if (countDownTimer != null) {
             countDownTimer.cancel();
             countDownTimer = null;
         }
@@ -912,30 +680,26 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     }
 
 
-
     RequestQueue quizMoneyRequestQueue;
-    Map<String,String> quizMoneyRequestHeader = new ArrayMap<>();
+    Map<String, String> quizMoneyRequestHeader = new ArrayMap<>();
 
-    private void finishQuiz(int questionID,Double response){
+    private void finishQuiz(int questionID, Double response) {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("token",AppConstants.token);
+            jsonObject.put("token", AppConstants.token);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         quizOver = true;
-        questionsSocket.emit("special_disconnect",jsonObject);
 
-        if(questionID != 10){
-            Toast.makeText(this,"You  lol",Toast.LENGTH_LONG).show();
-            questionsSocket.close();
+        if (questionID != 10) {
+            Toast.makeText(this, "You  lol", Toast.LENGTH_LONG).show();
             quizOver = true;
-            try{
-            losersPopup.show();}
-            catch (Exception e){}
-        }
-        else{
-
+            try {
+                losersPopup.show();
+            } catch (Exception e) {
+            }
+        } else {
 
 
             Double prize = 0.0;
@@ -947,11 +711,11 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             }
             TextView quizMoney = quizWinPopup.findViewById(R.id.quiz_winning_prize_money);
             quizWinPopup.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-            ((TextView)quizWinPopup.findViewById(R.id.quiz_win_name)).setText("Congratulations!!! "+AppConstants.username);
+            ((TextView) quizWinPopup.findViewById(R.id.quiz_win_name)).setText("Congratulations!!! " + AppConstants.username);
 
             quizWinPopup.show();
-            quizMoney.setText("₹ "+format.format(prize));
-            continueButtonPopup=quizWinPopup.findViewById(R.id.continue_txtview);
+            quizMoney.setText("₹ " + format.format(prize));
+            continueButtonPopup = quizWinPopup.findViewById(R.id.continue_txtview);
             continueButtonPopup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -969,19 +733,15 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             });
 
 
-
-
-
-
             quizMoneyRequestQueue = Volley.newRequestQueue(this);
-            quizMoneyRequestHeader.put("token",AppConstants.token);
-            quizMoneyRequestHeader.put("quizID",quizID);
-            String url = getResources().getString(R.string.apiBaseURL)+"quiz/reward/display";
+            quizMoneyRequestHeader.put("token", AppConstants.token);
+            quizMoneyRequestHeader.put("quizID", quizID);
+            String url = getResources().getString(R.string.apiBaseURL) + "quiz/reward/display";
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
 
-                    Log.d("QuizActivityWinning",response);
+                    Log.d("QuizActivityWinning", response);
 
                 }
             }, new Response.ErrorListener() {
@@ -989,9 +749,9 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                 public void onErrorResponse(VolleyError error) {
 
                 }
-            }){
+            }) {
                 @Override
-                public Map<String,String> getHeaders(){
+                public Map<String, String> getHeaders() {
 
                     return quizMoneyRequestHeader;
                 }
@@ -1002,14 +762,14 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         }
     }
 
-    void winnersMoney(String upiID){
-        Log.d("value",upiID);
+    void winnersMoney(String upiID) {
+        Log.d("value", upiID);
         winPaytmRequestQueue = Volley.newRequestQueue(FirebaseQuizActivity.this);
-        winPaytmRequestHeader.put("quizID",quizID);
-        winPaytmRequestHeader.put("token",AppConstants.token);
-        winPaytmRequestHeader.put("upiID",upiID);
-        String url = getResources().getString(R.string.apiBaseURL)+"quiz/reward";
-        StringRequest sr = new StringRequest(Request.Method.POST,url,  new Response.Listener<String>() {
+        winPaytmRequestHeader.put("quizID", quizID);
+        winPaytmRequestHeader.put("token", AppConstants.token);
+        winPaytmRequestHeader.put("upiID", upiID);
+        String url = getResources().getString(R.string.apiBaseURL) + "quiz/reward";
+        StringRequest sr = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("moneyResponse", response);
@@ -1019,15 +779,15 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(FirebaseQuizActivity.this,"Poor Internet Connection, please try again later",Toast.LENGTH_LONG).show();
+                Toast.makeText(FirebaseQuizActivity.this, "Poor Internet Connection, please try again later", Toast.LENGTH_LONG).show();
 //                startActivity(new Intent(FirebaseQuizActivity.this, MainActivity.class));
                 finish();
 
 
             }
-        }){
+        }) {
             @Override
-            public Map<String,String> getHeaders(){
+            public Map<String, String> getHeaders() {
 
                 return winPaytmRequestHeader;
             }
@@ -1037,7 +797,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     }
 
 
-    private void showAnswer(JSONObject response){
+    private void showAnswer(JSONObject response) {
         try {
             Log.d("showAnswer", response.toString());
 
@@ -1056,7 +816,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             int isOptionDCorrect = jsonAnswerResponseList.getJSONObject(3).getInt("isCorrect");
 
 //            int totalResponses = numCorrectOptionA + numCorrectOptionB + numCorrectOptionC + numCorrectOptionD;
-            int totalResponses = numCorrectOptionA+numCorrectOptionB+numCorrectOptionC+numCorrectOptionD;
+            int totalResponses = numCorrectOptionA + numCorrectOptionB + numCorrectOptionC + numCorrectOptionD;
             option1PB.setProgressDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.answer_progress_bar_wrong));
             option2PB.setProgressDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.answer_progress_bar_wrong));
             option3PB.setProgressDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.answer_progress_bar_wrong));
@@ -1086,29 +846,24 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             startAnswerAnimation(option3PB, (numCorrectOptionC * 100) / totalResponses, 3000);
             option4PB.setVisibility(View.VISIBLE);
             startAnswerAnimation(option4PB, (numCorrectOptionD * 100) / totalResponses, 3000);
+        } catch (JSONException e) {
+            Log.d("FirebaseQuizActivity", e.toString());
         }
-        catch (JSONException e){
-            Log.d("FirebaseQuizActivity",e.toString());
-        }
-
-
-
-
-
 
 
     }
+
     public static boolean isRevivalShowing = false;
-    private void showRevival(){
+
+    private void showRevival() {
         isRevivalShowing = true;
-        Log.d("HEARTSSS", getIntent().getIntExtra("hearts",0)+" "+numberOfRevivals);
-        AppConstants.hearts = getIntent().getIntExtra("hearts",0);
+        Log.d("HEARTSSS", getIntent().getIntExtra("hearts", 0) + " " + numberOfRevivals);
+        AppConstants.hearts = getIntent().getIntExtra("hearts", 0);
 
 
-
-        if(AppConstants.hearts > 0 && numberOfRevivals<2){
-            Log.d("HEARTSSS", getIntent().getIntExtra("hearts",0)+" "+numberOfRevivals);
-            revivalpopup=new Dialog(FirebaseQuizActivity.this);
+        if (AppConstants.hearts > 0 && numberOfRevivals < 2) {
+            Log.d("HEARTSSS", getIntent().getIntExtra("hearts", 0) + " " + numberOfRevivals);
+            revivalpopup = new Dialog(FirebaseQuizActivity.this);
             revivalpopup.setContentView(R.layout.quiz_revival_xml);
             revivalpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             isRevivalShowing = false;
@@ -1124,7 +879,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             revivalYes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(view.getContext(),"Yes",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "Yes", Toast.LENGTH_SHORT).show();
                     QuizActivity.hasRevive = true;
                     numberOfRevivals++;
                     revivalpopup.dismiss();
@@ -1140,71 +895,66 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                     revivalpopup.dismiss();
                     quizOver = true;
 
-                    questionsSocket.disconnect();
-                    questionsSocket.close();
+
                     questionID = -1;
                     quizMusicPlayer.stop();
-                    if(countDownTimer != null) {
+                    if (countDownTimer != null) {
                         countDownTimer.cancel();
                         countDownTimer = null;
                     }
                     quizCorrectAnswerMusicPlayer.stop();
                     quizWrongAnswerMusicPlayer.stop();
-                    questionsSocket.close();
-                    try{
-                    losersPopup.show();}
-                    catch (Exception e){}
+                    try {
+                        losersPopup.show();
+                    } catch (Exception e) {
+                    }
                     questionsDBRef.removeEventListener(onNewQuestionsAdded);
                 }
             });
             try {
 
                 revivalpopup.show();
-            }
-            catch (Exception e){
+            } catch (Exception e) {
 
             }
-            startRevivalTimer(3,pb);
+            startRevivalTimer(3, pb);
             revivalProgressBar.setProgress(100);
-            revivalProgressBar.setProgressWithAnimation(0,6000);
+            revivalProgressBar.setProgressWithAnimation(0, 6000);
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
 
                     revivalpopup.dismiss();
-                    if(QuizActivity.hasRevive == true){
+                    if (QuizActivity.hasRevive == true) {
                         QuizActivity.hasRevive = false;
                         AppConstants.hearts -= 1;
-                        QuizActivity.numberOfRevivals +=1;
+                        QuizActivity.numberOfRevivals += 1;
                         SharedPreferences.Editor editor = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE).edit();
                         editor.putInt("coins", AppConstants.hearts);
                         editor.apply();
                         JSONObject quizObject = null;
                         JSONObject jsonObject = new JSONObject();
                         try {
-                            jsonObject.put("hearts",AppConstants.hearts);
-                            jsonObject.put("username",AppConstants.username+"_"+numberOfRevivals);
+                            jsonObject.put("hearts", AppConstants.hearts);
+                            jsonObject.put("username", AppConstants.username + "_" + numberOfRevivals);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                         //todo enter event name;
-                        questionsSocket.emit("hearts_updater",jsonObject);
-                    }
-                    else{
+                    } else {
                         quizOver = true;
-                        questionsSocket.close();
-                        try{
-                        losersPopup.show();}
-                        catch (Exception e){}
+                        try {
+                            losersPopup.show();
+                        } catch (Exception e) {
+                        }
                         removeEventListeners();
 
                     }
                 }
             }, 3000);
-        }
-        else{
-            Log.d("HEARTSSSLOST", getIntent().getIntExtra("hearts",0)+" "+numberOfRevivals);
-            losersPopup=new Dialog(FirebaseQuizActivity.this);
+        } else {
+            Log.d("HEARTSSSLOST", getIntent().getIntExtra("hearts", 0) + " " + numberOfRevivals);
+            losersPopup = new Dialog(FirebaseQuizActivity.this);
             losersPopup.setContentView(R.layout.quiz_loser_popup);
             losersPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             ImageView imageView = losersPopup.findViewById(R.id.close_loser_popup);
@@ -1223,7 +973,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                 public void onDismiss(DialogInterface dialogInterface) {
                     questionID = -1;
                     quizMusicPlayer.stop();
-                    if(countDownTimer != null) {
+                    if (countDownTimer != null) {
                         countDownTimer.cancel();
                         countDownTimer = null;
                     }
@@ -1231,35 +981,31 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                         removeEventListeners();
                         quizCorrectAnswerMusicPlayer.stop();
                         quizWrongAnswerMusicPlayer.stop();
-                        questionsSocket.close();
-                        questionsSocket.disconnect();
-//                        startActivity(new Intent(FirebaseQuizActivity.this, MainActivity.class));
-//                        finish();
                         finish();
-                    }
-                    catch(Exception e){
+                    } catch (Exception e) {
 //                        startActivity(new Intent(FirebaseQuizActivity.this, MainActivity.class));
                         finish();
-                        Log.d("QuizSocketActivity","SUm Catch Prob");
+                        Log.d("QuizSocketActivity", "SUm Catch Prob");
                     }
                 }
             });
             try {
                 losersPopup.show();
+            } catch (Exception e) {
             }
-            catch (Exception e){}
         }
     }
 
 
     private void startRevivalTimer(final int seconds, final ProgressBar pb) {
-        countDownTimer = new CountDownTimer(  seconds * 1000, 1) {
+        countDownTimer = new CountDownTimer(seconds * 1000, 1) {
             @Override
             public void onTick(long leftTimeInMilliseconds) {
                 long seconds = leftTimeInMilliseconds / 1000;
-                pb.setProgress((int)leftTimeInMilliseconds);
+                pb.setProgress((int) leftTimeInMilliseconds);
 //                textTimer.setText(String.format("%02d", seconds/60) + ":" + String.format("%02d", seconds%60));
             }
+
             @Override
             public void onFinish() {
 //
@@ -1269,13 +1015,12 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     }
 
 
-
-    private void startAnswerAnimation(ProgressBar mProgressBar, int percent, int duration){
-        Log.d("HEAR","PROGRESS BAR");
+    private void startAnswerAnimation(ProgressBar mProgressBar, int percent, int duration) {
+        Log.d("HEAR", "PROGRESS BAR");
         mProgressBar.setVisibility(View.VISIBLE);
 
         mProgressBar.setMax(100000);
-        ObjectAnimator progressAnimator = ObjectAnimator.ofInt(mProgressBar,"progress",0,percent*1000);
+        ObjectAnimator progressAnimator = ObjectAnimator.ofInt(mProgressBar, "progress", 0, percent * 1000);
         progressAnimator.setDuration(duration);
         progressAnimator.setInterpolator(new LinearInterpolator());
         progressAnimator.start();
