@@ -183,6 +183,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     private void removeEventListeners(){
         questionsDBRef.removeEventListener(onNewQuestionsAdded);
         playersDBRef.removeEventListener(numberOfPlayersActive);
+        answerStatsDBRef.removeEventListener(answerStats);
         if(playerQuizID != null) {
             playersDBRef.child(playerQuizID).setValue(null);
         }
@@ -217,6 +218,77 @@ public class FirebaseQuizActivity extends AppCompatActivity {
 //        waitingScreen.setVisibility(View.VISIBLE);
 //        Log.d("Value",)
         countDownTimer = null;
+
+        answerStats = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("ANSWERSTATSS","INSIDE ANSWERSTATS");
+
+                try {
+                    JSONObject response = new JSONObject();
+                    JSONArray optionsData = new JSONArray();
+
+                    int noOfSelectedOptions0 = (int)dataSnapshot.child("0").getChildrenCount();
+                    int noOfSelectedOptions1 = (int)dataSnapshot.child("1").getChildrenCount();
+                    int noOfSelectedOptions2 = (int)dataSnapshot.child("2").getChildrenCount();
+                    int noOfSelectedOptions3 = (int)dataSnapshot.child("3").getChildrenCount();
+
+                    int isCorrect0 = 0;
+                    int isCorrect1 = 0;
+                    int isCorrect2 = 0;
+                    int isCorrect3 = 0;
+
+                    if(correctOptionID == 0){
+                        isCorrect0 = 1;
+                    }
+                    if(correctOptionID == 1){
+                        isCorrect1 = 1;
+                    }
+                    if(correctOptionID == 2){
+                        isCorrect2 = 1;
+                    }
+                    if(correctOptionID == 3){
+                        isCorrect3 = 1;
+                    }
+                    JSONObject answerObject0 = new JSONObject();
+                    answerObject0.put("numResponses", noOfSelectedOptions0);
+                    answerObject0.put("isCorrect",isCorrect0);
+                    optionsData.put(answerObject0);
+
+                    JSONObject answerObject1 = new JSONObject();
+                    answerObject1.put("numResponses", noOfSelectedOptions1);
+                    answerObject1.put("isCorrect",isCorrect1);
+                    optionsData.put(answerObject1);
+
+                    JSONObject answerObject2 = new JSONObject();
+                    answerObject2.put("numResponses", noOfSelectedOptions2);
+                    answerObject2.put("isCorrect",isCorrect2);
+                    optionsData.put(answerObject2);
+
+                    JSONObject answerObject3 = new JSONObject();
+                    answerObject3.put("numResponses", noOfSelectedOptions3);
+                    answerObject3.put("isCorrect",isCorrect3);
+                    optionsData.put(answerObject3);
+
+
+                    response.put("optionsData", optionsData);
+                    showAnswer(response);
+                    answerStatsDBRef.removeEventListener(answerStats);
+                    Log.d("ANSWERSTATSS","COMPLETE ANSWERSTATS");
+
+
+                }
+                catch(Exception e){
+                    Log.e("answerSTatsFQA",e.toString());
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
 
 
         numberOfPlayersActive = new ValueEventListener() {
@@ -725,7 +797,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             public void onFinish() {
                 isTimerRunning = false;
                 textTimer.setText("STOP");
-
+                answerStatsDBRef.addValueEventListener(answerStats);
                 quizMusicPlayer.pause();
                         quizMusicPlayer.seekTo(0);
                         quizActivityAnswerIndicator.setVisibility(View.VISIBLE);
@@ -737,7 +809,10 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                                 Log.d("changequestion","calling change change question");
                                 if(questionID == 10) {
                                     FirebaseDatabase.getInstance().getReference().child("Winners").child(AppConstants.username).setValue(AppConstants.token);
-                                    quizWinPopup.show();
+                                    try {
+                                        quizWinPopup.show();
+                                    }
+                                    catch (Exception e){}
                                     removeEventListeners();
                                     Toast.makeText(FirebaseQuizActivity.this,"You won, write code now",Toast.LENGTH_SHORT).show();
                                     }
@@ -755,7 +830,10 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                         v.vibrate(500);
                     }
                     if (questionID >= 9) {
-                        losersPopup.show();
+                        try {
+                            losersPopup.show();
+                        }
+                        catch(Exception e){}
                         removeEventListeners();
                     } else {
                         if(!isRevivalShowing)
@@ -830,8 +908,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             countDownTimer = null;
         }
 
-        super.onDestroy();
-
+        finish();
     }
 
 
@@ -853,7 +930,9 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             Toast.makeText(this,"You  lol",Toast.LENGTH_LONG).show();
             questionsSocket.close();
             quizOver = true;
-            losersPopup.show();
+            try{
+            losersPopup.show();}
+            catch (Exception e){}
         }
         else{
 
@@ -957,6 +1036,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         winPaytmRequestQueue.add(sr);
     }
 
+
     private void showAnswer(JSONObject response){
         try {
             Log.d("showAnswer", response.toString());
@@ -976,7 +1056,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             int isOptionDCorrect = jsonAnswerResponseList.getJSONObject(3).getInt("isCorrect");
 
 //            int totalResponses = numCorrectOptionA + numCorrectOptionB + numCorrectOptionC + numCorrectOptionD;
-            int totalResponses = response.getInt("totalresponses");
+            int totalResponses = numCorrectOptionA+numCorrectOptionB+numCorrectOptionC+numCorrectOptionD;
             option1PB.setProgressDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.answer_progress_bar_wrong));
             option2PB.setProgressDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.answer_progress_bar_wrong));
             option3PB.setProgressDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.answer_progress_bar_wrong));
@@ -998,14 +1078,14 @@ public class FirebaseQuizActivity extends AppCompatActivity {
 
             Toast.makeText(FirebaseQuizActivity.this, "Showing Answers", Toast.LENGTH_SHORT).show();
             option1PB.setVisibility(View.VISIBLE);
-            startAnswerAnimation(option1PB, (numCorrectOptionA * 400) / totalResponses, 3000);
-            Log.d("percent", Integer.toString((numCorrectOptionA * 400) / totalResponses));
+            startAnswerAnimation(option1PB, (numCorrectOptionA * 100) / totalResponses, 3000);
+            Log.d("percent", Integer.toString((numCorrectOptionA * 100) / totalResponses));
             option2PB.setVisibility(View.VISIBLE);
-            startAnswerAnimation(option2PB, (numCorrectOptionB * 400) / totalResponses, 3000);
+            startAnswerAnimation(option2PB, (numCorrectOptionB * 100) / totalResponses, 3000);
             option3PB.setVisibility(View.VISIBLE);
-            startAnswerAnimation(option3PB, (numCorrectOptionC * 400) / totalResponses, 3000);
+            startAnswerAnimation(option3PB, (numCorrectOptionC * 100) / totalResponses, 3000);
             option4PB.setVisibility(View.VISIBLE);
-            startAnswerAnimation(option4PB, (numCorrectOptionD * 400) / totalResponses, 3000);
+            startAnswerAnimation(option4PB, (numCorrectOptionD * 100) / totalResponses, 3000);
         }
         catch (JSONException e){
             Log.d("FirebaseQuizActivity",e.toString());
@@ -1071,12 +1151,19 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                     quizCorrectAnswerMusicPlayer.stop();
                     quizWrongAnswerMusicPlayer.stop();
                     questionsSocket.close();
-                    losersPopup.show();
+                    try{
+                    losersPopup.show();}
+                    catch (Exception e){}
                     questionsDBRef.removeEventListener(onNewQuestionsAdded);
                 }
             });
+            try {
 
-            revivalpopup.show();
+                revivalpopup.show();
+            }
+            catch (Exception e){
+
+            }
             startRevivalTimer(3,pb);
             revivalProgressBar.setProgress(100);
             revivalProgressBar.setProgressWithAnimation(0,6000);
@@ -1106,7 +1193,9 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                     else{
                         quizOver = true;
                         questionsSocket.close();
-                        losersPopup.show();
+                        try{
+                        losersPopup.show();}
+                        catch (Exception e){}
                         removeEventListeners();
 
                     }
@@ -1155,7 +1244,10 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                     }
                 }
             });
-            losersPopup.show();
+            try {
+                losersPopup.show();
+            }
+            catch (Exception e){}
         }
     }
 

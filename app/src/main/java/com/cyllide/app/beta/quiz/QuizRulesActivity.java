@@ -292,6 +292,7 @@ public class QuizRulesActivity extends AppCompatActivity {
             quizSwitcher.putExtra("quizID", quizID);
             quizSwitcher.putExtra("hearts", Integer.parseInt(lives));
             startActivity(quizSwitcher);
+            finish();
         }
     }
 
