@@ -193,6 +193,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     DatabaseReference questionsDBRef;
     DatabaseReference playersDBRef;
     DatabaseReference answerStatsDBRef;
+    DatabaseReference revivalDBRef;
     ValueEventListener onNewQuestionsAdded;
     ValueEventListener numberOfPlayersActive;
     ValueEventListener answerStats;
@@ -201,10 +202,15 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_quiz);
+
+
+
         quizID = getIntent().getStringExtra("quizID");
         questionsDBRef = FirebaseDatabase.getInstance().getReference().child("questions");
         playersDBRef = FirebaseDatabase.getInstance().getReference().child("ActivePlayers");
         answerStatsDBRef = FirebaseDatabase.getInstance().getReference().child("AnswerStats");
+        revivalDBRef = FirebaseDatabase.getInstance().getReference().child("Revivals");
         playerQuizID = playersDBRef.push().getKey();
         if (playerQuizID != null) {
             playersDBRef.child(playerQuizID).setValue("Playing");
@@ -306,11 +312,13 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         onNewQuestionsAdded = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(quizOver){
+                   finish();
+                }
                 if (isTimerRunning) {
                     return;
                 }
                 isTimerRunning = true;
-                waitingScreen.setVisibility(View.GONE);
 
 
                 ArrayList<String> answerList = new ArrayList<>();
@@ -321,6 +329,8 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                     question = questionObject.child("theQuestion").getValue(String.class);
                     answerList = new ArrayList<>();
                     for (int i = 0; i < 4; i++) {
+                        waitingScreen.setVisibility(View.GONE);
+
                         try {
                             if (questionObject.child("answerOptions").child(i + "").child("isCorrect").getValue(Integer.class) == 1) {
                                 correctOptionID = i;
@@ -337,22 +347,22 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                     return;
                 }
                 questionID++;
-                //TODO UNCOMMENT IT LATER
-//                if(currentQuestionNumber == questionID) {
-//                    changeQuestion(questionID, question, answerList);
-//                }
-//                else{
-//                    //DISPLAY YOU HAVE MISSED THE QUIZ
-//                }
+                if(currentQuestionNumber == questionID) {
+                    changeQuestion(questionID, question, answerList);
+                }
+                else{
+                    //DISPLAY YOU HAVE MISSED THE QUIZ
+                }
 
-                //TODO COmment it later
-                changeQuestion(questionID, question, answerList);
-
+//                //TODO COmment it later
+//                changeQuestion(questionID, question, answerList);
+//
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                finish();
 
             }
         };
@@ -368,7 +378,6 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         quizWrongAnswerMusicPlayer = MediaPlayer.create(getApplicationContext(), R.raw.wrong_answer_sound);
 
 
-        setContentView(R.layout.activity_quiz);
         waitingScreen = findViewById(R.id.waiting_layout);
         revivalpopup = new Dialog(FirebaseQuizActivity.this);
         revivalpopup.setContentView(R.layout.quiz_revival_xml);
@@ -578,8 +587,25 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                     Log.d("questionID", Integer.toString(questionID));
                     Log.d("changequestion", "calling change change question");
                     if (questionID == 10) {
-                        FirebaseDatabase.getInstance().getReference().child("Winners").child(AppConstants.username).setValue(AppConstants.token);
+                        FirebaseDatabase.getInstance().getReference().child("Winners").push().setValue(AppConstants.username);
                         try {
+                            continueButtonPopup = quizWinPopup.findViewById(R.id.continue_txtview);
+                            continueButtonPopup.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    quizWinPopup.dismiss();
+//                    startActivity(new Intent(FirebaseQuizActivity.this,MainActivity.class));
+                                    finish();
+                                }
+                            });
+
+                            quizWinPopup.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                @Override
+                                public void onDismiss(DialogInterface dialogInterface) {
+                                    finish();
+                                }
+                            });
+
                             quizWinPopup.show();
                         } catch (Exception e) {
                         }
@@ -928,23 +954,20 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                     if (QuizActivity.hasRevive == true) {
                         QuizActivity.hasRevive = false;
                         AppConstants.hearts -= 1;
+
                         QuizActivity.numberOfRevivals += 1;
+                        revivalDBRef.child(AppConstants.username).setValue(AppConstants.hearts);
                         SharedPreferences.Editor editor = getSharedPreferences("AUTHENTICATION", MODE_PRIVATE).edit();
-                        editor.putInt("coins", AppConstants.hearts);
+                        editor.putInt("hearts", AppConstants.hearts);
                         editor.apply();
-                        JSONObject quizObject = null;
-                        JSONObject jsonObject = new JSONObject();
-                        try {
-                            jsonObject.put("hearts", AppConstants.hearts);
-                            jsonObject.put("username", AppConstants.username + "_" + numberOfRevivals);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        //todo enter event name;
+
                     } else {
+                        removeEventListeners();
                         quizOver = true;
                         try {
                             losersPopup.show();
+                            removeEventListeners();
+
                         } catch (Exception e) {
                         }
                         removeEventListeners();
