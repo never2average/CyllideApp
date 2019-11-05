@@ -63,20 +63,21 @@ public class StoriesPageActivity extends AppCompatActivity {
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, requestEndpoint, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("NewsPageActivity",response);
-                        Intent intent = new Intent(StoriesPageActivity.this, ArticlesMainActivity.class);
-                        startActivity(intent);
-                        finish();
+//                        Log.d("NewsPageActivity",response);
+//                        Intent intent = new Intent(StoriesPageActivity.this, ArticlesMainActivity.class);
+//                        startActivity(intent);
+//                        finish();
                         onBackPressed();
 
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("NewsPageActivity?", error.toString());
-                        Intent intent = new Intent(StoriesPageActivity.this, ArticlesMainActivity.class);
-                        startActivity(intent);
-                        finish();
+//                        Log.d("NewsPageActivity?", error.toString());
+//                        Intent intent = new Intent(StoriesPageActivity.this, ArticlesMainActivity.class);
+//                        startActivity(intent);
+//                        finish();
+                        onBackPressed();
                     }
                 }) {
                     @Override

@@ -102,8 +102,8 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
                         tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
 
-        viewPager.addOnPageChangeListener(new
-                TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+//        viewPager.addOnPageChangeListener(new
+//                TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -119,6 +119,8 @@ public class PortfolioGameDetailedChartActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                viewPager.measure(View.MeasureSpec.getSize(View.MeasureSpec.EXACTLY),View.MeasureSpec.getSize(View.MeasureSpec.EXACTLY));
 
             }
 

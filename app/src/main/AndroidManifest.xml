@@ -131,6 +131,9 @@
         <activity
             android:name="com.cyllide.app.beta.quiz.SocketQuizActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.cyllide.app.beta.quiz.FirebaseQuizActivity"
+            android:screenOrientation="portrait" />
 
         <receiver android:name="com.cyllide.app.beta.background.services.QuizAlarmManager" />
         <receiver

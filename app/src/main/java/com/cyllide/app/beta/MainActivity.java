@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
                     AppConstants.profilePic = jsonObject.getString("profilePicURL");
                     AppConstants.userLevel = jsonObject.getString("level");
                     AppConstants.minWithdrawable = jsonObject.getInt("min_withdrawable");
+                    AppConstants.hearts = jsonObject.getInt("hearts");
 
 
                     if(versionCode> minVersionCode){

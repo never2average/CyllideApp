@@ -45,6 +45,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.net.URISyntaxException;
 import java.text.DecimalFormat;
+import java.util.Calendar;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -123,7 +124,6 @@ public class SocketQuizActivity extends AppCompatActivity {
         option4CV.setBackgroundDrawable(ContextCompat.getDrawable(SocketQuizActivity.this,R.drawable.drawable_activity_quiz_unselected_option));
 
 
-
         optionA.setTextColor(ContextCompat.getColor(SocketQuizActivity.this,R.color.colorPrimary));
         optionB.setTextColor(ContextCompat.getColor(SocketQuizActivity.this,R.color.colorPrimary));
         optionC.setTextColor(ContextCompat.getColor(SocketQuizActivity.this,R.color.colorPrimary));
@@ -179,6 +179,7 @@ public class SocketQuizActivity extends AppCompatActivity {
         Emitter.Listener winnerMoney = new Emitter.Listener() {
             @Override
             public void call(Object... args) {
+                Log.d("QUIZCHUD","WinnerMoney at: "+ Calendar.getInstance().getTime()+"");
                 JSONObject data = new JSONObject();
                 try {
                     data.put("token",AppConstants.username);
@@ -216,6 +217,9 @@ public class SocketQuizActivity extends AppCompatActivity {
                 }
                 Log.d("HEAAARR",args.toString());
 
+                Log.d("QUIZCHUD","Winnermoney Exit at: "+ Calendar.getInstance().getTime()+"");
+
+
             }
         };
 
@@ -224,6 +228,7 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void call(Object... args) {
 //                waitingScreen.setVisibility(View.GONE);
+                Log.d("QUIZCHUD","numActivePlayers at: "+ Calendar.getInstance().getTime()+"");
 
                 try {
                     viewersTV.setText(Integer.toString(((JSONObject)args[1]).getInt("value")));
@@ -238,6 +243,8 @@ public class SocketQuizActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                Log.d("QUIZCHUD","numActivePlayers Exit at: "+ Calendar.getInstance().getTime()+"");
+
 
             }
         };
@@ -249,6 +256,8 @@ public class SocketQuizActivity extends AppCompatActivity {
             public void call(Object... args) {
                 String result = "";
 //                isCorrect = false;
+                Log.d("QUIZCHUD","amICorrect at: "+ Calendar.getInstance().getTime()+"");
+
                 try {
                     result = ((JSONObject)args[1]).getString("myresp");
                 } catch (JSONException e) {
@@ -266,6 +275,8 @@ public class SocketQuizActivity extends AppCompatActivity {
                     isCorrect = true;
                 }
                 Log.d("QuizActivity", result);
+                Log.d("QUIZCHUD","amICorrect Exit at: "+ Calendar.getInstance().getTime()+"");
+
             }
         };
 
@@ -276,6 +287,8 @@ public class SocketQuizActivity extends AppCompatActivity {
                 SocketQuizActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        Log.d("QUIZCHUD","NewQuestion at: "+ Calendar.getInstance().getTime()+"");
+
                         Log.d("SocketQuizActivity",args.toString());
                         JSONObject data;
                         try {
@@ -288,6 +301,8 @@ public class SocketQuizActivity extends AppCompatActivity {
                         if(!quizOver) {
                             changeQuestion(data);
                         }
+                        Log.d("QUIZCHUD","NewQuestion Exit at: "+ Calendar.getInstance().getTime()+"");
+
 
                     }
                 });
@@ -297,6 +312,8 @@ public class SocketQuizActivity extends AppCompatActivity {
         Emitter.Listener onResponseFromServer = new Emitter.Listener() {
             @Override
             public void call(final Object... args) {
+                Log.d("QUIZCHUD","QuestionAnswer at: "+ Calendar.getInstance().getTime()+"");
+
                 SocketQuizActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -336,7 +353,10 @@ public class SocketQuizActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                        }
+                        Log.d("QUIZCHUD","QuestionAnswer Exit at: "+ Calendar.getInstance().getTime()+"");
+
+
+                    }
 
 
 
@@ -385,7 +405,7 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 losersPopup.dismiss();
-                startActivity(new Intent(SocketQuizActivity.this,MainActivity.class));
+//                startActivity(new Intent(SocketQuizActivity.this,MainActivity.class));
                 finish();
             }
         });
@@ -404,11 +424,11 @@ public class SocketQuizActivity extends AppCompatActivity {
                     quizWrongAnswerMusicPlayer.stop();
                     questionsSocket.close();
                     questionsSocket.disconnect();
-                    startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
+//                    startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
                     finish();
                 }
                 catch(Exception e){
-                    startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
+//                    startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
                     finish();
                     Log.d("QuizSocketActivity","Sum Catch Prob");
                 }
@@ -558,7 +578,7 @@ public class SocketQuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 confirmExitPopup.dismiss();
-                startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
+//                startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
                 finish();
                 questionID = 0;
                 quizMusicPlayer.stop();
@@ -693,6 +713,17 @@ public class SocketQuizActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
 
+        super.onDestroy();
+        questionID = -1;
+        quizMusicPlayer.stop();
+        if(countDownTimer != null) {
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
+        quizCorrectAnswerMusicPlayer.stop();
+        quizWrongAnswerMusicPlayer.stop();
+        questionsSocket.close();
+
         super.onPause();
     }
 
@@ -739,7 +770,7 @@ public class SocketQuizActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     quizWinPopup.dismiss();
-                    startActivity(new Intent(SocketQuizActivity.this,MainActivity.class));
+//                    startActivity(new Intent(SocketQuizActivity.this,MainActivity.class));
                     finish();
                 }
             });
@@ -804,7 +835,7 @@ public class SocketQuizActivity extends AppCompatActivity {
 
                 Log.d("QuizACTIVITY", mConnectionClassManager.getCurrentBandwidthQuality().toString());
                 Toast.makeText(SocketQuizActivity.this,"Poor Internet Connection, please try again later",Toast.LENGTH_LONG).show();
-                startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
+//                startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
                 finish();
 
 
@@ -925,6 +956,15 @@ public static boolean isRevivalShowing = false;
 
                     questionsSocket.disconnect();
                     questionsSocket.close();
+                    questionID = -1;
+                    quizMusicPlayer.stop();
+                    if(countDownTimer != null) {
+                        countDownTimer.cancel();
+                        countDownTimer = null;
+                    }
+                    quizCorrectAnswerMusicPlayer.stop();
+                    quizWrongAnswerMusicPlayer.stop();
+                    questionsSocket.close();
                     losersPopup.show();
                 }
             });
@@ -976,7 +1016,7 @@ public static boolean isRevivalShowing = false;
                 @Override
                 public void onClick(View v) {
                     losersPopup.dismiss();
-                    startActivity(new Intent(SocketQuizActivity.this,MainActivity.class));
+//                    startActivity(new Intent(SocketQuizActivity.this,MainActivity.class));
                     finish();
                 }
             });
@@ -995,11 +1035,12 @@ public static boolean isRevivalShowing = false;
                         quizWrongAnswerMusicPlayer.stop();
                         questionsSocket.close();
                         questionsSocket.disconnect();
-                        startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
+//                        startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
+//                        finish();
                         finish();
                     }
                     catch(Exception e){
-                        startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
+//                        startActivity(new Intent(SocketQuizActivity.this, MainActivity.class));
                         finish();
                         Log.d("QuizSocketActivity","SUm Catch Prob");
                     }

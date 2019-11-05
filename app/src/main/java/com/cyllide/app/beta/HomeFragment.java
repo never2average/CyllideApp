@@ -119,15 +119,18 @@ public class HomeFragment extends Fragment {
         }
 
         level=AppConstants.userLevel;
-        if(level.equals("Gold")){
-            profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_gold_medal));
-        }else{
-            if(level.equals("Silver")){
-                profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_silver_medal));
-            }else{
-                profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_bronze_medal));
+        try {
+            if (level.equals("Gold")) {
+                profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_gold_medal));
+            } else {
+                if (level.equals("Silver")) {
+                    profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_silver_medal));
+                } else {
+                    profileMedal.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_bronze_medal));
+                }
             }
         }
+        catch (Exception e){}
 
 
 
