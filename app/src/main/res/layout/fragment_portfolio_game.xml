@@ -11,6 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="9">
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/loading"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:src="@drawable/web_view_loading"
+            android:visibility="visible"/>
         <androidx.recyclerview.widget.RecyclerView
             android:visibility="visible"
             android:layout_width="match_parent"

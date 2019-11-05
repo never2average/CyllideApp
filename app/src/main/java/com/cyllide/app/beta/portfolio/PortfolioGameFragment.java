@@ -72,6 +72,7 @@ public class PortfolioGameFragment extends Fragment {
     TextView noCards;
     LinearLayout rootView;
     boolean isLoading = false;
+    GifImageView loading;
     LinearLayoutManager linearLayoutManager1;
 
     public PortfolioGameFragment(Context context) {
@@ -88,6 +89,7 @@ public class PortfolioGameFragment extends Fragment {
         recyclerView = view.findViewById(R.id.game_rv);
         LinearSnapHelper linearSnapHelper = new SnapHelperOneByOne();
         linearSnapHelper.attachToRecyclerView(recyclerView);
+        loading = view.findViewById(R.id.loading);
 //        loading = view.findViewById(R.id.loading_screen);
         noCards = view.findViewById(R.id.no_cards_tv);
         rootView = view.findViewById(R.id.root_layout);
@@ -270,6 +272,7 @@ public class PortfolioGameFragment extends Fragment {
             public void onResponse(String response) {
                 Log.d("RESPONSE", response);
                 try {
+                    loading.setVisibility(View.GONE);
                     if(portfolioGameCardModels.size()>= i*10+1){
                         Log.d("IIIII","Exiting here as page"+i+" already exists");
                         return;

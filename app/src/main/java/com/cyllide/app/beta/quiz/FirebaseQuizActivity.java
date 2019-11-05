@@ -932,6 +932,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                     quizWrongAnswerMusicPlayer.stop();
                     try {
                         losersPopup.show();
+                        quit();
                     } catch (Exception e) {
                     }
                     questionsDBRef.removeEventListener(onNewQuestionsAdded);
@@ -962,11 +963,14 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                         editor.apply();
 
                     } else {
+
                         removeEventListeners();
                         quizOver = true;
                         try {
                             losersPopup.show();
                             removeEventListeners();
+                            quit();
+
 
                         } catch (Exception e) {
                         }
@@ -1017,6 +1021,17 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             } catch (Exception e) {
             }
         }
+    }
+    void quit(){
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+
+                losersPopup.dismiss();
+                finish();
+            }
+        }, 3000);
+
     }
 
 
