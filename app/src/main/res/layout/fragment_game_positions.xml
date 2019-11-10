@@ -2,6 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Stocks to show"
+        android:visibility="gone"
+        android:id="@+id/no_stocks"
+        android:layout_centerInParent="true"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/portfoliopositionsrv"
@@ -14,9 +21,10 @@
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/loading_screen"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/d1"/>
+        android:layout_centerInParent="true"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/web_view_loading"/>
 
 
     <LinearLayout
@@ -26,6 +34,7 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true">
         <TextView
+            android:layout_margin="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TOTAL"
@@ -36,7 +45,7 @@
             android:layout_height="wrap_content"
             android:text="2000"
             android:id="@+id/total_value"
-            android:layout_margin="@dimen/default_background_stroke_width"
+            android:layout_margin="8dp"
             android:textAlignment="textEnd"
             android:layout_gravity="end"/>
 

@@ -36,7 +36,19 @@
             android:gravity="center"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
-            android:text="Invite your friends to a quiz and gain 3 hearts per successful invitation"/>
+            android:text="Invite your friends to a quiz and gain "/>
+        <TextView
+            android:textColor="@color/red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="31sp"
+            android:layout_gravity="center"
+            android:text="❤❤❤"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="per referral"/>
 
     </LinearLayout>
 

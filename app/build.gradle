@@ -102,6 +102,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:16.0.2'
     implementation 'com.google.firebase:firebase-auth:16.0.3'
     implementation 'com.firebaseui:firebase-ui-database:4.1.0'
+    implementation 'com.facebook.soloader:soloader:0.6.0+'
 
 
 

@@ -41,7 +41,7 @@ public class PortfolioGamePositionsFragment extends Fragment {
     private ImageView backBtn;
     Map<String, String> positionsHeader = new HashMap<>();
     RequestQueue positionsQueue;
-    TextView totalTV;
+    TextView totalTV, noStocksToShowTV;
     GifImageView loading;
     double totalValue;
 
@@ -58,6 +58,7 @@ public class PortfolioGamePositionsFragment extends Fragment {
         loading = view.findViewById(R.id.loading_screen);
         loading.setVisibility(View.VISIBLE);
         totalTV = view.findViewById(R.id.total_value);
+        noStocksToShowTV = view.findViewById(R.id.no_stocks);
         setRetainInstance(false);
 
         return view;
@@ -137,6 +138,12 @@ public class PortfolioGamePositionsFragment extends Fragment {
                     loading.setVisibility(View.GONE);
                     totalTV.setText(String.format("%.2f",totalValue));
                     totalTV.setTextColor(ContextCompat.getColor(context,R.color.red));
+                    if(positionsModels.size()==0){
+                        noStocksToShowTV.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        noStocksToShowTV.setVisibility(View.GONE);
+                    }
 
                     if(totalValue>0){
                         totalTV.setTextColor(ContextCompat.getColor(context,R.color.green));

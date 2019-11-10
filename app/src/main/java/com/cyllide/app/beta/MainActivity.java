@@ -31,6 +31,7 @@ import com.cyllide.app.beta.faq_view.FAQActivity;
 
 
 import com.cyllide.app.beta.portfolio.VersionControlActivity;
+import com.getkeepsafe.relinker.ReLinker;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.material.snackbar.Snackbar;
 import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker;
@@ -127,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+
 
         super.onCreate(savedInstanceState);
         try{
