@@ -113,7 +113,9 @@
                         android:gravity="center"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:id="@+id/moneywoncontainer"
+                        android:clickable="true">
                         <TextView
                             android:textSize="@dimen/suggestion_body_text_size"
                             android:gravity="center_vertical|end"

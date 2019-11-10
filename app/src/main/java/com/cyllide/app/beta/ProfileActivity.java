@@ -3,6 +3,7 @@ package com.cyllide.app.beta;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -55,6 +56,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -101,6 +103,7 @@ public class ProfileActivity extends AppCompatActivity {
     String viewUsername;
 
     Uri photoURI;
+    final int GALLERYIMAGERQCODE=199;
 
 
     @Override
@@ -130,6 +133,21 @@ public class ProfileActivity extends AppCompatActivity {
         profilePic = findViewById(R.id.profile_pic_container);
         profileMedal = findViewById(R.id.profile_medal);
 
+        findViewById(R.id.moneywoncontainer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+        AlertDialog alert=  new AlertDialog.Builder(ProfileActivity.this)
+                        .setMessage("Minimum 20 rupees required for withdrawl")
+                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        }).create();
+        alert.show();
+
+            }
+        });
         quizWinPopup = new Dialog(ProfileActivity.this);
         quizWinPopup.setContentView(R.layout.money_dialog);
         quizWinPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -177,22 +195,31 @@ public class ProfileActivity extends AppCompatActivity {
                 profileMedal.setImageDrawable(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_bronze_medal));
             }
         }
+        ColorGenerator generator = ColorGenerator.MATERIAL;
+        int color = generator.getColor(AppConstants.username);
+        TextDrawable drawable = TextDrawable.builder()
+                .beginConfig()
+                .width(100)
+                .height(100)
+                .endConfig()
+                .buildRect(Character.toString(AppConstants.username.charAt(0)).toUpperCase(), color);
+
         if (sharedPreferences.getString("profileUri", null) == null) {
-            ColorGenerator generator = ColorGenerator.MATERIAL;
-            int color = generator.getColor(AppConstants.username);
-            TextDrawable drawable = TextDrawable.builder()
-                    .beginConfig()
-                    .width(100)
-                    .height(100)
-                    .endConfig()
-                    .buildRect(Character.toString(AppConstants.username.charAt(0)).toUpperCase(), color);
+
             profilePic.setImageDrawable(drawable);
 
         } else {
             String ur = sharedPreferences.getString("profileUri", null);
             Uri uri = Uri.parse(ur);
             Log.d("imageuri", ur);
-            Glide.with(ProfileActivity.this).load(uri).into(profilePic);
+            Glide.with(ProfileActivity.this).load(uri)
+
+                    .apply(new RequestOptions()
+                            .placeholder(drawable)
+                            .fitCenter())
+
+                     .into(profilePic);
+
 
 
         }
@@ -201,7 +228,9 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dispatchTakePictureIntent();
-
+             Intent chooseImage =new Intent(Intent.ACTION_PICK);
+             chooseImage.setType("image/*");
+             startActivityForResult(chooseImage,GALLERYIMAGERQCODE);
             }
         });
 
@@ -372,17 +401,17 @@ public class ProfileActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+        if (requestCode == GALLERYIMAGERQCODE&& resultCode == RESULT_OK) {
 
-
-            UCrop.of(photoURI, photoURI)
+            UCrop.of(data.getData(), photoURI)
                     .start(ProfileActivity.this);
         }
 
         if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
             final Uri resultUri = UCrop.getOutput(data);
             Glide.with(ProfileActivity.this).load(photoURI).into(profilePic);
-            targetUri = photoURI;
+            //targetUri = photoURI;
+            targetUri = resultUri;
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("profileUri", targetUri.toString());
@@ -541,8 +570,8 @@ public class ProfileActivity extends AppCompatActivity {
                 photoURI = FileProvider.getUriForFile(this,
                         "com.cyllide.app.beta.android.fileprovider",
                         photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                //startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
         }
     }
