@@ -133,21 +133,7 @@ public class ProfileActivity extends AppCompatActivity {
         profilePic = findViewById(R.id.profile_pic_container);
         profileMedal = findViewById(R.id.profile_medal);
 
-        findViewById(R.id.moneywoncontainer).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-        AlertDialog alert=  new AlertDialog.Builder(ProfileActivity.this)
-                        .setMessage("Minimum 20 rupees required for withdrawl")
-                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        }).create();
-        alert.show();
 
-            }
-        });
         quizWinPopup = new Dialog(ProfileActivity.this);
         quizWinPopup.setContentView(R.layout.money_dialog);
         quizWinPopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -299,7 +285,8 @@ public class ProfileActivity extends AppCompatActivity {
                     }
 
 
-                    if(Integer.parseInt(jsonResponse.getString("money_won"))>=20){
+                    if(Integer.parseInt(jsonResponse.getString("money_won"))>=20)
+                    {
                         money.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.green));
                         findViewById(R.id.money_ic).setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -350,6 +337,18 @@ public class ProfileActivity extends AppCompatActivity {
 
                             }
                         });
+                    } else {
+                        AlertDialog alert=  new AlertDialog.Builder(ProfileActivity.this)
+                                .setMessage("Minimum 20 rupees required for withdrawl")
+                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.cancel();
+                                    }
+                                }).create();
+                        alert.show();
+
+
                     }
 
 
