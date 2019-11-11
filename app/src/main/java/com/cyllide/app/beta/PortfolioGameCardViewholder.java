@@ -2,10 +2,12 @@ package com.cyllide.app.beta;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,6 +53,7 @@ public class PortfolioGameCardViewholder extends RecyclerView.ViewHolder {
 private LineChart lineChart;
     private ImageView infoButton;
     private int lastIndex;
+    RelativeLayout relativeLayout;
 
 
 
@@ -68,6 +71,7 @@ private LineChart lineChart;
             ticker = itemView.findViewById(R.id.ticker_title);
             infoButton = itemView.findViewById(R.id.game_card_info_button);
             context = itemView.getContext();
+            relativeLayout = itemView.findViewById(R.id.relative_layout);
             lineChart = itemView.findViewById(R.id.portfolio_game_home_chart);
         }
         catch (Exception e){}
@@ -80,6 +84,13 @@ private LineChart lineChart;
     public void populate(final PortfolioGameCardModel model){
         this.model = model;
         Log.d("HERE",model.getTicker());
+        if(model.isBought()){
+            relativeLayout.setBackgroundColor(Color.parseColor("#d3d3d3"));
+            //TODO: Remove Hardcoded Color
+        }
+        else{
+            relativeLayout.setBackgroundColor(Color.WHITE);
+        }
 
         companyIndustry.setText(model.getCompanyIndustry());
         companySector.setText(model.getCompanySector());
