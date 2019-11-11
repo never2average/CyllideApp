@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.ArrayMap;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ import com.cyllide.app.beta.stories.SnapHelperOneByOne;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -162,7 +164,7 @@ public class PortfolioGameFragment extends Fragment {
                     return;
 
                 }
-                sendSwipeCard(portfolioGameCardModels.get(position),100);
+                sendSwipeCard(portfolioGameCardModels.get(position),100, position);
 
                 cardStack.swipeTopViewToRight();
 
@@ -302,6 +304,11 @@ public class PortfolioGameFragment extends Fragment {
 
                         PortfolioGameCardModel model = new PortfolioGameCardModel();
                         model.setTicker(key);
+                        model.setBought(false);
+                        if(tickers.contains(model.getTicker()));
+                        {
+                            model.setBought(true);
+                        }
                         model.setCompanySector(detailsObject.getJSONObject(key).getString("Sector"));
                         model.setCompanyIndustry(detailsObject.getJSONObject(key).getString("Industry"));
                         model.setPreviousClose(summaryObject.getJSONObject(key).getString("Previous close"));
@@ -373,7 +380,7 @@ public class PortfolioGameFragment extends Fragment {
     RequestQueue requestQueue;
     Map<String, String> getCardsHeader = new HashMap<>();
 
-    private void sendSwipeCard(PortfolioGameCardModel portfolioGameCardModel, int qty) {
+    private void sendSwipeCard(PortfolioGameCardModel portfolioGameCardModel, int qty, final int pos) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("ticker",portfolioGameCardModel.getTicker());
@@ -399,6 +406,9 @@ public class PortfolioGameFragment extends Fragment {
                     cardStack.resetStack();
                 }
                 else{
+                    portfolioGameCardModels.get(pos).setBought(true);
+                    rvAdapter.notifyDataSetChanged();
+
                     adapter = new PortfolioGameCardAdapter(portfolioGameCardModels, context);
                     cardStack.setAdapter(adapter);
 
@@ -422,6 +432,43 @@ public class PortfolioGameFragment extends Fragment {
 
 
 
+    }
+    ArrayMap<String,String> positionsHeader;
+    RequestQueue positionsQueue;
+    ArrayList<String> tickers;
+
+    void getPositionsVolley(final JSONObject ltp) {
+        positionsHeader = new ArrayMap<>();
+        String url = context.getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
+        positionsQueue = Volley.newRequestQueue(context);
+        positionsHeader.put("token", AppConstants.token);
+        tickers = new ArrayList<>();
+        StringRequest positionRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("DONE", response);
+                try {
+                    JSONArray responseList = (new JSONObject(response).getJSONArray("data"));
+                    for(int i = 0; i<responseList.length();i++){
+                       tickers.add(responseList.getJSONObject(i).getString("ticker"));
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders(){
+                return positionsHeader;
+            }
+        };
+        positionsQueue.add(positionRequest);
     }
 
     public void showAppTour(){

@@ -2,6 +2,15 @@ package com.cyllide.app.beta;
 
 public class PortfolioGameCardModel {
     String companySector,companyIndustry,peRatio,previousClose,open,ask,marketCap,ticker;
+    boolean isBought;
+
+    public boolean isBought() {
+        return isBought;
+    }
+
+    public void setBought(boolean bought) {
+        isBought = bought;
+    }
 
     public String getCompanySector() {
         return companySector;
