@@ -58,6 +58,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/progress_rl"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/margin"
@@ -411,6 +412,7 @@
                 android:layout_height="50dp"
                 android:src="@drawable/cross_icon" />
             <TextView
+                android:visibility="gone"
                 android:layout_below="@+id/profile_activity_coins_rl"
                 android:layout_marginTop="@dimen/default_stroke_width"
                 android:id="@+id/accuracy_tv"

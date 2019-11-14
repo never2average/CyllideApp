@@ -147,7 +147,9 @@ public class QuizRulesActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                try{
+                onBackPressed();}
+                catch (Exception e){}
             }
         });
 
@@ -233,7 +235,9 @@ public class QuizRulesActivity extends AppCompatActivity {
 //                        Snackbar snackbar = Snackbar
 //                                .make(findViewById(R.id.root_layout), "No Quizzes Available", Snackbar.LENGTH_LONG);
                         Toast.makeText(getBaseContext(),"No Quizzes Available right now!",Toast.LENGTH_SHORT).show();
-                        onBackPressed();
+                        try{
+                        onBackPressed();}
+                        catch (Exception e2){}
                     }
 
 

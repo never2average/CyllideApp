@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -194,7 +195,7 @@ public class PortfolioGameFragment extends Fragment {
         cardStack.forceLayout();
         cardStack.invalidate();
         cardStack.refreshDrawableState();
-
+        getPositionsVolley();
 
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
@@ -305,9 +306,17 @@ public class PortfolioGameFragment extends Fragment {
                         PortfolioGameCardModel model = new PortfolioGameCardModel();
                         model.setTicker(key);
                         model.setBought(false);
-                        if(tickers.contains(model.getTicker()));
+                        Log.d("CARDSTYPE:","TRUEEE");
+
+                        if(tickers.contains(model.getTicker()))
                         {
+                            Toast.makeText(getContext(),"LOOOL",Toast.LENGTH_SHORT).show();
+                            Log.d("CARDSTYPE:","TRUEEE");
                             model.setBought(true);
+                        }
+                        else{
+                            Toast.makeText(getContext(),"LOOOLNOOOO",Toast.LENGTH_SHORT).show();
+
                         }
                         model.setCompanySector(detailsObject.getJSONObject(key).getString("Sector"));
                         model.setCompanyIndustry(detailsObject.getJSONObject(key).getString("Industry"));
@@ -435,9 +444,9 @@ public class PortfolioGameFragment extends Fragment {
     }
     ArrayMap<String,String> positionsHeader;
     RequestQueue positionsQueue;
-    ArrayList<String> tickers;
+    ArrayList<String> tickers = new ArrayList<>();
 
-    void getPositionsVolley(final JSONObject ltp) {
+    void getPositionsVolley() {
         positionsHeader = new ArrayMap<>();
         String url = context.getResources().getString(R.string.apiBaseURL)+"portfolios/positionlist";
         positionsQueue = Volley.newRequestQueue(context);
