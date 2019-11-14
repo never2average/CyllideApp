@@ -207,6 +207,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
 
 
         quizID = getIntent().getStringExtra("quizID");
+        AppConstants.hearts = getIntent().getIntExtra("hearts", 0);
         questionsDBRef = FirebaseDatabase.getInstance().getReference().child("questions");
         playersDBRef = FirebaseDatabase.getInstance().getReference().child("ActivePlayers");
         answerStatsDBRef = FirebaseDatabase.getInstance().getReference().child("AnswerStats");
@@ -628,6 +629,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                     if (questionID >= 9) {
                         try {
                             losersPopup.show();
+                            quizOver = true;
                         } catch (Exception e) {
                         }
                         removeEventListeners();
@@ -884,8 +886,6 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     private void showRevival() {
         isRevivalShowing = true;
         Log.d("HEARTSSS", getIntent().getIntExtra("hearts", 0) + " " + numberOfRevivals);
-        AppConstants.hearts = getIntent().getIntExtra("hearts", 0);
-
 
         if (AppConstants.hearts > 0 && numberOfRevivals < 2) {
             Log.d("HEARTSSS", getIntent().getIntExtra("hearts", 0) + " " + numberOfRevivals);
@@ -1019,6 +1019,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             });
             try {
                 losersPopup.show();
+                quizOver = true;
             } catch (Exception e) {
             }
         }
