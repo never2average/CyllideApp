@@ -900,7 +900,8 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             TextView revivalNo = revivalpopup.findViewById(R.id.text_view_no);
             CircularProgressBar revivalProgressBar = revivalpopup.findViewById(R.id.revival_progress_bar);
             ProgressBar pb = revivalpopup.findViewById(R.id.progressBarTodayRevival);
-            coinsLeft.setText(Integer.toString(AppConstants.hearts));
+            coinsLeft.setText(AppConstants.hearts+"");
+            Log.d("HEARTSREMAINING:",AppConstants.hearts+"");
 
             revivalYes.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -932,7 +933,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                     quizWrongAnswerMusicPlayer.stop();
                     try {
                         losersPopup.show();
-                        quit();
+                        quizOver = true;
                     } catch (Exception e) {
                     }
                     questionsDBRef.removeEventListener(onNewQuestionsAdded);
