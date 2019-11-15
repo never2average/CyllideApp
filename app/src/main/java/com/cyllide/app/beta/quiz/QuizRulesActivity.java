@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
@@ -152,6 +153,8 @@ public class QuizRulesActivity extends AppCompatActivity {
                 catch (Exception e){}
             }
         });
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
 
 
 
@@ -290,7 +293,7 @@ public class QuizRulesActivity extends AppCompatActivity {
 
     private void fetchQuestions(final String quizID){
         Log.d("TEASTisRunning",isRunning+"");
-        if(isRunning) {
+        if(isRunning && !FirebaseQuizActivity.isActive) {
             Intent quizSwitcher = new Intent(QuizRulesActivity.this, FirebaseQuizActivity.class);
             quizSwitcher.putExtra("questions", "");
             quizSwitcher.putExtra("quizID", quizID);

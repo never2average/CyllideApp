@@ -195,7 +195,6 @@ public class PortfolioGameFragment extends Fragment {
         cardStack.forceLayout();
         cardStack.invalidate();
         cardStack.refreshDrawableState();
-        getPositionsVolley();
 
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
@@ -256,9 +255,7 @@ public class PortfolioGameFragment extends Fragment {
         recyclerView.setAdapter(rvAdapter);
 
 
-
-
-        fetchCards(i);
+        getPositionsVolley();
 
         return view;
 
@@ -461,6 +458,7 @@ public class PortfolioGameFragment extends Fragment {
                     for(int i = 0; i<responseList.length();i++){
                        tickers.add(responseList.getJSONObject(i).getString("ticker"));
                     }
+                    fetchCards(i);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

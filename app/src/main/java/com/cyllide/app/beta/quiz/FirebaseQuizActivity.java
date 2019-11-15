@@ -71,7 +71,7 @@ import com.github.nkzawa.socketio.client.IO;
 
 public class FirebaseQuizActivity extends AppCompatActivity {
 
-
+    public static boolean isActive = false;
     public static boolean hasRevive = false;
     public static int numberOfRevivals = 0;
     private Handler handler = new Handler();
@@ -201,12 +201,14 @@ public class FirebaseQuizActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        isActive=true;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 
         quizID = getIntent().getStringExtra("quizID");
+        AppConstants.hearts = getIntent().getIntExtra("hearts", 0);
         questionsDBRef = FirebaseDatabase.getInstance().getReference().child("questions");
         playersDBRef = FirebaseDatabase.getInstance().getReference().child("ActivePlayers");
         answerStatsDBRef = FirebaseDatabase.getInstance().getReference().child("AnswerStats");
@@ -628,6 +630,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                     if (questionID >= 9) {
                         try {
                             losersPopup.show();
+                            quizOver = true;
                         } catch (Exception e) {
                         }
                         removeEventListeners();
@@ -688,6 +691,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         //TODO Remove all listeners
         removeEventListeners();
         //Remove the player from the active users
+        isActive = false;
 
 
         questionID = -1;
@@ -884,8 +888,6 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     private void showRevival() {
         isRevivalShowing = true;
         Log.d("HEARTSSS", getIntent().getIntExtra("hearts", 0) + " " + numberOfRevivals);
-        AppConstants.hearts = getIntent().getIntExtra("hearts", 0);
-
 
         if (AppConstants.hearts > 0 && numberOfRevivals < 2) {
             Log.d("HEARTSSS", getIntent().getIntExtra("hearts", 0) + " " + numberOfRevivals);
@@ -1019,6 +1021,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             });
             try {
                 losersPopup.show();
+                quizOver = true;
             } catch (Exception e) {
             }
         }
