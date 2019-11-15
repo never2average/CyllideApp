@@ -130,15 +130,15 @@ public class QuizRulesActivity extends AppCompatActivity {
 
 
         startQuizButton=findViewById(R.id.startQuizButton);
-        startQuizButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent quizSwitcher = new Intent(QuizRulesActivity.this,FirebaseQuizActivity.class);
-                quizSwitcher.putExtra("questions","");
-                quizSwitcher.putExtra("quizID",quizID);
-                startActivity(quizSwitcher);
-                finish();            }
-        });
+//        startQuizButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent quizSwitcher = new Intent(QuizRulesActivity.this,FirebaseQuizActivity.class);
+//                quizSwitcher.putExtra("questions","");
+//                quizSwitcher.putExtra("quizID",quizID);
+//                startActivity(quizSwitcher);
+//                finish();            }
+//        });
 
 
         quizPrize = findViewById(R.id.quiz_rules_qrize_text_view);
@@ -186,6 +186,7 @@ public class QuizRulesActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(String response) {
                     try {
+                        AppConstants.ttttt = 0;
                         Log.d("QuizRulesActivity",currentTime+"");
                         lives = new JSONObject(response).getString("lives");
                         quizID = new JSONObject(response).getJSONObject("data").getJSONObject("_id").getString("$oid");
@@ -197,12 +198,12 @@ public class QuizRulesActivity extends AppCompatActivity {
                         Log.d("TIMES","currentTime :"+currentTime+" QuizTime :"+quizStartTime);
                         quizPrize.setText("₹ "+Integer.toString(new JSONObject(response).getJSONObject("data").getInt("quizPrizeMoney")));
 
-                        startQuizButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                fetchQuestions(quizID);
-                            }
-                        });
+//                        startQuizButton.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                fetchQuestions(quizID);
+//                            }
+//                        });
                         Log.d("QuizRulesActivity1",quizStartTime-currentTime+"");
                         quizCountDownTimer =
                                 new CountDownTimer(quizStartTime-currentTime,1000){

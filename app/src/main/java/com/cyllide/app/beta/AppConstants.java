@@ -29,4 +29,5 @@ public class AppConstants {
 
     public static int minWithdrawable;
     public static String tempUsername;
+    public static int ttttt = 0;
 }

@@ -203,9 +203,13 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         isActive=true;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        setContentView(R.layout.activity_quiz);
+        if(AppConstants.ttttt >0){
+            finish();
+        }
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        Toast.makeText(this,"NO OF TIMES: "+(++AppConstants.ttttt),Toast.LENGTH_LONG).show();
 
         quizID = getIntent().getStringExtra("quizID");
         AppConstants.hearts = getIntent().getIntExtra("hearts", 0);
@@ -997,6 +1001,8 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                     finish();
                 }
             });
+            isActive = false;
+            quizOver = true;
 
             losersPopup.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
@@ -1020,9 +1026,10 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                 }
             });
             try {
-                losersPopup.show();
                 quizOver = true;
+                losersPopup.show();
             } catch (Exception e) {
+                finish();
             }
         }
     }
