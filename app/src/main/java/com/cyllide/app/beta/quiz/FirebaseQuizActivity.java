@@ -71,7 +71,7 @@ import com.github.nkzawa.socketio.client.IO;
 
 public class FirebaseQuizActivity extends AppCompatActivity {
 
-
+    public static boolean isActive = false;
     public static boolean hasRevive = false;
     public static int numberOfRevivals = 0;
     private Handler handler = new Handler();
@@ -201,9 +201,10 @@ public class FirebaseQuizActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        isActive=true;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 
         quizID = getIntent().getStringExtra("quizID");
