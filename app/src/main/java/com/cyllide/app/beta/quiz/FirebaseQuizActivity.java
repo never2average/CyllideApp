@@ -691,6 +691,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         //TODO Remove all listeners
         removeEventListeners();
         //Remove the player from the active users
+        isActive = false;
 
 
         questionID = -1;
