@@ -294,7 +294,7 @@ public class QuizRulesActivity extends AppCompatActivity {
 
     private void fetchQuestions(final String quizID){
         Log.d("TEASTisRunning",isRunning+"");
-        if(isRunning && !FirebaseQuizActivity.isActive) {
+        if(isRunning) {
             Intent quizSwitcher = new Intent(QuizRulesActivity.this, FirebaseQuizActivity.class);
             quizSwitcher.putExtra("questions", "");
             quizSwitcher.putExtra("quizID", quizID);
