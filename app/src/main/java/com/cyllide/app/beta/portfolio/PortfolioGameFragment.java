@@ -307,13 +307,7 @@ public class PortfolioGameFragment extends Fragment {
 
                         if(tickers.contains(model.getTicker()))
                         {
-                            Toast.makeText(getContext(),"LOOOL",Toast.LENGTH_SHORT).show();
-                            Log.d("CARDSTYPE:","TRUEEE");
                             model.setBought(true);
-                        }
-                        else{
-                            Toast.makeText(getContext(),"LOOOLNOOOO",Toast.LENGTH_SHORT).show();
-
                         }
                         model.setCompanySector(detailsObject.getJSONObject(key).getString("Sector"));
                         model.setCompanyIndustry(detailsObject.getJSONObject(key).getString("Industry"));

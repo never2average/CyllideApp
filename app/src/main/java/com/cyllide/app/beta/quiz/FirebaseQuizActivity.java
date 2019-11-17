@@ -73,6 +73,13 @@ public class FirebaseQuizActivity extends AppCompatActivity {
 
     public static boolean isActive = false;
     public static boolean hasRevive = false;
+    //TODO Fix numberofRevivals
+    /*
+        The case that is not handled is basically, 
+        when someone uses 2 revivals and wins the quiz
+        the variable numberOfRevivals is not updated and since it is static
+        number of fuckups is very high
+     */
     public static int numberOfRevivals = 0;
     private Handler handler = new Handler();
     CountDownTimer countDownTimer = null;
@@ -723,7 +730,6 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         quizOver = true;
 
         if (questionID != 10) {
-            Toast.makeText(this, "You  lol", Toast.LENGTH_LONG).show();
             quizOver = true;
             try {
                 losersPopup.show();
@@ -810,10 +816,6 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
                 Toast.makeText(FirebaseQuizActivity.this, "Poor Internet Connection, please try again later", Toast.LENGTH_LONG).show();
-//                startActivity(new Intent(FirebaseQuizActivity.this, MainActivity.class));
-                finish();
-
-
             }
         }) {
             @Override
@@ -866,10 +868,8 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                 option4PB.setProgressDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.answer_progress_bar_correct));
             }
 
-            Toast.makeText(FirebaseQuizActivity.this, "Showing Answers", Toast.LENGTH_SHORT).show();
             option1PB.setVisibility(View.VISIBLE);
             startAnswerAnimation(option1PB, (numCorrectOptionA * 100) / totalResponses, 3000);
-            Log.d("percent", Integer.toString((numCorrectOptionA * 100) / totalResponses));
             option2PB.setVisibility(View.VISIBLE);
             startAnswerAnimation(option2PB, (numCorrectOptionB * 100) / totalResponses, 3000);
             option3PB.setVisibility(View.VISIBLE);
@@ -908,7 +908,6 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             revivalYes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(view.getContext(), "Yes", Toast.LENGTH_SHORT).show();
                     QuizActivity.hasRevive = true;
                     numberOfRevivals++;
                     revivalpopup.dismiss();

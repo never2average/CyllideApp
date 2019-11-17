@@ -108,7 +108,6 @@ public class PhoneAuth extends AppCompatActivity {
                             finish();
                         }
                         else {
-//                            Toast.makeText(getBaseContext(), "Message Sending ",Toast.LENGTH_LONG).show();
                             Snackbar.make(findViewById(R.id.root_layout),"Something went wrong!",Snackbar.LENGTH_SHORT).show();
 
 

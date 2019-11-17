@@ -97,7 +97,7 @@ public class PortfolioActivity extends AppCompatActivity {
                     setGraph("1D");
                 webView.loadUrl("file:///android_asset/oneday.html");}
                 else{
-                    Toast.makeText(PortfolioActivity.this,"Internet Connecion Lost",Toast.LENGTH_LONG).show();
+                    Toast.makeText(PortfolioActivity.this,"Internet Connection Lost",Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -111,7 +111,7 @@ public class PortfolioActivity extends AppCompatActivity {
                 if(ConnectionStatus.connectionstatus){
                 webView.loadUrl("file:///android_asset/oneweek.html");}
                 else {
-                    Toast.makeText(PortfolioActivity.this,"Internet Connecion Lost",Toast.LENGTH_LONG).show();
+                    Toast.makeText(PortfolioActivity.this,"Internet Connection Lost",Toast.LENGTH_LONG).show();
 
 
                 }
@@ -126,7 +126,7 @@ public class PortfolioActivity extends AppCompatActivity {
                     setGraph("1M");
                 webView.loadUrl("file:///android_asset/onemonth.html");}
                 else {
-                    Toast.makeText(PortfolioActivity.this,"Internet Connecion Lost",Toast.LENGTH_LONG).show();
+                    Toast.makeText(PortfolioActivity.this,"Internet Connection Lost",Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -140,7 +140,7 @@ public class PortfolioActivity extends AppCompatActivity {
                     setGraph("6M");
                 webView.loadUrl("file:///android_asset/sixmonths.html");}
                 else{
-                    Toast.makeText(PortfolioActivity.this,"Internet Connecion Lost",Toast.LENGTH_LONG).show();
+                    Toast.makeText(PortfolioActivity.this,"Internet Connection Lost",Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -154,7 +154,7 @@ public class PortfolioActivity extends AppCompatActivity {
                     setGraph("1Y");
                 webView.loadUrl("file:///android_asset/oneyear.html");}
                 else{
-                    Toast.makeText(PortfolioActivity.this,"Internet Connecion Lost",Toast.LENGTH_LONG).show();
+                    Toast.makeText(PortfolioActivity.this,"Internet Connection Lost",Toast.LENGTH_LONG).show();
 
                 }
             }

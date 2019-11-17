@@ -95,16 +95,11 @@ public class QuizAlarmManager extends BroadcastReceiver {
         PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "PowerManager:");
         wl.acquire();
         getQuizIDService(context);
-
-        // Put here YOUR code.
-       // Toast.makeText(context, "Fetching Latest Quiz Time", Toast.LENGTH_LONG).show(); // For example
-
         wl.release();
     }
 
     public void setAlarm(Context context)
     {
-//        Toast.makeText(context,"In SetAlarm",Toast.LENGTH_SHORT);
         AlarmManager am =(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(context, QuizAlarmManager.class);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);

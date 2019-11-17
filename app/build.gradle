@@ -20,7 +20,7 @@ android {
         applicationId "com.cyllide.app.beta"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 6
+        versionCode 8
         versionName "1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
