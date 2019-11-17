@@ -100,7 +100,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     MediaPlayer quizMusicPlayer;
     MediaPlayer quizCorrectAnswerMusicPlayer;
     MediaPlayer quizWrongAnswerMusicPlayer;
-
+    boolean hasQuizStarted = false;
     String playerQuizID = null;
 
     private FrameLayout waitingScreen;
@@ -208,6 +208,16 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         if(AppConstants.ttttt >0){
             finish();
         }
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                if(!hasQuizStarted){
+                    finish();
+                }
+            }
+        }, 15000);
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         Toast.makeText(this,"NO OF TIMES: "+(++AppConstants.ttttt),Toast.LENGTH_LONG).show();
 
@@ -318,6 +328,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         onNewQuestionsAdded = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                hasQuizStarted = true;
                 if(quizOver){
                    finish();
                 }

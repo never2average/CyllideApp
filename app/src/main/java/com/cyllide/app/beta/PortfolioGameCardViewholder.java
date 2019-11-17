@@ -38,6 +38,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Map;
 
+import pl.droidsonroids.gif.GifImageView;
+
 public class PortfolioGameCardViewholder extends RecyclerView.ViewHolder {
 
     private ArrayList<PortfolioGameCardModel> data;
