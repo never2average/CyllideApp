@@ -104,7 +104,6 @@ public class GetLatestQuizIDService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("RealityCkeck","OnStart");
-       // Toast.makeText(this,"In ONStart",Toast.LENGTH_SHORT);
         getQuizIDService();
         alarmManager.setAlarm(this);
         return START_STICKY;

@@ -106,10 +106,7 @@ public class HomeFragment extends Fragment {
 
         if(sharedPreferences.getString("profileUri",null)==null)
         {
-           // getProfilePicVolley();
             profilePic.setImageDrawable(drawable);
-
-          //  Toast.makeText(getContext(),"please choose your profile pic",Toast.LENGTH_SHORT).show();
         }else{
             String ur=sharedPreferences.getString("profileUri",null);
             Uri uri=Uri.parse(ur);
@@ -284,7 +281,6 @@ public class HomeFragment extends Fragment {
 //            // getProfilePicVolley();
 //            profilePic.setImageDrawable(drawable);
 //
-//            Toast.makeText(getContext(),"please choose your profile pic",Toast.LENGTH_SHORT).show();
 //        }else{
 //            String ur=sharedPreferences.getString("profileUri",null);
 //            Uri uri=Uri.parse(ur);
@@ -313,10 +309,7 @@ public class HomeFragment extends Fragment {
 
                         if(sharedPreferences.getString("profileUri",null)==null)
                         {
-                            // getProfilePicVolley();
                             profilePic.setImageDrawable(drawable);
-
-                            //Toast.makeText(getContext(),"please choose your profile pic",Toast.LENGTH_SHORT).show();
                         }else{
                             String ur=sharedPreferences.getString("profileUri",null);
                             Uri uri=Uri.parse(ur);
