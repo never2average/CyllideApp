@@ -132,6 +132,7 @@
             android:name="com.cyllide.app.beta.quiz.SocketQuizActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:noHistory="true"
             android:name="com.cyllide.app.beta.quiz.FirebaseQuizActivity"
             android:screenOrientation="portrait" />
 

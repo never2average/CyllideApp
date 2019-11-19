@@ -278,7 +278,7 @@ public class ProfileActivity extends AppCompatActivity {
                     AnimatedPieViewConfig config = new AnimatedPieViewConfig().drawText(false).textSize(40);
                     config.strokeWidth(30);
                     coins.setText(jsonResponse.getString("points_collected"));
-                    money.setText("₹ "+jsonResponse.getString("money_won"));
+                    money.setText(""+jsonResponse.getString("money_won"));
                     money.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.cyllide_grey));
                     if (Integer.parseInt(jsonResponse.getString("money_won")) > AppConstants.minWithdrawable) {
                         money.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.green));
