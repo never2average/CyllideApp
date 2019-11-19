@@ -71,10 +71,7 @@ import com.github.nkzawa.socketio.client.IO;
 
 public class FirebaseQuizActivity extends AppCompatActivity {
 
-
-    public static boolean hasRevive = false;
     public static int numberOfRevivals = 0;
-    private Handler handler = new Handler();
     CountDownTimer countDownTimer = null;
     CircularProgressBar circularProgressBar;
     TextView continueButtonPopup;
@@ -85,7 +82,6 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     TextView mainQuestion, optionA, optionB, optionC, optionD, textTimer, viewersTV;
     MaterialCardView option1CV, option2CV, option3CV, option4CV;
     RequestQueue winPaytmRequestQueue;
-    JSONArray jsonQuestionArray;
     Map<String, String> winPaytmRequestHeader = new ArrayMap<>();
     ProgressBar option1PB, option2PB, option3PB, option4PB;
     private int questionID = 0; // new value for socket
@@ -95,7 +91,6 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     Dialog confirmExitPopup;
     ImageView quizActivityAnswerIndicator;
     private String quizID;
-    String socketQuestionID;
     ImageView exitQuiz;
     MediaPlayer quizMusicPlayer;
     MediaPlayer quizCorrectAnswerMusicPlayer;
@@ -104,8 +99,6 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     String playerQuizID = null;
 
     private FrameLayout waitingScreen;
-    int revivalsUsed;
-    int revivalsRemaining;
     boolean quizOver = false;
 
     boolean isTimerRunning = false;
@@ -121,8 +114,6 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     private void changeQuestion(int qno, String question, ArrayList<String> answerList) {
         startMusic();
         waitingScreen.setVisibility(View.GONE);
-
-        String id;
 
         option1CV.setClickable(true);
         option2CV.setClickable(true);
@@ -169,9 +160,6 @@ public class FirebaseQuizActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         addEventListeners();
-
-        //Attach all listeners
-
     }
 
     private void addEventListeners() {
@@ -354,7 +342,7 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                     //DISPLAY YOU HAVE MISSED THE QUIZ
                 }
 
-//                //TODO COmment it later
+//                //TODO Comment it later
 //                changeQuestion(questionID, question, answerList);
 //
 
@@ -463,6 +451,15 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                 option3CV.setClickable(false);
                 option4CV.setClickable(false);
                 option1CV.setPressed(true);
+
+                option2CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_unselected_option));
+                option3CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_unselected_option));
+                option4CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_unselected_option));
+
+
+                optionB.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.colorPrimary));
+                optionC.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.colorPrimary));
+                optionD.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.colorPrimary));
             }
         });
         option2CV.setOnClickListener(new View.OnClickListener() {
@@ -476,6 +473,15 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                 option3CV.setClickable(false);
                 option4CV.setClickable(false);
                 option2CV.setPressed(true);
+
+                option1CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_unselected_option));
+                option3CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_unselected_option));
+                option4CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_unselected_option));
+
+
+                optionA.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.colorPrimary));
+                optionC.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.colorPrimary));
+                optionD.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.colorPrimary));
             }
         });
         option3CV.setOnClickListener(new View.OnClickListener() {
@@ -489,6 +495,15 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                 option1CV.setClickable(false);
                 option4CV.setClickable(false);
                 option3CV.setPressed(true);
+
+                option1CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_unselected_option));
+                option2CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_unselected_option));
+                option4CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_unselected_option));
+
+
+                optionA.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.colorPrimary));
+                optionB.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.colorPrimary));
+                optionD.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.colorPrimary));
             }
         });
         option4CV.setOnClickListener(new View.OnClickListener() {
@@ -502,6 +517,15 @@ public class FirebaseQuizActivity extends AppCompatActivity {
                 option2CV.setClickable(false);
                 option3CV.setClickable(false);
                 option4CV.setPressed(true);
+
+                option1CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_unselected_option));
+                option2CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_unselected_option));
+                option3CV.setBackgroundDrawable(ContextCompat.getDrawable(FirebaseQuizActivity.this, R.drawable.drawable_activity_quiz_unselected_option));
+
+
+                optionA.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.colorPrimary));
+                optionB.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.colorPrimary));
+                optionC.setTextColor(ContextCompat.getColor(FirebaseQuizActivity.this, R.color.colorPrimary));
             }
         });
         pb = findViewById(R.id.progressBarToday);
@@ -533,7 +557,6 @@ public class FirebaseQuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 confirmExitPopup.dismiss();
-//                startActivity(new Intent(FirebaseQuizActivity.this, MainActivity.class));
                 finish();
                 questionID = 0;
                 quizMusicPlayer.stop();
@@ -556,12 +579,6 @@ public class FirebaseQuizActivity extends AppCompatActivity {
         });
 
     }
-
-
-// Socketio legend
-//    new questions = NewQuestionEvent
-//    send questions = SendQuestionEvent
-//    recieve response = RecieveQuestionEvent
 
     private void startTimer(final int seconds) {
         countDownTimer = new CountDownTimer(seconds * 1000, 1) {
